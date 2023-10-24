@@ -1,10 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 
 import MainNav from "./navigation/MainNav";
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
