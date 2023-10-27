@@ -1,18 +1,24 @@
 import React from "react";
 
 import MainNav from "./navigation/MainNav";
-
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import BottomNavigationHeader from "./navigation/BottomNavHeader";
+import ParkInfoScreen from "./sidebarScreens/ParkInfo";
+import FAQScreen from "./sidebarScreens/FAQ";
 
-const Stack = createNativeStackNavigator();
+
+const Drawer = createDrawerNavigator();
+
 
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="MainNav">
-                <Stack.Screen name="MainNav" options={{headerShown: false}} component={MainNav}></Stack.Screen>
-            </Stack.Navigator>
+            <Drawer.Navigator>
+                <Drawer.Screen name="MainNav" component={MainNav} options={{header: ()=><BottomNavigationHeader/>}}/>
+                <Drawer.Screen name="FAQ" component={FAQScreen}  options={{header: ()=><BottomNavigationHeader/>}}/>
+                <Drawer.Screen name="ParkInfo" component={ParkInfoScreen} options={{header: ()=><BottomNavigationHeader/>}}/>            
+                </Drawer.Navigator>
         </NavigationContainer>
     );
 }
