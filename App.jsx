@@ -1,24 +1,24 @@
 import React from "react";
-
-import MainNav from "./navigation/MainNav";
+import HomeTabNavigator from "./components/navigation/HomeTabNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import BottomNavigationHeader from "./navigation/BottomNavHeader";
+import AppHeader from "./components/navigation/AppHeader";
 import ParkInfoScreen from "./sidebarScreens/ParkInfo";
 import FAQScreen from "./sidebarScreens/FAQ";
-
+// import LoginScreen from "./sidebarScreens/auth/Login";
+import AuthStackNavigator from "./components/navigation/AuthStackNavigator";
 
 const Drawer = createDrawerNavigator();
-
 
 export default function App() {
     return (
         <NavigationContainer>
             <Drawer.Navigator>
-                <Drawer.Screen name="MainNav" component={MainNav} options={{header: ()=><BottomNavigationHeader/>}}/>
-                <Drawer.Screen name="FAQ" component={FAQScreen}  options={{header: ()=><BottomNavigationHeader/>}}/>
-                <Drawer.Screen name="ParkInfo" component={ParkInfoScreen} options={{header: ()=><BottomNavigationHeader/>}}/>            
-                </Drawer.Navigator>
+                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader /> }} />
+                <Drawer.Screen name="Login" component={AuthStackNavigator} options={{ header: () => <AppHeader /> }} />
+                <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader /> }} />
+                <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <AppHeader /> }} />
+            </Drawer.Navigator>
         </NavigationContainer>
     );
 }
