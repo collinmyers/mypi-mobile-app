@@ -31,7 +31,8 @@ export default function LoginScreen({ navigation }) {
 
             setEmail("");
             setPassword("");
-            navigation.navigate("MainNav");
+            navigation.navigate("Home");
+            
 
         } catch (error) {
             console.error(error);
