@@ -13,7 +13,15 @@ const Drawer = createDrawerNavigator();
 export default function App() {
     return (
         <NavigationContainer>
-            <Drawer.Navigator>
+            <Drawer.Navigator
+            
+            screenOptions={{
+                drawerLabelStyle: {color:"#134C77"},
+                drawerStyle:{
+                    backgroundColor: "#8FA063",
+                }
+            }}
+            >
                 <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader /> }} />
                 <Drawer.Screen name="Sign In" component={AuthStackNavigator} options={{ header: () => <AppHeader /> }} />
                 <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader /> }} />
