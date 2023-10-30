@@ -3,7 +3,7 @@ import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
 import { Account, Client, ID } from "appwrite";
 import PropTypes from "prop-types";
-import { validateName, validateEmail, validatePassword } from "../../utils/validators";
+import { validateName, validateEmail, validatePassword } from "../../utils/Validators";
 
 import AuthLogo from "../../components/logo/AuthLogo";
 import AppStyle from "../../styling/AppStyling";

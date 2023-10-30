@@ -1,36 +1,40 @@
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, SafeAreaView } from "react-native";
+import { Text } from "react-native-paper";
 import { Card } from "react-native-elements";
 
 
-export default function EventListScreen(){
-    return(
+// import AppStyle from "../styling/AppStyling";
+import HomeStyle from "../styling/HomeStyling";
 
-            <View style={{justifyContent:"center", flex:1}}>
-                <Text style={{textAlign:"center"}}>EventList</Text>
-                <ScrollView>
-                    <Card>
-                        <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
-                         <Text>I am a placeholder event!</Text>
-                    </Card>
-                    <Card>
-                        <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
-                         <Text>I am a placeholder event!</Text>
-                    </Card>
-                    <Card>
-                        <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
-                         <Text>I am a placeholder event!</Text>
-                    </Card>
-                    <Card>
-                        <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
-                         <Text>I am a placeholder event!</Text>
-                    </Card>
-                    <Card>
-                        <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
-                         <Text>I am a placeholder event!</Text>
-                    </Card>
-                </ScrollView>
-            </View>
+
+export default function EventListScreen() {
+    return (
+
+        <SafeAreaView style={HomeStyle.eventContainer}>
+            <ScrollView>
+                <Card>
+                    <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
+                    <Text>I am a placeholder event!</Text>
+                </Card>
+                <Card>
+                    <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
+                    <Text>I am a placeholder event!</Text>
+                </Card>
+                <Card>
+                    <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
+                    <Text>I am a placeholder event!</Text>
+                </Card>
+                <Card>
+                    <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
+                    <Text>I am a placeholder event!</Text>
+                </Card>
+                <Card>
+                    <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
+                    <Text>I am a placeholder event!</Text>
+                </Card>
+            </ScrollView>
+        </SafeAreaView>
 
 
     );

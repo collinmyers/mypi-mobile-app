@@ -13,7 +13,7 @@ export default function AppHeader() {
                 <Icon style={AppStyle.drawerMenuBar}
                     name="menu"
                     size={35}
-                    color="white"
+                    color="#8FA063"
                     onPress={() => navigation.openDrawer()} />
             </View>
         </SafeAreaView>

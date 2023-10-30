@@ -4,7 +4,7 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems:"center",
         backgroundColor: "#134C77",
     },
     drawerHeader: {
@@ -12,7 +12,12 @@ export default StyleSheet.create({
     },
     drawerMenuBar: {
         padding: 10,
-        alignItems: "left"
+        alignItems: "left",
+
+        // For top border
+
+        // borderBottomColor: "#8FA063",
+        // borderBottomWidth: 1,
     }
 
 });

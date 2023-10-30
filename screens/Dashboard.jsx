@@ -1,12 +1,15 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native";
+import { Text } from "react-native-paper";
+import AppStyle from "../styling/AppStyling";
+import HomeStyle from "../styling/HomeStyling";
 
 
-export default function Dashboard(){
-    return(
-        <View style={{justifyContent:"center", height:"100%"}}>
-            <Text style={{textAlign:"center"}}>WELCOME!</Text>
-        </View>
+export default function Dashboard() {
+    return (
+        <SafeAreaView style={AppStyle.container}>
+            <Text style={HomeStyle.centerText}>WELCOME!</Text>
+        </SafeAreaView>
     );
 }
 
