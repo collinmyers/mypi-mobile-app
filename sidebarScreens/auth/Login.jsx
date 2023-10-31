@@ -8,6 +8,8 @@ import AuthLogo from "../../components/logo/AuthLogo";
 import AppStyle from "../../styling/AppStyling";
 import AuthStyle from "../../styling/AuthStyling";
 
+import { validateEmail } from "../../utils/Validators";
+
 LoginScreen.propTypes = {
     navigation: PropTypes.shape({
         navigate: PropTypes.func.isRequired,
@@ -62,6 +64,7 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                         activeUnderlineColor="#134C77"
                         onChangeText={(text) => setEmail(text)}
                         value={email}
+                        onBlur={() => validateEmail(email, setEmail)}
                     />
 
                     <TextInput

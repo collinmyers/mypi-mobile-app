@@ -8,6 +8,8 @@ import AuthLogo from "../../components/logo/AuthLogo";
 import AppStyle from "../../styling/AppStyling";
 import AuthStyle from "../../styling/AuthStyling";
 
+import { validateEmail } from "../../utils/Validators";
+
 ForgotPasswordScreen.propTypes = {
     navigation: PropTypes.shape({
         navigate: PropTypes.func.isRequired,
@@ -64,6 +66,7 @@ export default function ForgotPasswordScreen({ navigation }) {
                         activeUnderlineColor="#134C77"
                         onChangeText={(text) => setEmail(text)}
                         value={email}
+                        onBlur={() => validateEmail(email, setEmail)}
                     />
 
 
