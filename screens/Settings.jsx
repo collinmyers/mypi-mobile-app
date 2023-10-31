@@ -1,12 +1,17 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native";
+import { Text } from "react-native-paper";
+
+import AppStyle from "../styling/AppStyling";
+import HomeStyle from "../styling/HomeStyling";
+
+export default function SettingsScreen() {
 
 
-export default function SettingsScreen(){
-    return(
-        <View style={{justifyContent:"center", height:"100%"}}>
-            <Text style={{textAlign:"center"}}>Settings</Text>
-        </View>
+    return (
+        <SafeAreaView style={AppStyle.container}>
+            <Text style={HomeStyle.centerText}>Settings</Text>
+        </SafeAreaView>
     );
 }
 
