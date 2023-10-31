@@ -21,6 +21,8 @@ export default StyleSheet.create({
 
         // borderBottomColor: "#8FA063",
         // borderBottomWidth: 1,
+    },
+    drawerMenuBarContainer: {
+        marginLeft: 5
     }
-
 });

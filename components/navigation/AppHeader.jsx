@@ -9,7 +9,7 @@ export default function AppHeader() {
     const navigation = useNavigation();
     return (
         <SafeAreaView style={AppStyle.drawerHeader}>
-            <View>
+            <View style={AppStyle.drawerMenuBarContainer}>
                 <Icon style={AppStyle.drawerMenuBar}
                     name="menu"
                     size={35}
