@@ -55,8 +55,8 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                     <TextInput
                         style={AuthStyle.userInput}
                         placeholder="Email"
-                        placeholderTextColor={"#134C77"}
-                        textColor={"#134C77"}
+                        placeholderTextColor={"#FFFFFF"}
+                        textColor={"#FFFFFF"}
                         mode="flat"
                         underlineColor="#134C77"
                         activeUnderlineColor="#134C77"
@@ -67,8 +67,8 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                     <TextInput
                         style={AuthStyle.userInput}
                         placeholder="Password"
-                        placeholderTextColor={"#134C77"}
-                        textColor={"#134C77"}
+                        placeholderTextColor={"#FFFFFF"}
+                        textColor={"#FFFFFF"}
                         mode="flat"
                         underlineColor="#134C77"
                         activeUnderlineColor="#134C77"
@@ -77,11 +77,11 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                         value={password}
                     />
 
-                    <TouchableOpacity onPress={(handleLogin)} style={AuthStyle.ButtonOpacity}>
+                    <TouchableOpacity onPress={handleLogin} style={AuthStyle.ButtonOpacity}>
                         <Text style={AuthStyle.buttonText}>Sign In</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={AuthStyle.additionalOptions}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Forgot Password")} style={AuthStyle.additionalOptions}>
                         <Text style={AuthStyle.additionalOptionsText}>Forgot Password</Text>
                     </TouchableOpacity>
 

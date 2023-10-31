@@ -13,7 +13,7 @@ export default StyleSheet.create({
 
     title: {
         fontSize: 30,
-        color: "#FFFFFF",
+        color: "#134C77",
         fontWeight: "bold",
         marginBottom: 16,
     },

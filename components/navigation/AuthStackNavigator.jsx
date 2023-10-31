@@ -3,9 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SignUpScreen from "../../sidebarScreens/auth/SignUp";
 import LoginScreen from "../../sidebarScreens/auth/Login";
 import PropTypes from "prop-types";
-
-// import PasswordResetScreen from "../../sidebarScreens/auth/PasswordReset";
-// import ChangePasswordScreen from "../../sidebarScreens/auth/ChangePassword";
+import PasswordResetScreen from "../../sidebarScreens/auth/ForgotPassword";
 
 const Stack = createStackNavigator();
 
@@ -16,8 +14,7 @@ export default function AuthStackNavigator({ handleLoginSuccess }) {
                 {(props) => <LoginScreen {...props} handleLoginSuccess={handleLoginSuccess} />}
             </Stack.Screen>
             <Stack.Screen name="Sign Up" component={SignUpScreen} />
-            {/* <Stack.Screen name="Forgot Password" component={PasswordResetScreen} />
-            <Stack.Screen name="Create Account" component={ChangePasswordScreen} /> */}
+            <Stack.Screen name="Forgot Password" component={PasswordResetScreen} />
         </Stack.Navigator>
     );
 }

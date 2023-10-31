@@ -55,8 +55,8 @@ export default function SignUpScreen({ navigation }) {
                     <TextInput
                         style={AuthStyle.userInput}
                         placeholder="First Name"
-                        placeholderTextColor={"#134C77"}
-                        textColor={"#134C77"}
+                        placeholderTextColor={"#FFFFFF"}
+                        textColor={"#FFFFFF"}
                         mode="flat"
                         underlineColor="#134C77"
                         activeUnderlineColor="#134C77"
@@ -68,8 +68,8 @@ export default function SignUpScreen({ navigation }) {
                     <TextInput
                         style={AuthStyle.userInput}
                         placeholder="Last Name"
-                        placeholderTextColor={"#134C77"}
-                        textColor={"#134C77"}
+                        placeholderTextColor={"#FFFFFF"}
+                        textColor={"#FFFFFF"}
                         mode="flat"
                         underlineColor="#134C77"
                         activeUnderlineColor="#134C77"
@@ -81,8 +81,8 @@ export default function SignUpScreen({ navigation }) {
                     <TextInput
                         style={AuthStyle.userInput}
                         placeholder="Email"
-                        placeholderTextColor={"#134C77"}
-                        textColor={"#134C77"}
+                        placeholderTextColor={"#FFFFFF"}
+                        textColor={"#FFFFFF"}
                         mode="flat"
                         underlineColor="#134C77"
                         activeUnderlineColor="#134C77"
@@ -94,8 +94,8 @@ export default function SignUpScreen({ navigation }) {
                     <TextInput
                         style={AuthStyle.userInput}
                         placeholder="Password"
-                        placeholderTextColor={"#134C77"}
-                        textColor={"#134C77"}
+                        placeholderTextColor={"#FFFFFF"}
+                        textColor={"#FFFFFF"}
                         mode="flat"
                         underlineColor="#134C77"
                         activeUnderlineColor="#134C77"
@@ -107,8 +107,8 @@ export default function SignUpScreen({ navigation }) {
                     <TextInput
                         style={AuthStyle.userInput}
                         placeholder="Confirm Password"
-                        placeholderTextColor={"#134C77"}
-                        textColor={"#134C77"}
+                        placeholderTextColor={"#FFFFFF"}
+                        textColor={"#FFFFFF"}
                         mode="flat"
                         underlineColor="#134C77"
                         activeUnderlineColor="#134C77"
@@ -117,7 +117,7 @@ export default function SignUpScreen({ navigation }) {
                         value={confirmPassword}
                         onBlur={() => validatePassword(password, confirmPassword, setPassword, setConfirmPassword)}
                     />
-                    <TouchableOpacity onPress={(handleSignUp)} style={AuthStyle.ButtonOpacity}>
+                    <TouchableOpacity onPress={handleSignUp} style={AuthStyle.ButtonOpacity}>
                         <Text style={AuthStyle.buttonText}>Sign Up</Text>
                     </TouchableOpacity>
 

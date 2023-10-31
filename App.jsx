@@ -5,8 +5,12 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemL
 import AppHeader from "./components/navigation/AppHeader";
 import ParkInfoScreen from "./sidebarScreens/ParkInfo";
 import FAQScreen from "./sidebarScreens/FAQ";
+import DonationsScreen from "./sidebarScreens/Donation";
 import AuthStackNavigator from "./components/navigation/AuthStackNavigator";
 import { Client, Account } from "appwrite";
+
+import { Entypo, Ionicons, AntDesign, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+
 
 const Drawer = createDrawerNavigator();
 
@@ -25,7 +29,6 @@ export default function App() {
 
             await account.get();
 
-            setIsSignedIn(true);
         } catch {
             setIsSignedIn(false);
         }
@@ -65,9 +68,10 @@ export default function App() {
                     <DrawerItem
                         label="Sign Out"
                         labelStyle={{
-                            color: "#134C77",
+                            color: "#FFFFFF",
                             fontSize: 20,
                         }}
+                        icon={() => (<Ionicons name="person-circle" size={24} color="#134C77" />)}
 
                         onPress={handleLogout} />
 
@@ -88,7 +92,7 @@ export default function App() {
                 screenOptions={{
                     overlayColor: "transparent",
                     drawerLabelStyle: {
-                        color: "#134C77",
+                        color: "#FFFFFF",
                         fontSize: 20,
                     },
                     drawerActiveBackgroundColor: "none",
@@ -102,15 +106,19 @@ export default function App() {
                     <Drawer.Screen
                         name="Sign In"
                         component={AuthStackWithLoginSuccess}
-                        options={{ header: () => <AppHeader /> }}
-                    />
+                        options={{
+                            header: () => <AppHeader />,
+                            drawerIcon: () => <Ionicons name="person-circle" size={24} color="#134C77" />
+                        }} />
                 )}
-                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader /> }} />
-                <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader /> }} />
-                <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <AppHeader /> }} />
+                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader />, drawerIcon: () => <Entypo name="home" size={24} color="#134C77" /> }} />
+                {/* <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader /> }} /> */}
+                <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color="#134C77" /> }} />
+                {/* <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader /> }} /> */}
+                <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <MaterialIcons name="park" size={24} color="#134C77" /> }} />
+                <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <FontAwesome5 name="donate" size={24} color="#134C77" /> }} />
 
             </Drawer.Navigator>
         </NavigationContainer >
     );
 }
-

@@ -8,7 +8,10 @@ export default StyleSheet.create({
         backgroundColor: "#134C77",
     },
     drawerHeader: {
+        justifyContent:"flex-start",
+        alignItems:"flex-start",
         backgroundColor: "#134C77",
+        paddingTop:60
     },
     drawerMenuBar: {
         padding: 10,
