@@ -58,6 +58,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
                     <TextInput
                         style={AuthStyle.userInput}
+                        numberOfLines={1}
                         placeholder="Email"
                         placeholderTextColor={"#FFFFFF"}
                         textColor={"#FFFFFF"}

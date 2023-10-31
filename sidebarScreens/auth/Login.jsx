@@ -56,6 +56,7 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
 
                     <TextInput
                         style={AuthStyle.userInput}
+                        numberOfLines={1}
                         placeholder="Email"
                         placeholderTextColor={"#FFFFFF"}
                         textColor={"#FFFFFF"}
@@ -69,6 +70,7 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
 
                     <TextInput
                         style={AuthStyle.userInput}
+                        numberOfLines={1}
                         placeholder="Password"
                         placeholderTextColor={"#FFFFFF"}
                         textColor={"#FFFFFF"}

@@ -54,6 +54,7 @@ export default function SignUpScreen({ navigation }) {
 
                     <TextInput
                         style={AuthStyle.userInput}
+                        numberOfLines={1}
                         placeholder="First Name"
                         placeholderTextColor={"#FFFFFF"}
                         textColor={"#FFFFFF"}
@@ -67,6 +68,7 @@ export default function SignUpScreen({ navigation }) {
 
                     <TextInput
                         style={AuthStyle.userInput}
+                        numberOfLines={1}
                         placeholder="Last Name"
                         placeholderTextColor={"#FFFFFF"}
                         textColor={"#FFFFFF"}
@@ -80,6 +82,7 @@ export default function SignUpScreen({ navigation }) {
 
                     <TextInput
                         style={AuthStyle.userInput}
+                        numberOfLines={1}
                         placeholder="Email"
                         placeholderTextColor={"#FFFFFF"}
                         textColor={"#FFFFFF"}
@@ -93,6 +96,7 @@ export default function SignUpScreen({ navigation }) {
 
                     <TextInput
                         style={AuthStyle.userInput}
+                        numberOfLines={1}
                         placeholder="Password"
                         placeholderTextColor={"#FFFFFF"}
                         textColor={"#FFFFFF"}
@@ -106,6 +110,7 @@ export default function SignUpScreen({ navigation }) {
 
                     <TextInput
                         style={AuthStyle.userInput}
+                        numberOfLines={1}
                         placeholder="Confirm Password"
                         placeholderTextColor={"#FFFFFF"}
                         textColor={"#FFFFFF"}
