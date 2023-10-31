@@ -12,9 +12,10 @@ LoginScreen.propTypes = {
     navigation: PropTypes.shape({
         navigate: PropTypes.func.isRequired,
     }).isRequired,
+    handleLoginSuccess: PropTypes.func.isRequired,
 };
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ navigation, handleLoginSuccess }) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -31,8 +32,9 @@ export default function LoginScreen({ navigation }) {
 
             setEmail("");
             setPassword("");
+            handleLoginSuccess();
             navigation.navigate("Home");
-            
+
 
         } catch (error) {
             console.error(error);

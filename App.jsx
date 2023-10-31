@@ -6,17 +6,14 @@ import AppHeader from "./components/navigation/AppHeader";
 import ParkInfoScreen from "./sidebarScreens/ParkInfo";
 import FAQScreen from "./sidebarScreens/FAQ";
 import AuthStackNavigator from "./components/navigation/AuthStackNavigator";
-// import HandleAuthState from "./components/navigation/AuthStateDrawer";
 import { Client, Account } from "appwrite";
-// import { AuthDrawer } from "./utils/drawer";
 
 const Drawer = createDrawerNavigator();
-
 
 export default function App() {
 
     const [isSignedIn, setIsSignedIn] = useState(false);
-    const [drawerKey, setDrawerKey] = useState(0);
+    const [refreshDrawer, setRefreshDrawer] = useState(0);
 
     const checkAuthState = async () => {
         try {
@@ -27,8 +24,8 @@ export default function App() {
             const account = new Account(client);
 
             await account.get();
-            setIsSignedIn(true);
 
+            setIsSignedIn(true);
         } catch {
             setIsSignedIn(false);
         }
@@ -36,8 +33,12 @@ export default function App() {
 
     useEffect(() => {
         checkAuthState();
-        console.log(isSignedIn);
-    }, [drawerKey]);
+    }, [refreshDrawer]);
+
+    const handleLoginSuccess = () => {
+        setIsSignedIn(true);
+        setRefreshDrawer((prev) => prev + 1);
+    };
 
     const handleLogout = async () => {
         try {
@@ -49,37 +50,62 @@ export default function App() {
 
             await account.deleteSessions("current");
 
-            setDrawerKey((prev) => prev + 1);
+            setRefreshDrawer((prev) => prev + 1);
 
         } catch (error) {
             console.error(error);
         }
     };
 
+    const SignOutDrawerItem = (props) => {
+        return (
+            <DrawerContentScrollView {...props}>
+
+                {isSignedIn && (
+                    <DrawerItem
+                        label="Sign Out"
+                        labelStyle={{
+                            color: "#134C77",
+                            fontSize: 20,
+                        }}
+
+                        onPress={handleLogout} />
+
+                )}
+                <DrawerItemList {...props} />
+            </DrawerContentScrollView>
+        );
+    };
+
+    const AuthStackWithLoginSuccess = () => <AuthStackNavigator handleLoginSuccess={handleLoginSuccess} />;
+
     return (
         <NavigationContainer>
-            <Drawer.Navigator drawerContent={(props) => (
-                <DrawerContentScrollView {...props}>
-                    <DrawerItemList {...props} />
-                    {isSignedIn && (
-                        <DrawerItem label="Sign Out" onPress={handleLogout} />
-                    )}
-                </DrawerContentScrollView>
-            )}
-
-            // screenOptions={{
-            //     drawerLabelStyle: { color: "#134C77" },
-            //     drawerStyle: {
-            //         backgroundColor: "#8FA063",
-            //     }
-            // }}
+            <Drawer.Navigator
+                key={refreshDrawer}
+                initialRouteName="Home"
+                drawerContent={(props) => <SignOutDrawerItem {...props} />}
+                screenOptions={{
+                    overlayColor: "transparent",
+                    drawerLabelStyle: {
+                        color: "#134C77",
+                        fontSize: 20,
+                    },
+                    drawerActiveBackgroundColor: "none",
+                    drawerStyle: {
+                        backgroundColor: "#8FA063",
+                    }
+                }}
             >
-                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader /> }} />
 
                 {!isSignedIn && (
-                    <Drawer.Screen name="Sign In" component={AuthStackNavigator} options={{ header: () => <AppHeader /> }} />
+                    <Drawer.Screen
+                        name="Sign In"
+                        component={AuthStackWithLoginSuccess}
+                        options={{ header: () => <AppHeader /> }}
+                    />
                 )}
-
+                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader /> }} />
                 <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader /> }} />
                 <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <AppHeader /> }} />
 
