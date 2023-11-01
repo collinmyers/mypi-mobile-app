@@ -7,7 +7,6 @@ import HomeStyle from "../styling/HomeStyling";
 
 export default function SettingsScreen() {
 
-
     return (
         <SafeAreaView style={AppStyle.container}>
             <Text style={HomeStyle.centerText}>Settings</Text>
