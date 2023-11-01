@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
-// import { Account, Client } from "appwrite";
+import { Account, Client } from "appwrite";
 import PropTypes from "prop-types";
 
 import AuthLogo from "../../components/logo/AuthLogo";
@@ -25,17 +25,12 @@ export default function ForgotPasswordScreen({ navigation }) {
 
         try {
 
-            // !!!!!!!! IMPORTANT !!!!!!!!!!!!!!
+            const client = new Client()
+                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
+                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
 
-            // Commented out until further proj development has occured, needs domain to reset password on and SMTP server
-
-            // const client = new Client()
-            //     .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-            //     .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            // const account = new Account(client);
-            // await account.createRecovery(`${email}`, "https://www.examplDomainHere.com");
-
+            const account = new Account(client);
+            await account.createRecovery(`${email}`, process.env.EXPO_PUBLIC_DDNS);
 
             setEmail("");
             navigation.navigate("Login");
