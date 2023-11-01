@@ -4,7 +4,6 @@ import { Text } from "react-native-paper";
 import AppStyle from "../styling/AppStyling";
 import HomeStyle from "../styling/HomeStyling";
 
-
 export default function Dashboard() {
     return (
         <SafeAreaView style={AppStyle.container}>

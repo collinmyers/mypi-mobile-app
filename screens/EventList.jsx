@@ -12,7 +12,7 @@ export default function EventListScreen() {
     return (
 
         <SafeAreaView style={HomeStyle.eventContainer}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <Card>
                     <Card.Image source={require("../assets/my-pi-2-alt.png")}></Card.Image>
                     <Text>I am a placeholder event!</Text>
