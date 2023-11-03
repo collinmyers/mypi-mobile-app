@@ -15,8 +15,8 @@ export default function HomeTabNavigator() {
         <Tab.Navigator
             initialRouteName="Home"
             screenOptions={{
-                tabBarActiveTintColor: "#FFFFFF",
-                tabBarInactiveTintColor: "#8FA063",
+                tabBarActiveTintColor: "#8FA063",
+                tabBarInactiveTintColor: "#FFFFFF",
                 tabBarStyle: {
                     backgroundColor: "#134C77",
                     borderTopColor: "#8FA063",

@@ -11,16 +11,13 @@ export default StyleSheet.create({
         justifyContent:"flex-start",
         alignItems:"flex-start",
         backgroundColor: "#134C77",
-        paddingTop:60
+        paddingTop: 50,
+        paddingLeft: 15
     },
     drawerMenuBar: {
         padding: 10,
+        marginLeft: 10,
         alignItems: "left",
-
-        // For top border
-
-        // borderBottomColor: "#8FA063",
-        // borderBottomWidth: 1,
     },
     drawerMenuBarContainer: {
         marginLeft: 5
