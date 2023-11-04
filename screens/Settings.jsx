@@ -42,6 +42,7 @@ export default function SettingsScreen() {
             </View>
 
             <View style={HomeStyle.changeInfoSection}>
+                
                 <TouchableOpacity style={HomeStyle.changeInfoOpac} >
                     <Text style={HomeStyle.changeInfoText}>Change Name</Text>
                 </TouchableOpacity>
@@ -52,6 +53,10 @@ export default function SettingsScreen() {
 
                 <TouchableOpacity style={HomeStyle.changeInfoOpac}>
                     <Text style={HomeStyle.changeInfoText}>Change Password</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={HomeStyle.deleteAccountOpac}>
+                    <Text style={HomeStyle.changeInfoText}>Delete Account</Text>
                 </TouchableOpacity>
             </View>
 

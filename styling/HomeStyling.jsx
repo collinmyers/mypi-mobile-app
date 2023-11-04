@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+const deviceWidth = Dimensions.get("window").width;
 
 export default StyleSheet.create({
 
@@ -27,14 +29,14 @@ export default StyleSheet.create({
     },
     changeInfoSection: {
         flex: 1,
+        alignSelf: "center",
+        marginTop: 20
     },
     changeInfoOpac: {
         backgroundColor: "#8FA063",
         borderRadius: 5,
-        marginHorizontal: 30,
+        width: deviceWidth * .5,
         marginVertical: 10,
-        paddingLeft: 30,
-        paddingRight: 30,
         paddingTop: 10,
         paddingBottom: 10
     },
@@ -42,6 +44,14 @@ export default StyleSheet.create({
         color: "#FFFFFF",
         textAlign: "center",
         fontSize: 20
+    },
+    deleteAccountOpac: {
+        backgroundColor: "#C70039",
+        borderRadius: 5,
+        width: deviceWidth * .5,
+        marginVertical: 10,
+        paddingTop: 10,
+        paddingBottom: 10
     }
 
 });
