@@ -65,13 +65,13 @@ export default function SettingsScreen({ navigation }) {
                             </Card.Content>
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity style={HomeStyle.changeInfoOpac}>
+                                <TouchableOpacity onPress={() => navigation.navigate("Change Email")} style={HomeStyle.changeInfoOpac}>
                                     <Text style={HomeStyle.changeInfoText}>Change Email</Text>
                                 </TouchableOpacity>
                             </Card.Content>
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity style={HomeStyle.changeInfoOpac}>
+                                <TouchableOpacity onPress={() => navigation.navigate("Change Password")} style={HomeStyle.changeInfoOpac}>
                                     <Text style={HomeStyle.changeInfoText}>Change Password</Text>
                                 </TouchableOpacity>
                             </Card.Content>
@@ -93,19 +93,19 @@ export default function SettingsScreen({ navigation }) {
                             <Text style={HomeStyle.settingsSectionHeader}>Notification Settings</Text>
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity style={HomeStyle.changeInfoOpac} >
+                                <TouchableOpacity onPress={() => navigation.navigate("Park Notifications")} style={HomeStyle.changeInfoOpac} >
                                     <Text style={HomeStyle.changeInfoText}>Park Alerts</Text>
                                 </TouchableOpacity>
                             </Card.Content>
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity style={HomeStyle.changeInfoOpac}>
+                                <TouchableOpacity onPress={() => navigation.navigate("Event Notifications")} style={HomeStyle.changeInfoOpac}>
                                     <Text style={HomeStyle.changeInfoText}>Events</Text>
                                 </TouchableOpacity>
                             </Card.Content>
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity style={HomeStyle.changeInfoOpac}>
+                                <TouchableOpacity onPress={() => navigation.navigate("Promotion Notifications")} style={HomeStyle.changeInfoOpac}>
                                     <Text style={HomeStyle.changeInfoText}>Promotions</Text>
                                 </TouchableOpacity>
                             </Card.Content>
@@ -122,5 +122,5 @@ export default function SettingsScreen({ navigation }) {
 }
 
 SettingsScreen.propTypes = {
-    navigation: PropTypes.func.isRequired,
+    navigation: PropTypes.object.isRequired,
 };

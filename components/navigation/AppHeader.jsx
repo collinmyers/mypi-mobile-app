@@ -25,7 +25,7 @@ export default function AppHeader() {
                         name="menu"
                         size={35}
                         color="#8FA063"
-                        onPress={() => navigation.openDrawer()} />}
+                        onPress={() => navigation.toggleDrawer()} />}
             </View>
         </SafeAreaView>
     );

@@ -75,7 +75,7 @@ export default function HomeTabNavigator() {
                 }}
             />
             <Tab.Screen
-                name="Settings"
+                name="SettingsStack"
                 component={SettingsStackNavigator}
                 options={{
                     tabBarLabel: "Settings",
