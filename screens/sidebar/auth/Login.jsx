@@ -4,11 +4,11 @@ import { Card, Text, TextInput } from "react-native-paper";
 import { Account, Client } from "appwrite";
 import PropTypes from "prop-types";
 
-import AuthLogo from "../../components/logo/AuthLogo";
-import AppStyle from "../../styling/AppStyling";
-import AuthStyle from "../../styling/AuthStyling";
+import AuthLogo from "../../../components/logo/AuthLogo";
+import AppStyle from "../../../styling/AppStyling";
+import AuthStyle from "../../../styling/AuthStyling";
 
-import { validateEmail } from "../../utils/Validators";
+import { validateEmail } from "../../../utils/Validators";
 
 LoginScreen.propTypes = {
     navigation: PropTypes.shape({
@@ -19,8 +19,10 @@ LoginScreen.propTypes = {
 
 export default function LoginScreen({ navigation, handleLoginSuccess }) {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [authentication, setAuthentication] = useState({
+        email: "",
+        password: ""
+    });
 
     const handleLogin = async () => {
 
@@ -30,10 +32,12 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                 .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
 
             const account = new Account(client);
-            await account.createEmailSession(`${email}`, `${password}`);
+            await account.createEmailSession(`${authentication.email}`, `${authentication.password}`);
 
-            setEmail("");
-            setPassword("");
+            setAuthentication({
+                email: "",
+                password: ""
+            });
             handleLoginSuccess();
             navigation.navigate("Home");
 
@@ -63,9 +67,9 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                         mode="flat"
                         underlineColor="#134C77"
                         activeUnderlineColor="#134C77"
-                        onChangeText={(text) => setEmail(text)}
-                        value={email}
-                        onBlur={() => validateEmail(email, setEmail)}
+                        onChangeText={(text) => setAuthentication({ ...authentication, email: text })}
+                        value={authentication.email}
+                        onBlur={() => validateEmail(authentication.email, (text) => setAuthentication({ ...authentication, email: text }))}
                     />
 
                     <TextInput
@@ -78,8 +82,8 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                         underlineColor="#134C77"
                         activeUnderlineColor="#134C77"
                         secureTextEntry
-                        onChangeText={(text) => setPassword(text)}
-                        value={password}
+                        onChangeText={(text) => setAuthentication({ ...authentication, password: text })}
+                        value={authentication.password}
                     />
 
                     <TouchableOpacity onPress={handleLogin} style={AuthStyle.ButtonOpacity}>

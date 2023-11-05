@@ -1,10 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MapScreen from "../../screens/Map";
-import EventListScreen from "../../screens/EventList";
-import AlertsScreen from "../../screens/Alerts";
-import SettingsScreen from "../../screens/Settings";
-import DashboardScreen from "../../screens/Dashboard";
+import MapScreen from "../../screens/Central/Map";
+import EventListScreen from "../../screens/Central/EventList";
+import AlertsScreen from "../../screens/Central/Alerts";
+import SettingsScreen from "../../screens/Central/Settings";
+import DashboardScreen from "../../screens/Central/Dashboard";
 import { Entypo, Fontisto, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();

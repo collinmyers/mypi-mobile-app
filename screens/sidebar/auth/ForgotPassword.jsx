@@ -4,11 +4,11 @@ import { Card, Text, TextInput } from "react-native-paper";
 import { Account, Client } from "appwrite";
 import PropTypes from "prop-types";
 
-import AuthLogo from "../../components/logo/AuthLogo";
-import AppStyle from "../../styling/AppStyling";
-import AuthStyle from "../../styling/AuthStyling";
+import AuthLogo from "../../../components/logo/AuthLogo";
+import AppStyle from "../../../styling/AppStyling";
+import AuthStyle from "../../../styling/AuthStyling";
 
-import { validateEmail } from "../../utils/Validators";
+import { validateEmail } from "../../../utils/Validators";
 
 ForgotPasswordScreen.propTypes = {
     navigation: PropTypes.shape({
