@@ -3,9 +3,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MapScreen from "../../screens/Central/Map";
 import EventListScreen from "../../screens/Central/EventList";
 import AlertsScreen from "../../screens/Central/Alerts";
-import SettingsScreen from "../../screens/Central/Settings";
+// import SettingsScreen from "../../screens/Central/Settings";
 import DashboardScreen from "../../screens/Central/Dashboard";
 import { Entypo, Fontisto, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
+
+import SettingsStackNavigator from "./SettingsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -74,7 +76,7 @@ export default function HomeTabNavigator() {
             />
             <Tab.Screen
                 name="Settings"
-                component={SettingsScreen}
+                component={SettingsStackNavigator}
                 options={{
                     tabBarLabel: "Settings",
                     headerShown: false,

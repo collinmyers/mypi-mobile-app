@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { Account, Client } from "appwrite";
+import PropTypes from "prop-types";
 // import AppStyle from "../styling/AppStyling";
 import HomeStyle from "../../styling/HomeStyling";
 
-export default function SettingsScreen() {
+export default function SettingsScreen({ navigation }) {
 
     const [profileInfo, setProfileInfo] = useState({
         name: "",
@@ -31,7 +32,7 @@ export default function SettingsScreen() {
 
             setIsSignedIn(true);
 
-        } catch (error) {
+        } catch {
             setIsSignedIn(false);
         }
     };
@@ -58,7 +59,7 @@ export default function SettingsScreen() {
                             <Text style={HomeStyle.settingsSectionHeader}>Account Settings</Text>
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity style={HomeStyle.changeInfoOpac} >
+                                <TouchableOpacity onPress={() => navigation.navigate("Change Name")} style={HomeStyle.changeInfoOpac} >
                                     <Text style={HomeStyle.changeInfoText}>Change Name</Text>
                                 </TouchableOpacity>
                             </Card.Content>
@@ -120,3 +121,6 @@ export default function SettingsScreen() {
     );
 }
 
+SettingsScreen.propTypes = {
+    navigation: PropTypes.func.isRequired,
+};
