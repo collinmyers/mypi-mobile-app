@@ -39,7 +39,7 @@ export default function SettingsScreen({ navigation }) {
 
     useEffect(() => {
         getNameAndEmail();
-    }, []);
+    }, [isSignedIn]);
 
 
 
@@ -47,44 +47,58 @@ export default function SettingsScreen({ navigation }) {
         <SafeAreaView style={HomeStyle.settingsContainer}>
 
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={HomeStyle.profileView}>
-                    <Text style={HomeStyle.profileText}>{profileInfo.name}</Text>
-                    <Text style={HomeStyle.profileText}>{profileInfo.email}</Text>
-                </View>
 
-                <View style={HomeStyle.cardView}>
-                    <Card style={HomeStyle.settingsCard}>
-                        <Card.Content style={HomeStyle.settingsCardContentContainer}>
+                {isSignedIn && (
+                    <View style={HomeStyle.profileView}>
+                        <Text style={HomeStyle.profileText}>{profileInfo.name}</Text>
+                        <Text style={HomeStyle.profileText}>{profileInfo.email}</Text>
+                    </View>
+                )}
 
-                            <Text style={HomeStyle.settingsSectionHeader}>Account Settings</Text>
+                {isSignedIn && (
+                    <View style={HomeStyle.cardView}>
+                        <Card style={HomeStyle.settingsCard}>
+                            <Card.Content style={HomeStyle.settingsCardContentContainer}>
+                                <Text style={HomeStyle.settingsSectionHeader}>Account Settings</Text>
 
-                            <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity onPress={() => navigation.navigate("Change Name")} style={HomeStyle.changeInfoOpac} >
-                                    <Text style={HomeStyle.changeInfoText}>Change Name</Text>
-                                </TouchableOpacity>
+                                <Card.Content style={HomeStyle.settingsCardContent}>
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate("Change Name")}
+                                        style={HomeStyle.changeInfoOpac}
+                                    >
+                                        <Text style={HomeStyle.changeInfoText}>Change Name</Text>
+                                    </TouchableOpacity>
+                                </Card.Content>
+
+                                <Card.Content style={HomeStyle.settingsCardContent}>
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate("Change Email")}
+                                        style={HomeStyle.changeInfoOpac}
+                                    >
+                                        <Text style={HomeStyle.changeInfoText}>Change Email</Text>
+                                    </TouchableOpacity>
+                                </Card.Content>
+
+                                <Card.Content style={HomeStyle.settingsCardContent}>
+                                    <TouchableOpacity
+                                        onPress={() => navigation.navigate("Change Password")}
+                                        style={HomeStyle.changeInfoOpac}
+                                    >
+                                        <Text style={HomeStyle.changeInfoText}>Change Password</Text>
+                                    </TouchableOpacity>
+                                </Card.Content>
+
+                                <Card.Content style={HomeStyle.settingsCardContent}>
+                                    <TouchableOpacity style={HomeStyle.deleteAccountOpac}>
+                                        <Text style={HomeStyle.changeInfoText}>Delete Account</Text>
+                                    </TouchableOpacity>
+                                </Card.Content>
                             </Card.Content>
-
-                            <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity onPress={() => navigation.navigate("Change Email")} style={HomeStyle.changeInfoOpac}>
-                                    <Text style={HomeStyle.changeInfoText}>Change Email</Text>
-                                </TouchableOpacity>
-                            </Card.Content>
-
-                            <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity onPress={() => navigation.navigate("Change Password")} style={HomeStyle.changeInfoOpac}>
-                                    <Text style={HomeStyle.changeInfoText}>Change Password</Text>
-                                </TouchableOpacity>
-                            </Card.Content>
+                        </Card>
+                    </View>
+                )}
 
 
-                            <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity style={HomeStyle.deleteAccountOpac}>
-                                    <Text style={HomeStyle.changeInfoText}>Delete Account</Text>
-                                </TouchableOpacity>
-                            </Card.Content>
-                        </Card.Content>
-                    </Card>
-                </View>
 
                 <View style={HomeStyle.cardView}>
                     <Card style={HomeStyle.settingsCard}>
@@ -115,6 +129,7 @@ export default function SettingsScreen({ navigation }) {
 
                     </Card>
                 </View>
+
             </ScrollView>
 
         </SafeAreaView>
