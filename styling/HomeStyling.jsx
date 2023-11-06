@@ -82,6 +82,44 @@ export default StyleSheet.create({
         marginVertical: 10,
         paddingTop: 10,
         paddingBottom: 10
-    }
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#00000080"
+      },
+      modalContentContainer: {
+        backgroundColor: "#134C77",
+        margin: deviceWidth * .05,
+        padding: 30,
+        alignItems: "center",
+        borderRadius: 5
+      },
+      modalText: {
+        marginBottom: 20,
+        color: "#FFFFFF",
+        textAlign: "center"
+      },
+      modalButtonContainer: {
+        flexDirection: "row",
+      },
+      modalCancelButton: {
+        backgroundColor: "#8FA063",
+        paddingVertical: 10,
+        paddingHorizontal: 30,
+        margin: 10,
+        borderRadius: 5,
+      },
+      modalDeleteButton: {
+        backgroundColor: "#C70039",
+        padding: 10,
+        margin: 10,
+        borderRadius: 5,
+      },
+      modalButtonText: {
+        color: "#FFFFFF",
+        textAlign: "center"
+      },
 
 });
