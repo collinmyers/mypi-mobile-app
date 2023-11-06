@@ -123,7 +123,11 @@ export default function SignUpScreen({ navigation }) {
                         secureTextEntry
                         onChangeText={(text) => setSignUpInfo({ ...signUpInfo, confirmPassword: text })}
                         value={signUpInfo.confirmPassword}
-                        onBlur={() => validatePassword(signUpInfo.password, signUpInfo.confirmPassword, (text) => setSignUpInfo({ ...signUpInfo, password: text }), (text) => setSignUpInfo({ ...signUpInfo, confirmPassword: text }))}
+                        onBlur={
+                            () => validatePassword(signUpInfo.password, signUpInfo.confirmPassword,
+                                (text) => setSignUpInfo({ ...signUpInfo, password: text }),
+                                (text) => setSignUpInfo({ ...signUpInfo, confirmPassword: text }))
+                        }
                     />
                     <TouchableOpacity onPress={handleSignUp} style={AuthStyle.ButtonOpacity}>
                         <Text style={AuthStyle.buttonText}>Sign Up</Text>

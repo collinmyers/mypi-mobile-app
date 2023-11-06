@@ -3,9 +3,9 @@ import HomeTabNavigator from "../navigation/HomeTabNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import AppHeader from "../../components/navigation/AppHeader";
-import ParkInfoScreen from "../../screens/sidebar/ParkInfo";
-import FAQScreen from "../../screens/sidebar/FAQ";
-import DonationsScreen from "../../screens/sidebar/Donation";
+import ParkInfoScreen from "../../screens/Sidebar/ParkInfo";
+import FAQScreen from "../../screens/Sidebar/FAQ";
+import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./AuthStackNavigator";
 import { Client, Account } from "appwrite";
 

@@ -1,9 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import SignUpScreen from "../../screens/sidebar/auth/SignUp";
-import LoginScreen from "../../screens/sidebar/auth/Login";
+import SignUpScreen from "../../screens/Sidebar/auth/SignUp";
+import LoginScreen from "../../screens/Sidebar/auth/Login";
 import PropTypes from "prop-types";
-import PasswordResetScreen from "../../screens/sidebar/auth/ForgotPassword";
+import PasswordResetScreen from "../../screens/Sidebar/auth/ForgotPassword";
 
 const Stack = createStackNavigator();
 
