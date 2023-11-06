@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Card, Text } from "react-native-paper";
 import { Account, Client } from "appwrite";
 import PropTypes from "prop-types";
-// import AppStyle from "../styling/AppStyling";
 import HomeStyle from "../../styling/HomeStyling";
 
 export default function SettingsScreen({ navigation }) {
@@ -14,6 +14,7 @@ export default function SettingsScreen({ navigation }) {
     });
 
     const [isSignedIn, setIsSignedIn] = useState(false);
+
 
     const getNameAndEmail = async () => {
 
@@ -37,11 +38,11 @@ export default function SettingsScreen({ navigation }) {
         }
     };
 
-    useEffect(() => {
-        getNameAndEmail();
-    }, [isSignedIn]);
-
-
+    useFocusEffect(
+        React.useCallback(() => {
+            getNameAndEmail();
+        }, [])
+    );
 
     return (
         <SafeAreaView style={HomeStyle.settingsContainer}>
@@ -135,6 +136,12 @@ export default function SettingsScreen({ navigation }) {
         </SafeAreaView>
     );
 }
+
+// SettingsScreen.propTypes = {
+//     navigation: PropTypes.shape({
+//         navigate: PropTypes.object.isRequired,
+//     }).isRequired,
+// };
 
 SettingsScreen.propTypes = {
     navigation: PropTypes.object.isRequired,

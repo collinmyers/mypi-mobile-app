@@ -3,8 +3,6 @@ import HomeTabNavigator from "../navigation/HomeTabNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import AppHeader from "../../components/navigation/AppHeader";
-
-
 import ParkInfoScreen from "../../screens/sidebar/ParkInfo";
 import FAQScreen from "../../screens/sidebar/FAQ";
 import DonationsScreen from "../../screens/sidebar/Donation";
@@ -29,6 +27,8 @@ export default function DrawerNavigator() {
             const account = new Account(client);
 
             await account.get();
+            
+            setIsSignedIn(true);
 
         } catch {
             setIsSignedIn(false);
@@ -113,9 +113,7 @@ export default function DrawerNavigator() {
                         }} />
                 )}
                 <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader />, drawerIcon: () => <Entypo name="home" size={24} color="#134C77" /> }} />
-                {/* <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader /> }} /> */}
                 <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color="#134C77" /> }} />
-                {/* <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader /> }} /> */}
                 <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <MaterialIcons name="park" size={24} color="#134C77" /> }} />
                 <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <FontAwesome5 name="donate" size={24} color="#134C77" /> }} />
 

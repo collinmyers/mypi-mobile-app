@@ -29,7 +29,7 @@ export default StyleSheet.create({
     
     settingsCard: {
         backgroundColor: "#134C77",
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: "#8FA063",
         width: cardWidth,
         marginBottom: 10
