@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, SafeAreaView } from "react-native";
 import { Text } from "react-native-paper";
 import { Card } from "react-native-elements";
@@ -10,7 +10,7 @@ import HomeStyle from "../../styling/HomeStyling";
 
 export default function EventListScreen() {
 
-    const eventListing = [];
+    const [data, setData] = useState([]);
 
     const getEvents = async () => {
 
@@ -31,15 +31,17 @@ export default function EventListScreen() {
             //event, but I think there are sync issues with the promise... not sure how to handle
             //
             promise.then(function (response) {
-                console.log(response);
-                console.log(response["documents"][0]["Name"]);
-                eventListing.push(
-                    <Card key={0}>
-                        <Text>{response["documents"][0]["Name"]}</Text>
-                    </Card>
-                );
+                    for (let index = 0; index < response.documents.length; index++) {
+                        setData(
+                            <Card key={index}>
+                                <Text>{response["documents"][index]["Name"]}</Text>
+                                <Text>{response["documents"][index]["Description"]}</Text>
+                            </Card>
+                        );
+                        
+                    }
             }, function (error) {
-                console.log(error); //promise failure
+                console.error(error); //promise failure
             });
         }
 
@@ -57,13 +59,7 @@ export default function EventListScreen() {
         <SafeAreaView style={HomeStyle.eventContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
 
-                {/* 
-                    Want to put events from db here 
-                    Should be able to just do
-                    {eventListing}
-                */}
-
-                {console.log(eventListing)}  
+                {data} 
 
                 <Card>
                     <Card.Image source={require("../../assets/my-pi-2-alt.png")}></Card.Image>
