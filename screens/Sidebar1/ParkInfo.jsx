@@ -5,7 +5,7 @@ import { Text } from "react-native-paper";
 export default function ParkInfoScreen() {
     return (
         <SafeAreaView style={{ justifyContent: "center", height: "100%" }}>
-            <Text style={{ textAlign: "center" }}>Park Info Screen</Text>
+            <Text style={{ textAlign: "center" }}>Park Info</Text>
         </SafeAreaView>
     );
 }
