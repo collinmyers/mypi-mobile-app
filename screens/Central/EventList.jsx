@@ -27,16 +27,17 @@ export default function EventListScreen() {
                 "6543f2c30111d4e20bde", //Collection ID
             );
 
-            //Successful pull from db.  I tried doing a for loop to create a card for each
-            //event, but I think there are sync issues with the promise... not sure how to handle
+            //Successful pull from db. Add data to array with set data in for loop...
             //
             promise.then(function (response) {
-                    for (let index = 0; index < response.documents.length; index++) {
-                        setData(
+                    for (let index = 0; index < response.documents.length; index++) {   //Iterate over every document in db
+                        setData( data => [...data,  //Add document data to array that contains react-native code to render the events 
+                            
                             <Card key={index}>
                                 <Text>{response["documents"][index]["Name"]}</Text>
                                 <Text>{response["documents"][index]["Description"]}</Text>
                             </Card>
+                            ]
                         );
                         
                     }
@@ -50,8 +51,10 @@ export default function EventListScreen() {
         }
     };
 
+
     useEffect(() => {
-        getEvents();
+        setData([]);    //Empty the data array
+        getEvents();    //Get Events 
     }, []);
 
     return (
@@ -59,7 +62,7 @@ export default function EventListScreen() {
         <SafeAreaView style={HomeStyle.eventContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
 
-                {data} 
+                {data}
 
                 <Card>
                     <Card.Image source={require("../../assets/my-pi-2-alt.png")}></Card.Image>
