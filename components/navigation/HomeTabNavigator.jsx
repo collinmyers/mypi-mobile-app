@@ -4,9 +4,9 @@ import { Entypo, Fontisto, MaterialCommunityIcons, Octicons } from "@expo/vector
 
 import DashboardScreen from "../../screens/Central/Dashboard";
 import MapScreen from "../../screens/Central/Map";
-import EventListScreen from "../../screens/Central/EventList";
 import AlertsScreen from "../../screens/Central/Alerts";
 import SettingsStackNavigator from "./SettingsStackNavigator";
+import EventsStackNavigator from "./EventsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -51,7 +51,7 @@ export default function HomeTabNavigator() {
 
             <Tab.Screen
                 name="EventList"
-                component={EventListScreen}
+                component={EventsStackNavigator}
                 options={{
                     tabBarLabel: "Events",
                     headerShown: false,

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, SafeAreaView } from "react-native";
+import { ScrollView, SafeAreaView, Pressable } from "react-native";
 import { Text } from "react-native-paper";
 import { Card } from "react-native-elements";
 import { Databases, Client } from "appwrite";
+import { useNavigation } from "@react-navigation/native";
+
 
 // import AppStyle from "../styling/AppStyling";
 import HomeStyle from "../../styling/HomeStyling";
 
 
 export default function EventListScreen() {
+    const navigation = useNavigation();
 
     const [data, setData] = useState([]);
 
@@ -31,12 +34,16 @@ export default function EventListScreen() {
             //
             promise.then(function (response) {
                     for (let index = 0; index < response.documents.length; index++) {   //Iterate over every document in db
+                        let eventID = response["documents"][index]["$id"];
                         setData( data => [...data,  //Add document data to array that contains react-native code to render the events 
                             
-                            <Card key={index}>
-                                <Text>{response["documents"][index]["Name"]}</Text>
-                                <Text>{response["documents"][index]["Description"]}</Text>
-                            </Card>
+                            <Pressable key={index} onPress={() => navigation.navigate("EventDetailsScreen",{EventDetailsID:eventID})}>
+                                <Card >
+                                    <Text>{response["documents"][index]["Name"]}</Text>
+                                    <Text>{response["documents"][index]["Description"]}</Text>
+                                </Card>
+                            </Pressable>
+
                             ]
                         );
                         
