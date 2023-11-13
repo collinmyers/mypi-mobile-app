@@ -25,15 +25,14 @@ export default function EventDetailsScreen() {
             //Get docs from specified collection from db
             let promise = database.getDocument(
                 "653ae4b2740b9f0a5139", //DB ID
-                "6543f2c30111d4e20bde", //Collection ID
+                "655280f07e30eb37c8e8", //Collection ID
                 EventDetailsID //Document ID
             );
 
             //Successful pull from db. Add data to array with set data in for loop...
             //
             promise.then(function (response) {
-                console.log(response);
-                SetEventDetails(response["eventsDetails"]["Description"]);
+                SetEventDetails(response["LongDescription"]);
             }, function (error) {
                 console.error(error); //promise failure
             });

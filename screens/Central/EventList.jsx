@@ -27,7 +27,7 @@ export default function EventListScreen() {
             //Get docs from specified collection from db
             let promise = database.listDocuments(
                 "653ae4b2740b9f0a5139", //DB ID
-                "6543f2c30111d4e20bde", //Collection ID
+                "655280f07e30eb37c8e8", //Collection ID
             );
 
             //Successful pull from db. Add data to array with set data in for loop...
@@ -40,7 +40,7 @@ export default function EventListScreen() {
                             <Pressable key={index} onPress={() => navigation.navigate("EventDetailsScreen",{EventDetailsID:eventID})}>
                                 <Card >
                                     <Text>{response["documents"][index]["Name"]}</Text>
-                                    <Text>{response["documents"][index]["Description"]}</Text>
+                                    <Text>{response["documents"][index]["ShortDescription"]}</Text>
                                 </Card>
                             </Pressable>
 
