@@ -34,10 +34,10 @@ export default function EventListScreen() {
             //
             promise.then(function (response) {
                     for (let index = 0; index < response.documents.length; index++) {   //Iterate over every document in db
-                        let eventID = response["documents"][index]["$id"];
+                        let LongDescription = response["documents"][index]["LongDescription"];
                         setData( data => [...data,  //Add document data to array that contains react-native code to render the events 
                             
-                            <Pressable key={index} onPress={() => navigation.navigate("EventDetailsScreen",{EventDetailsID:eventID})}>
+                            <Pressable key={index} onPress={() => navigation.navigate("EventDetailsScreen",{EventDescription:LongDescription})}>
                                 <Card >
                                     <Text>{response["documents"][index]["Name"]}</Text>
                                     <Text>{response["documents"][index]["ShortDescription"]}</Text>

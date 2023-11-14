@@ -1,52 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { Databases, Client } from "appwrite";
 
 
 
 export default function EventDetailsScreen() {
     const route = useRoute();
 
-    const [EventDescription,SetEventDetails] = useState("");
 
-    const {EventDetailsID} = route.params;
-
-
-    const getEvents = async () => {
-
-        try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const database = new Databases(client);
-
-            //Get docs from specified collection from db
-            let promise = database.getDocument(
-                "653ae4b2740b9f0a5139", //DB ID
-                "655280f07e30eb37c8e8", //Collection ID
-                EventDetailsID //Document ID
-            );
-
-            //Successful pull from db. Add data to array with set data in for loop...
-            //
-            promise.then(function (response) {
-                SetEventDetails(response["LongDescription"]);
-            }, function (error) {
-                console.error(error); //promise failure
-            });
-        }
-
-        catch (error) {
-            console.error(error); //catch error
-        }
-    };
+    const {EventDescription} = route.params;
 
 
-    useEffect(()=>{
-        getEvents();
-    });
 
     return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
