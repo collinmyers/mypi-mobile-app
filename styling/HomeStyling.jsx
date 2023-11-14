@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet } from "react-native";
 
 const deviceWidth = Dimensions.get("window").width;
 
-const cardWidth = deviceWidth *.75;
+const cardWidth = deviceWidth * .75;
 const buttonWidth = deviceWidth * .5;
 
 export default StyleSheet.create({
@@ -26,7 +26,7 @@ export default StyleSheet.create({
     settingsCardContentContainer: {
 
     },
-    
+
     settingsCard: {
         backgroundColor: "#134C77",
         borderWidth: 2,
@@ -88,38 +88,48 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#00000080"
-      },
-      modalContentContainer: {
+    },
+    modalContentContainer: {
         backgroundColor: "#134C77",
         margin: deviceWidth * .05,
         padding: 30,
         alignItems: "center",
         borderRadius: 5
-      },
-      modalText: {
+    },
+    modalText: {
         marginBottom: 20,
         color: "#FFFFFF",
         textAlign: "center"
-      },
-      modalButtonContainer: {
+    },
+    modalButtonContainer: {
         flexDirection: "row",
-      },
-      modalCancelButton: {
+    },
+    modalCancelButton: {
         backgroundColor: "#8FA063",
         paddingVertical: 10,
         paddingHorizontal: 30,
         margin: 10,
         borderRadius: 5,
-      },
-      modalDeleteButton: {
+    },
+    modalDeleteButton: {
         backgroundColor: "#C70039",
         padding: 10,
         margin: 10,
         borderRadius: 5,
-      },
-      modalButtonText: {
+    },
+    modalButtonText: {
         color: "#FFFFFF",
         textAlign: "center"
-      },
-
+    },
+    ButtonOpacity: {
+        backgroundColor: "#8FA063",
+        width: 150,
+        borderRadius: 5,
+        marginTop: 10,
+        marginBottom: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 10,
+        paddingBottom: 10
+    }
 });
