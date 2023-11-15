@@ -4,7 +4,7 @@ import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { useDrawerStatus } from "@react-navigation/drawer";
 
-import AppStyle from "../../styling/AppStyling";
+import AppStyle from "../../styling/AppStyle";
 
 export default function AppHeader() {
     const navigation = useNavigation();

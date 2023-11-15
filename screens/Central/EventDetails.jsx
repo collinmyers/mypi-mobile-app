@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView, Pressable } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 
-import HomeStyle from "../../styling/HomeStyling";
+import HomeStyle from "../../styling/HomeStyle";
 
 
 export default function EventDetailsScreen() {

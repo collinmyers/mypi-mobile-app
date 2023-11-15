@@ -1,29 +1,36 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { SafeAreaView, TouchableOpacity } from "react-native";
-import { Text } from "react-native-paper";
-import AppStyle from "../../styling/AppStyling";
-import HomeStyle from "../../styling/HomeStyling";
-import AuthStyle from "../../styling/AuthStyling";
+import { View, SafeAreaView, Text } from "react-native";
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapStyle from "../../styling/MapStyle";
 
 export default function MapScreen() {
-
-    let latitude = 42.158581;
-    let longitude = -80.114944;
-    let directionsPreference = "walk";
+    const latitude = 42.158581;
+    const longitude = -80.114944;
+    const directionsPreference = "walk";
+    const poiStatus = "Open";
 
     const handleGetDirections = () => {
         getDirections(latitude, longitude, directionsPreference);
     };
 
-    return (
-        <SafeAreaView style={AppStyle.container}>
+    const getDirections = (lat, long, directionsPreference) => {
+        showLocation({
+            latitude: lat,
+            longitude: long,
+            appsWhiteList: [],
+            googleForceLatLon: true,
+            alwaysIncludeGoogle: true,
+            naverCallerName: "com.discoverpi.mypi",
+            directionsMode: directionsPreference,
+        });
+    };
 
-            <View style={styles.container}>
+    return (
+        <SafeAreaView style={MapStyle.container}>
+            <View style={MapStyle.container}>
                 <MapView
-                    style={styles.map}
+                    style={MapStyle.map}
                     provider={PROVIDER_GOOGLE}
                     initialRegion={{
                         latitude: 42.158581,
@@ -31,41 +38,18 @@ export default function MapScreen() {
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
                     }}
-                />
-            </View>
+                >
+                    <Marker coordinate={{ latitude: 42.158581, longitude: -80.114944 }}>
+                        <Callout onPress={handleGetDirections}>
+                            <View>
+                                <Text style={MapStyle.poiMarkerTitle}>Presque Isle ({poiStatus})</Text>
+                                <Text style={MapStyle.poiMarkerDirectionsText}>Get Directions </Text>
+                            </View>
+                        </Callout>
+                    </Marker>
 
-            <View>
-                <TouchableOpacity onPress={handleGetDirections} style={HomeStyle.ButtonOpacity}>
-                    <Text style={AuthStyle.buttonText}>Map</Text>
-                </TouchableOpacity>
+                </MapView>
             </View>
-
-        </SafeAreaView >
+        </SafeAreaView>
     );
 }
-
-function getDirections(lat, long, directionsPreference) {
-
-    showLocation({
-        latitude: lat,
-        longitude: long,
-        appsWhiteList: [], // Set an empty array to include all supported apps installed on the device
-        googleForceLatLon: true,
-        alwaysIncludeGoogle: true,
-        naverCallerName: "com.discoverpi.mypi",
-        directionsMode: directionsPreference,
-    });
-
-}
-
-const styles = StyleSheet.create({
-    container: {
-        ...StyleSheet.absoluteFillObject,
-        flex: 1, //the container will fill the whole screen.
-        justifyContent: "flex-end",
-        alignItems: "center",
-    },
-    map: {
-        ...StyleSheet.absoluteFillObject,
-    },
-});

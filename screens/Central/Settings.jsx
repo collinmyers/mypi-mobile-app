@@ -4,7 +4,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Card, Text } from "react-native-paper";
 import { Account, Client } from "appwrite";
 import PropTypes from "prop-types";
-import HomeStyle from "../../styling/HomeStyling";
+import HomeStyle from "../../styling/HomeStyle";
 
 export default function SettingsScreen({ navigation }) {
 
