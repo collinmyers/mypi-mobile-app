@@ -17,7 +17,7 @@ export default function EventListScreen() {
         .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
         .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
 
-    client.subscribe(`databases.653ae4b2740b9f0a5139.collections.655280f07e30eb37c8e8.documents`, response => {
+    client.subscribe("databases.653ae4b2740b9f0a5139.collections.655280f07e30eb37c8e8.documents", response => {
         console.log(response);
     });
 
