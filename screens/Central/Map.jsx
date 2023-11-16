@@ -1,12 +1,12 @@
 import React from "react";
-import { View, SafeAreaView, Text } from "react-native";
+import { View, SafeAreaView, Text, Image } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
 import MapStyle from "../../styling/MapStyle";
 
 export default function MapScreen() {
-    const latitude = 42.158581;
-    const longitude = -80.114944;
+    const latitude = 42.164559173352686;
+    const longitude = -80.07980224570333;
     const directionsPreference = "walk";
     const poiStatus = "Open";
 
@@ -39,10 +39,10 @@ export default function MapScreen() {
                         longitudeDelta: 0.0421,
                     }}
                 >
-                    <Marker coordinate={{ latitude: 42.158581, longitude: -80.114944 }}>
+                    <Marker coordinate={{ latitude: 42.164559173352686, longitude: -80.07980224570333 }}>
                         <Callout onPress={handleGetDirections}>
                             <View>
-                                <Text style={MapStyle.poiMarkerTitle}>Presque Isle ({poiStatus})</Text>
+                                <Text style={MapStyle.poiMarkerTitle}>Beach 11 ({poiStatus})</Text>
                                 <Text style={MapStyle.poiMarkerDirectionsText}>Get Directions </Text>
                             </View>
                         </Callout>
