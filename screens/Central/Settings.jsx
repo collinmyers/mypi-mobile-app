@@ -5,6 +5,8 @@ import { Card, Text } from "react-native-paper";
 import { Account, Client } from "appwrite";
 import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
+import { useDirections } from "../../components/Contexts/DirectionProvider";
+import { Picker } from "@react-native-picker/picker";
 
 export default function SettingsScreen({ navigation }) {
 
@@ -15,6 +17,8 @@ export default function SettingsScreen({ navigation }) {
         email: "",
         identity: ""
     });
+
+    const { setDirectionsPreference } = useDirections();
 
     const getNameAndEmail = async () => {
         try {
@@ -186,9 +190,30 @@ export default function SettingsScreen({ navigation }) {
 
                     </Card>
                 </View>
+
+                {/* <View style={HomeStyle.cardView}>
+                    <Card style={HomeStyle.settingsCard}>
+
+                        <Card.Content style={HomeStyle.settingsCardContentContainer}>
+
+                            <Text style={HomeStyle.settingsSectionHeader}>App Settings</Text>
+
+                            <Card.Content style={HomeStyle.settingsCardContent}>
+
+                                <Picker onValueChange={(value) => setDirectionsPreference(value)}>
+                                    <Picker.Item label="Biking" value="bike" />
+                                    <Picker.Item label="Driving" value="car" />
+                                    <Picker.Item label="Walking" value="walk" />
+                                </Picker>
+                            </Card.Content>
+
+                        </Card.Content>
+
+                    </Card>
+                </View> */}
+
                 <DeleteConfirmationModal />
             </ScrollView>
-
         </SafeAreaView>
     );
 }
