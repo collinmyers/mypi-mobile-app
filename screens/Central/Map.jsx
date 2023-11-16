@@ -1,5 +1,5 @@
 import React from "react";
-import { View, SafeAreaView, Text, Image } from "react-native";
+import { View, SafeAreaView, Text } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
 import MapStyle from "../../styling/MapStyle";
