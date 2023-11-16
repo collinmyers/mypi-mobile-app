@@ -12,6 +12,15 @@ export default function EventListScreen() {
 
     const [data, setData] = useState([]);
 
+    // Rest of your code
+    const client = new Client()
+        .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
+        .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
+
+    client.subscribe(`databases.653ae4b2740b9f0a5139.collections.655280f07e30eb37c8e8.documents`, response => {
+        console.log(response);
+    });
+
     const getEvents = async () => {
 
         try {
