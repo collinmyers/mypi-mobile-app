@@ -1,17 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, SafeAreaView, Text } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
+import { Databases, Client } from "appwrite";
 import MapStyle from "../../styling/MapStyle";
+import { useDirections } from "../../components/Contexts/DirectionProvider";
 
 export default function MapScreen() {
-    const latitude = 42.164559173352686;
-    const longitude = -80.07980224570333;
-    const directionsPreference = "walk";
-    const poiStatus = "Open";
 
-    const handleGetDirections = () => {
-        getDirections(latitude, longitude, directionsPreference);
+    const { directionsPreference } = useDirections();
+
+    console.log(directionsPreference);
+
+    const [markers, setMarkers] = useState([]);
+
+    const getMarkers = async () => {
+
+        try {
+            const client = new Client()
+                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
+                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
+
+            const database = new Databases(client);
+
+            let promise = database.listDocuments(
+                "653ae4b2740b9f0a5139", //DB ID
+                "65565099921adc2d835b", //Collection ID
+            );
+
+            promise.then(function (response) {
+                for (let index = 0; index < response.documents.length; index++) {
+                    let dbLatitude = response.documents[index].Latitude;
+                    let dbLongitude = response.documents[index].Longitude;
+                    let dbName = response.documents[index].Name;
+                    let dbParkStatus = response.documents[index].Status;
+
+                    setMarkers(data => [...data,  //Add document data to array that contains react-native code to render markers
+                    <Marker key={index} coordinate={{ latitude: dbLatitude, longitude: dbLongitude }}>
+                        <Callout onPress={() => { getDirections(dbLatitude, dbLongitude, directionsPreference); }}>
+                            <View>
+                                <Text style={MapStyle.poiMarkerTitle}>{dbName} ({dbParkStatus})</Text>
+                                <Text style={MapStyle.poiMarkerDirectionsText}>Get Directions </Text>
+                            </View>
+                        </Callout>
+                    </Marker>
+                    ]
+                    );
+                }
+            }, function (error) {
+                console.error(error); //promise failure
+            });
+        }
+
+        catch (error) {
+            console.error(error); //catch error
+        }
     };
 
     const getDirections = (lat, long, directionsPreference) => {
@@ -26,6 +69,12 @@ export default function MapScreen() {
         });
     };
 
+    useEffect(() => {
+        setMarkers([]);    //Empty the data array
+        getMarkers();    //Get Events 
+    }, []);
+
+
     return (
         <SafeAreaView style={MapStyle.container}>
             <View style={MapStyle.container}>
@@ -39,15 +88,7 @@ export default function MapScreen() {
                         longitudeDelta: 0.0421,
                     }}
                 >
-                    <Marker coordinate={{ latitude: 42.164559173352686, longitude: -80.07980224570333 }}>
-                        <Callout onPress={handleGetDirections}>
-                            <View>
-                                <Text style={MapStyle.poiMarkerTitle}>Beach 11 ({poiStatus})</Text>
-                                <Text style={MapStyle.poiMarkerDirectionsText}>Get Directions </Text>
-                            </View>
-                        </Callout>
-                    </Marker>
-
+                    {markers}
                 </MapView>
             </View>
         </SafeAreaView>
