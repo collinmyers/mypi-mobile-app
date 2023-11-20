@@ -16,6 +16,7 @@ const Drawer = createDrawerNavigator();
 export default function DrawerNavigator() {
 
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const [isSigningOut, setIsSigningOut] = useState(false);
     const [refreshDrawer, setRefreshDrawer] = useState(0);
 
     const checkAuthState = async () => {
@@ -27,7 +28,7 @@ export default function DrawerNavigator() {
             const account = new Account(client);
 
             await account.get();
-            
+
             setIsSignedIn(true);
 
         } catch {
@@ -45,21 +46,30 @@ export default function DrawerNavigator() {
     };
 
     const handleLogout = async () => {
-        try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
+        if (!isSigningOut) {
+            try {
+                setIsSigningOut(true);
+                const client = new Client()
+                    .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
+                    .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
 
-            const account = new Account(client);
+                const account = new Account(client);
 
-            await account.deleteSessions("current");
+                await account.deleteSessions("current");
 
-            setRefreshDrawer((prev) => prev + 1);
+                setRefreshDrawer((prev) => prev + 1);
 
-        } catch (error) {
-            console.error(error);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setIsSigningOut(false);
+            }
         }
     };
+
+
+
+
 
     const SignOutDrawerItem = (props) => {
         return (

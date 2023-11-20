@@ -1,11 +1,14 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { View, Text, SafeAreaView, Pressable } from "react-native";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 
+import HomeStyle from "../../styling/HomeStyle";
 
 
 export default function EventDetailsScreen() {
     const route = useRoute();
+    const navigation = useNavigation();
 
 
     const {EventDescription} = route.params;
@@ -13,12 +16,22 @@ export default function EventDetailsScreen() {
 
 
     return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <SafeAreaView style={HomeStyle.eventContainer}>
 
-                    <Text>This is the Event Details:</Text>
-                    <Text>{EventDescription}</Text>
+            <View style={{alignItems:"left", padding:40}}>
+                <Pressable onPress={navigation.goBack}>
+                    <AntDesign name="leftcircle" size={24} color="#8FA063" />
+                </Pressable>
+            </View>
+
+
+            <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center", padding:5 }}>
+
+                <Text style={{color:"white"}}>This is the Event Details:</Text>
+                <Text style={{color:"white"}}>{EventDescription}</Text>
 
             </View>
+        </SafeAreaView>
     );
 }
 

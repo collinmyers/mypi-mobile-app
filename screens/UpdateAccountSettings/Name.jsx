@@ -5,8 +5,8 @@ import { Account, Client } from "appwrite";
 import PropTypes from "prop-types";
 
 import AuthLogo from "../../components/logo/AuthLogo";
-import AppStyle from "../../styling/AppStyling";
-import AuthStyle from "../../styling/AuthStyling";
+import AppStyle from "../../styling/AppStyle";
+import AuthStyle from "../../styling/AuthStyle";
 
 import { validateName } from "../../utils/Validators";
 

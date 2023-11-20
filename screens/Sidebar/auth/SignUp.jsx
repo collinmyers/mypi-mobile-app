@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 import { validateName, validateEmail, validatePassword } from "../../../utils/Validators";
 
 import AuthLogo from "../../../components/logo/AuthLogo";
-import AppStyle from "../../../styling/AppStyling";
-import AuthStyle from "../../../styling/AuthStyling";
+import AppStyle from "../../../styling/AppStyle";
+import AuthStyle from "../../../styling/AuthStyle";
 
 SignUpScreen.propTypes = {
     navigation: PropTypes.shape({
