@@ -11,7 +11,8 @@ export default StyleSheet.create({
         justifyContent:"flex-start",
         alignItems:"flex-start",
         backgroundColor: "#134C77",
-        paddingTop: 50,
+        paddingTop: 40,
+        paddingBottom: 10,
         paddingLeft: 15
     },
     drawerMenuBar: {

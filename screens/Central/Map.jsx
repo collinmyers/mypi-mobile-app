@@ -83,8 +83,8 @@ export default function MapScreen() {
                     provider={PROVIDER_GOOGLE}
                     initialRegion={{
                         latitude: 42.158581,
-                        longitude: -80.114944,
-                        latitudeDelta: 0.0922,
+                        longitude: -80.1079,
+                        latitudeDelta: 0.115,
                         longitudeDelta: 0.0421,
                     }}
                 >
