@@ -10,6 +10,7 @@ export default StyleSheet.create({
     eventContainer: {
         flex: 1,
         justifyContent: "center",
+        alignItems: "center",
         backgroundColor: "#134C77",
     },
     settingsContainer: {
@@ -131,5 +132,26 @@ export default StyleSheet.create({
         paddingRight: 30,
         paddingTop: 10,
         paddingBottom: 10
+    },
+    eventCard: {
+        width: deviceWidth * .9,
+        marginBottom: deviceWidth *.1,
+    },
+    eventCardContent: {
+        
+    },
+    eventShortImage: {
+        aspectRatio: 1.5,
+        borderRadius: 5,
+        marginBottom: "5%",
+        resizeMode: "cover",
+        width: "100%",
+    },
+    eventShortTitle:{
+        fontWeight: "bold",
+        fontSize: 18
+    },
+    eventShortDescription:{
+        fontSize: 14
     }
 });

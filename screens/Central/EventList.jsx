@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, SafeAreaView, Pressable, View, Image } from "react-native";
-import { Text } from "react-native-paper";
-import { Card } from "react-native-elements";
+import { Card, Text } from "react-native-paper";
+// import { Card } from "react-native-elements";
 import { Databases, Client, Storage } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
 import HomeStyle from "../../styling/HomeStyle";
@@ -54,27 +54,20 @@ export default function EventListScreen() {
                     setData(data => [...data,  //Add document data to array that contains react-native code to render the events 
 
                     <Pressable key={index} onPress={() => navigation.navigate("EventDetailsScreen", { EventDescription: LongDescription })}>
-                        <Card >
-                            <View>
-                                <Image
-                                source={{ uri: result.toString() }}
-                                style={{ width: "100%", aspectRatio: 1 }}
-                                resizeMode="contain"
-                                />
-                            </View>
-                            <Text>{response["documents"][index]["Name"]}</Text>
-                            <Text>{response["documents"][index]["ShortDescription"]}</Text>
+                        <Card style={HomeStyle.eventCard} >
+                            <Card.Content style={HomeStyle.eventCardContent}>
+                                <Image source={{ uri: result.toString() }} style={HomeStyle.eventShortImage} />
+                                <Text style={HomeStyle.eventShortTitle}>{response["documents"][index]["Name"]}</Text>
+                                <Text style={HomeStyle.eventShortDescription}>{response["documents"][index]["ShortDescription"]}</Text>
+                            </Card.Content>
                         </Card>
                     </Pressable>
-
-                    ]
-                    );
-
+                    ]);
                 }
             }, function (error) {
                 console.error(error); //promise failure
             });
-            
+
         }
 
         catch (error) {
@@ -92,29 +85,7 @@ export default function EventListScreen() {
 
         <SafeAreaView style={HomeStyle.eventContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
-
                 {data}
-
-                <Card>
-                    <Card.Image source={require("../../assets/my-pi-2-alt.png")}></Card.Image>
-                    <Text>I am a placeholder event!</Text>
-                </Card>
-                <Card>
-                    <Card.Image source={require("../../assets/my-pi-2-alt.png")}></Card.Image>
-                    <Text>I am a placeholder event!</Text>
-                </Card>
-                <Card>
-                    <Card.Image source={require("../../assets/my-pi-2-alt.png")}></Card.Image>
-                    <Text>I am a placeholder event!</Text>
-                </Card>
-                <Card>
-                    <Card.Image source={require("../../assets/my-pi-2-alt.png")}></Card.Image>
-                    <Text>I am a placeholder event!</Text>
-                </Card>
-                <Card>
-                    <Card.Image source={require("../../assets/my-pi-2-alt.png")}></Card.Image>
-                    <Text>I am a placeholder event!</Text>
-                </Card>
             </ScrollView>
         </SafeAreaView>
 
