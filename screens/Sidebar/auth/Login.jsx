@@ -9,6 +9,7 @@ import AppStyle from "../../../styling/AppStyle";
 import AuthStyle from "../../../styling/AuthStyle";
 
 import { validateEmail } from "../../../utils/Validators";
+import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
 
 LoginScreen.propTypes = {
     navigation: PropTypes.shape({
@@ -49,57 +50,59 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
 
     return (
         <SafeAreaView style={AppStyle.container}>
+            <KeyboardAvoidingComponent style={AuthStyle.keyboardAdj}>
+                <AuthLogo style={AuthStyle.logo} />
 
-            <AuthLogo style={AuthStyle.logo} />
+                <Card style={AuthStyle.card}>
 
-            <Card style={AuthStyle.card}>
+                    <Card.Content style={AuthStyle.cardContent}>
 
-                <Card.Content style={AuthStyle.cardContent}>
+                        <Text style={AuthStyle.title}> Sign In</Text>
 
-                    <Text style={AuthStyle.title}> Sign In</Text>
+                        <TextInput
+                            style={AuthStyle.userInput}
+                            numberOfLines={1}
+                            placeholder="Email"
+                            placeholderTextColor={"#FFFFFF"}
+                            textColor={"#FFFFFF"}
+                            mode="flat"
+                            underlineColor="#134C77"
+                            activeUnderlineColor="#134C77"
+                            onChangeText={(text) => setAuthentication({ ...authentication, email: text })}
+                            value={authentication.email}
+                            onBlur={() => validateEmail(authentication.email, (text) => setAuthentication({ ...authentication, email: text }))}
+                        />
 
-                    <TextInput
-                        style={AuthStyle.userInput}
-                        numberOfLines={1}
-                        placeholder="Email"
-                        placeholderTextColor={"#FFFFFF"}
-                        textColor={"#FFFFFF"}
-                        mode="flat"
-                        underlineColor="#134C77"
-                        activeUnderlineColor="#134C77"
-                        onChangeText={(text) => setAuthentication({ ...authentication, email: text })}
-                        value={authentication.email}
-                        onBlur={() => validateEmail(authentication.email, (text) => setAuthentication({ ...authentication, email: text }))}
-                    />
+                        <TextInput
+                            style={AuthStyle.userInput}
+                            numberOfLines={1}
+                            placeholder="Password"
+                            placeholderTextColor={"#FFFFFF"}
+                            textColor={"#FFFFFF"}
+                            mode="flat"
+                            underlineColor="#134C77"
+                            activeUnderlineColor="#134C77"
+                            secureTextEntry
+                            onChangeText={(text) => setAuthentication({ ...authentication, password: text })}
+                            value={authentication.password}
+                        />
 
-                    <TextInput
-                        style={AuthStyle.userInput}
-                        numberOfLines={1}
-                        placeholder="Password"
-                        placeholderTextColor={"#FFFFFF"}
-                        textColor={"#FFFFFF"}
-                        mode="flat"
-                        underlineColor="#134C77"
-                        activeUnderlineColor="#134C77"
-                        secureTextEntry
-                        onChangeText={(text) => setAuthentication({ ...authentication, password: text })}
-                        value={authentication.password}
-                    />
+                        <TouchableOpacity onPress={handleLogin} style={AuthStyle.ButtonOpacity}>
+                            <Text style={AuthStyle.buttonText}>Sign In</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={handleLogin} style={AuthStyle.ButtonOpacity}>
-                        <Text style={AuthStyle.buttonText}>Sign In</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("Forgot Password")} style={AuthStyle.additionalOptions}>
+                            <Text style={AuthStyle.additionalOptionsText}>Forgot Password</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate("Forgot Password")} style={AuthStyle.additionalOptions}>
-                        <Text style={AuthStyle.additionalOptionsText}>Forgot Password</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("Sign Up")} style={AuthStyle.additionalOptions}>
+                            <Text style={AuthStyle.additionalOptionsText}>Sign Up</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate("Sign Up")} style={AuthStyle.additionalOptions}>
-                        <Text style={AuthStyle.additionalOptionsText}>Sign Up</Text>
-                    </TouchableOpacity>
+                    </Card.Content>
+                </Card>
 
-                </Card.Content>
-            </Card>
+            </KeyboardAvoidingComponent>
 
         </SafeAreaView>
     );

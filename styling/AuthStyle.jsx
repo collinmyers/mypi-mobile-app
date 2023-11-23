@@ -1,11 +1,19 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-    card: {
+
+    keyboardAdj:{
         width: "80%",
+    },
+    logo:{
+        alignSelf: "center",
+    },
+    card: {
+        alignSelf: "center",
+        width: "100%",
         padding: 10,
         backgroundColor: "#8FA063",
-        margin: 20
+        margin: "5%"
     },
     cardContent: {
         alignItems: "center"
@@ -51,8 +59,4 @@ export default StyleSheet.create({
         color: "#134C77",
         fontSize: 15
     }
-
-
-
-
 });

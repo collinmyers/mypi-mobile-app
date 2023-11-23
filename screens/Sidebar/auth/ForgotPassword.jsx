@@ -9,6 +9,7 @@ import AppStyle from "../../../styling/AppStyle";
 import AuthStyle from "../../../styling/AuthStyle";
 
 import { validateEmail } from "../../../utils/Validators";
+import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
 
 ForgotPasswordScreen.propTypes = {
     navigation: PropTypes.shape({
@@ -42,36 +43,36 @@ export default function ForgotPasswordScreen({ navigation }) {
 
     return (
         <SafeAreaView style={AppStyle.container}>
+            <KeyboardAvoidingComponent>
+                <AuthLogo style={AuthStyle.logo} />
 
-            <AuthLogo style={AuthStyle.logo} />
+                <Card style={AuthStyle.card}>
 
-            <Card style={AuthStyle.card}>
+                    <Card.Content style={AuthStyle.cardContent}>
 
-                <Card.Content style={AuthStyle.cardContent}>
+                        <Text style={AuthStyle.title}> Forgot Password</Text>
 
-                    <Text style={AuthStyle.title}> Forgot Password</Text>
+                        <TextInput
+                            style={AuthStyle.userInput}
+                            numberOfLines={1}
+                            placeholder="Email"
+                            placeholderTextColor={"#FFFFFF"}
+                            textColor={"#FFFFFF"}
+                            mode="flat"
+                            underlineColor="#134C77"
+                            activeUnderlineColor="#134C77"
+                            onChangeText={(text) => setEmail(text)}
+                            value={email}
+                            onBlur={() => validateEmail(email, setEmail)}
+                        />
 
-                    <TextInput
-                        style={AuthStyle.userInput}
-                        numberOfLines={1}
-                        placeholder="Email"
-                        placeholderTextColor={"#FFFFFF"}
-                        textColor={"#FFFFFF"}
-                        mode="flat"
-                        underlineColor="#134C77"
-                        activeUnderlineColor="#134C77"
-                        onChangeText={(text) => setEmail(text)}
-                        value={email}
-                        onBlur={() => validateEmail(email, setEmail)}
-                    />
+                        <TouchableOpacity onPress={handlePasswordReset} style={AuthStyle.ButtonOpacity}>
+                            <Text style={AuthStyle.buttonText}>Send Email</Text>
+                        </TouchableOpacity>
 
-
-                    <TouchableOpacity onPress={handlePasswordReset} style={AuthStyle.ButtonOpacity}>
-                        <Text style={AuthStyle.buttonText}>Send Email</Text>
-                    </TouchableOpacity>
-
-                </Card.Content>
-            </Card>
+                    </Card.Content>
+                </Card>
+            </KeyboardAvoidingComponent>
 
         </SafeAreaView>
 
