@@ -46,6 +46,12 @@ export default StyleSheet.create({
         fontSize: 24,
         marginBottom: 20,
     },
+    parkInfoText: {
+        textAlign: "center",
+        color: "#FFFFFF",
+        fontSize: 14,
+        marginBottom: 20,
+    },
     settingsCardContentContainer: {
 
     },
