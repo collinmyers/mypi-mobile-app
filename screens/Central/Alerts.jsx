@@ -52,10 +52,9 @@ export default function AlertsScreen() {
 
   
   return (
-    <View style={{ justifyContent: "center", height: "100%" }}>
-      <Text style={{ textAlign: "center" }}>Alerts</Text>
+    <View style={{ justifyContent: "center", height: "100%" , backgroundColor: "#134C77"}}>
       <TouchableOpacity onPress={sendNotification} style={{alignSelf: "center"}}>
-        <View style={{ backgroundColor: "blue", padding: 20, borderRadius: 50, justifyContent: "center" }}>
+        <View style={{ backgroundColor: "#8FA063", padding: 20, borderRadius: 50, justifyContent: "center" }}>
           <Text style={{ color: "white" , textAlign: "center"}}>Send New Notification</Text>
         </View>
       </TouchableOpacity>
