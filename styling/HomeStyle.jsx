@@ -10,13 +10,16 @@ export default StyleSheet.create({
     eventContainer: {
         flex: 1,
         justifyContent: "center",
+
         alignItems: "center",
         backgroundColor: "#134C77",
     },
     settingsContainer: {
         flex: 1,
-        justifyContent: "center",
+        alignSelf: "center",
         backgroundColor: "#134C77",
+    },
+    ScrollableView: {
     },
 
     // Temp until content gets placed in pages
@@ -207,7 +210,8 @@ export default StyleSheet.create({
         fontSize: 15
     },
     eventDetailsCard: {
-        height: "97%",
+        alignSelf: "center",
+        height: "100%",
         width: "90%",
         padding: 10,
         backgroundColor: "#8FA063",
@@ -244,7 +248,7 @@ export default StyleSheet.create({
         paddingRight: 30,
         paddingTop: 10,
         paddingBottom: 10,
-         marginVertical: "10%"
+        marginVertical: "10%"
     },
     homeButtonText: {
         color: "#FFFFFF",

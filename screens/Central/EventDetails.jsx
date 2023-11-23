@@ -7,6 +7,7 @@ import { showLocation } from "react-native-map-link";
 import HomeStyle from "../../styling/HomeStyle";
 
 import { useDirections } from "../../components/Contexts/DirectionProvider";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function EventDetailsScreen() {
     const route = useRoute();
@@ -30,29 +31,32 @@ export default function EventDetailsScreen() {
 
     return (
         <SafeAreaView style={HomeStyle.eventContainer}>
-            <Card style={HomeStyle.eventDetailsCard} >
+            <ScrollView style={HomeStyle.ScrollView} showsVerticalScrollIndicator={false}>
+                <Card style={HomeStyle.eventDetailsCard} >
 
-                <View style={{ alignItems: "left", padding: 10 }}>
-                    <Pressable onPress={navigation.goBack}>
-                        <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
-                    </Pressable>
-                </View>
+                    <View style={{ alignItems: "left", padding: 10 }}>
+                        <Pressable onPress={navigation.goBack}>
+                            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+                        </Pressable>
+                    </View>
 
-                <Card.Content style={HomeStyle.eventDetailsCardContent}>
-                    <Text style={HomeStyle.eventDetailsTitle}>{EventName}</Text>
-                    <Image source={{ uri: EventImage }} style={HomeStyle.eventDetailsImage} />
+                    <Card.Content style={HomeStyle.eventDetailsCardContent}>
+                        <Text style={HomeStyle.eventDetailsTitle}>{EventName}</Text>
+                        <Image source={{ uri: EventImage }} style={HomeStyle.eventDetailsImage} />
 
-                    <Text style={HomeStyle.eventDetailsDescription}>{EventDescription}</Text>
-                    <Card.Content style={HomeStyle.directionsButton}>
-                        <TouchableOpacity
-                            onPress={() => { getDirections(EventLatitude, EventLongitude, directionsPreference); }}
-                            style={HomeStyle.homeButtonOpacity}>
-                            <Text style={HomeStyle.homeButtonText}>Get Directions</Text>
-                        </TouchableOpacity>
+                        <Text style={HomeStyle.eventDetailsDescription}>{EventDescription}</Text>
+                        <Card.Content style={HomeStyle.directionsButton}>
+                            <TouchableOpacity
+                                onPress={() => { getDirections(EventLatitude, EventLongitude, directionsPreference); }}
+                                style={HomeStyle.homeButtonOpacity}>
+                                <Text style={HomeStyle.homeButtonText}>Get Directions</Text>
+                            </TouchableOpacity>
+                        </Card.Content>
+
                     </Card.Content>
+                </Card>
+            </ScrollView>
 
-                </Card.Content>
-            </Card>
         </SafeAreaView>
     );
 }
