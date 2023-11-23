@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, SafeAreaView, Pressable, View, Image } from "react-native";
+import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
-// import { Card } from "react-native-elements";
 import { Databases, Client, Storage } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
 import HomeStyle from "../../styling/HomeStyle";
