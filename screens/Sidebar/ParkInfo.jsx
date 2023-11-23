@@ -10,7 +10,7 @@ export default function ParkInfoScreen() {
         <View style={HomeStyle.dbContainer}>
 
             <Text style={HomeStyle.parkInfoText}>
-            Presque Isle is a major recreational landmark for about four million visitors each year.
+            Presque Isle is a major recreational landmark for over four million visitors each year.
             </Text>
             <Text style={HomeStyle.parkInfoText}>
             The park offers visitors a beautiful, sandy coastline and many recreational activities, including swimming, boating, fishing, hiking, bicycling, and even surfing!

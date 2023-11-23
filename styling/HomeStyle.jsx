@@ -10,7 +10,6 @@ export default StyleSheet.create({
     eventContainer: {
         flex: 1,
         justifyContent: "center",
-
         alignItems: "center",
         backgroundColor: "#134C77",
     },
@@ -18,6 +17,7 @@ export default StyleSheet.create({
         flex: 1,
         alignSelf: "center",
         backgroundColor: "#134C77",
+        width: "100%"
     },
     ScrollableView: {
     },

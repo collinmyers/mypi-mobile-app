@@ -11,12 +11,12 @@ export default function AlertsScreen() {
 
     Notifications.scheduleNotificationAsync({
       content: {
-        title: "Presque Isle",
-        body: "There is a Tornado",
+        title: "Park Alert",
+        body: "There is a tree down near Beach 8, use caution.",
       },
-      trigger: null, // Send immediately
+      trigger: null,
       presentation: {
-        style: "notification", // or 'notification'
+        style: "notification",
       },
     });
 
