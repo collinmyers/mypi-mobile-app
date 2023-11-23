@@ -135,10 +135,10 @@ export default StyleSheet.create({
     },
     eventCard: {
         width: deviceWidth * .9,
-        marginBottom: deviceWidth *.1,
+        marginBottom: deviceWidth * .1,
     },
     eventCardContent: {
-        
+
     },
     eventShortImage: {
         aspectRatio: 1.5,
@@ -147,11 +147,60 @@ export default StyleSheet.create({
         resizeMode: "cover",
         width: "100%",
     },
-    eventShortTitle:{
+    eventShortTitle: {
         fontWeight: "bold",
         fontSize: 18
     },
-    eventShortDescription:{
+    eventShortDescription: {
         fontSize: 14
+    },
+    updateAccountKeyboardAdj: {
+        width: "80%",
+    },
+    updateAccountLogo: {
+        alignSelf: "center",
+    },
+    updateAccountCard: {
+        alignSelf: "center",
+        width: "100%",
+        padding: 10,
+        backgroundColor: "#8FA063",
+        margin: "5%"
+    },
+    updateAccountCardContent: {
+        alignItems: "center"
+    },
+
+    updateAccountTitle: {
+        fontSize: 30,
+        color: "#134C77",
+        fontWeight: "bold",
+        marginBottom: 16,
+    },
+
+    updateAccountUserInput: {
+        width: "90%",
+        height: 40,
+        backgroundColor: "none",
+        marginBottom: 16,
+        color: "#FFFFFF"
+    },
+
+    updateAccountButtonOpacity: {
+        backgroundColor: "#134C77",
+        width: 150,
+        borderRadius: 5,
+        marginTop: 10,
+        marginBottom: 20,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+
+    updateAccountButtonText: {
+        color: "#FFFFFF",
+        textAlign: "center",
+        fontSize: 15
     }
 });

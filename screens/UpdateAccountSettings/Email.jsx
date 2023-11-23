@@ -4,9 +4,11 @@ import { Card, Text, TextInput } from "react-native-paper";
 import { Account, Client } from "appwrite";
 import PropTypes from "prop-types";
 
+import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
+
 import AuthLogo from "../../components/logo/AuthLogo";
 import AppStyle from "../../styling/AppStyle";
-import AuthStyle from "../../styling/AuthStyle";
+import HomeStyle from "../../styling/HomeStyle";
 
 import { validateEmail } from "../../utils/Validators";
 
@@ -50,49 +52,51 @@ export default function ChangeEmailScreen({ navigation }) {
 
     return (
         <SafeAreaView style={AppStyle.container}>
+            <KeyboardAvoidingComponent style={HomeStyle.updateAccountKeyboardAdj}>
+                <AuthLogo style={HomeStyle.updateAccountLogo} />
 
-            <AuthLogo style={AuthStyle.logo} />
+                <Card style={HomeStyle.updateAccountCard}>
 
-            <Card style={AuthStyle.card}>
+                    <Card.Content style={HomeStyle.updateAccountCardContent}>
 
-                <Card.Content style={AuthStyle.cardContent}>
+                        <Text style={HomeStyle.updateAccountTitle}> Change Email</Text>
 
-                    <Text style={AuthStyle.title}> Change Email</Text>
+                        <TextInput
+                            style={HomeStyle.updateAccountUserInput}
+                            numberOfLines={1}
+                            placeholder="New Email"
+                            placeholderTextColor={"#FFFFFF"}
+                            textColor={"#FFFFFF"}
+                            mode="flat"
+                            underlineColor="#134C77"
+                            activeUnderlineColor="#134C77"
+                            onChangeText={(text) => setCredentials({ ...credentials, email: text })}
+                            value={credentials.email}
+                            onBlur={() => validateEmail(credentials.email, setCredentials)}
+                        />
 
-                    <TextInput
-                        style={AuthStyle.userInput}
-                        numberOfLines={1}
-                        placeholder="New Email"
-                        placeholderTextColor={"#FFFFFF"}
-                        textColor={"#FFFFFF"}
-                        mode="flat"
-                        underlineColor="#134C77"
-                        activeUnderlineColor="#134C77"
-                        onChangeText={(text) => setCredentials({ ...credentials, email: text })}
-                        value={credentials.email}
-                        onBlur={() => validateEmail(credentials.email, setCredentials)}
-                    />
+                        <TextInput
+                            style={HomeStyle.updateAccountUserInput}
+                            numberOfLines={1}
+                            placeholder="Password"
+                            placeholderTextColor={"#FFFFFF"}
+                            textColor={"#FFFFFF"}
+                            mode="flat"
+                            underlineColor="#134C77"
+                            activeUnderlineColor="#134C77"
+                            secureTextEntry
+                            onChangeText={(text) => setCredentials({ ...credentials, password: text })}
+                            value={credentials.password}
+                        />
 
-                    <TextInput
-                        style={AuthStyle.userInput}
-                        numberOfLines={1}
-                        placeholder="Password"
-                        placeholderTextColor={"#FFFFFF"}
-                        textColor={"#FFFFFF"}
-                        mode="flat"
-                        underlineColor="#134C77"
-                        activeUnderlineColor="#134C77"
-                        secureTextEntry
-                        onChangeText={(text) => setCredentials({ ...credentials, password: text })}
-                        value={credentials.password}
-                    />
+                        <TouchableOpacity onPress={handleEmailChange} style={HomeStyle.updateAccountButtonOpacity}>
+                            <Text style={HomeStyle.updateAccountButtonText}>Change</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={handleEmailChange} style={AuthStyle.ButtonOpacity}>
-                        <Text style={AuthStyle.buttonText}>Change</Text>
-                    </TouchableOpacity>
+                    </Card.Content>
+                </Card>
 
-                </Card.Content>
-            </Card>
+            </KeyboardAvoidingComponent>
 
         </SafeAreaView>
 

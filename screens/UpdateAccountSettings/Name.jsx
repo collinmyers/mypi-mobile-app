@@ -6,7 +6,8 @@ import PropTypes from "prop-types";
 
 import AuthLogo from "../../components/logo/AuthLogo";
 import AppStyle from "../../styling/AppStyle";
-import AuthStyle from "../../styling/AuthStyle";
+import HomeStyle from "../../styling/HomeStyle";
+import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
 
 import { validateName } from "../../utils/Validators";
 
@@ -51,50 +52,52 @@ export default function ChangeNameScreen({ navigation }) {
 
     return (
         <SafeAreaView style={AppStyle.container}>
+            <KeyboardAvoidingComponent style={HomeStyle.updateAccountKeyboardAdj}>
+                <AuthLogo style={HomeStyle.updateAccountLogo} />
 
-            <AuthLogo style={AuthStyle.logo} />
+                <Card style={HomeStyle.updateAccountCard}>
 
-            <Card style={AuthStyle.card}>
+                    <Card.Content style={HomeStyle.updateAccountCardContent}>
 
-                <Card.Content style={AuthStyle.cardContent}>
+                        <Text style={HomeStyle.updateAccountTitle}> Change Name</Text>
 
-                    <Text style={AuthStyle.title}> Change Name</Text>
+                        <TextInput
+                            style={HomeStyle.updateAccountUserInput}
+                            numberOfLines={1}
+                            placeholder="First Name"
+                            placeholderTextColor={"#FFFFFF"}
+                            textColor={"#FFFFFF"}
+                            mode="flat"
+                            underlineColor="#134C77"
+                            activeUnderlineColor="#134C77"
+                            onChangeText={(text) => setName({ ...name, firstName: text })}
+                            value={name.firstName}
+                            onBlur={() => validateName(name.firstName, setName)}
+                        />
 
-                    <TextInput
-                        style={AuthStyle.userInput}
-                        numberOfLines={1}
-                        placeholder="First Name"
-                        placeholderTextColor={"#FFFFFF"}
-                        textColor={"#FFFFFF"}
-                        mode="flat"
-                        underlineColor="#134C77"
-                        activeUnderlineColor="#134C77"
-                        onChangeText={(text) => setName({ ...name, firstName: text })}
-                        value={name.firstName}
-                        onBlur={() => validateName(name.firstName, setName)}
-                    />
-
-                    <TextInput
-                        style={AuthStyle.userInput}
-                        numberOfLines={1}
-                        placeholder="Last Name"
-                        placeholderTextColor={"#FFFFFF"}
-                        textColor={"#FFFFFF"}
-                        mode="flat"
-                        underlineColor="#134C77"
-                        activeUnderlineColor="#134C77"
-                        onChangeText={(text) => setName({ ...name, lastName: text })}
-                        value={name.lastName}
-                        onBlur={() => validateName(name.lastName, setName)}
-                    />
+                        <TextInput
+                            style={HomeStyle.updateAccountUserInput}
+                            numberOfLines={1}
+                            placeholder="Last Name"
+                            placeholderTextColor={"#FFFFFF"}
+                            textColor={"#FFFFFF"}
+                            mode="flat"
+                            underlineColor="#134C77"
+                            activeUnderlineColor="#134C77"
+                            onChangeText={(text) => setName({ ...name, lastName: text })}
+                            value={name.lastName}
+                            onBlur={() => validateName(name.lastName, setName)}
+                        />
 
 
-                    <TouchableOpacity onPress={handleNameChange} style={AuthStyle.ButtonOpacity}>
-                        <Text style={AuthStyle.buttonText}>Change</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={handleNameChange} style={HomeStyle.updateAccountButtonOpacity}>
+                            <Text style={HomeStyle.updateAccountButtonText}>Change</Text>
+                        </TouchableOpacity>
 
-                </Card.Content>
-            </Card>
+                    </Card.Content>
+                </Card>
+            </KeyboardAvoidingComponent>
+
 
         </SafeAreaView>
 

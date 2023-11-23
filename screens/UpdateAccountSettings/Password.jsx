@@ -6,7 +6,8 @@ import PropTypes from "prop-types";
 
 import AuthLogo from "../../components/logo/AuthLogo";
 import AppStyle from "../../styling/AppStyle";
-import AuthStyle from "../../styling/AuthStyle";
+import HomeStyle from "../../styling/HomeStyle";
+import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
 
 import { validatePassword } from "../../utils/Validators";
 
@@ -51,69 +52,69 @@ export default function ChangePasswordScreen({ navigation }) {
 
     return (
         <SafeAreaView style={AppStyle.container}>
+            <KeyboardAvoidingComponent style={HomeStyle.updateAccountKeyboardAdj}>
+                <AuthLogo style={HomeStyle.updateAccountLogo} />
 
-            <AuthLogo style={AuthStyle.logo} />
+                <Card style={HomeStyle.updateAccountCard}>
 
-            <Card style={AuthStyle.card}>
+                    <Card.Content style={HomeStyle.updateAccountCardContent}>
 
-                <Card.Content style={AuthStyle.cardContent}>
+                        <Text style={HomeStyle.updateAccountTitle}> Change Password</Text>
 
-                    <Text style={AuthStyle.title}> Change Password</Text>
+                        <TextInput
+                            style={HomeStyle.updateAccountUserInput}
+                            numberOfLines={1}
+                            placeholder="Old Password"
+                            placeholderTextColor={"#FFFFFF"}
+                            textColor={"#FFFFFF"}
+                            mode="flat"
+                            underlineColor="#134C77"
+                            activeUnderlineColor="#134C77"
+                            secureTextEntry
+                            onChangeText={(text) => setPasswords({ ...passwords, oldPassword: text })}
+                            value={passwords.oldPassword}
+                        />
 
-                    <TextInput
-                        style={AuthStyle.userInput}
-                        numberOfLines={1}
-                        placeholder="Old Password"
-                        placeholderTextColor={"#FFFFFF"}
-                        textColor={"#FFFFFF"}
-                        mode="flat"
-                        underlineColor="#134C77"
-                        activeUnderlineColor="#134C77"
-                        secureTextEntry
-                        onChangeText={(text) => setPasswords({ ...passwords, oldPassword: text })}
-                        value={passwords.oldPassword}
-                    />
+                        <TextInput
+                            style={HomeStyle.updateAccountUserInput}
+                            numberOfLines={1}
+                            placeholder="New Password"
+                            placeholderTextColor={"#FFFFFF"}
+                            textColor={"#FFFFFF"}
+                            mode="flat"
+                            underlineColor="#134C77"
+                            activeUnderlineColor="#134C77"
+                            secureTextEntry
+                            onChangeText={(text) => setPasswords({ ...passwords, newPassword: text })}
+                            value={passwords.newPassword}
+                        />
 
-                    <TextInput
-                        style={AuthStyle.userInput}
-                        numberOfLines={1}
-                        placeholder="New Password"
-                        placeholderTextColor={"#FFFFFF"}
-                        textColor={"#FFFFFF"}
-                        mode="flat"
-                        underlineColor="#134C77"
-                        activeUnderlineColor="#134C77"
-                        secureTextEntry
-                        onChangeText={(text) => setPasswords({ ...passwords, newPassword: text })}
-                        value={passwords.newPassword}
-                    />
+                        <TextInput
+                            style={HomeStyle.updateAccountUserInput}
+                            numberOfLines={1}
+                            placeholder="Confirm New Password"
+                            placeholderTextColor={"#FFFFFF"}
+                            textColor={"#FFFFFF"}
+                            mode="flat"
+                            underlineColor="#134C77"
+                            activeUnderlineColor="#134C77"
+                            secureTextEntry
+                            onChangeText={(text) => setPasswords({ ...passwords, confirmNewPassword: text })}
+                            value={passwords.confirmNewPassword}
+                            onBlur={
+                                () => validatePassword(passwords.newPassword, passwords.confirmNewPassword,
+                                    (text) => setPasswords({ ...passwords, newPassword: text }),
+                                    (text) => setPasswords({ ...passwords, confirmNewPassword: text }))
+                            }
+                        />
 
-                    <TextInput
-                        style={AuthStyle.userInput}
-                        numberOfLines={1}
-                        placeholder="Confirm New Password"
-                        placeholderTextColor={"#FFFFFF"}
-                        textColor={"#FFFFFF"}
-                        mode="flat"
-                        underlineColor="#134C77"
-                        activeUnderlineColor="#134C77"
-                        secureTextEntry
-                        onChangeText={(text) => setPasswords({ ...passwords, confirmNewPassword: text })}
-                        value={passwords.confirmNewPassword}
-                        onBlur={
-                            () => validatePassword(passwords.newPassword, passwords.confirmNewPassword,
-                                (text) => setPasswords({ ...passwords, newPassword: text }),
-                                (text) => setPasswords({ ...passwords, confirmNewPassword: text }))
-                        }
-                    />
+                        <TouchableOpacity onPress={handlePasswordChange} style={HomeStyle.updateAccountButtonOpacity}>
+                            <Text style={HomeStyle.updateAccountButtonText}>Change</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={handlePasswordChange} style={AuthStyle.ButtonOpacity}>
-                        <Text style={AuthStyle.buttonText}>Change</Text>
-                    </TouchableOpacity>
-
-                </Card.Content>
-            </Card>
-
+                    </Card.Content>
+                </Card>
+            </KeyboardAvoidingComponent>
         </SafeAreaView>
 
     );
