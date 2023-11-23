@@ -41,23 +41,35 @@ export default function EventListScreen() {
             promise.then(async function (response) {
                 for (let index = 0; index < response.documents.length; index++) {   //Iterate over every document in db
 
-                    let LongDescription = response["documents"][index]["LongDescription"];
+                    const ShortDescription = response["documents"][index]["ShortDescription"];
+                    const EventName = response["documents"][index]["Name"];
+                    const LongDescription = response["documents"][index]["LongDescription"];
+                    const EventLatitude = response["documents"][index]["Latitude"];
+                    const EventLongitude = response["documents"][index]["Longitude"];
 
-                    let result = storage.getFileView(
+                    const EventImage = storage.getFileView(
                         "653ae4d2b3fcc68c10bf", //BucketID
                         response["documents"][index]["FileID"] //File ID
-                    );
+                    ).toString();
 
-                    console.log(result);
+                    // console.log(result);
 
                     setData(data => [...data,  //Add document data to array that contains react-native code to render the events 
 
-                    <Pressable key={index} onPress={() => navigation.navigate("EventDetailsScreen", { EventDescription: LongDescription })}>
+                    <Pressable key={index} onPress={() => navigation.navigate("EventDetailsScreen", {
+                        EventImage: EventImage,
+                        EventName: EventName,
+                        EventDescription: LongDescription,
+                        EventLatitude: EventLatitude,
+                        EventLongitude: EventLongitude
+                    }
+                    )}
+                    >
                         <Card style={HomeStyle.eventCard} >
                             <Card.Content style={HomeStyle.eventCardContent}>
-                                <Image source={{ uri: result.toString() }} style={HomeStyle.eventShortImage} />
-                                <Text style={HomeStyle.eventShortTitle}>{response["documents"][index]["Name"]}</Text>
-                                <Text style={HomeStyle.eventShortDescription}>{response["documents"][index]["ShortDescription"]}</Text>
+                                <Image source={{ uri: EventImage }} style={HomeStyle.eventListImage} />
+                                <Text style={HomeStyle.eventListTitle}>{EventName}</Text>
+                                <Text style={HomeStyle.eventListDescription}>{ShortDescription}</Text>
                             </Card.Content>
                         </Card>
                     </Pressable>

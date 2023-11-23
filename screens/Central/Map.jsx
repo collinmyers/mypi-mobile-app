@@ -10,7 +10,7 @@ export default function MapScreen() {
 
     const { directionsPreference } = useDirections();
 
-    console.log(directionsPreference);
+    // console.log(directionsPreference);
 
     const [markers, setMarkers] = useState([]);
 

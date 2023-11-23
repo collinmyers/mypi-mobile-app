@@ -136,23 +136,26 @@ export default StyleSheet.create({
     eventCard: {
         width: deviceWidth * .9,
         marginBottom: deviceWidth * .1,
+        backgroundColor: "#8FA063",
     },
     eventCardContent: {
 
     },
-    eventShortImage: {
+    eventListImage: {
         aspectRatio: 1.5,
         borderRadius: 5,
         marginBottom: "5%",
         resizeMode: "cover",
         width: "100%",
     },
-    eventShortTitle: {
+    eventListTitle: {
         fontWeight: "bold",
-        fontSize: 18
+        fontSize: 18,
+        color: "#FFFFFF"
     },
-    eventShortDescription: {
-        fontSize: 14
+    eventListDescription: {
+        fontSize: 14,
+        color: "#FFFFFF"
     },
     updateAccountKeyboardAdj: {
         width: "80%",
@@ -202,5 +205,51 @@ export default StyleSheet.create({
         color: "#FFFFFF",
         textAlign: "center",
         fontSize: 15
-    }
+    },
+    eventDetailsCard: {
+        height: "97%",
+        width: "90%",
+        padding: 10,
+        backgroundColor: "#8FA063",
+        marginBottom: "2%",
+    },
+
+    eventDetailsCardContent: {
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+    },
+    eventDetailsTitle: {
+        color: "#FFFFFF",
+        fontWeight: "bold",
+        fontSize: 24,
+        marginBottom: "10%"
+    },
+    eventDetailsImage: {
+        aspectRatio: 1.5,
+        borderRadius: 5,
+        marginBottom: "10%",
+        resizeMode: "cover",
+        width: "100%",
+    },
+    eventDetailsDescription: {
+        color: "#FFFFFF",
+        fontSize: 15
+    },
+    homeButtonOpacity: {
+        backgroundColor: "#134C77",
+        width: 160,
+        borderRadius: 5,
+        paddingLeft: 30,
+        paddingRight: 30,
+        paddingTop: 10,
+        paddingBottom: 10,
+         marginVertical: "10%"
+    },
+    homeButtonText: {
+        color: "#FFFFFF",
+        textAlign: "center",
+        fontSize: 15
+    },
+
 });
