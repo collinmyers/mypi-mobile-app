@@ -22,5 +22,17 @@ export default StyleSheet.create({
     },
     drawerMenuBarContainer: {
         marginLeft: 5
-    }
+    },
+    // Image container for Dashboard
+    imageContainer: {
+    alignItems: "center",
+    position: "absolute",
+    top: 10,
+    width: "100%",
+  }, 
+  // Image for Dashboard
+  image: {
+    width: 400,
+    height: 200,
+  },
 });

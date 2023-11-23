@@ -27,6 +27,25 @@ export default StyleSheet.create({
         textAlign: "center",
         color: "#FFFFFF"
     },
+    // Dashboard styling
+    dbText:{
+        textAlign: "center",
+        color: "#FFFFFF",
+        fontSize: 18,
+        marginBottom: 10,
+    },
+    // Dashboard container styling
+    dbContainer: {
+        paddingHorizontal: 20,
+        marginTop: 100,
+    },
+    // Dashboard title styling
+    dbTitleText: {
+        textAlign: "center",
+        color: "#FFFFFF",
+        fontSize: 24,
+        marginBottom: 20,
+    },
     settingsCardContentContainer: {
 
     },
