@@ -5,6 +5,9 @@ import * as Notifications from "expo-notifications";
 export default function AlertsScreen() {
   const [notificationCount, setNotificationCount] = useState(0);
 
+  const appBlue = "#134C77";
+  const appGreen = "#8FA063";
+
   const sendNotification = async () => {
     // Create a simple notification
     console.log("new notification");
@@ -52,9 +55,9 @@ export default function AlertsScreen() {
 
   
   return (
-    <View style={{ justifyContent: "center", height: "100%" , backgroundColor: "#134C77"}}>
+    <View style={{ justifyContent: "center", height: "100%" , backgroundColor: appBlue}}>
       <TouchableOpacity onPress={sendNotification} style={{alignSelf: "center"}}>
-        <View style={{ backgroundColor: "#8FA063", padding: 20, borderRadius: 50, justifyContent: "center" }}>
+        <View style={{ backgroundColor: appGreen, padding: 20, borderRadius: 50, justifyContent: "center" }}>
           <Text style={{ color: "white" , textAlign: "center"}}>Send New Notification</Text>
         </View>
       </TouchableOpacity>

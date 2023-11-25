@@ -24,6 +24,8 @@ export default function ChangeNameScreen({ navigation }) {
         lastName: ""
     });
 
+    const appBlue = "#134C77";
+    const appWhite = "#FFFFFF";
 
     const handleNameChange = async () => {
 
@@ -65,11 +67,11 @@ export default function ChangeNameScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="First Name"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             onChangeText={(text) => setName({ ...name, firstName: text })}
                             value={name.firstName}
                             onBlur={() => validateName(name.firstName, setName)}
@@ -79,11 +81,11 @@ export default function ChangeNameScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="Last Name"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             onChangeText={(text) => setName({ ...name, lastName: text })}
                             value={name.lastName}
                             onBlur={() => validateName(name.lastName, setName)}

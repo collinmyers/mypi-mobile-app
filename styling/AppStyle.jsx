@@ -1,16 +1,18 @@
 import { StyleSheet } from "react-native";
 
+const appBlue = "#134C77";
+
 export default StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems:"center",
-        backgroundColor: "#134C77",
+        backgroundColor: appBlue,
     },
     drawerHeader: {
         justifyContent:"flex-start",
         alignItems:"flex-start",
-        backgroundColor: "#134C77",
+        backgroundColor:appBlue,
         paddingTop: 40,
         paddingBottom: 10,
         paddingLeft: 15

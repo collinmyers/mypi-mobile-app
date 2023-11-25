@@ -19,6 +19,10 @@ export default function DrawerNavigator() {
     const [isSigningOut, setIsSigningOut] = useState(false);
     const [refreshDrawer, setRefreshDrawer] = useState(0);
 
+    const appBlue = "#134C77";
+    const appGreen = "#8FA063";
+    const appWhite = "#FFFFFF";
+
     const checkAuthState = async () => {
         try {
             const client = new Client()
@@ -79,10 +83,10 @@ export default function DrawerNavigator() {
                     <DrawerItem
                         label="Sign Out"
                         labelStyle={{
-                            color: "#FFFFFF",
+                            color: appWhite,
                             fontSize: 20,
                         }}
-                        icon={() => (<Ionicons name="person-circle" size={24} color="#134C77" />)}
+                        icon={() => (<Ionicons name="person-circle" size={24} color={appBlue} />)}
 
                         onPress={handleLogout} />
 
@@ -103,12 +107,12 @@ export default function DrawerNavigator() {
                 screenOptions={{
                     overlayColor: "transparent",
                     drawerLabelStyle: {
-                        color: "#FFFFFF",
+                        color: appWhite,
                         fontSize: 20,
                     },
                     drawerActiveBackgroundColor: "none",
                     drawerStyle: {
-                        backgroundColor: "#8FA063",
+                        backgroundColor: appGreen,
                     }
                 }}
             >
@@ -119,13 +123,13 @@ export default function DrawerNavigator() {
                         component={AuthStackWithLoginSuccess}
                         options={{
                             header: () => <AppHeader />,
-                            drawerIcon: () => <Ionicons name="person-circle" size={24} color="#134C77" />
+                            drawerIcon: () => <Ionicons name="person-circle" size={24} color={appBlue} />
                         }} />
                 )}
-                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader />, drawerIcon: () => <Entypo name="home" size={24} color="#134C77" /> }} />
-                <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color="#134C77" /> }} />
-                <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <MaterialIcons name="park" size={24} color="#134C77" /> }} />
-                <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <FontAwesome5 name="donate" size={24} color="#134C77" /> }} />
+                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader />, drawerIcon: () => <Entypo name="home" size={24} color={appBlue} /> }} />
+                <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color={appBlue} /> }} />
+                <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <MaterialIcons name="park" size={24} color={appBlue} /> }} />
+                <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <FontAwesome5 name="donate" size={24} color={appBlue} /> }} />
 
             </Drawer.Navigator>
         </NavigationContainer >

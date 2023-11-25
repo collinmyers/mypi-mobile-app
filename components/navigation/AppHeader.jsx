@@ -10,6 +10,8 @@ export default function AppHeader() {
     const navigation = useNavigation();
     const drawerStatus = useDrawerStatus();
 
+    const appGreen = "#8FA063";
+
     return (
         <SafeAreaView style={AppStyle.drawerHeader}>
             <View>
@@ -17,14 +19,14 @@ export default function AppHeader() {
                     <Icon style={AppStyle.drawerMenuBar}
                         name="menu"
                         size={35}
-                        color="#8FA063"
+                        color={appGreen}
                         onPress={() => navigation.toggleDrawer()} />}
 
                 {(Platform.OS === "android" && drawerStatus === "closed") &&
                     <Icon style={AppStyle.drawerMenuBar}
                         name="menu"
                         size={35}
-                        color="#8FA063"
+                        color={appGreen}
                         onPress={() => navigation.toggleDrawer()} />}
             </View>
         </SafeAreaView>

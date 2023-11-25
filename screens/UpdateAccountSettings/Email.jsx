@@ -25,6 +25,8 @@ export default function ChangeEmailScreen({ navigation }) {
         password: ""
     });
 
+    const appBlue = "#134C77";
+    const appWhite = "#FFFFFF";
 
     const handleEmailChange = async () => {
 
@@ -65,11 +67,11 @@ export default function ChangeEmailScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="New Email"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             onChangeText={(text) => setCredentials({ ...credentials, email: text })}
                             value={credentials.email}
                             onBlur={() => validateEmail(credentials.email, setCredentials)}
@@ -79,11 +81,11 @@ export default function ChangeEmailScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="Password"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             secureTextEntry
                             onChangeText={(text) => setCredentials({ ...credentials, password: text })}
                             value={credentials.password}

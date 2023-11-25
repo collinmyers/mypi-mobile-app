@@ -11,16 +11,21 @@ import EventsStackNavigator from "./EventsStackNavigator";
 const Tab = createBottomTabNavigator();
 
 export default function HomeTabNavigator() {
+
+    const appBlue = "#134C77";
+    const appGreen = "#8FA063";
+    const appWhite = "#FFFFFF";
+
     return (
 
         <Tab.Navigator
             initialRouteName="Home"
             screenOptions={{
-                tabBarActiveTintColor: "#8FA063",
-                tabBarInactiveTintColor: "#FFFFFF",
+                tabBarActiveTintColor: appGreen,
+                tabBarInactiveTintColor: appWhite,
                 tabBarStyle: {
-                    backgroundColor: "#134C77",
-                    borderTopColor: "#8FA063",
+                    backgroundColor: appBlue,
+                    borderTopColor: appGreen,
                     borderTopWidth: 1,
                 },
             }}
@@ -32,7 +37,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Dashboard",
                     headerShown: false,
                     tabBarIcon: () => (
-                        <Entypo name="home" size={24} color="#8FA063" />
+                        <Entypo name="home" size={24} color={appGreen} />
                     )
                 }}
             />
@@ -44,7 +49,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Map",
                     headerShown: false,
                     tabBarIcon: () => (
-                        <Entypo name="map" size={24} color="#8FA063" />
+                        <Entypo name="map" size={24} color={appGreen} />
                     )
                 }}
             />
@@ -56,7 +61,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Events",
                     headerShown: false,
                     tabBarIcon: () => (
-                        <MaterialCommunityIcons name="calendar-month-outline" size={24} color="#8FA063" />
+                        <MaterialCommunityIcons name="calendar-month-outline" size={24} color={appGreen} />
                     )
                 }}
             />
@@ -69,7 +74,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Alerts",
                     headerShown: false,
                     tabBarIcon: () => (
-                        <Fontisto name="bell" size={24} color="#8FA063" />
+                        <Fontisto name="bell" size={24} color={appGreen} />
                     )
                 }}
             />
@@ -80,7 +85,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Settings",
                     headerShown: false,
                     tabBarIcon: () => (
-                        <Octicons name="gear" size={24} color="#8FA063" />
+                        <Octicons name="gear" size={24} color={appGreen} />
                     )
                 }}
             />

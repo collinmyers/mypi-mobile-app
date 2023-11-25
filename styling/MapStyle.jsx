@@ -1,5 +1,8 @@
 import { StyleSheet } from "react-native";
 
+const appBlue = "#134C77";
+const appGreen = "#8FA063";
+
 export default StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
@@ -12,12 +15,12 @@ export default StyleSheet.create({
     },
     poiMarkerTitle: {
         fontSize: 15,
-        color: "#134C77",
+        color: appBlue,
         fontWeight: "bold",
     },
     poiMarkerDirectionsText: {
         fontSize: 15,
-        color: "#8FA063",
+        color: appGreen,
         fontWeight: "bold",
         alignSelf: "center"
     },

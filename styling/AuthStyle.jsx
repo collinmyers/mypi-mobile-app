@@ -1,5 +1,9 @@
 import { StyleSheet } from "react-native";
 
+const appBlue = "#134C77";
+const appGreen = "#8FA063";
+const appWhite = "#FFFFFF";
+
 export default StyleSheet.create({
 
     keyboardAdj:{
@@ -12,7 +16,7 @@ export default StyleSheet.create({
         alignSelf: "center",
         width: "100%",
         padding: 10,
-        backgroundColor: "#8FA063",
+        backgroundColor: appGreen,
         margin: "5%"
     },
     cardContent: {
@@ -21,7 +25,7 @@ export default StyleSheet.create({
 
     title: {
         fontSize: 30,
-        color: "#134C77",
+        color: appBlue,
         fontWeight: "bold",
         marginBottom: 16,
     },
@@ -31,11 +35,11 @@ export default StyleSheet.create({
         height: 40,
         backgroundColor: "none",
         marginBottom: 16,
-        color: "#FFFFFF"
+        color: appWhite
     },
 
     ButtonOpacity: {
-        backgroundColor: "#134C77",
+        backgroundColor: appBlue,
         width: 150,
         borderRadius: 5,
         marginTop: 10,
@@ -47,7 +51,7 @@ export default StyleSheet.create({
     },
 
     buttonText: {
-        color: "#FFFFFF",
+        color: appWhite,
         textAlign: "center",
         fontSize: 15
     },

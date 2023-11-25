@@ -28,6 +28,8 @@ export default function EventDetailsScreen() {
         });
     };
 
+    const appWhite = "#FFFFFF";
+
 
     return (
         <SafeAreaView style={HomeStyle.eventContainer}>
@@ -37,7 +39,7 @@ export default function EventDetailsScreen() {
 
                     <View style={HomeStyle.eventDetailsBackButton}>
                         <Pressable onPress={navigation.goBack}>
-                            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+                            <Ionicons name="arrow-back" size={24} color={appWhite} />
                         </Pressable>
                     </View>
 

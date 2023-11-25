@@ -26,6 +26,9 @@ export default function SignUpScreen({ navigation }) {
         confirmPassword: ""
     });
 
+    const appBlue = "#134C77";
+    const appWhite = "#FFFFFF";
+
     const handleSignUp = async () => {
 
         try {
@@ -61,11 +64,11 @@ export default function SignUpScreen({ navigation }) {
                             style={AuthStyle.userInput}
                             numberOfLines={1}
                             placeholder="First Name"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             onChangeText={(text) => setSignUpInfo({ ...signUpInfo, firstName: text })}
                             value={signUpInfo.firstName}
                             onBlur={() => validateName(signUpInfo.firstName, (text) => setSignUpInfo({ ...signUpInfo, firstName: text }))}
@@ -75,11 +78,11 @@ export default function SignUpScreen({ navigation }) {
                             style={AuthStyle.userInput}
                             numberOfLines={1}
                             placeholder="Last Name"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             onChangeText={(text) => setSignUpInfo({ ...signUpInfo, lastName: text })}
                             onBlur={() => validateName(signUpInfo.lastName, (text) => setSignUpInfo({ ...signUpInfo, lastName: text }))}
                             value={signUpInfo.lastName}
@@ -89,11 +92,11 @@ export default function SignUpScreen({ navigation }) {
                             style={AuthStyle.userInput}
                             numberOfLines={1}
                             placeholder="Email"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             onChangeText={(text) => setSignUpInfo({ ...signUpInfo, email: text })}
                             onBlur={() => validateEmail(signUpInfo.email, (text) => setSignUpInfo({ ...signUpInfo, email: text }))}
                             value={signUpInfo.email}
@@ -103,11 +106,11 @@ export default function SignUpScreen({ navigation }) {
                             style={AuthStyle.userInput}
                             numberOfLines={1}
                             placeholder="Password"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             secureTextEntry
                             onChangeText={(text) => setSignUpInfo({ ...signUpInfo, password: text })}
                             value={signUpInfo.password}
@@ -117,11 +120,11 @@ export default function SignUpScreen({ navigation }) {
                             style={AuthStyle.userInput}
                             numberOfLines={1}
                             placeholder="Confirm Password"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             secureTextEntry
                             onChangeText={(text) => setSignUpInfo({ ...signUpInfo, confirmPassword: text })}
                             value={signUpInfo.confirmPassword}

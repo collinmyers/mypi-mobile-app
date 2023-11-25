@@ -25,6 +25,9 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
         password: ""
     });
 
+    const appBlue = "#134C77";
+    const appWhite = "#FFFFFF";
+
     const handleLogin = async () => {
 
         try {
@@ -63,11 +66,11 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                             style={AuthStyle.userInput}
                             numberOfLines={1}
                             placeholder="Email"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             onChangeText={(text) => setAuthentication({ ...authentication, email: text })}
                             value={authentication.email}
                             onBlur={() => validateEmail(authentication.email, (text) => setAuthentication({ ...authentication, email: text }))}
@@ -77,11 +80,11 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                             style={AuthStyle.userInput}
                             numberOfLines={1}
                             placeholder="Password"
-                            placeholderTextColor={"#FFFFFF"}
-                            textColor={"#FFFFFF"}
+                            placeholderTextColor={appWhite}
+                            textColor={appWhite}
                             mode="flat"
-                            underlineColor="#134C77"
-                            activeUnderlineColor="#134C77"
+                            underlineColor={appBlue}
+                            activeUnderlineColor={appBlue}
                             secureTextEntry
                             onChangeText={(text) => setAuthentication({ ...authentication, password: text })}
                             value={authentication.password}
