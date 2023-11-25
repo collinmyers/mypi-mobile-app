@@ -291,9 +291,11 @@ export default StyleSheet.create({
     },
     donationsWebViewContainer: {
         justifyContent: "center",
-        height: "100%"
+        height: "100%",
+        backgroundColor: "#134C77"
     },
     donationsWebView: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#134C77"
     }
 });
