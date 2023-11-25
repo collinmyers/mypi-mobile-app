@@ -3,6 +3,7 @@ import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { Databases, Client, Storage } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import HomeStyle from "../../styling/HomeStyle";
 
 
@@ -90,11 +91,12 @@ export default function EventListScreen() {
         }
     };
 
-
-    useEffect(() => {
-        setData([]);    //Empty the data array
-        getEvents();    //Get Events 
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
+            setData([]);    //Empty the data array
+            getEvents();    //Get Events 
+        }, [])
+    );
 
     return (
 
