@@ -19,16 +19,12 @@ export default StyleSheet.create({
         backgroundColor: "#134C77",
         width: "100%"
     },
-    ScrollableView: {
+    scrollableView: {
+        flexGrow: 1, 
+        justifyContent: "center", 
+        backgroundColor: "#134C77"
     },
-
-    // Temp until content gets placed in pages
-    centerText: {
-        textAlign: "center",
-        color: "#FFFFFF"
-    },
-    // Dashboard styling
-    dbText:{
+    dbText: {
         textAlign: "center",
         color: "#FFFFFF",
         fontSize: 18,
@@ -234,36 +230,35 @@ export default StyleSheet.create({
         textAlign: "center",
         fontSize: 15
     },
+    eventDetailsBackButton: {
+        alignItems: "left",
+        padding: 10
+    },
     eventDetailsCard: {
         alignSelf: "center",
-        height: "100%",
-        width: "90%",
+        width: "95%",
         padding: 10,
+        paddingBottom: 0,
         backgroundColor: "#8FA063",
-        marginBottom: "2%",
     },
-
     eventDetailsCardContent: {
         alignItems: "center",
-        display: "flex",
-        flexDirection: "column",
     },
     eventDetailsTitle: {
         color: "#FFFFFF",
         fontWeight: "bold",
         fontSize: 24,
-        marginBottom: "10%"
     },
     eventDetailsImage: {
         aspectRatio: 1.5,
         borderRadius: 5,
-        marginBottom: "10%",
+        marginVertical: "10%",
         resizeMode: "cover",
         width: "100%",
     },
     eventDetailsDescription: {
         color: "#FFFFFF",
-        fontSize: 15
+        fontSize: 16
     },
     homeButtonOpacity: {
         backgroundColor: "#134C77",
@@ -273,7 +268,8 @@ export default StyleSheet.create({
         paddingRight: 30,
         paddingTop: 10,
         paddingBottom: 10,
-        marginVertical: "10%"
+        marginVertical: "10%",
+        marginBottom: 0,
     },
     homeButtonText: {
         color: "#FFFFFF",

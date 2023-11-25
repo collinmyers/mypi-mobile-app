@@ -95,7 +95,7 @@ export default function EventListScreen() {
     return (
 
         <SafeAreaView style={HomeStyle.eventContainer}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
                 {data}
             </ScrollView>
         </SafeAreaView>

@@ -31,10 +31,11 @@ export default function EventDetailsScreen() {
 
     return (
         <SafeAreaView style={HomeStyle.eventContainer}>
-            <ScrollView style={HomeStyle.ScrollView} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
+
                 <Card style={HomeStyle.eventDetailsCard} >
 
-                    <View style={{ alignItems: "left", padding: 10 }}>
+                    <View style={HomeStyle.eventDetailsBackButton}>
                         <Pressable onPress={navigation.goBack}>
                             <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
                         </Pressable>
@@ -45,13 +46,12 @@ export default function EventDetailsScreen() {
                         <Image source={{ uri: EventImage }} style={HomeStyle.eventDetailsImage} />
 
                         <Text style={HomeStyle.eventDetailsDescription}>{EventDescription}</Text>
-                        <Card.Content style={HomeStyle.directionsButton}>
-                            <TouchableOpacity
-                                onPress={() => { getDirections(EventLatitude, EventLongitude, directionsPreference); }}
-                                style={HomeStyle.homeButtonOpacity}>
-                                <Text style={HomeStyle.homeButtonText}>Get Directions</Text>
-                            </TouchableOpacity>
-                        </Card.Content>
+
+                        <TouchableOpacity
+                            onPress={() => { getDirections(EventLatitude, EventLongitude, directionsPreference); }}
+                            style={HomeStyle.homeButtonOpacity}>
+                            <Text style={HomeStyle.homeButtonText}>Get Directions</Text>
+                        </TouchableOpacity>
 
                     </Card.Content>
                 </Card>
