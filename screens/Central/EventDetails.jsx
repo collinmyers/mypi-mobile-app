@@ -14,7 +14,7 @@ export default function EventDetailsScreen() {
     const navigation = useNavigation();
     const { directionsPreference } = useDirections();
 
-    const { EventImage, EventName, EventDescription, EventLatitude, EventLongitude } = route.params;
+    const { EventImage, EventName, EventDateTime, EventDetailsDescription, EventLatitude, EventLongitude } = route.params;
 
     const getDirections = (lat, long, directionsPreference) => {
         showLocation({
@@ -33,7 +33,7 @@ export default function EventDetailsScreen() {
         <SafeAreaView style={HomeStyle.eventContainer}>
             <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
 
-                <Card style={HomeStyle.eventDetailsCard} >
+                <Card style={HomeStyle.eventDetailsCard}>
 
                     <View style={HomeStyle.eventDetailsBackButton}>
                         <Pressable onPress={navigation.goBack}>
@@ -43,9 +43,10 @@ export default function EventDetailsScreen() {
 
                     <Card.Content style={HomeStyle.eventDetailsCardContent}>
                         <Text style={HomeStyle.eventDetailsTitle}>{EventName}</Text>
+                        <Text style={HomeStyle.eventDetailsDateTime}>{EventDateTime}</Text>
                         <Image source={{ uri: EventImage }} style={HomeStyle.eventDetailsImage} />
 
-                        <Text style={HomeStyle.eventDetailsDescription}>{EventDescription}</Text>
+                        <Text style={HomeStyle.eventDetailsDescription}>{EventDetailsDescription}</Text>
 
                         <TouchableOpacity
                             onPress={() => { getDirections(EventLatitude, EventLongitude, directionsPreference); }}

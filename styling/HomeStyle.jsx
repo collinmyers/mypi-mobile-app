@@ -20,8 +20,8 @@ export default StyleSheet.create({
         width: "100%"
     },
     scrollableView: {
-        flexGrow: 1, 
-        justifyContent: "center", 
+        flexGrow: 1,
+        justifyContent: "center",
         backgroundColor: "#134C77"
     },
     dbText: {
@@ -177,6 +177,13 @@ export default StyleSheet.create({
         fontSize: 18,
         color: "#FFFFFF"
     },
+    eventListDateTime: {
+        textAlign: "left",
+        fontWeight: "bold",
+        fontSize: 14,
+        color: "#FFFFFF",
+        marginVertical: "1%"
+    },
     eventListDescription: {
         fontSize: 14,
         color: "#FFFFFF"
@@ -248,6 +255,12 @@ export default StyleSheet.create({
         color: "#FFFFFF",
         fontWeight: "bold",
         fontSize: 24,
+    },
+    eventDetailsDateTime: {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: "#FFFFFF",
+        marginTop: "1%"
     },
     eventDetailsImage: {
         aspectRatio: 1.5,

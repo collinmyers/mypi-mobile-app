@@ -41,9 +41,11 @@ export default function EventListScreen() {
             promise.then(async function (response) {
                 for (let index = 0; index < response.documents.length; index++) {   //Iterate over every document in db
 
-                    const ShortDescription = response["documents"][index]["ShortDescription"];
+                    
                     const EventName = response["documents"][index]["Name"];
-                    const LongDescription = response["documents"][index]["LongDescription"];
+                    const EventDateTime = response["documents"][index]["DateTime"];
+                    const EventListDescription = response["documents"][index]["EventListDescription"];
+                    const EventDetailsDescription = response["documents"][index]["EventDetailsDescription"];
                     const EventLatitude = response["documents"][index]["Latitude"];
                     const EventLongitude = response["documents"][index]["Longitude"];
 
@@ -59,7 +61,8 @@ export default function EventListScreen() {
                     <Pressable key={index} onPress={() => navigation.navigate("EventDetailsScreen", {
                         EventImage: EventImage,
                         EventName: EventName,
-                        EventDescription: LongDescription,
+                        EventDateTime: EventDateTime,
+                        EventDetailsDescription: EventDetailsDescription,
                         EventLatitude: EventLatitude,
                         EventLongitude: EventLongitude
                     }
@@ -69,7 +72,8 @@ export default function EventListScreen() {
                             <Card.Content style={HomeStyle.eventCardContent}>
                                 <Image source={{ uri: EventImage }} style={HomeStyle.eventListImage} />
                                 <Text style={HomeStyle.eventListTitle}>{EventName}</Text>
-                                <Text style={HomeStyle.eventListDescription}>{ShortDescription}</Text>
+                                <Text style={HomeStyle.eventListDateTime}>{EventDateTime}</Text>
+                                <Text style={HomeStyle.eventListDescription}>{EventListDescription}</Text>
                             </Card.Content>
                         </Card>
                     </Pressable>
