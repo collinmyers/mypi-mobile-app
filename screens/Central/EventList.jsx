@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { Databases, Client, Storage } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
 import HomeStyle from "../../styling/HomeStyle";
-
 
 export default function EventListScreen() {
     const navigation = useNavigation();
@@ -42,7 +41,6 @@ export default function EventListScreen() {
             promise.then(async function (response) {
                 for (let index = 0; index < response.documents.length; index++) {   //Iterate over every document in db
 
-                    
                     const EventName = response["documents"][index]["Name"];
                     const EventDateTime = response["documents"][index]["DateTime"];
                     const EventListDescription = response["documents"][index]["EventListDescription"];
@@ -54,8 +52,6 @@ export default function EventListScreen() {
                         "653ae4d2b3fcc68c10bf", //BucketID
                         response["documents"][index]["FileID"] //File ID
                     ).toString();
-
-                    // console.log(result);
 
                     setData(data => [...data,  //Add document data to array that contains react-native code to render the events 
 

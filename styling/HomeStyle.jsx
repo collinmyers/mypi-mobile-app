@@ -289,5 +289,11 @@ export default StyleSheet.create({
         textAlign: "center",
         fontSize: 15
     },
-
+    donationsWebViewContainer: {
+        justifyContent: "center",
+        height: "100%"
+    },
+    donationsWebView: {
+        flex: 1
+    }
 });
