@@ -4,11 +4,8 @@ import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
 import { Databases, Client } from "appwrite";
 import MapStyle from "../../styling/MapStyle";
-import { useDirections } from "../../components/Contexts/DirectionProvider";
 
 export default function MapScreen() {
-
-    const { directionsPreference } = useDirections();
 
     // console.log(directionsPreference);
 

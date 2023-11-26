@@ -6,13 +6,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { showLocation } from "react-native-map-link";
 import HomeStyle from "../../styling/HomeStyle";
 
-import { useDirections } from "../../components/Contexts/DirectionProvider";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function EventDetailsScreen() {
     const route = useRoute();
     const navigation = useNavigation();
-    const { directionsPreference } = useDirections();
 
     const { EventImage, EventName, EventDateTime, EventDetailsDescription, EventLatitude, EventLongitude } = route.params;
 

@@ -9,7 +9,7 @@ import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
 
-import { validateName } from "../../utils/Validators";
+import { validateName } from "../../utils/Regex/Validators";
 
 ChangeNameScreen.propTypes = {
     navigation: PropTypes.shape({

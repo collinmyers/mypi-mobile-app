@@ -8,7 +8,7 @@ import AuthLogo from "../../../components/logo/AuthLogo";
 import AppStyle from "../../../styling/AppStyle";
 import AuthStyle from "../../../styling/AuthStyle";
 
-import { validateEmail } from "../../../utils/Validators";
+import { validateEmail } from "../../../utils/Regex/Validators";
 import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
 
 ForgotPasswordScreen.propTypes = {

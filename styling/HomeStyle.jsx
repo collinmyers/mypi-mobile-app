@@ -68,7 +68,9 @@ export default StyleSheet.create({
         alignSelf: "center",
         borderTopColor: appGreen,
         width: cardWidth,
-        alignItems: "center"
+        alignItems: "center",
+        // marginTop: 20,
+        // marginHorizontal: 20,
     },
     settingsSectionHeader: {
         alignSelf: "center",
@@ -77,7 +79,10 @@ export default StyleSheet.create({
         fontSize: 24,
         marginBottom: 10
     },
-
+    navPreferencePickerText: {
+        fontSize: 16,
+        marginBottom: 8,
+    },
     profileView: {
         padding: 16,
     },
@@ -302,5 +307,53 @@ export default StyleSheet.create({
     donationsWebView: {
         flex: 1,
         backgroundColor: appBlue
-    }
+    },
+    modalNavContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#00000080"
+    },
+    modalNavContentContainer: {
+        backgroundColor: appBlue,
+        maxWidth: "90%",
+        paddingVertical: 20,
+        paddingHorizontal: 30,
+        alignItems: "center",
+        borderRadius: 5
+    },
+    modalNavCancelContainer: {
+        backgroundColor: appBlue,
+    },
+    modalNavText: {
+        marginBottom: 20,
+        fontWeight: "bold",
+        fontSize: 18,
+        color: appWhite,
+        textAlign: "center"
+    },
+    modalNavButtonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    modalNavCancelContentContainer: {
+        marginTop: 30
+    },
+    modalNavCancelButton: {
+        backgroundColor: deleteRed,
+        paddingVertical: 10,
+        paddingHorizontal: 50,
+        borderRadius: 5,
+    },
+    modalNavButton: {
+        backgroundColor: appGreen,
+        paddingHorizontal: 30,
+        paddingVertical: 10,
+        marginHorizontal: 6.5,
+        borderRadius: 5,
+    },
+    modalNavButtonText: {
+        color: appWhite,
+        textAlign: "center"
+    },
 });

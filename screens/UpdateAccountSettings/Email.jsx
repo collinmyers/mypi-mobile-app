@@ -10,7 +10,7 @@ import AuthLogo from "../../components/logo/AuthLogo";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 
-import { validateEmail } from "../../utils/Validators";
+import { validateEmail } from "../../utils/Regex/Validators";
 
 ChangeEmailScreen.propTypes = {
     navigation: PropTypes.shape({

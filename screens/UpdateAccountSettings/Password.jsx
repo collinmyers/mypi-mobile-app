@@ -9,7 +9,7 @@ import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
 
-import { validatePassword } from "../../utils/Validators";
+import { validatePassword } from "../../utils/Regex/Validators";
 
 ChangePasswordScreen.propTypes = {
     navigation: PropTypes.shape({
