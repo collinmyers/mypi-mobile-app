@@ -12,6 +12,8 @@ export default function MapScreen() {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
 
     const getMarkers = async (directionsPreference) => {
+
+        setCurrentNavPreference(directionsPreference); // Forcing update to marker direction preference if user changes preference
         try {
             const client = new Client()
                 .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
@@ -27,28 +29,23 @@ export default function MapScreen() {
             promise.then(
                 function (response) {
                     const newMarkers = response.documents.map((doc, index) => {
-                        const dbLatitude = doc.Latitude;
-                        const dbLongitude = doc.Longitude;
-                        const dbName = doc.Name;
-                        const dbParkStatus = doc.Status;
+                        const poiLatitude = doc.Latitude;
+                        const poiLongitude = doc.Longitude;
+                        const poiName = doc.Name;
+                        const poiParkStatus = doc.Status;
 
                         return (
                             <Marker
                                 key={index}
-                                coordinate={{ latitude: dbLatitude, longitude: dbLongitude }}
+                                coordinate={{ latitude: poiLatitude, longitude: poiLongitude }}
                             >
-                                <Callout
-                                    onPress={() => {
-                                        getDirections(
-                                            dbLatitude,
-                                            dbLongitude,
-                                            directionsPreference
-                                        );
-                                    }}
+                                <Callout onPress={() => {
+                                    getDirections(poiLatitude, poiLongitude, directionsPreference);
+                                }}
                                 >
                                     <View>
                                         <Text style={MapStyle.poiMarkerTitle}>
-                                            {dbName} ({dbParkStatus})
+                                            {poiName} ({poiParkStatus})
                                         </Text>
                                         <Text style={MapStyle.poiMarkerDirectionsText}>
                                             Get Directions{" "}
@@ -62,18 +59,15 @@ export default function MapScreen() {
                     setMarkers(newMarkers);
                 },
                 function (error) {
-                    console.error(error); // Promise failure
+                    console.error(error);
                 }
             );
         } catch (error) {
-            console.error(error); // Catch error
+            console.error(error);
         }
     };
 
     const getDirections = (lat, long, directionsPreference) => {
-
-        // console.log("directions preference: " + directionsPreference);
-
         showLocation({
             latitude: lat,
             longitude: long,
@@ -95,6 +89,8 @@ export default function MapScreen() {
         }
     };
 
+    // Two useFocusEffects required for directionsPreference to be set properly on change
+
     useFocusEffect(
         React.useCallback(() => {
             fetchNavPreference();
@@ -104,8 +100,8 @@ export default function MapScreen() {
     useFocusEffect(
         React.useCallback(() => {
             if (currentNavPreference !== null) {
-                setMarkers([]); // Empty the data array
-                getMarkers(currentNavPreference); // Get Events
+                setMarkers([]); // Empty the data array before updating
+                getMarkers(currentNavPreference); // Get POI markers
             }
         }, [currentNavPreference])
     );

@@ -20,7 +20,6 @@ export default function EventDetailsScreen() {
     const { EventImage, EventName, EventDateTime, EventDetailsDescription, EventLatitude, EventLongitude } = route.params;
 
     const getDirections = (lat, long, directionsPreference) => {
-        // console.log("directions preference: " + directionsPreference);
         showLocation({
             latitude: lat,
             longitude: long,
@@ -45,12 +44,6 @@ export default function EventDetailsScreen() {
     useFocusEffect(
         React.useCallback(() => {
             fetchNavPreference();
-        }, [])
-    );
-
-    useFocusEffect(
-        React.useCallback(() => {
-            // Add a check to ensure currentNavPreference is not null before using it
             if (currentNavPreference !== null) {
                 setCurrentNavPreference(currentNavPreference);
             }
