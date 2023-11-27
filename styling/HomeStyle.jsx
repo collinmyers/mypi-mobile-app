@@ -347,7 +347,7 @@ export default StyleSheet.create({
     },
     modalNavButton: {
         backgroundColor: appGreen,
-        paddingHorizontal: 30,
+        paddingHorizontal: "10%",
         paddingVertical: 10,
         marginHorizontal: 6.5,
         borderRadius: 5,
