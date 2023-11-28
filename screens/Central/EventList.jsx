@@ -1,107 +1,98 @@
 import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+
 import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { Databases, Client, Storage } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
-import { useFocusEffect } from "@react-navigation/native";
 import HomeStyle from "../../styling/HomeStyle";
 
 export default function EventListScreen() {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
+  const [data, setData] = useState([]);
 
-    const [data, setData] = useState([]);
+  useFocusEffect(
+    React.useCallback(() => {
+    // Initialize Appwrite client
+    const client = new Client()
+      .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
+      .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
 
-    // Rest of your code
-    // const client = new Client()
-    //     .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-    //     .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-    // client.subscribe("databases.653ae4b2740b9f0a5139.collections.655280f07e30eb37c8e8.documents", response => {
-    //     console.log(response);
-    // });
-
-    const getEvents = async () => {
-
-        try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const database = new Databases(client);
-            const storage = new Storage(client);
-
-            //Get docs from specified collection from db
-            let promise = database.listDocuments(
-                "653ae4b2740b9f0a5139", //DB ID
-                "655280f07e30eb37c8e8", //Collection ID
-            );
-
-            //Successful pull from db. Add data to array with set data in for loop...
-            //
-            promise.then(async function (response) {
-                for (let index = 0; index < response.documents.length; index++) {   //Iterate over every document in db
-
-                    const EventName = response["documents"][index]["Name"];
-                    const EventDateTime = response["documents"][index]["DateTime"];
-                    const EventListDescription = response["documents"][index]["EventListDescription"];
-                    const EventDetailsDescription = response["documents"][index]["EventDetailsDescription"];
-                    const EventLatitude = response["documents"][index]["Latitude"];
-                    const EventLongitude = response["documents"][index]["Longitude"];
-
-                    const EventImage = storage.getFileView(
-                        "653ae4d2b3fcc68c10bf", //BucketID
-                        response["documents"][index]["FileID"] //File ID
-                    ).toString();
-
-                    setData(data => [...data,  //Add document data to array that contains react-native code to render the events 
-
-                    <Pressable key={index} onPress={() => navigation.navigate("EventDetailsScreen", {
-                        EventImage: EventImage,
-                        EventName: EventName,
-                        EventDateTime: EventDateTime,
-                        EventDetailsDescription: EventDetailsDescription,
-                        EventLatitude: EventLatitude,
-                        EventLongitude: EventLongitude
-                    }
-                    )}
-                    >
-                        <Card style={HomeStyle.eventCard} >
-                            <Card.Content style={HomeStyle.eventCardContent}>
-                                <Image source={{ uri: EventImage }} style={HomeStyle.eventListImage} />
-                                <Text style={HomeStyle.eventListTitle}>{EventName}</Text>
-                                <Text style={HomeStyle.eventListDateTime}>{EventDateTime}</Text>
-                                <Text style={HomeStyle.eventListDescription}>{EventListDescription}</Text>
-                            </Card.Content>
-                        </Card>
-                    </Pressable>
-                    ]);
-                }
-            }, function (error) {
-                console.error(error); //promise failure
-            });
-
-        }
-
-        catch (error) {
-            console.error(error); //catch error
-        }
+    // Function to handle real-time updates
+    const handleSubscription = () => {
+      getEvents();
     };
-
-    useFocusEffect(
-        React.useCallback(() => {
-            setData([]);    //Empty the data array
-            getEvents();    //Get Events 
-        }, [])
+    // Subscribe to real-time updates
+    const subscription = client.subscribe(
+      "databases.653ae4b2740b9f0a5139.collections.655280f07e30eb37c8e8.documents",
+      handleSubscription
     );
 
-    return (
+    getEvents();
+ 
+  }, [])); // Empty dependency array means this effect will only run once when the component mounts
 
-        <SafeAreaView style={HomeStyle.eventContainer}>
-            <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
-                {data}
-            </ScrollView>
-        </SafeAreaView>
-
-
-    );
+  const getEvents = async () => {
+    try {
+      const client = new Client()
+        .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
+        .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
+  
+      const database = new Databases(client);
+      const storage = new Storage(client);
+  
+      const response = await database.listDocuments(
+        "653ae4b2740b9f0a5139", // DB ID
+        "655280f07e30eb37c8e8" // Collection ID
+      );
+   
+ 
+      // Build a new array with updated data
+      const newData = response.documents.map((document, index) => {
+        const ShortDescription = document.ShortDescription;
+        const EventName = document.Name;
+        const LongDescription = document.LongDescription;
+        const EventLatitude = document.Latitude;
+        const EventLongitude = document.Longitude;
+  
+        const EventImage = storage.getFileView(
+          "653ae4d2b3fcc68c10bf", // BucketID
+          document.FileID // File ID
+        ).toString();
+  
+        return (
+          <Pressable
+            key={index}
+            onPress={() =>
+              navigation.navigate("EventDetailsScreen", {
+                EventImage: EventImage,
+                EventName: EventName,
+                EventDescription: LongDescription,
+                EventLatitude: EventLatitude,
+                EventLongitude: EventLongitude,
+              })
+            }
+          >
+            <Card style={HomeStyle.eventCard}>
+              <Card.Content style={HomeStyle.eventCardContent}>
+                <Image source={{ uri: EventImage }} style={HomeStyle.eventListImage} />
+                <Text style={HomeStyle.eventListTitle}>{EventName}</Text>
+                <Text style={HomeStyle.eventListDescription}>{ShortDescription}</Text>
+              </Card.Content>
+            </Card>
+          </Pressable>
+        );
+      });
+      // Update state with the new array
+     setData(newData);
+      } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  return (
+    <SafeAreaView style={HomeStyle.eventContainer}>
+      <ScrollView showsVerticalScrollIndicator={false}>{data}</ScrollView>
+    </SafeAreaView>
+  );
 }
