@@ -48,10 +48,11 @@ export default function EventListScreen() {
    
  
       // Build a new array with updated data
-      const newData = response.documents.map((document, index) => {
-        const ShortDescription = document.ShortDescription;
+        const newData = response.documents.map((document, index) => {
+        const EventListDescription = document.EventListDescription;
         const EventName = document.Name;
-        const LongDescription = document.LongDescription;
+        const EventDateTime = document.DateTime;
+        const EventDetailsDescription = document.EventDetailsDescription;
         const EventLatitude = document.Latitude;
         const EventLongitude = document.Longitude;
   
@@ -65,11 +66,13 @@ export default function EventListScreen() {
             key={index}
             onPress={() =>
               navigation.navigate("EventDetailsScreen", {
-                EventImage: EventImage,
-                EventName: EventName,
-                EventDescription: LongDescription,
-                EventLatitude: EventLatitude,
-                EventLongitude: EventLongitude,
+                        EventImage: EventImage,
+                        EventName: EventName,
+                        EventDateTime: EventDateTime,
+                        EventDetailsDescription: EventDetailsDescription,
+                        EventListDescription: EventListDescription,
+                        EventLatitude: EventLatitude,
+                        EventLongitude: EventLongitude
               })
             }
           >
@@ -77,7 +80,9 @@ export default function EventListScreen() {
               <Card.Content style={HomeStyle.eventCardContent}>
                 <Image source={{ uri: EventImage }} style={HomeStyle.eventListImage} />
                 <Text style={HomeStyle.eventListTitle}>{EventName}</Text>
-                <Text style={HomeStyle.eventListDescription}>{ShortDescription}</Text>
+                <Text style={HomeStyle.eventListDateTime}>{EventDateTime}</Text>
+                <Text style={HomeStyle.eventListDescription}>{EventListDescription}</Text>
+                
               </Card.Content>
             </Card>
           </Pressable>
@@ -92,7 +97,11 @@ export default function EventListScreen() {
   
   return (
     <SafeAreaView style={HomeStyle.eventContainer}>
-      <ScrollView showsVerticalScrollIndicator={false}>{data}</ScrollView>
-    </SafeAreaView>
+    <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
+        {data}
+    </ScrollView>
+</SafeAreaView>
+
+
   );
 }
