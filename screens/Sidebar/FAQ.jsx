@@ -10,9 +10,6 @@ export default function FAQScreen() {
             <Text style={HomeStyle.dbText}>FAQ Page</Text>
             <Text style={HomeStyle.dbText}>Do I need to sign up to use this app?</Text>
             <Text style={HomeStyle.dbText}>Where are all the food trucks at?</Text>
-            <Text style={HomeStyle.dbText}>Will I ever find true love?</Text>
-            <Text style={HomeStyle.dbText}>Will I get answers to this questions?</Text>
-            <Text style={HomeStyle.dbText}>Will these questions get buttons that expand to display the answers?</Text>
         </SafeAreaView>
     );
 }
