@@ -12,10 +12,10 @@
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/drawer": "^6.6.6",
-    "@react-navigation/native-stack": "^6.9.16",
+    "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.20",
-    "appwrite": "^13.0.0",
-    "expo": "~49.0.13",
+    "appwrite": "^13.0.1",
+    "expo": "~49.0.21",
     "expo-notifications": "~0.20.1",
     "local-storage-fallback": "^4.1.2",
     "prop-types": "^15.8.1",
@@ -25,14 +25,14 @@
     "react-native-gesture-handler": "~2.12.0",
     "react-native-map-link": "^2.11.3",
     "react-native-maps": "1.7.1",
-    "react-native-paper": "^5.11.3",
+    "react-native-paper": "^5.11.4",
     "react-native-reanimated": "~3.3.0",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-webview": "13.2.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "eslint": "^8.51.0",
+    "@babel/core": "^7.23.6",
+    "eslint": "^8.55.0",
     "eslint-plugin-react": "^7.33.2"
   },
   "private": true
