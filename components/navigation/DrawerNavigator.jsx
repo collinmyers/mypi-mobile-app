@@ -9,7 +9,7 @@ import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./AuthStackNavigator";
 import { Client, Account } from "appwrite";
 
-import { Entypo, Ionicons, AntDesign, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+import { Entypo, Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 
 const Drawer = createDrawerNavigator();
 
