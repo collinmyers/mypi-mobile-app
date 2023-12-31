@@ -43,6 +43,7 @@ export default function DrawerNavigator() {
     useEffect(() => {
         checkAuthState();
     }, [refreshDrawer]);
+    
 
     const handleLoginSuccess = () => {
         setIsSignedIn(true);
@@ -127,9 +128,10 @@ export default function DrawerNavigator() {
                         }} />
                 )}
                 <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader />, drawerIcon: () => <Entypo name="home" size={24} color={appBlue} /> }} />
+                <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <MaterialIcons name="volunteer-activism" size={24} color={appBlue} /> }} />
                 <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color={appBlue} /> }} />
                 <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <MaterialIcons name="park" size={24} color={appBlue} /> }} />
-                <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <FontAwesome5 name="donate" size={24} color={appBlue} /> }} />
+
 
             </Drawer.Navigator>
         </NavigationContainer >
