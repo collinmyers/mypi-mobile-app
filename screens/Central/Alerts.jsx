@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
+import { Alert, SafeAreaView, ScrollView } from "react-native";
+import { Card, Text } from "react-native-paper";
+import { Databases, Client } from "appwrite";
 import * as Notifications from "expo-notifications";
+import HomeStyle from "../../styling/HomeStyle";
+
 
 export default function AlertsScreen() {
-  const [notificationCount, setNotificationCount] = useState(0);
 
-  const appBlue = "#134C77";
-  const appGreen = "#8FA063";
+  /* For sending notifications from mobile (possibly add in future)
+
+  const [notificationCount, setNotificationCount] = useState(0);
 
   const sendNotification = async () => {
     // Create a simple notification
@@ -25,6 +29,10 @@ export default function AlertsScreen() {
 
     setNotificationCount(notificationCount + 1);
   };
+  */
+
+  const [data, setData] = useState([]);
+
 
   useEffect(() => {
     // Request notification permissions when the component mounts
@@ -51,16 +59,57 @@ export default function AlertsScreen() {
 
     // Set the notification handler
     Notifications.setNotificationHandler(notificationHandler);
+
+    getAlerts();
+
   }, []);
+
+  const getAlerts = async () => {
+    try {
+        const client = new Client()
+            .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
+            .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
+
+        const database = new Databases(client);
+
+        const response = await database.listDocuments(
+            "653ae4b2740b9f0a5139", // DB ID
+            "6552848655e88d169d7d" // Collection ID
+        );
+
+
+        // Build a new array with updated data
+        const newData = response.documents.map((document, index) => {
+            const Title = document.Title;
+            const Details = document.Details;
+            const NotificationType = document.NotificationType;
+
+            return (
+
+              <Card style={HomeStyle.alertCard} key ={index}>
+                  <Card.Content style={HomeStyle.alertCardContent}>
+                      <Text style={HomeStyle.alertListTitle}>{Title}</Text>
+                      <Text style={HomeStyle.alertListDetails}>{Details}</Text>
+                      <Text style={HomeStyle.alertListTypeDesc}>{NotificationType}</Text>
+
+                  </Card.Content>
+              </Card>
+                
+            );
+        });
+        // Update state with the new array
+        setData(newData);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
   
   return (
-    <View style={{ justifyContent: "center", height: "100%" , backgroundColor: appBlue}}>
-      <TouchableOpacity onPress={sendNotification} style={{alignSelf: "center"}}>
-        <View style={{ backgroundColor: appGreen, padding: 20, borderRadius: 50, justifyContent: "center" }}>
-          <Text style={{ color: "white" , textAlign: "center"}}>Send New Notification</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView style={HomeStyle.alertContainer}>
+      <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
+          {data}
+      </ScrollView>
+    </SafeAreaView>
   );
 }

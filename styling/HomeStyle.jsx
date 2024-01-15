@@ -356,4 +356,34 @@ export default StyleSheet.create({
         color: appWhite,
         textAlign: "center"
     },
+    alertContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: appBlue,
+    },
+    alertCard: {
+        width: deviceWidth * .9,
+        marginBottom: deviceWidth * .1,
+        backgroundColor: appGreen,
+    },
+    alertCardContent: {
+
+    },
+    alertListTitle: {
+        fontWeight: "bold",
+        textAlign:"center",
+        fontSize: 18,
+        color: appWhite
+    },
+    alertListDetails: {
+        fontSize: 14,
+        textAlign:"center",
+        color: appWhite
+    },
+    alertListTypeDesc: {
+        fontSize: 12,
+        fontStyle:"italic",
+        color: appWhite
+    },
 });
