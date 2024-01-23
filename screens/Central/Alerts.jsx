@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert, SafeAreaView, ScrollView } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { Card, Text, Button } from "react-native-paper";
 import { Databases, Client } from "appwrite";
 import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
@@ -32,6 +32,8 @@ export default function AlertsScreen() {
   */
 
   const [data, setData] = useState([]);
+  const [filterList, setList] = useState([]);
+  const [fullList, setFull] = useState([]);
 
 
   useEffect(() => {
@@ -86,7 +88,7 @@ export default function AlertsScreen() {
 
             return (
 
-              <Card style={HomeStyle.alertCard} key ={index}>
+              <Card style={HomeStyle.alertCard} key ={index} id={NotificationType}>
                   <Card.Content style={HomeStyle.alertCardContent}>
                       <Text style={HomeStyle.alertListTitle}>{Title}</Text>
                       <Text style={HomeStyle.alertListDetails}>{Details}</Text>
@@ -104,11 +106,46 @@ export default function AlertsScreen() {
     }
 };
 
+const handleFilterById = (filterId) => {
+  
+  setFull([]);
+  setList([]);
+
+  data.forEach(element => {
+    if(element.props.id == filterId){
+      setList(element);
+    }
+  });
+};
+
+const handleGetFullList  = () => {
+
+  setFull([]);
+  setList([]);
+
+  setFull(data);
+};
   
   return (
     <SafeAreaView style={HomeStyle.alertContainer}>
       <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
-          {data}
+
+
+        <Button mode="contained" onPress={()=>handleGetFullList()}>
+          All
+        </Button>
+        <Button mode="contained" onPress={()=>handleFilterById("alerts")}>
+          Alerts
+        </Button>
+        <Button mode="contained" onPress={()=>handleFilterById("events")}>
+          Events
+        </Button>
+        <Button mode="contained" onPress={()=>handleFilterById("promos")}>
+          Promos
+        </Button>
+
+          {fullList}
+          {filterList}
       </ScrollView>
     </SafeAreaView>
   );
