@@ -8,6 +8,8 @@ import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPref
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function MapScreen() {
+
+
     const [markers, setMarkers] = useState([]);
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
 
@@ -108,20 +110,20 @@ export default function MapScreen() {
 
     return (
         <SafeAreaView style={MapStyle.container}>
-            <View style={MapStyle.container}>
-                <MapView
-                    style={MapStyle.map}
-                    provider={PROVIDER_GOOGLE}
-                    initialRegion={{
-                        latitude: 42.158581,
-                        longitude: -80.1079,
-                        latitudeDelta: 0.115,
-                        longitudeDelta: 0.0421,
-                    }}
-                >
-                    {markers}
-                </MapView>
-            </View>
+            <Text style={MapStyle.changeButton} onPress={() => { console.log("CollinIsCool"); }}>View as List</Text>
+    
+            <MapView
+                style={MapStyle.map}
+                provider={PROVIDER_GOOGLE}
+                initialRegion={{
+                    latitude: 42.158581,
+                    longitude: -80.1079,
+                    latitudeDelta: 0.115,
+                    longitudeDelta: 0.0421,
+                }}
+            >
+                {markers}
+            </MapView>
         </SafeAreaView>
     );
 }

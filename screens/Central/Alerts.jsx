@@ -9,7 +9,6 @@ import { useFocusEffect } from "@react-navigation/native";
 
 export default function AlertsScreen() {
 
-    const appBlue = "#134C77";
     const appGreen = "#8FA063";
     const appWhite = "#FFFFFF";
 
