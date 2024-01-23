@@ -26,7 +26,7 @@ export default StyleSheet.create({
     },
     scrollableView: {
         flexGrow: 1,
-        justifyContent: "center",
+        justifyContent: "space",
         backgroundColor: appBlue
     },
     dbText: {
@@ -357,10 +357,25 @@ export default StyleSheet.create({
         textAlign: "center"
     },
     alertContainer: {
+        display: "flex",
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
         backgroundColor: appBlue,
+    },
+    alertButtons: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        marginBottom: "10%"
+    },
+    alertButtonOpacity: {
+            backgroundColor: appGreen,
+            borderRadius: 25,
+            paddingLeft: 10,
+            paddingRight: 10,
+            paddingTop: 10,
+            paddingBottom: 10,
+            marginVertical: "10%",
+            marginBottom: 0,
     },
     alertCard: {
         width: deviceWidth * .9,
@@ -372,18 +387,18 @@ export default StyleSheet.create({
     },
     alertListTitle: {
         fontWeight: "bold",
-        textAlign:"center",
+        textAlign: "center",
         fontSize: 18,
         color: appWhite
     },
     alertListDetails: {
         fontSize: 14,
-        textAlign:"center",
+        textAlign: "center",
         color: appWhite
     },
     alertListTypeDesc: {
         fontSize: 12,
-        fontStyle:"italic",
+        fontStyle: "italic",
         color: appWhite
     },
 });
