@@ -1,4 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet,Dimensions } from "react-native";
+
+const deviceWidth = Dimensions.get("window").width;
+
 
 const appBlue = "#134C77";
 const appGreen = "#8FA063";
@@ -41,6 +44,41 @@ export default StyleSheet.create({
         textAlign:"center",
         flexDirection:"column",
         zIndex:1
+    },
+    poiCard: {
+        width: deviceWidth * .9,
+        marginBottom: deviceWidth * .1,
+        backgroundColor: appGreen,
+    },
+    poiCardContent: {
+
+    },
+    poiListTitle: {
+        fontWeight: "bold",
+        fontSize: 18,
+        color: appWhite
+    },
+    poiListLatLon: {
+        textAlign: "left",
+        fontWeight: "bold",
+        fontSize: 14,
+        color: appWhite,
+        marginVertical: "1%"
+    },
+    poiListStatus: {
+        fontSize: 14,
+        color: appWhite
+    },
+    poiContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: appBlue,
+    },
+    scrollableView: {
+        flexGrow: 1,
+        justifyContent: "space",
+        backgroundColor: appBlue
     },
 
 });

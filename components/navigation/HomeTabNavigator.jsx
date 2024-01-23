@@ -3,10 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, Fontisto, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
 
 import DashboardScreen from "../../screens/Central/Dashboard";
-import MapScreen from "../../screens/Central/Map";
 import AlertsScreen from "../../screens/Central/Alerts";
 import SettingsStackNavigator from "./SettingsStackNavigator";
 import EventsStackNavigator from "./EventsStackNavigator";
+import MapStackNavigator from "./MapStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -44,7 +44,7 @@ export default function HomeTabNavigator() {
 
             <Tab.Screen
                 name="Map"
-                component={MapScreen}
+                component={MapStackNavigator}
                 options={{
                     tabBarLabel: "Map",
                     headerShown: false,

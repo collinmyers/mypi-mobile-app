@@ -6,9 +6,12 @@ import { Databases, Client } from "appwrite";
 import MapStyle from "../../styling/MapStyle";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+
 
 export default function MapScreen() {
 
+    const navigation = useNavigation();
 
     const [markers, setMarkers] = useState([]);
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
@@ -110,7 +113,7 @@ export default function MapScreen() {
 
     return (
         <SafeAreaView style={MapStyle.container}>
-            <Text style={MapStyle.changeButton} onPress={() => { console.log("CollinIsCool"); }}>View as List</Text>
+            <Text style={MapStyle.changeButton} onPress={() => { navigation.navigate("MapList"); }}>View as List</Text>
     
             <MapView
                 style={MapStyle.map}
