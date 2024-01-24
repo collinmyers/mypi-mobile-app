@@ -1,4 +1,4 @@
-import { StyleSheet,Dimensions } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -16,7 +16,7 @@ export default StyleSheet.create({
     },
     map: {
         ...StyleSheet.absoluteFillObject,
-        zIndex:0,
+        zIndex: 0,
     },
     poiMarkerTitle: {
         fontSize: 15,
@@ -29,21 +29,24 @@ export default StyleSheet.create({
         fontWeight: "bold",
         alignSelf: "center"
     },
-    changeButton:{
+    changeButton: {
         fontSize: 20,
-        paddingVertical:10,
+        margin: "5%",
+        padding: 10,
+        borderRadius: 40,
         color: appWhite,
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 1,
         shadowRadius: 3.84,
         elevation: 5,
-        textAlign:"center",
-        flexDirection:"column",
-        zIndex:1
+        textAlign: "center",
+        flexDirection: "column",
+        zIndex: 1,
+        backgroundColor: appGreen
     },
     poiCard: {
         width: deviceWidth * .9,
