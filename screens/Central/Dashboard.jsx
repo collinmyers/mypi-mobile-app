@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import { Text } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import { Account, Client } from "appwrite";
 import { useFocusEffect } from "@react-navigation/native";
 import Logo from "../../components/logo/AuthLogo";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+
+
 
 export default function Dashboard() {
+
+    const navigation = useNavigation();
+
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [profileInfo, setProfileInfo] = useState({
         name: "",
@@ -45,7 +52,7 @@ export default function Dashboard() {
             </View>
 
             <View style={HomeStyle.dbContainer}>
-                
+
                 {isSignedIn ?
                     (<Text style={HomeStyle.dbTitleText}>Welcome {profileInfo.name}</Text>) :
                     (<Text style={HomeStyle.dbTitleText}>Welcome to myPI</Text>)
@@ -66,6 +73,10 @@ export default function Dashboard() {
                 <Text style={HomeStyle.dbText}>
                     Check the sidebar menu to see other options such as the FAQ page and the Park Info page.
                 </Text> */}
+                <TouchableOpacity style={HomeStyle.dashboardDonoOpac} onPress={() => { navigation.navigate("Donate"); }}>
+                    <MaterialIcons name="volunteer-activism" size={24} color={"#8B0000"} />
+                    <Text style={HomeStyle.dashboardDonoText}>Donate Here!</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );

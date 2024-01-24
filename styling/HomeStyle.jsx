@@ -368,14 +368,14 @@ export default StyleSheet.create({
         marginBottom: "10%"
     },
     alertButtonOpacity: {
-            backgroundColor: appGreen,
-            borderRadius: 25,
-            paddingLeft: 10,
-            paddingRight: 10,
-            paddingTop: 10,
-            paddingBottom: 10,
-            marginVertical: "10%",
-            marginBottom: 0,
+        backgroundColor: appGreen,
+        borderRadius: 25,
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginVertical: "10%",
+        marginBottom: 0,
     },
     alertCard: {
         width: deviceWidth * .9,
@@ -400,5 +400,20 @@ export default StyleSheet.create({
         fontSize: 12,
         fontStyle: "italic",
         color: appWhite
+    },
+    dashboardDonoOpac: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        backgroundColor: appGreen,
+        borderRadius: 5,
+        width: buttonWidth,
+        marginVertical: 10,
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    dashboardDonoText: {
+        color: appWhite,
+        textAlign: "center",
+        fontSize: 24
     },
 });

@@ -33,7 +33,7 @@ export default StyleSheet.create({
         fontSize: 20,
         margin: "5%",
         padding: 10,
-        borderRadius: 40,
+        borderRadius: 20,
         color: appWhite,
         shadowColor: "#000",
         shadowOffset: {
@@ -46,7 +46,8 @@ export default StyleSheet.create({
         textAlign: "center",
         flexDirection: "column",
         zIndex: 1,
-        backgroundColor: appGreen
+        backgroundColor: appGreen,
+        overflow: "hidden"
     },
     poiCard: {
         width: deviceWidth * .9,
