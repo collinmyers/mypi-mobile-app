@@ -86,9 +86,8 @@ export default function MapList() {
 
     return (
         <SafeAreaView style={MapStyle.poiContainer}>
+            <Text style={MapStyle.changeButton} onPress={() => { navigation.navigate("MapScreen"); }}>View as Map</Text>
             <ScrollView contentContainerStyle={MapStyle.scrollableView} showsVerticalScrollIndicator={false}>
-                <Text style={MapStyle.changeButton} onPress={() => { navigation.navigate("MapScreen"); }}>View as Map</Text>
-
                 {data}
             </ScrollView>
         </SafeAreaView>

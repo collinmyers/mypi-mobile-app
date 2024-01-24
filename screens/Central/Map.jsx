@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, SafeAreaView, Text } from "react-native";
-import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Callout, Marker } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
 import { Databases, Client } from "appwrite";
 import MapStyle from "../../styling/MapStyle";
@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 
 
 export default function MapScreen() {
+    // Google maps on iPhone sucks
 
     const navigation = useNavigation();
 
@@ -145,7 +146,7 @@ export default function MapScreen() {
 
             <MapView
                 style={MapStyle.map}
-                
+
                 initialRegion={{
                     latitude: 42.158581,
                     longitude: -80.1079,

@@ -39,15 +39,16 @@ export default StyleSheet.create({
     },
 
     ButtonOpacity: {
-        backgroundColor: appBlue,
+        fontSize: 20,
         width: 150,
-        borderRadius: 5,
-        marginTop: 10,
-        marginBottom: 20,
-        paddingLeft: 30,
-        paddingRight: 30,
-        paddingTop: 10,
-        paddingBottom: 10
+        margin: "5%",
+        padding: 10,
+        borderRadius: 20,
+        color: appWhite,
+        textAlign: "center",
+        flexDirection: "column",
+        backgroundColor: appBlue,
+        overflow: "hidden"
     },
 
     buttonText: {
@@ -57,10 +58,10 @@ export default StyleSheet.create({
     },
 
     additionalOptions: {
-        marginBottom: 10
+        marginTop: 10
     },
     additionalOptionsText: {
         color: "#134C77",
-        fontSize: 15
+        fontSize: 16
     }
 });

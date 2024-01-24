@@ -291,3 +291,5 @@ export default function SettingsScreen({ navigation }) {
 SettingsScreen.propTypes = {
     navigation: PropTypes.object.isRequired,
 };
+
+// Android sucks

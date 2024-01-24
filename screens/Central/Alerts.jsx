@@ -151,16 +151,33 @@ export default function AlertsScreen() {
         <SafeAreaView style={HomeStyle.alertContainer}>
             <View style={HomeStyle.alertButtons}>
 
-                <Button mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleGetFullList()}>
+                {/* <TouchableOpacity onPress={() => handleGetFullList()} style={HomeStyle.alertButton}>
+                    <Text style={HomeStyle.alertButtonText}>All</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => handleFilterById("alerts")} style={HomeStyle.alertButton}>
+                    <Text style={HomeStyle.alertButtonText}>Alerts</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => handleFilterById("events")} style={HomeStyle.alertButton}>
+                    <Text style={HomeStyle.alertButtonText}>Events</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => handleFilterById("promos")} style={HomeStyle.alertButton}>
+                    <Text style={HomeStyle.alertButtonText}>Promos</Text>
+                </TouchableOpacity> */}
+
+
+                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleGetFullList()}>
                     All
                 </Button>
-                <Button mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleFilterById("alerts")}>
+                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleFilterById("alerts")}>
                     Alerts
                 </Button>
-                <Button mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleFilterById("events")}>
+                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleFilterById("events")}>
                     Events
                 </Button>
-                <Button mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleFilterById("promos")}>
+                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleFilterById("promos")}>
                     Promos
                 </Button>
 

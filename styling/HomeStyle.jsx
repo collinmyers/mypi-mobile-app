@@ -1,4 +1,8 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
+
+let fontSizeAlert = 16;
+
+if (Platform.OS === "android") fontSizeAlert = 13;
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -76,7 +80,7 @@ export default StyleSheet.create({
         alignSelf: "center",
         color: appWhite,
         fontWeight: "bold",
-        fontSize: 24,
+        fontSize: 20,
         marginBottom: 10
     },
     navPreferencePickerText: {
@@ -98,25 +102,33 @@ export default StyleSheet.create({
         marginTop: 20
     },
     changeInfoOpac: {
-        backgroundColor: appGreen,
-        borderRadius: 5,
+        fontSize: 20,
         width: buttonWidth,
-        marginVertical: 10,
-        paddingTop: 10,
-        paddingBottom: 10
+        margin: "2%",
+        padding: 10,
+        borderRadius: 20,
+        color: appWhite,
+        textAlign: "center",
+        flexDirection: "column",
+        backgroundColor: appGreen,
+        overflow: "hidden"
     },
     changeInfoText: {
         color: appWhite,
         textAlign: "center",
-        fontSize: 20
+        fontSize: 18
     },
     deleteAccountOpac: {
-        backgroundColor: deleteRed,
-        borderRadius: 5,
+        fontSize: 18,
         width: buttonWidth,
-        marginVertical: 10,
-        paddingTop: 10,
-        paddingBottom: 10
+        margin: "2%",
+        padding: 10,
+        borderRadius: 20,
+        color: appWhite,
+        textAlign: "center",
+        flexDirection: "column",
+        backgroundColor: deleteRed,
+        overflow: "hidden"
     },
     modalContainer: {
         flex: 1,
@@ -126,7 +138,7 @@ export default StyleSheet.create({
     },
     modalContentContainer: {
         backgroundColor: appBlue,
-        margin: deviceWidth * .05,
+        width: "99%",
         padding: 30,
         alignItems: "center",
         borderRadius: 5
@@ -140,17 +152,28 @@ export default StyleSheet.create({
         flexDirection: "row",
     },
     modalCancelButton: {
-        backgroundColor: appGreen,
         paddingVertical: 10,
         paddingHorizontal: 30,
         margin: 10,
-        borderRadius: 5,
+        padding: 10,
+        borderRadius: 20,
+        color: appWhite,
+        textAlign: "center",
+        flexDirection: "column",
+        backgroundColor: appGreen,
+        overflow: "hidden"
     },
     modalDeleteButton: {
-        backgroundColor: deleteRed,
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 30,
         margin: 10,
-        borderRadius: 5,
+        padding: 10,
+        borderRadius: 20,
+        color: appWhite,
+        textAlign: "center",
+        flexDirection: "column",
+        backgroundColor: deleteRed,
+        overflow: "hidden"
     },
     modalButtonText: {
         color: appWhite,
@@ -231,15 +254,16 @@ export default StyleSheet.create({
     },
 
     updateAccountButtonOpacity: {
+        fontSize: 20,
+        width: buttonWidth,
+        margin: "2%",
+        padding: 10,
+        borderRadius: 20,
+        color: appWhite,
+        textAlign: "center",
+        flexDirection: "column",
         backgroundColor: appBlue,
-        width: 150,
-        borderRadius: 5,
-        marginTop: 10,
-        marginBottom: 20,
-        paddingLeft: 30,
-        paddingRight: 30,
-        paddingTop: 10,
-        paddingBottom: 10
+        overflow: "hidden"
     },
 
     updateAccountButtonText: {
@@ -316,7 +340,7 @@ export default StyleSheet.create({
     },
     modalNavContentContainer: {
         backgroundColor: appBlue,
-        maxWidth: "90%",
+        maxWidth: "99%",
         paddingVertical: 20,
         paddingHorizontal: 30,
         alignItems: "center",
@@ -340,17 +364,28 @@ export default StyleSheet.create({
         marginTop: 30
     },
     modalNavCancelButton: {
-        backgroundColor: deleteRed,
         paddingVertical: 10,
         paddingHorizontal: 50,
-        borderRadius: 5,
+        marginHorizontal: 6.5,
+        padding: 10,
+        borderRadius: 20,
+        color: appWhite,
+        textAlign: "center",
+        flexDirection: "column",
+        overflow: "hidden",
+        backgroundColor: deleteRed,
     },
     modalNavButton: {
-        backgroundColor: appGreen,
-        paddingHorizontal: "10%",
         paddingVertical: 10,
+        paddingHorizontal: 30,
         marginHorizontal: 6.5,
-        borderRadius: 5,
+        padding: 10,
+        borderRadius: 20,
+        color: appWhite,
+        textAlign: "center",
+        flexDirection: "column",
+        overflow: "hidden",
+        backgroundColor: appGreen,
     },
     modalNavButtonText: {
         color: appWhite,
@@ -364,18 +399,20 @@ export default StyleSheet.create({
     alertButtons: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-evenly",
-        marginBottom: "10%"
+        justifyContent: "space-around",
+        marginBottom: "10%",
     },
-    alertButtonOpacity: {
+    alertButton: {
         backgroundColor: appGreen,
         borderRadius: 25,
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        marginVertical: "10%",
-        marginBottom: 0,
+        marginTop: "2%",
+        marginHorizontal: "1%",
+    },
+    alertButtonText: {
+        color: appWhite,
+        textAlign: "center",
+        marginHorizontal: "4%",
+        fontSize: fontSizeAlert
     },
     alertCard: {
         width: deviceWidth * .9,
@@ -404,12 +441,17 @@ export default StyleSheet.create({
     dashboardDonoOpac: {
         flexDirection: "row",
         justifyContent: "space-evenly",
-        backgroundColor: appGreen,
-        borderRadius: 5,
         width: buttonWidth,
         marginVertical: 10,
         paddingTop: 10,
-        paddingBottom: 10
+        paddingBottom: 10,
+        fontSize: 20,
+        margin: "5%",
+        borderRadius: 20,
+        color: appWhite,
+        textAlign: "center",
+        backgroundColor: appGreen,
+        overflow: "hidden"
     },
     dashboardDonoText: {
         color: appWhite,
