@@ -33,16 +33,44 @@ export default function MapScreen() {
 
             promise.then(
                 function (response) {
+
+                    let markerColor = "#000000";
+
                     const newMarkers = response.documents.map((doc, index) => {
                         const poiLatitude = doc.Latitude;
                         const poiLongitude = doc.Longitude;
                         const poiName = doc.Name;
                         const poiParkStatus = doc.Status;
+                        const poiType = doc.Type;
 
+                        switch (poiType) {
+                            case "Beach":
+                                markerColor = "#FF0000";
+                                break;
+                            case "Attraction":
+                                markerColor = "#FFC000";
+                                break;
+                            case "Rest Room":
+                                markerColor = "#3399FF";
+                                break;
+                            case "Parking":
+                                markerColor = "#666666";
+                                break;
+                            case "Information":
+                                markerColor = "#33CC33";
+                                break;
+                            case "Amenities":
+                                markerColor = "#9966CC";
+                                break;
+                            default:
+                                break;
+
+                        }
                         return (
                             <Marker
                                 key={index}
                                 coordinate={{ latitude: poiLatitude, longitude: poiLongitude }}
+                                pinColor={markerColor}
                             >
                                 <Callout onPress={() => {
                                     getDirections(poiLatitude, poiLongitude, directionsPreference);
@@ -114,7 +142,7 @@ export default function MapScreen() {
     return (
         <SafeAreaView style={MapStyle.container}>
             <Text style={MapStyle.changeButton} onPress={() => { navigation.navigate("MapList"); }}>View as List</Text>
-    
+
             <MapView
                 style={MapStyle.map}
                 provider={PROVIDER_GOOGLE}
