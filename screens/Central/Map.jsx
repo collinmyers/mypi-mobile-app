@@ -54,7 +54,7 @@ export default function MapScreen() {
                                 markerColor = "#3399FF";
                                 break;
                             case "Parking":
-                                markerColor = "#666666";
+                                markerColor = "#D2691E";
                                 break;
                             case "Information":
                                 markerColor = "#33CC33";
@@ -145,7 +145,7 @@ export default function MapScreen() {
 
             <MapView
                 style={MapStyle.map}
-                provider={PROVIDER_GOOGLE}
+                
                 initialRegion={{
                     latitude: 42.158581,
                     longitude: -80.1079,
