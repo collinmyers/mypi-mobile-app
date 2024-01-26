@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, SafeAreaView, Text } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
-import { Databases, Client } from "appwrite";
+import { Databases, Client, Query } from "appwrite";
 import MapStyle from "../../styling/MapStyle";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { useFocusEffect } from "@react-navigation/native";
@@ -17,89 +17,102 @@ export default function MapScreen() {
     const [markers, setMarkers] = useState([]);
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
 
-    const getMarkers = async (directionsPreference) => {
+    const PAGE_SIZE = 25;
 
-        setCurrentNavPreference(directionsPreference); // Forcing update to marker direction preference if user changes preference
+    const getMarkers = async (directionsPreference) => {
+        setCurrentNavPreference(directionsPreference);
+
         try {
             const client = new Client()
                 .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
                 .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
 
             const database = new Databases(client);
+            let offset = 0;
+            let allMarkers = [];
 
-            let promise = database.listDocuments(
-                "653ae4b2740b9f0a5139", // DB ID
-                "65565099921adc2d835b" // Collection ID
-            );
+            const fetchPage = async (offset) => {
+                const response = await database.listDocuments(
+                    "653ae4b2740b9f0a5139", // DB ID
+                    "65565099921adc2d835b", // Collection ID
+                    [
+                        Query.limit(PAGE_SIZE),
+                        Query.offset(offset)
+                    ]
+                );
 
-            promise.then(
-                function (response) {
+                const newMarkers = response.documents.map((doc, index) => {
+                    const poiLatitude = doc.Latitude;
+                    const poiLongitude = doc.Longitude;
+                    const poiName = doc.Name;
+                    const poiParkStatus = doc.Status;
+                    const poiType = doc.Type;
+                    const key = `${doc.id}_${offset + index}`; // Ensures all keys are unique, even with recursion
 
                     let markerColor = "#000000";
 
-                    const newMarkers = response.documents.map((doc, index) => {
-                        const poiLatitude = doc.Latitude;
-                        const poiLongitude = doc.Longitude;
-                        const poiName = doc.Name;
-                        const poiParkStatus = doc.Status;
-                        const poiType = doc.Type;
+                    switch (poiType) {
+                        case "Beach":
+                            markerColor = "#FF0000";
+                            break;
+                        case "Attraction":
+                            markerColor = "#FFC000";
+                            break;
+                        case "Rest Room":
+                            markerColor = "#3399FF";
+                            break;
+                        case "Parking":
+                            markerColor = "#D2691E";
+                            break;
+                        case "Information":
+                            markerColor = "#33CC33";
+                            break;
+                        case "Amenities":
+                            markerColor = "#9966CC";
+                            break;
+                        default:
+                            break;
+                    }
 
-                        switch (poiType) {
-                            case "Beach":
-                                markerColor = "#FF0000";
-                                break;
-                            case "Attraction":
-                                markerColor = "#FFC000";
-                                break;
-                            case "Rest Room":
-                                markerColor = "#3399FF";
-                                break;
-                            case "Parking":
-                                markerColor = "#D2691E";
-                                break;
-                            case "Information":
-                                markerColor = "#33CC33";
-                                break;
-                            case "Amenities":
-                                markerColor = "#9966CC";
-                                break;
-                            default:
-                                break;
-
-                        }
-                        return (
-                            <Marker
-                                key={index}
-                                coordinate={{ latitude: poiLatitude, longitude: poiLongitude }}
-                                pinColor={markerColor}
+                    return (
+                        <Marker
+                            key={key}
+                            coordinate={{ latitude: poiLatitude, longitude: poiLongitude }}
+                            pinColor={markerColor}
+                        >
+                            <Callout onPress={() => {
+                                getDirections(poiLatitude, poiLongitude, directionsPreference);
+                            }}
                             >
-                                <Callout onPress={() => {
-                                    getDirections(poiLatitude, poiLongitude, directionsPreference);
-                                }}
-                                >
-                                    <View>
-                                        <Text style={MapStyle.poiMarkerTitle}>
-                                            {poiName} ({poiParkStatus})
-                                        </Text>
-                                        <Text style={MapStyle.poiMarkerDirectionsText}>
-                                            Get Directions{" "}
-                                        </Text>
-                                    </View>
-                                </Callout>
-                            </Marker>
-                        );
-                    });
+                                <View>
+                                    <Text style={MapStyle.poiMarkerTitle}>
+                                        {poiName} ({poiParkStatus})
+                                    </Text>
+                                    <Text style={MapStyle.poiMarkerDirectionsText}>
+                                        Get Directions{" "}
+                                    </Text>
+                                </View>
+                            </Callout>
+                        </Marker>
+                    );
+                });
 
-                    setMarkers(newMarkers);
-                },
-                function (error) {
-                    console.error(error);
+                allMarkers = [...allMarkers, ...newMarkers];
+
+                if (response.documents.length === PAGE_SIZE) {
+                    await fetchPage(offset + PAGE_SIZE);
                 }
-            );
+            };
+
+            await fetchPage(offset);
+
+            setMarkers(allMarkers);
         } catch (error) {
             console.error(error);
         }
     };
+
+
 
     const getDirections = (lat, long, directionsPreference) => {
         showLocation({
