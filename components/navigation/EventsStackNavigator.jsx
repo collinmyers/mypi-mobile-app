@@ -2,21 +2,37 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import EventListScreen from "../../screens/Central/EventList";
 import EventDetailsScreen from "../../screens/Central/EventDetails";
+import Menu from "./AppHeader";
+import MenuBack from "./AppHeaderNavBack";
 
 const fade = ({ current }) => ({
     cardStyle: {
-      opacity: current.progress,
+        opacity: current.progress,
     },
 });
 
 const Stack = createStackNavigator();
 
 export default function EventsStackNavigator() {
+    const appBlue = "#134C77";
     return (
-        <Stack.Navigator initialRouteName="Events" screenOptions={{ headerShown: false, cardStyleInterpolator: fade}}>
-            <Stack.Screen name="Events" component={EventListScreen} />
-
-            <Stack.Screen name="EventDetailsScreen" component={EventDetailsScreen}/>
+        <Stack.Navigator initialRouteName="Events" screenOptions={{ headerShown: false, cardStyleInterpolator: fade }}>
+            <Stack.Screen name="Events" component={EventListScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: "",
+                    headerStyle: { backgroundColor: appBlue },
+                    header: () => <Menu />
+                }}
+            />
+            <Stack.Screen name="EventDetailsScreen" component={EventDetailsScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: "",
+                    headerStyle: { backgroundColor: appBlue },
+                    header: () => <MenuBack />
+                }}
+            />
         </Stack.Navigator>
 
     );

@@ -10,20 +10,20 @@ export default StyleSheet.create({
         backgroundColor: appBlue,
     },
     drawerHeader: {
-        justifyContent:"flex-start",
+        justifyContent:"space-between",
         alignItems:"flex-start",
+        flexDirection: "row",
         backgroundColor:appBlue,
         paddingTop: 40,
         paddingBottom: 10,
-        paddingLeft: 15
     },
     drawerMenuBar: {
         padding: 10,
         marginLeft: 10,
-        alignItems: "left",
     },
-    drawerMenuBarContainer: {
-        marginLeft: 5
+    navBackButton:{
+        padding: 10,
+        marginRight: 10,
     },
     // Image container for Dashboard
     imageContainer: {

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { View, SafeAreaView, Pressable, Image, TouchableOpacity } from "react-native";
+import { SafeAreaView, Image, TouchableOpacity } from "react-native";
 import { Card, Text } from "react-native-paper";
-import { useRoute, useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
 import { showLocation } from "react-native-map-link";
 import HomeStyle from "../../styling/HomeStyle";
 import { ScrollView } from "react-native-gesture-handler";
@@ -13,9 +12,6 @@ export default function EventDetailsScreen() {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
 
     const route = useRoute();
-    const navigation = useNavigation();
-
-    const appWhite = "#FFFFFF";
 
     const { EventImage, EventName, EventDateTime, EventDetailsDescription, EventLatitude, EventLongitude } = route.params;
 
@@ -54,11 +50,6 @@ export default function EventDetailsScreen() {
         <SafeAreaView style={HomeStyle.eventContainer}>
             <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
                 <Card style={HomeStyle.eventDetailsCard}>
-                    <View style={HomeStyle.eventDetailsBackButton}>
-                        <Pressable onPress={navigation.goBack}>
-                            <Ionicons name="arrow-back" size={24} color={appWhite} />
-                        </Pressable>
-                    </View>
                     <Card.Content style={HomeStyle.eventDetailsCardContent}>
                         <Text style={HomeStyle.eventDetailsTitle}>{EventName}</Text>
                         <Text style={HomeStyle.eventDetailsDateTime}>{EventDateTime}</Text>

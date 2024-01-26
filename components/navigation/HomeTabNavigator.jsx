@@ -8,6 +8,8 @@ import SettingsStackNavigator from "./SettingsStackNavigator";
 import EventsStackNavigator from "./EventsStackNavigator";
 import MapStackNavigator from "./MapStackNavigator";
 
+import Menu from "./AppHeader";
+
 const Tab = createBottomTabNavigator();
 
 export default function HomeTabNavigator() {
@@ -17,7 +19,6 @@ export default function HomeTabNavigator() {
     const appWhite = "#FFFFFF";
 
     return (
-
         <Tab.Navigator
             initialRouteName="Home"
             screenOptions={{
@@ -35,44 +36,40 @@ export default function HomeTabNavigator() {
                 component={DashboardScreen}
                 options={{
                     tabBarLabel: "Dashboard",
-                    headerShown: false,
+                    header: () => <Menu/>,
                     tabBarIcon: () => (
                         <Entypo name="home" size={24} color={appGreen} />
                     )
                 }}
             />
-
             <Tab.Screen
                 name="Map"
                 component={MapStackNavigator}
                 options={{
                     tabBarLabel: "Map",
-                    headerShown: false,
+                    header: () => <Menu/>,
                     tabBarIcon: () => (
                         <Entypo name="map" size={24} color={appGreen} />
                     )
                 }}
             />
-
             <Tab.Screen
                 name="EventList"
                 component={EventsStackNavigator}
                 options={{
                     tabBarLabel: "Events",
-                    headerShown: false,
+                    header: () => false,
                     tabBarIcon: () => (
                         <MaterialCommunityIcons name="calendar-month-outline" size={24} color={appGreen} />
                     )
                 }}
             />
-
-
             <Tab.Screen
                 name="Alerts"
                 component={AlertsScreen}
                 options={{
                     tabBarLabel: "Alerts",
-                    headerShown: false,
+                    header: () => <Menu/>,
                     tabBarIcon: () => (
                         <Fontisto name="bell" size={24} color={appGreen} />
                     )
@@ -89,7 +86,6 @@ export default function HomeTabNavigator() {
                     )
                 }}
             />
-
         </Tab.Navigator>
     );
 }

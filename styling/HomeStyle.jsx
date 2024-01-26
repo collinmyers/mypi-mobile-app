@@ -29,6 +29,7 @@ export default StyleSheet.create({
         width: "100%"
     },
     scrollableView: {
+        marginTop: "2%",
         flexGrow: 1,
         justifyContent: "space",
         backgroundColor: appBlue
@@ -271,10 +272,6 @@ export default StyleSheet.create({
         textAlign: "center",
         fontSize: 15
     },
-    eventDetailsBackButton: {
-        alignItems: "left",
-        padding: 10
-    },
     eventDetailsCard: {
         alignSelf: "center",
         width: "95%",
@@ -309,14 +306,14 @@ export default StyleSheet.create({
     },
     homeButtonOpacity: {
         backgroundColor: appBlue,
-        width: 160,
-        borderRadius: 5,
-        paddingLeft: 30,
-        paddingRight: 30,
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingHorizontal: 30,
+        paddingVertical: 10,
         marginVertical: "10%",
         marginBottom: 0,
+        fontSize: 20,
+        borderRadius: 20,
+        color: appWhite,
+        overflow: "hidden"
     },
     homeButtonText: {
         color: appWhite,
@@ -458,4 +455,8 @@ export default StyleSheet.create({
         textAlign: "center",
         fontSize: 24
     },
+    navBackButton:{
+        
+    
+    }
 });

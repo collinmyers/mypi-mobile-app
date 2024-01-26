@@ -270,7 +270,7 @@ export default function SettingsScreen({ navigation }) {
                                     onPress={showNavModal}
                                     style={HomeStyle.changeInfoOpac}
                                 >
-                                    <Text style={HomeStyle.changeInfoText}>Directions Mode</Text>
+                                    <Text style={HomeStyle.changeInfoText}>Navigation Type</Text>
                                 </TouchableOpacity>
                             </Card.Content>
 

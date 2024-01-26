@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import HomeTabNavigator from "../navigation/HomeTabNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
-import AppHeader from "../../components/navigation/AppHeader";
+import Menu from "../../components/navigation/AppHeader";
 import ParkInfoScreen from "../../screens/Sidebar/ParkInfo";
 import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
@@ -123,16 +123,14 @@ export default function DrawerNavigator() {
                         name="Sign In"
                         component={AuthStackWithLoginSuccess}
                         options={{
-                            header: () => <AppHeader />,
+                            header: () => {false;},
                             drawerIcon: () => <Ionicons name="person-circle" size={24} color={appBlue} />
                         }} />
                 )}
-                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => <AppHeader />, drawerIcon: () => <Entypo name="home" size={24} color={appBlue} /> }} />
-                <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <MaterialIcons name="volunteer-activism" size={24} color={appBlue} /> }} />
-                <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color={appBlue} /> }} />
-                <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <AppHeader />, drawerIcon: () => <MaterialIcons name="park" size={24} color={appBlue} /> }} />
-
-
+                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => false, drawerIcon: () => <Entypo name="home" size={24} color={appBlue} /> }} />
+                <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="volunteer-activism" size={24} color={appBlue} /> }} />
+                <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <Menu />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color={appBlue} /> }} />
+                <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="park" size={24} color={appBlue} /> }} />
             </Drawer.Navigator>
         </NavigationContainer >
     );
