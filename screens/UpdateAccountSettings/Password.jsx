@@ -25,8 +25,8 @@ export default function ChangePasswordScreen({ navigation }) {
         confirmNewPassword: ""
     });
 
-    const appBlue = "#134C77";
-    const appWhite = "#FFFFFF";
+    const appPrimaryColor = "#134C77";
+    const appTextColor = "#FFFFFF";
 
     const handlePasswordChange = async () => {
 
@@ -67,11 +67,11 @@ export default function ChangePasswordScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="Old Password"
-                            placeholderTextColor={appWhite}
-                            textColor={appWhite}
+                            placeholderTextColor={appTextColor}
+                            textColor={appTextColor}
                             mode="flat"
-                            underlineColor={appBlue}
-                            activeUnderlineColor={appBlue}
+                            underlineColor={appPrimaryColor}
+                            activeUnderlineColor={appPrimaryColor}
                             secureTextEntry
                             onChangeText={(text) => setPasswords({ ...passwords, oldPassword: text })}
                             value={passwords.oldPassword}
@@ -81,11 +81,11 @@ export default function ChangePasswordScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="New Password"
-                            placeholderTextColor={appWhite}
-                            textColor={appWhite}
+                            placeholderTextColor={appTextColor}
+                            textColor={appTextColor}
                             mode="flat"
-                            underlineColor={appBlue}
-                            activeUnderlineColor={appBlue}
+                            underlineColor={appPrimaryColor}
+                            activeUnderlineColor={appPrimaryColor}
                             secureTextEntry
                             onChangeText={(text) => setPasswords({ ...passwords, newPassword: text })}
                             value={passwords.newPassword}
@@ -95,11 +95,11 @@ export default function ChangePasswordScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="Confirm New Password"
-                            placeholderTextColor={appWhite}
-                            textColor={appWhite}
+                            placeholderTextColor={appTextColor}
+                            textColor={appTextColor}
                             mode="flat"
-                            underlineColor={appBlue}
-                            activeUnderlineColor={appBlue}
+                            underlineColor={appPrimaryColor}
+                            activeUnderlineColor={appPrimaryColor}
                             secureTextEntry
                             onChangeText={(text) => setPasswords({ ...passwords, confirmNewPassword: text })}
                             value={passwords.confirmNewPassword}

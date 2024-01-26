@@ -9,10 +9,10 @@ const deviceWidth = Dimensions.get("window").width;
 const cardWidth = deviceWidth * .75;
 const buttonWidth = deviceWidth * .5;
 
-const appBlue = "#134C77";
-const appGreen = "#8FA063";
-const appWhite = "#FFFFFF";
-const deleteRed = "#C70039";
+const appPrimaryColor = "#134C77";
+const appSecondaryColor = "#8FA063";
+const appTextColor = "#FFFFFF";
+const appDeleteColor = "#C70039";
 
 export default StyleSheet.create({
 
@@ -20,23 +20,23 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
     },
     settingsContainer: {
         flex: 1,
         alignSelf: "center",
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
         width: "100%"
     },
     scrollableView: {
         marginTop: "2%",
         flexGrow: 1,
         justifyContent: "space",
-        backgroundColor: appBlue
+        backgroundColor: appPrimaryColor
     },
     dbText: {
         textAlign: "center",
-        color: appWhite,
+        color: appTextColor,
         fontSize: 18,
         marginBottom: 10,
     },
@@ -48,13 +48,13 @@ export default StyleSheet.create({
     // Dashboard title styling
     dbTitleText: {
         textAlign: "center",
-        color: appWhite,
+        color: appTextColor,
         fontSize: 24,
         marginBottom: 20,
     },
     parkInfoText: {
         textAlign: "center",
-        color: appWhite,
+        color: appTextColor,
         fontSize: 14,
         marginBottom: 20,
     },
@@ -63,15 +63,15 @@ export default StyleSheet.create({
     },
 
     settingsCard: {
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
         borderWidth: 2,
-        borderColor: appGreen,
+        borderColor: appSecondaryColor,
         width: cardWidth,
         marginBottom: 10
     },
     settingsCardContent: {
         alignSelf: "center",
-        borderTopColor: appGreen,
+        borderTopColor: appSecondaryColor,
         width: cardWidth,
         alignItems: "center",
         // marginTop: 20,
@@ -79,7 +79,7 @@ export default StyleSheet.create({
     },
     settingsSectionHeader: {
         alignSelf: "center",
-        color: appWhite,
+        color: appTextColor,
         fontWeight: "bold",
         fontSize: 20,
         marginBottom: 10
@@ -93,7 +93,7 @@ export default StyleSheet.create({
     },
     profileText: {
         textAlign: "center",
-        color: appWhite,
+        color: appTextColor,
         fontWeight: "bold",
         fontSize: 20
     },
@@ -108,14 +108,14 @@ export default StyleSheet.create({
         margin: "2%",
         padding: 10,
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
         overflow: "hidden"
     },
     changeInfoText: {
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         fontSize: 18
     },
@@ -125,10 +125,10 @@ export default StyleSheet.create({
         margin: "2%",
         padding: 10,
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: deleteRed,
+        backgroundColor: appDeleteColor,
         overflow: "hidden"
     },
     modalContainer: {
@@ -138,7 +138,7 @@ export default StyleSheet.create({
         backgroundColor: "#00000080"
     },
     modalContentContainer: {
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
         width: "99%",
         padding: 30,
         alignItems: "center",
@@ -146,7 +146,7 @@ export default StyleSheet.create({
     },
     modalText: {
         marginBottom: 20,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center"
     },
     modalButtonContainer: {
@@ -158,10 +158,10 @@ export default StyleSheet.create({
         margin: 10,
         padding: 10,
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
         overflow: "hidden"
     },
     modalDeleteButton: {
@@ -170,18 +170,18 @@ export default StyleSheet.create({
         margin: 10,
         padding: 10,
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: deleteRed,
+        backgroundColor: appDeleteColor,
         overflow: "hidden"
     },
     modalButtonText: {
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center"
     },
     ButtonOpacity: {
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
         width: 150,
         borderRadius: 5,
         marginTop: 10,
@@ -194,7 +194,7 @@ export default StyleSheet.create({
     eventCard: {
         width: deviceWidth * .9,
         marginBottom: deviceWidth * .1,
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
     },
     eventCardContent: {
 
@@ -209,18 +209,18 @@ export default StyleSheet.create({
     eventListTitle: {
         fontWeight: "bold",
         fontSize: 18,
-        color: appWhite
+        color: appTextColor
     },
     eventListDateTime: {
         textAlign: "left",
         fontWeight: "bold",
         fontSize: 14,
-        color: appWhite,
+        color: appTextColor,
         marginVertical: "1%"
     },
     eventListDescription: {
         fontSize: 14,
-        color: appWhite
+        color: appTextColor
     },
     updateAccountKeyboardAdj: {
         width: "80%",
@@ -232,7 +232,7 @@ export default StyleSheet.create({
         alignSelf: "center",
         width: "100%",
         padding: 10,
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
         margin: "5%"
     },
     updateAccountCardContent: {
@@ -241,7 +241,7 @@ export default StyleSheet.create({
 
     updateAccountTitle: {
         fontSize: 30,
-        color: appBlue,
+        color: appPrimaryColor,
         fontWeight: "bold",
         marginBottom: 16,
     },
@@ -251,7 +251,7 @@ export default StyleSheet.create({
         height: 40,
         backgroundColor: "none",
         marginBottom: 16,
-        color: appWhite
+        color: appTextColor
     },
 
     updateAccountButtonOpacity: {
@@ -260,15 +260,15 @@ export default StyleSheet.create({
         margin: "2%",
         padding: 10,
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
         overflow: "hidden"
     },
 
     updateAccountButtonText: {
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         fontSize: 15
     },
@@ -277,20 +277,20 @@ export default StyleSheet.create({
         width: "95%",
         padding: 10,
         paddingBottom: 0,
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
     },
     eventDetailsCardContent: {
         alignItems: "center",
     },
     eventDetailsTitle: {
-        color: appWhite,
+        color: appTextColor,
         fontWeight: "bold",
         fontSize: 24,
     },
     eventDetailsDateTime: {
         fontSize: 14,
         fontWeight: "bold",
-        color: appWhite,
+        color: appTextColor,
         marginTop: "1%"
     },
     eventDetailsImage: {
@@ -301,33 +301,33 @@ export default StyleSheet.create({
         width: "100%",
     },
     eventDetailsDescription: {
-        color: appWhite,
+        color: appTextColor,
         fontSize: 16
     },
     homeButtonOpacity: {
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
         paddingHorizontal: 30,
         paddingVertical: 10,
         marginVertical: "10%",
         marginBottom: 0,
         fontSize: 20,
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         overflow: "hidden"
     },
     homeButtonText: {
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         fontSize: 15
     },
     donationsWebViewContainer: {
         justifyContent: "center",
         height: "100%",
-        backgroundColor: appBlue
+        backgroundColor: appPrimaryColor
     },
     donationsWebView: {
         flex: 1,
-        backgroundColor: appBlue
+        backgroundColor: appPrimaryColor
     },
     modalNavContainer: {
         flex: 1,
@@ -336,7 +336,7 @@ export default StyleSheet.create({
         backgroundColor: "#00000080"
     },
     modalNavContentContainer: {
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
         maxWidth: "99%",
         paddingVertical: 20,
         paddingHorizontal: 30,
@@ -344,13 +344,13 @@ export default StyleSheet.create({
         borderRadius: 5
     },
     modalNavCancelContainer: {
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
     },
     modalNavText: {
         marginBottom: 20,
         fontWeight: "bold",
         fontSize: 18,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center"
     },
     modalNavButtonContainer: {
@@ -366,11 +366,11 @@ export default StyleSheet.create({
         marginHorizontal: 6.5,
         padding: 10,
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: deleteRed,
+        backgroundColor: appDeleteColor,
     },
     modalNavButton: {
         paddingVertical: 10,
@@ -378,20 +378,20 @@ export default StyleSheet.create({
         marginHorizontal: 6.5,
         padding: 10,
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
     },
     modalNavButtonText: {
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center"
     },
     alertContainer: {
         display: "flex",
         flex: 1,
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
     },
     alertButtons: {
         display: "flex",
@@ -400,13 +400,13 @@ export default StyleSheet.create({
         marginBottom: "10%",
     },
     alertButton: {
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
         borderRadius: 25,
         marginTop: "2%",
         marginHorizontal: "1%",
     },
     alertButtonText: {
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         marginHorizontal: "4%",
         fontSize: fontSizeAlert
@@ -414,7 +414,7 @@ export default StyleSheet.create({
     alertCard: {
         width: deviceWidth * .9,
         marginBottom: deviceWidth * .1,
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
     },
     alertCardContent: {
 
@@ -423,17 +423,17 @@ export default StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
         fontSize: 18,
-        color: appWhite
+        color: appTextColor
     },
     alertListDetails: {
         fontSize: 14,
         textAlign: "center",
-        color: appWhite
+        color: appTextColor
     },
     alertListTypeDesc: {
         fontSize: 12,
         fontStyle: "italic",
-        color: appWhite
+        color: appTextColor
     },
     dashboardDonoOpac: {
         flexDirection: "row",
@@ -445,13 +445,13 @@ export default StyleSheet.create({
         fontSize: 20,
         margin: "5%",
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
         overflow: "hidden"
     },
     dashboardDonoText: {
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         fontSize: 24
     },

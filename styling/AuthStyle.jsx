@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 
-const appBlue = "#134C77";
-const appGreen = "#8FA063";
-const appWhite = "#FFFFFF";
+const appPrimaryColor = "#134C77";
+const appSecondaryColor = "#8FA063";
+const appTextColor = "#FFFFFF";
 
 export default StyleSheet.create({
 
@@ -16,7 +16,7 @@ export default StyleSheet.create({
         alignSelf: "center",
         width: "100%",
         padding: 10,
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
         margin: "5%"
     },
     cardContent: {
@@ -25,7 +25,7 @@ export default StyleSheet.create({
 
     title: {
         fontSize: 30,
-        color: appBlue,
+        color: appPrimaryColor,
         fontWeight: "bold",
         marginBottom: 16,
     },
@@ -35,7 +35,7 @@ export default StyleSheet.create({
         height: 40,
         backgroundColor: "none",
         marginBottom: 16,
-        color: appWhite
+        color: appTextColor
     },
 
     ButtonOpacity: {
@@ -44,15 +44,15 @@ export default StyleSheet.create({
         margin: "5%",
         padding: 10,
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
         overflow: "hidden"
     },
 
     buttonText: {
-        color: appWhite,
+        color: appTextColor,
         textAlign: "center",
         fontSize: 15
     },

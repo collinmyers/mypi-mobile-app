@@ -14,14 +14,14 @@ const fade = ({ current }) => ({
 const Stack = createStackNavigator();
 
 export default function EventsStackNavigator() {
-    const appBlue = "#134C77";
+    const appPrimaryColor = "#134C77";
     return (
         <Stack.Navigator initialRouteName="Events" screenOptions={{ headerShown: false, cardStyleInterpolator: fade }}>
             <Stack.Screen name="Events" component={EventListScreen}
                 options={{
                     headerShown: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <Menu />
                 }}
             />
@@ -29,7 +29,7 @@ export default function EventsStackNavigator() {
                 options={{
                     headerShown: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <MenuBack />
                 }}
             />

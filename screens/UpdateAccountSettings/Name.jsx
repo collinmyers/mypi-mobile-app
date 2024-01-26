@@ -24,8 +24,8 @@ export default function ChangeNameScreen({ navigation }) {
         lastName: ""
     });
 
-    const appBlue = "#134C77";
-    const appWhite = "#FFFFFF";
+    const appPrimaryColor = "#134C77";
+    const appTextColor = "#FFFFFF";
 
     const handleNameChange = async () => {
 
@@ -67,11 +67,11 @@ export default function ChangeNameScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="First Name"
-                            placeholderTextColor={appWhite}
-                            textColor={appWhite}
+                            placeholderTextColor={appTextColor}
+                            textColor={appTextColor}
                             mode="flat"
-                            underlineColor={appBlue}
-                            activeUnderlineColor={appBlue}
+                            underlineColor={appPrimaryColor}
+                            activeUnderlineColor={appPrimaryColor}
                             onChangeText={(text) => setName({ ...name, firstName: text })}
                             value={name.firstName}
                             onBlur={() => validateName(name.firstName, setName)}
@@ -81,11 +81,11 @@ export default function ChangeNameScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="Last Name"
-                            placeholderTextColor={appWhite}
-                            textColor={appWhite}
+                            placeholderTextColor={appTextColor}
+                            textColor={appTextColor}
                             mode="flat"
-                            underlineColor={appBlue}
-                            activeUnderlineColor={appBlue}
+                            underlineColor={appPrimaryColor}
+                            activeUnderlineColor={appPrimaryColor}
                             onChangeText={(text) => setName({ ...name, lastName: text })}
                             value={name.lastName}
                             onBlur={() => validateName(name.lastName, setName)}

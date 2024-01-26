@@ -9,8 +9,8 @@ import { useFocusEffect } from "@react-navigation/native";
 
 export default function AlertsScreen() {
 
-    const appGreen = "#8FA063";
-    const appWhite = "#FFFFFF";
+    const appSecondaryColor = "#8FA063";
+    const appTextColor = "#FFFFFF";
 
     const PAGE_SIZE = 25;
 
@@ -184,16 +184,16 @@ export default function AlertsScreen() {
                 </TouchableOpacity> */}
 
 
-                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleGetFullList()}>
+                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appTextColor} buttonColor={appSecondaryColor} onPress={() => handleGetFullList()}>
                     All
                 </Button>
-                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleFilterById("alerts")}>
+                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appTextColor} buttonColor={appSecondaryColor} onPress={() => handleFilterById("alerts")}>
                     Alerts
                 </Button>
-                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleFilterById("events")}>
+                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appTextColor} buttonColor={appSecondaryColor} onPress={() => handleFilterById("events")}>
                     Events
                 </Button>
-                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appWhite} buttonColor={appGreen} onPress={() => handleFilterById("promos")}>
+                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appTextColor} buttonColor={appSecondaryColor} onPress={() => handleFilterById("promos")}>
                     Promos
                 </Button>
 

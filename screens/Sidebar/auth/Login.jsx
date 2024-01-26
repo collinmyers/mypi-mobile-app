@@ -25,8 +25,8 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
         password: ""
     });
 
-    const appBlue = "#134C77";
-    const appWhite = "#FFFFFF";
+    const appPrimaryColor = "#134C77";
+    const appTextColor = "#FFFFFF";
 
     const handleLogin = async () => {
 
@@ -66,11 +66,11 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                             style={AuthStyle.userInput}
                             numberOfLines={1}
                             placeholder="Email"
-                            placeholderTextColor={appWhite}
-                            textColor={appWhite}
+                            placeholderTextColor={appTextColor}
+                            textColor={appTextColor}
                             mode="flat"
-                            underlineColor={appBlue}
-                            activeUnderlineColor={appBlue}
+                            underlineColor={appPrimaryColor}
+                            activeUnderlineColor={appPrimaryColor}
                             onChangeText={(text) => setAuthentication({ ...authentication, email: text })}
                             value={authentication.email}
                             onBlur={() => validateEmail(authentication.email, (text) => setAuthentication({ ...authentication, email: text }))}
@@ -80,11 +80,11 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                             style={AuthStyle.userInput}
                             numberOfLines={1}
                             placeholder="Password"
-                            placeholderTextColor={appWhite}
-                            textColor={appWhite}
+                            placeholderTextColor={appTextColor}
+                            textColor={appTextColor}
                             mode="flat"
-                            underlineColor={appBlue}
-                            activeUnderlineColor={appBlue}
+                            underlineColor={appPrimaryColor}
+                            activeUnderlineColor={appPrimaryColor}
                             secureTextEntry
                             onChangeText={(text) => setAuthentication({ ...authentication, password: text })}
                             value={authentication.password}

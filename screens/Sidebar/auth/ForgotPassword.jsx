@@ -21,8 +21,8 @@ ForgotPasswordScreen.propTypes = {
 export default function ForgotPasswordScreen({ navigation }) {
     const [email, setEmail] = useState("");
 
-    const appBlue = "#134C77";
-    const appWhite = "#FFFFFF";
+    const appPrimaryColor = "#134C77";
+    const appTextColor = "#FFFFFF";
 
     const handlePasswordReset = async () => {
 
@@ -58,11 +58,11 @@ export default function ForgotPasswordScreen({ navigation }) {
                             style={AuthStyle.userInput}
                             numberOfLines={1}
                             placeholder="Email"
-                            placeholderTextColor={appWhite}
-                            textColor={appWhite}
+                            placeholderTextColor={appTextColor}
+                            textColor={appTextColor}
                             mode="flat"
-                            underlineColor={appBlue}
-                            activeUnderlineColor={appBlue}
+                            underlineColor={appPrimaryColor}
+                            activeUnderlineColor={appPrimaryColor}
                             onChangeText={(text) => setEmail(text)}
                             value={email}
                             onBlur={() => validateEmail(email, setEmail)}

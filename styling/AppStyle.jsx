@@ -1,19 +1,19 @@
 import { StyleSheet } from "react-native";
 
-const appBlue = "#134C77";
+const appPrimaryColor = "#134C77";
 
 export default StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems:"center",
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
     },
     drawerHeader: {
         justifyContent:"space-between",
         alignItems:"flex-start",
         flexDirection: "row",
-        backgroundColor:appBlue,
+        backgroundColor:appPrimaryColor,
         paddingTop: 40,
         paddingBottom: 10,
     },

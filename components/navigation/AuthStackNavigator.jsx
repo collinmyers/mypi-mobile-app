@@ -10,7 +10,7 @@ import MenuBack from "./AppHeaderNavBack";
 const Stack = createStackNavigator();
 
 export default function AuthStackNavigator({ handleLoginSuccess }) {
-    const appBlue = "#134C77";
+    const appPrimaryColor = "#134C77";
     return (
         <Stack.Navigator initialRouteName="Login" >
             <Stack.Screen name="Login"
@@ -18,7 +18,7 @@ export default function AuthStackNavigator({ handleLoginSuccess }) {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <Menu />
                 }}
             >
@@ -30,7 +30,7 @@ export default function AuthStackNavigator({ handleLoginSuccess }) {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <MenuBack />
                 }}
             />
@@ -39,7 +39,7 @@ export default function AuthStackNavigator({ handleLoginSuccess }) {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <MenuBack />
                 }}
             />

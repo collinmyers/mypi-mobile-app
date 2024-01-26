@@ -3,9 +3,9 @@ import { StyleSheet, Dimensions } from "react-native";
 const deviceWidth = Dimensions.get("window").width;
 
 
-const appBlue = "#134C77";
-const appGreen = "#8FA063";
-const appWhite = "#FFFFFF";
+const appPrimaryColor = "#134C77";
+const appSecondaryColor = "#8FA063";
+const appTextColor = "#FFFFFF";
 
 export default StyleSheet.create({
     container: {
@@ -20,12 +20,12 @@ export default StyleSheet.create({
     },
     poiMarkerTitle: {
         fontSize: 15,
-        color: appBlue,
+        color: appPrimaryColor,
         fontWeight: "bold",
     },
     poiMarkerDirectionsText: {
         fontSize: 15,
-        color: appGreen,
+        color: appSecondaryColor,
         fontWeight: "bold",
         alignSelf: "center"
     },
@@ -34,7 +34,7 @@ export default StyleSheet.create({
         margin: "5%",
         padding: 10,
         borderRadius: 20,
-        color: appWhite,
+        color: appTextColor,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -46,13 +46,13 @@ export default StyleSheet.create({
         textAlign: "center",
         flexDirection: "column",
         zIndex: 1,
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
         overflow: "hidden"
     },
     poiCard: {
         width: deviceWidth * .9,
         marginBottom: deviceWidth * .1,
-        backgroundColor: appGreen,
+        backgroundColor: appSecondaryColor,
     },
     poiCardContent: {
 
@@ -60,29 +60,29 @@ export default StyleSheet.create({
     poiListTitle: {
         fontWeight: "bold",
         fontSize: 18,
-        color: appWhite
+        color: appTextColor
     },
     poiListLatLon: {
         textAlign: "left",
         fontWeight: "bold",
         fontSize: 14,
-        color: appWhite,
+        color: appTextColor,
         marginVertical: "1%"
     },
     poiListStatus: {
         fontSize: 14,
-        color: appWhite
+        color: appTextColor
     },
     poiContainer: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: appBlue,
+        backgroundColor: appPrimaryColor,
     },
     scrollableView: {
         flexGrow: 1,
         justifyContent: "space",
-        backgroundColor: appBlue
+        backgroundColor: appPrimaryColor
     },
 
 });

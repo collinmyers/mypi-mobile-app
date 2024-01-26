@@ -14,14 +14,14 @@ import MenuBack from "./AppHeaderNavBack";
 const Stack = createStackNavigator();
 
 export default function SettingsStackNavigator() {
-    const appBlue = "#134C77";
+    const appPrimaryColor = "#134C77";
     return (
         <Stack.Navigator initialRouteName="Settings" >
             <Stack.Screen name="Settings" component={SettingsScreen}
                 options={{
                     headerShown: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <Menu />
                 }}
             />
@@ -31,7 +31,7 @@ export default function SettingsStackNavigator() {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <MenuBack />
                 }}
             />
@@ -40,7 +40,7 @@ export default function SettingsStackNavigator() {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <MenuBack />
                 }}
             />
@@ -49,7 +49,7 @@ export default function SettingsStackNavigator() {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <MenuBack />
                 }}
             />
@@ -59,7 +59,7 @@ export default function SettingsStackNavigator() {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <MenuBack />
                 }}
             />
@@ -68,7 +68,7 @@ export default function SettingsStackNavigator() {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <MenuBack />
                 }}
             />
@@ -77,7 +77,7 @@ export default function SettingsStackNavigator() {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <MenuBack />
                 }}
             />

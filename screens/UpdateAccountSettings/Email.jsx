@@ -25,8 +25,8 @@ export default function ChangeEmailScreen({ navigation }) {
         password: ""
     });
 
-    const appBlue = "#134C77";
-    const appWhite = "#FFFFFF";
+    const appPrimaryColor = "#134C77";
+    const appTextColor = "#FFFFFF";
 
     const handleEmailChange = async () => {
 
@@ -67,11 +67,11 @@ export default function ChangeEmailScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="New Email"
-                            placeholderTextColor={appWhite}
-                            textColor={appWhite}
+                            placeholderTextColor={appTextColor}
+                            textColor={appTextColor}
                             mode="flat"
-                            underlineColor={appBlue}
-                            activeUnderlineColor={appBlue}
+                            underlineColor={appPrimaryColor}
+                            activeUnderlineColor={appPrimaryColor}
                             onChangeText={(text) => setCredentials({ ...credentials, email: text })}
                             value={credentials.email}
                             onBlur={() => validateEmail(credentials.email, setCredentials)}
@@ -81,11 +81,11 @@ export default function ChangeEmailScreen({ navigation }) {
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
                             placeholder="Password"
-                            placeholderTextColor={appWhite}
-                            textColor={appWhite}
+                            placeholderTextColor={appTextColor}
+                            textColor={appTextColor}
                             mode="flat"
-                            underlineColor={appBlue}
-                            activeUnderlineColor={appBlue}
+                            underlineColor={appPrimaryColor}
+                            activeUnderlineColor={appPrimaryColor}
                             secureTextEntry
                             onChangeText={(text) => setCredentials({ ...credentials, password: text })}
                             value={credentials.password}
