@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, SafeAreaView, ScrollView, View } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
-import { Databases, Client } from "appwrite";
+import { Databases, Client, Query } from "appwrite";
 import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
 import { useFocusEffect } from "@react-navigation/native";
@@ -11,6 +11,8 @@ export default function AlertsScreen() {
 
     const appGreen = "#8FA063";
     const appWhite = "#FFFFFF";
+
+    const PAGE_SIZE = 25;
 
     /* For sending notifications from mobile (possibly add in future)
   
@@ -84,7 +86,8 @@ export default function AlertsScreen() {
 
             getAlerts();
 
-        }, [])); // Empty dependency array means this effect will only run once when the component mounts
+        }, [])
+    ); // Empty dependency array means this effect will only run once when the component mounts
 
     const getAlerts = async () => {
         try {
@@ -94,38 +97,51 @@ export default function AlertsScreen() {
 
             const database = new Databases(client);
 
-            const response = await database.listDocuments(
-                "653ae4b2740b9f0a5139", // DB ID
-                "6552848655e88d169d7d" // Collection ID
-            );
+            let offset = 0;
+            let allData = [];
 
-
-            // Build a new array with updated data
-            const newData = response.documents.map((document, index) => {
-                const Title = document.Title;
-                const Details = document.Details;
-                const NotificationType = document.NotificationType;
-
-                return (
-
-                    <Card style={HomeStyle.alertCard} key={index} id={NotificationType}>
-                        <Card.Content style={HomeStyle.alertCardContent}>
-                            <Text style={HomeStyle.alertListTitle}>{Title}</Text>
-                            <Text style={HomeStyle.alertListDetails}>{Details}</Text>
-                            <Text style={HomeStyle.alertListTypeDesc}>{NotificationType}</Text>
-
-                        </Card.Content>
-                    </Card>
-
+            const fetchPage = async (offset) => {
+                const response = await database.listDocuments(
+                    "653ae4b2740b9f0a5139", // DB ID
+                    "6552848655e88d169d7d", // Collection ID
+                    [
+                        Query.limit(PAGE_SIZE),
+                        Query.offset(offset)
+                    ]
                 );
-            });
-            // Update state with the new array
-            setData(newData);
-            setFull(newData);
+
+                const newData = response.documents.map((document, index) => {
+                    const Title = document.Title;
+                    const Details = document.Details;
+                    const NotificationType = document.NotificationType;
+
+                    return (
+                        <Card style={HomeStyle.alertCard} key={`${offset}_${index}`} id={NotificationType}>
+                            <Card.Content style={HomeStyle.alertCardContent}>
+                                <Text style={HomeStyle.alertListTitle}>{Title}</Text>
+                                <Text style={HomeStyle.alertListDetails}>{Details}</Text>
+                                <Text style={HomeStyle.alertListTypeDesc}>{NotificationType}</Text>
+                            </Card.Content>
+                        </Card>
+                    );
+                });
+
+                allData = [...allData, ...newData];
+
+                if (response.documents.length === PAGE_SIZE) {
+                    await fetchPage(offset + PAGE_SIZE); // Fetch next page
+                }
+            };
+
+            await fetchPage(offset); // Start fetching from the initial offset
+
+            setData(allData);
+            setFull(allData);
         } catch (error) {
             console.error(error);
         }
     };
+
 
     const handleFilterById = (filterId) => {
 
