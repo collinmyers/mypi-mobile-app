@@ -12,7 +12,7 @@ const buttonWidth = deviceWidth * .5;
 const appPrimaryColor = "#134C77";
 const appSecondaryColor = "#8FA063";
 const appTextColor = "#FFFFFF";
-const appDeleteColor = "#C70039";
+const appWarningColor = "#C70039";
 
 export default StyleSheet.create({
 
@@ -128,7 +128,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appDeleteColor,
+        backgroundColor: appWarningColor,
         overflow: "hidden"
     },
     modalContainer: {
@@ -173,7 +173,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appDeleteColor,
+        backgroundColor: appWarningColor,
         overflow: "hidden"
     },
     modalButtonText: {
@@ -370,7 +370,7 @@ export default StyleSheet.create({
         textAlign: "center",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: appDeleteColor,
+        backgroundColor: appWarningColor,
     },
     modalNavButton: {
         paddingVertical: 10,
