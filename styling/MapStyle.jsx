@@ -75,12 +75,14 @@ export default StyleSheet.create({
         backgroundColor: appSecondaryColor,
     },
     poiCardContent: {
-
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     poiListTitle: {
         fontWeight: "bold",
         fontSize: 18,
-        color: appTextColor
+        color: appTextColor,
+        flexShrink: 1
     },
     poiListLatLon: {
         textAlign: "left",
@@ -103,7 +105,7 @@ export default StyleSheet.create({
         flexGrow: 1,
         justifyContent: "space",
         backgroundColor: appPrimaryColor,
-        paddingTop:10
+        paddingTop: 10
     },
     checkboxContainer: {
         flexDirection: "row",
@@ -139,6 +141,9 @@ export default StyleSheet.create({
     mapSearchBar: {
         width: "90%",
         marginBottom: "3%"
+    },
+    directionsIcon: {
+
     }
 });
 

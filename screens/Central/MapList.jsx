@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import MapStyle from "../../styling/MapStyle";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { showLocation } from "react-native-map-link";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function MapList() {
     const navigation = useNavigation();
@@ -17,6 +18,7 @@ export default function MapList() {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
 
     const PAGE_SIZE = 25;
+    const appTextColor = "#FFFFFF";
 
     useFocusEffect(
         React.useCallback(() => {
@@ -106,14 +108,13 @@ export default function MapList() {
                         <Pressable
                             id={Name}
                             key={`${offset}_${index}`}
-                            onPress={() => {
-                                getDirections(Latitude, Longitude, directionsPreference);
-                            }}
                         >
                             <Card style={MapStyle.poiCard}>
                                 <Card.Content style={MapStyle.poiCardContent}>
                                     <Text style={MapStyle.poiListTitle}>{Name} ({Status})</Text>
-                                    <Text style={MapStyle.poiListStatus}>Get Directions</Text>
+                                    <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={26} color={appTextColor} onPress={() => {
+                                        getDirections(Latitude, Longitude, directionsPreference);
+                                    }} />
                                 </Card.Content>
                             </Card>
                         </Pressable>
