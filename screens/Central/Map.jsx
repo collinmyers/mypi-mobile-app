@@ -9,7 +9,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
-import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function MapScreen() {
     const navigation = useNavigation();
