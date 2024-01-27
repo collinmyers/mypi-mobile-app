@@ -112,8 +112,8 @@ export default function MapList() {
                         >
                             <Card style={MapStyle.poiCard}>
                                 <Card.Content style={MapStyle.poiCardContent}>
-                                    <Text style={MapStyle.poiListTitle}>{Name}</Text>
-                                    <Text style={MapStyle.poiListStatus}>{Status}</Text>
+                                    <Text style={MapStyle.poiListTitle}>{Name} ({Status})</Text>
+                                    <Text style={MapStyle.poiListStatus}>Get Directions</Text>
                                 </Card.Content>
                             </Card>
                         </Pressable>
