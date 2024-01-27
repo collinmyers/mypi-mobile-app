@@ -80,18 +80,38 @@ export default function MapList() {
                     await fetchPage(offset + PAGE_SIZE);
                 } else {
                     allData.sort((a, b) => {
-                        const nameA = a.props.id.toUpperCase();
-                        const nameB = b.props.id.toUpperCase();
-                        if (nameA < nameB) {
-                            return -1;
+                        const nameA = a.props.id.toLowerCase();
+                        const nameB = b.props.id.toLowerCase();
+                    
+                        const splitA = nameA.match(/(\D+|\d+)/g);
+                        const splitB = nameB.match(/(\D+|\d+)/g);
+                    
+                        for (let i = 0; i < Math.max(splitA.length, splitB.length); i++) {
+                            if (i >= splitA.length) return -1;
+                            if (i >= splitB.length) return 1;
+                    
+                            const partA = splitA[i];
+                            const partB = splitB[i];
+                    
+                            if (!isNaN(partA) && !isNaN(partB)) {
+                                const numA = parseInt(partA);
+                                const numB = parseInt(partB);
+                                if (numA !== numB) {
+                                    return numA - numB;
+                                }
+                            } else {
+                                if (partA !== partB) {
+                                    return partA.localeCompare(partB);
+                                }
+                            }
                         }
-                        if (nameA > nameB) {
-                            return 1;
-                        }
+                    
                         return 0;
                     });
-
+                    
                     setData(allData);
+                    
+
                 }
             };
 
@@ -119,10 +139,10 @@ export default function MapList() {
 
     return (
         <SafeAreaView style={MapStyle.poiContainer}>
-            <Text style={MapStyle.changeButton} onPress={() => { navigation.navigate("MapScreen"); }}>View as Map</Text>
+            <Text style={MapStyle.changeButtonList} onPress={() => { navigation.navigate("MapScreen"); }}>View as Map</Text>
             <Searchbar
                 style={MapStyle.mapSearchBar}
-                placeholder="Search for point of interest"
+                placeholder="Search"
                 value={searchQuery}
                 onChangeText={(text) => {
                     setSearchQuery(text);

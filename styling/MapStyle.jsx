@@ -29,9 +29,29 @@ export default StyleSheet.create({
         fontWeight: "bold",
         alignSelf: "center"
     },
-    changeButton: {
+    changeButtonMap: {
         fontSize: 20,
-        margin: "5%",
+        marginTop: "2%",
+        padding: 10,
+        borderRadius: 20,
+        color: appTextColor,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 1,
+        shadowRadius: 3.84,
+        elevation: 5,
+        textAlign: "center",
+        flexDirection: "column",
+        zIndex: 1,
+        backgroundColor: appSecondaryColor,
+        overflow: "hidden"
+    },
+    changeButtonList: {
+        fontSize: 20,
+        marginVertical: "3%",
         padding: 10,
         borderRadius: 20,
         color: appTextColor,
@@ -51,7 +71,7 @@ export default StyleSheet.create({
     },
     poiCard: {
         width: deviceWidth * .9,
-        marginBottom: deviceWidth * .1,
+        marginBottom: "5%",
         backgroundColor: appSecondaryColor,
     },
     poiCardContent: {
@@ -117,7 +137,8 @@ export default StyleSheet.create({
         elevation: 8,
     },
     mapSearchBar: {
-        width: "80%"
+        width: "90%",
+        marginBottom: "3%"
     }
 });
 

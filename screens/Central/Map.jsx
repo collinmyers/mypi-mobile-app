@@ -179,7 +179,7 @@ export default function MapScreen() {
 
     return (
         <SafeAreaView style={MapStyle.container}>
-            <Text style={MapStyle.changeButton} onPress={() => { navigation.navigate("MapList"); }}>
+            <Text style={MapStyle.changeButtonMap} onPress={() => { navigation.navigate("MapList"); }}>
                 View as List
             </Text>
 
