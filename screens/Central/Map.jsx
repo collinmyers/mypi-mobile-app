@@ -161,7 +161,7 @@ export default function MapScreen() {
     };
 
     const renderFilterCheckboxes = () => {
-        const filterAliases = {
+        const filterAliases = { // alias key value pair
             "Amenities": "Amenities",
             "Attraction": "Attractions",
             "Beach": "Beaches",
@@ -169,7 +169,7 @@ export default function MapScreen() {
             "Parking": "Parking",
             "Restroom": "Restrooms",
         };
-    
+
         return Object.keys(filterAliases).map((filter) => (
             <View key={filter} style={MapStyle.checkboxContainer}>
                 <Checkbox
@@ -181,7 +181,7 @@ export default function MapScreen() {
             </View>
         ));
     };
-    
+
 
     const toggleFabVisible = () => {
         setFabVisible(!fabVisible);
@@ -189,9 +189,11 @@ export default function MapScreen() {
 
     return (
         <SafeAreaView style={MapStyle.container}>
-            <Text style={MapStyle.changeButtonMap} onPress={() => { navigation.navigate("MapList"); }}>
-                View as List
-            </Text>
+
+            <TouchableOpacity style={MapStyle.changeMapOpac} onPress={() => { navigation.navigate("MapList"); }}>
+                <Text style={MapStyle.changeMapText}>View as List</Text>
+            </TouchableOpacity>
+
 
             <MapView
                 style={MapStyle.map}

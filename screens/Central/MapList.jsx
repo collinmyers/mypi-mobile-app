@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { ScrollView, SafeAreaView, Pressable } from "react-native";
+import { ScrollView, SafeAreaView, Pressable, TouchableOpacity } from "react-native";
 import { Card, Searchbar, Text } from "react-native-paper";
 import { Databases, Client, Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
@@ -186,7 +186,9 @@ export default function MapList() {
 
     return (
         <SafeAreaView style={MapStyle.poiContainer}>
-            <Text style={MapStyle.changeButtonList} onPress={() => { navigation.navigate("MapScreen"); }}>View as Map</Text>
+            <TouchableOpacity style={MapStyle.changeListOpac} onPress={() => { navigation.navigate("MapScreen"); }}>
+                <Text style={MapStyle.changeListText}>View as Map</Text>
+            </TouchableOpacity>
             <Searchbar
                 style={MapStyle.mapSearchBar}
                 placeholder="Search"

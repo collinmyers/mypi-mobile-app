@@ -29,45 +29,30 @@ export default StyleSheet.create({
         fontWeight: "bold",
         alignSelf: "center"
     },
-    changeButtonMap: {
+    changeMapOpac: {
         fontSize: 20,
         marginTop: "2%",
         padding: 10,
         borderRadius: 20,
-        color: appTextColor,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 1,
-        shadowRadius: 3.84,
-        elevation: 5,
-        textAlign: "center",
-        flexDirection: "column",
         zIndex: 1,
         backgroundColor: appSecondaryColor,
-        overflow: "hidden"
     },
-    changeButtonList: {
+    changeMapText: {
+        color: appTextColor,
+        fontSize: 18
+    },
+    changeListOpac: {
         fontSize: 20,
-        marginVertical: "3%",
+        marginTop: "2%",
+        marginBottom: "3%",
         padding: 10,
         borderRadius: 20,
-        color: appTextColor,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 1,
-        shadowRadius: 3.84,
-        elevation: 5,
-        textAlign: "center",
-        flexDirection: "column",
         zIndex: 1,
         backgroundColor: appSecondaryColor,
-        overflow: "hidden"
+    },
+    changeListText: {
+        color: appTextColor,
+        fontSize: 18
     },
     poiCard: {
         width: deviceWidth * .9,
