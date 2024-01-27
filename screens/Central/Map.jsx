@@ -161,19 +161,27 @@ export default function MapScreen() {
     };
 
     const renderFilterCheckboxes = () => {
-        const filterTypes = ["Amenities", "Attraction", "Beach", "Information", "Parking", "Restroom"];
-
-        return filterTypes.map((filter) => (
+        const filterAliases = {
+            "Amenities": "Amenities",
+            "Attraction": "Attractions",
+            "Beach": "Beaches",
+            "Information": "Information",
+            "Parking": "Parking",
+            "Restroom": "Restrooms",
+        };
+    
+        return Object.keys(filterAliases).map((filter) => (
             <View key={filter} style={MapStyle.checkboxContainer}>
                 <Checkbox
                     value={selectedFilters.includes(filter)}
                     onValueChange={() => toggleFilter(filter)}
                     color={appPrimaryColor}
                 />
-                <Text style={MapStyle.checkboxText}>{filter}</Text>
+                <Text style={MapStyle.checkboxText}>{filterAliases[filter]}</Text>
             </View>
         ));
     };
+    
 
     const toggleFabVisible = () => {
         setFabVisible(!fabVisible);
