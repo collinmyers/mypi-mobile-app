@@ -159,7 +159,7 @@ export default function MapScreen() {
     };
 
     const renderFilterCheckboxes = () => {
-        const filterTypes = ["Amenities", "Attractions", "Beaches", "Information", "Parking", "Restrooms"];
+        const filterTypes = ["Amenities", "Attraction", "Beach", "Information", "Parking", "Restroom"];
 
         return filterTypes.map((filter) => (
             <View key={filter} style={MapStyle.checkboxContainer}>
