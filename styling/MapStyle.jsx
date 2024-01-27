@@ -116,5 +116,8 @@ export default StyleSheet.create({
         padding: 10,
         elevation: 8,
     },
+    mapSearchBar: {
+        width: "80%"
+    }
 });
 
