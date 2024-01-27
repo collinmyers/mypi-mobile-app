@@ -112,7 +112,7 @@ export default function MapList() {
                             <Card style={MapStyle.poiCard}>
                                 <Card.Content style={MapStyle.poiCardContent}>
                                     <Text style={MapStyle.poiListTitle}>{Name} ({Status})</Text>
-                                    <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={26} color={appTextColor} onPress={() => {
+                                    <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={30} color={appTextColor} onPress={() => {
                                         getDirections(Latitude, Longitude, directionsPreference);
                                     }} />
                                 </Card.Content>

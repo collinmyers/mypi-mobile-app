@@ -76,9 +76,11 @@ export default StyleSheet.create({
     },
     poiCardContent: {
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center"
     },
     poiListTitle: {
+        justifyContent: "center",
         fontWeight: "bold",
         fontSize: 18,
         color: appTextColor,
