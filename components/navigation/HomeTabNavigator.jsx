@@ -3,12 +3,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, Fontisto, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
 
 import DashboardScreen from "../../screens/Central/Dashboard";
-import AlertsScreen from "../../screens/Central/Alerts";
 import SettingsStackNavigator from "./SettingsStackNavigator";
 import EventsStackNavigator from "./EventsStackNavigator";
 import MapStackNavigator from "./MapStackNavigator";
 
 import Menu from "./AppHeader";
+import AlertsStackNavigator from "./AlertsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -66,10 +66,10 @@ export default function HomeTabNavigator() {
             />
             <Tab.Screen
                 name="Alerts"
-                component={AlertsScreen}
+                component={AlertsStackNavigator}
                 options={{
                     tabBarLabel: "Alerts",
-                    header: () => <Menu/>,
+                    header: () => false,
                     tabBarIcon: () => (
                         <Fontisto name="bell" size={24} color={appSecondaryColor} />
                     )

@@ -1,18 +1,29 @@
 import React, { useState } from "react";
-import { Alert, SafeAreaView, ScrollView, View } from "react-native";
+import { Alert, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
-import { Databases, Client, Query } from "appwrite";
+import { Account, Databases, Client, Query } from "appwrite";
 import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
 import { useFocusEffect } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 
 export default function AlertsScreen() {
+
+    const navigation = useNavigation();
+
 
     const appSecondaryColor = "#8FA063";
     const appTextColor = "#FFFFFF";
 
     const PAGE_SIZE = 25;
+
+    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [profileRole, setProfileRole] = useState({
+        role: "",
+    });
+
 
     /* For sending notifications from mobile (possibly add in future)
   
@@ -85,6 +96,7 @@ export default function AlertsScreen() {
             Notifications.setNotificationHandler(notificationHandler);
 
             getAlerts();
+            getNameAndRole();
 
         }, [])
     ); // Empty dependency array means this effect will only run once when the component mounts
@@ -163,6 +175,26 @@ export default function AlertsScreen() {
         setFull(data);
     };
 
+    const getNameAndRole = async () => {
+        try {
+            const client = new Client()
+                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
+                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
+
+            const account = new Account(client);
+            const response = await account.get();
+
+            setProfileRole({
+                role: response.labels,
+            });
+
+            setIsSignedIn(true);
+        } catch {
+            setIsSignedIn(false);
+        }
+    };
+
+
     return (
         <SafeAreaView style={HomeStyle.alertContainer}>
             <View style={HomeStyle.alertButtons}>
@@ -202,6 +234,16 @@ export default function AlertsScreen() {
             <ScrollView contentContainerStyle={[HomeStyle.scrollableView, { alignItems: "center" }]} showsVerticalScrollIndicator={false}>
                 {fullList}
                 {filterList}
+
+                {isSignedIn && (profileRole.role == "admin") ?
+                    (<TouchableOpacity onPress={()=>navigation.navigate("PushNotificationScreen")}>
+                        <AntDesign name="pluscircle" size={30} color="#8fa063" />
+                    </TouchableOpacity>
+                    ) :
+                    null
+                }
+
+
             </ScrollView>
         </SafeAreaView>
     );
