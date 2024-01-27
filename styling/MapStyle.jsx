@@ -84,6 +84,36 @@ export default StyleSheet.create({
         justifyContent: "space",
         backgroundColor: appPrimaryColor
     },
-
+    checkboxContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 5,
+    },
+    checkboxText: {
+        marginLeft: 10,
+        fontSize: 16,
+        color: appTextColor
+    },
+    fab: {
+        position: "absolute",
+        bottom: 20,
+        right: 20,
+        backgroundColor: appSecondaryColor,
+        borderRadius: 30,
+        width: 60,
+        height: 60,
+        justifyContent: "center",
+        alignItems: "center",
+        elevation: 8,
+    },
+    filterOptionsContainer: {
+        position: "absolute",
+        bottom: 100,
+        right: 20,
+        backgroundColor: appSecondaryColor,
+        borderRadius: 10,
+        padding: 10,
+        elevation: 8,
+    },
 });
 

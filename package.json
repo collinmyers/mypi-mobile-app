@@ -17,7 +17,9 @@
     "appwrite": "^13.0.1",
     "expo": "~50.0.3",
     "expo-notifications": "~0.27.5",
+    "i": "^0.3.7",
     "local-storage-fallback": "^4.1.2",
+    "npm": "^10.4.0",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-native": "0.73.2",
@@ -28,7 +30,8 @@
     "react-native-paper": "^5.12.2",
     "react-native-reanimated": "~3.6.2",
     "react-native-url-polyfill": "^2.0.0",
-    "react-native-webview": "13.6.4"
+    "react-native-webview": "13.6.4",
+    "expo-checkbox": "~2.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",

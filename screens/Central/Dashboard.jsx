@@ -9,8 +9,6 @@ import Logo from "../../components/logo/AuthLogo";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-
-
 export default function Dashboard() {
 
     const navigation = useNavigation();
@@ -19,6 +17,8 @@ export default function Dashboard() {
     const [profileInfo, setProfileInfo] = useState({
         name: "",
     });
+
+    const appTextColor = "#FFFFFF";
 
     const getNameAndEmail = async () => {
         try {
@@ -59,8 +59,8 @@ export default function Dashboard() {
                 }
 
                 <TouchableOpacity style={HomeStyle.dashboardDonoOpac} onPress={() => { navigation.navigate("Donate"); }}>
-                    <MaterialIcons name="volunteer-activism" size={24} color={"#8B0000"} />
-                    <Text style={HomeStyle.dashboardDonoText}>Donate Here!</Text>
+                    <MaterialIcons name="volunteer-activism" size={24} color={appTextColor} />
+                    <Text style={HomeStyle.dashboardDonoText}>Donate Here</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
