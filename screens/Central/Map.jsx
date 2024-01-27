@@ -8,7 +8,8 @@ import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPref
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
-import { Checkbox } from "expo-checkbox"; // Import Checkbox from Expo
+import { Checkbox } from "expo-checkbox";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function MapScreen() {
     const navigation = useNavigation();
@@ -87,13 +88,15 @@ export default function MapScreen() {
                             coordinate={{ latitude: poiLatitude, longitude: poiLongitude }}
                             pinColor={markerColor}
                         >
-                            <Callout
-                                onPress={() => {
-                                    getDirections(poiLatitude, poiLongitude, directionsPreference);
-                                }}>
+                            <Callout>
                                 <View>
                                     <Text style={MapStyle.poiMarkerTitle}>{poiName} ({poiParkStatus})</Text>
-                                    <Text style={MapStyle.poiMarkerDirectionsText}>Get Directions </Text>
+                                    <Text style={MapStyle.poiMarkerDirectionsText} onPress={() => {
+                                        getDirections(poiLatitude, poiLongitude, directionsPreference);
+                                    }}
+                                    >
+                                        Get Directions
+                                    </Text>
                                 </View>
                             </Callout>
                         </Marker>
