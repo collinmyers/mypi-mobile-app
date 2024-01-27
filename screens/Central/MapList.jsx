@@ -2,15 +2,22 @@ import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 
 import { ScrollView, SafeAreaView, Pressable } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { Card, Searchbar, Text, TextInput } from "react-native-paper";
 import { Databases, Client, Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
 import MapStyle from "../../styling/MapStyle";
+
+
 
 export default function MapList() {
 
     const navigation = useNavigation();
     const [data, setData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredCards, setFilteredCards] = useState([]);
+    const [filterOn, setFilterOn] = useState(false);
+
+
 
     const PAGE_SIZE = 25;
 
@@ -65,6 +72,7 @@ export default function MapList() {
 
                     return (
                         <Pressable
+                            id={Name}
                             key={`${offset}_${index}`} // Ensure each key is unique
                         // onPress={() =>
                         //     navigation.navigate("Map", {
@@ -100,11 +108,42 @@ export default function MapList() {
         }
     };
 
+    const handleSearch = (query) => {
+        setFilteredCards([]);
+        setFilterOn(true);
+
+
+        data.forEach(element => {
+            const cardIdString = element.props.id;
+            if (cardIdString.toLowerCase().includes(query.toLowerCase()) ) {
+                setFilteredCards(prevFilter => [...prevFilter,element]);
+            }
+        });
+        if(query == ""){
+            setFilterOn(false);
+        }
+      };
+
     return (
         <SafeAreaView style={MapStyle.poiContainer}>
             <Text style={MapStyle.changeButton} onPress={() => { navigation.navigate("MapScreen"); }}>View as Map</Text>
+            <Searchbar 
+                style={{width:"80%"}}
+                placeholder="Search for point of interest" 
+                value={searchQuery} 
+                onChangeText={(text) => {
+                setSearchQuery(text);
+                handleSearch(text);
+            }}
+            />
+
+                
             <ScrollView contentContainerStyle={MapStyle.scrollableView} showsVerticalScrollIndicator={false}>
-                {data}
+                {filterOn ?
+                    (filteredCards) 
+                    :
+                    (data)
+                }
             </ScrollView>
         </SafeAreaView>
 

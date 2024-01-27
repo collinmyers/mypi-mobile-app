@@ -82,7 +82,8 @@ export default StyleSheet.create({
     scrollableView: {
         flexGrow: 1,
         justifyContent: "space",
-        backgroundColor: appPrimaryColor
+        backgroundColor: appPrimaryColor,
+        paddingTop:10
     },
     checkboxContainer: {
         flexDirection: "row",
