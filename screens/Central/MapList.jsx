@@ -5,6 +5,8 @@ import { Card, Searchbar, Text } from "react-native-paper";
 import { Databases, Client, Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
 import MapStyle from "../../styling/MapStyle";
+import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
+import { showLocation } from "react-native-map-link";
 
 export default function MapList() {
     const navigation = useNavigation();
@@ -12,6 +14,7 @@ export default function MapList() {
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredCards, setFilteredCards] = useState([]);
     const [filterOn, setFilterOn] = useState(false);
+    const [currentNavPreference, setCurrentNavPreference] = useState(null);
 
     const PAGE_SIZE = 25;
 
@@ -34,7 +37,45 @@ export default function MapList() {
 
         }, []));
 
-    const getPOI = async () => {
+    useFocusEffect(React.useCallback(() => {
+        fetchNavPreference();
+    }, []));
+
+    useFocusEffect(
+        React.useCallback(() => {
+            if (currentNavPreference !== null) {
+                setData([]);
+                getPOI(currentNavPreference);
+            }
+        }, [currentNavPreference])
+    );
+
+
+    const fetchNavPreference = async () => {
+        try {
+            const preference = await getNavigationPreference();
+
+            setCurrentNavPreference(preference);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const getDirections = (lat, long, directionsPreference) => {
+        showLocation({
+            latitude: lat,
+            longitude: long,
+            appsWhiteList: [],
+            googleForceLatLon: true,
+            alwaysIncludeGoogle: true,
+            naverCallerName: "com.discoverpi.mypi",
+            directionsMode: directionsPreference,
+        });
+    };
+
+
+    const getPOI = async (directionsPreference) => {
+        setCurrentNavPreference(directionsPreference);
         try {
             const client = new Client()
                 .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
@@ -58,11 +99,16 @@ export default function MapList() {
                 const newData = response.documents.map((document, index) => {
                     const Name = document.Name;
                     const Status = document.Status;
+                    const Latitude = document.Latitude;
+                    const Longitude = document.Longitude;
 
                     return (
                         <Pressable
                             id={Name}
                             key={`${offset}_${index}`}
+                            onPress={() => {
+                                getDirections(Latitude, Longitude, directionsPreference);
+                            }}
                         >
                             <Card style={MapStyle.poiCard}>
                                 <Card.Content style={MapStyle.poiCardContent}>
@@ -82,17 +128,17 @@ export default function MapList() {
                     allData.sort((a, b) => {
                         const nameA = a.props.id.toLowerCase();
                         const nameB = b.props.id.toLowerCase();
-                    
+
                         const splitA = nameA.match(/(\D+|\d+)/g);
                         const splitB = nameB.match(/(\D+|\d+)/g);
-                    
+
                         for (let i = 0; i < Math.max(splitA.length, splitB.length); i++) {
                             if (i >= splitA.length) return -1;
                             if (i >= splitB.length) return 1;
-                    
+
                             const partA = splitA[i];
                             const partB = splitB[i];
-                    
+
                             if (!isNaN(partA) && !isNaN(partB)) {
                                 const numA = parseInt(partA);
                                 const numB = parseInt(partB);
@@ -105,12 +151,12 @@ export default function MapList() {
                                 }
                             }
                         }
-                    
+
                         return 0;
                     });
-                    
+
                     setData(allData);
-                    
+
 
                 }
             };
