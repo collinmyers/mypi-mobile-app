@@ -6,7 +6,7 @@ import { account } from "../../../utils/Config/appwriteConfig";
 import AuthLogo from "../../../components/logo/AuthLogo";
 import AppStyle from "../../../styling/AppStyle";
 import AuthStyle from "../../../styling/AuthStyle";
-
+import { appPrimaryColor, appTextColor } from "../../../utils/colors/appColors";
 import { validateEmail } from "../../../utils/Regex/Validators";
 import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
 
@@ -19,9 +19,6 @@ ForgotPasswordScreen.propTypes = {
 
 export default function ForgotPasswordScreen({ navigation }) {
     const [email, setEmail] = useState("");
-
-    const appPrimaryColor = "#134C77";
-    const appTextColor = "#FFFFFF";
 
     const handlePasswordReset = async () => {
 

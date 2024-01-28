@@ -6,11 +6,11 @@ import PropTypes from "prop-types";
 import PasswordResetScreen from "../../screens/Sidebar/auth/ForgotPassword";
 import Menu from "./AppHeader";
 import MenuBack from "./AppHeaderNavBack";
+import { appPrimaryColor } from "../../utils/colors/appColors";
 
 const Stack = createStackNavigator();
 
 export default function AuthStackNavigator({ handleLoginSuccess }) {
-    const appPrimaryColor = "#134C77";
     return (
         <Stack.Navigator initialRouteName="Login" >
             <Stack.Screen name="Login"

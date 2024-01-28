@@ -10,7 +10,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
-
+import { appPrimaryColor, appTextColor } from "../../utils/colors/appColors";
 
 
 export default function MapScreen() {
@@ -23,10 +23,6 @@ export default function MapScreen() {
     const [fabVisible, setFabVisible] = useState(false);
 
     const PAGE_SIZE = 25;
-
-    const appPrimaryColor = "#134C77";
-    // const appSecondaryColor = "#8FA063";
-    const appTextColor = "#FFFFFF";
 
     const getMarkers = async (directionsPreference, filters) => {
         setCurrentNavPreference(directionsPreference);

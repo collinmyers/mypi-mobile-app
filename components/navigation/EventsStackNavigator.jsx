@@ -4,6 +4,7 @@ import EventListScreen from "../../screens/Central/EventList";
 import EventDetailsScreen from "../../screens/Central/EventDetails";
 import Menu from "./AppHeader";
 import MenuBack from "./AppHeaderNavBack";
+import { appPrimaryColor } from "../../utils/colors/appColors";
 
 const fade = ({ current }) => ({
     cardStyle: {
@@ -14,7 +15,6 @@ const fade = ({ current }) => ({
 const Stack = createStackNavigator();
 
 export default function EventsStackNavigator() {
-    const appPrimaryColor = "#134C77";
     return (
         <Stack.Navigator initialRouteName="Events" screenOptions={{ headerShown: false, cardStyleInterpolator: fade }}>
             <Stack.Screen name="Events" component={EventListScreen}

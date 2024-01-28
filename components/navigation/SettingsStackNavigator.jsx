@@ -7,14 +7,13 @@ import ChangePasswordScreen from "../../screens/UpdateAccountSettings/Password";
 import ParkNotificationsScreen from "../../screens/UpdateNotificationSettings/ParkAlertNotifications";
 import EventsNotificationsScreen from "../../screens/UpdateNotificationSettings/EventNotifications";
 import PromotionsNotificationsScreen from "../../screens/UpdateNotificationSettings/PromotionNotifications";
-
+import { appPrimaryColor } from "../../utils/colors/appColors";
 import Menu from "./AppHeader";
 import MenuBack from "./AppHeaderNavBack";
 
 const Stack = createStackNavigator();
 
 export default function SettingsStackNavigator() {
-    const appPrimaryColor = "#134C77";
     return (
         <Stack.Navigator initialRouteName="Settings" >
             <Stack.Screen name="Settings" component={SettingsScreen}

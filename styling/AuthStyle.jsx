@@ -1,15 +1,12 @@
 import { StyleSheet } from "react-native";
-
-const appPrimaryColor = "#134C77";
-const appSecondaryColor = "#8FA063";
-const appTextColor = "#FFFFFF";
+import { appPrimaryColor, appSecondaryColor, appTextColor } from "../utils/colors/appColors";
 
 export default StyleSheet.create({
 
-    keyboardAdj:{
+    keyboardAdj: {
         width: "80%",
     },
-    logo:{
+    logo: {
         alignSelf: "center",
     },
     card: {

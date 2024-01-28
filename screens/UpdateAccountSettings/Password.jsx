@@ -3,12 +3,11 @@ import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
 import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
-
 import AuthLogo from "../../components/logo/AuthLogo";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
-
+import { appPrimaryColor, appTextColor } from "../../utils/colors/appColors";
 import { validatePassword } from "../../utils/Regex/Validators";
 
 ChangePasswordScreen.propTypes = {
@@ -24,9 +23,6 @@ export default function ChangePasswordScreen({ navigation }) {
         newPassword: "",
         confirmNewPassword: ""
     });
-
-    const appPrimaryColor = "#134C77";
-    const appTextColor = "#FFFFFF";
 
     const handlePasswordChange = async () => {
         try {

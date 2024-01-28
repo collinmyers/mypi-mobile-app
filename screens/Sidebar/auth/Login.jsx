@@ -3,11 +3,10 @@ import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
 import { account } from "../../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
-
 import AuthLogo from "../../../components/logo/AuthLogo";
 import AppStyle from "../../../styling/AppStyle";
 import AuthStyle from "../../../styling/AuthStyle";
-
+import { appPrimaryColor, appTextColor } from "../../../utils/colors/appColors";
 import { validateEmail } from "../../../utils/Regex/Validators";
 import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
 
@@ -24,9 +23,6 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
         email: "",
         password: ""
     });
-
-    const appPrimaryColor = "#134C77";
-    const appTextColor = "#FFFFFF";
 
     const handleLogin = async () => {
         try {

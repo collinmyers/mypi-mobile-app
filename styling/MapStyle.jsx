@@ -1,11 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { appPrimaryColor, appSecondaryColor, appTextColor } from "../utils/colors/appColors";
 
 const deviceWidth = Dimensions.get("window").width;
-
-
-const appPrimaryColor = "#134C77";
-const appSecondaryColor = "#8FA063";
-const appTextColor = "#FFFFFF";
 
 export default StyleSheet.create({
     container: {

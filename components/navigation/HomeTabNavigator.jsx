@@ -6,18 +6,13 @@ import DashboardScreen from "../../screens/Central/Dashboard";
 import SettingsStackNavigator from "./SettingsStackNavigator";
 import EventsStackNavigator from "./EventsStackNavigator";
 import MapStackNavigator from "./MapStackNavigator";
-
+import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
 import Menu from "./AppHeader";
 import AlertsStackNavigator from "./AlertsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
 export default function HomeTabNavigator() {
-
-    const appPrimaryColor = "#134C77";
-    const appSecondaryColor = "#8FA063";
-    const appTextColor = "#FFFFFF";
-
     return (
         <Tab.Navigator
             initialRouteName="Home"
@@ -36,7 +31,7 @@ export default function HomeTabNavigator() {
                 component={DashboardScreen}
                 options={{
                     tabBarLabel: "Dashboard",
-                    header: () => <Menu/>,
+                    header: () => <Menu />,
                     tabBarIcon: () => (
                         <Entypo name="home" size={24} color={appSecondaryColor} />
                     )
@@ -47,7 +42,7 @@ export default function HomeTabNavigator() {
                 component={MapStackNavigator}
                 options={{
                     tabBarLabel: "Map",
-                    header: () => <Menu/>,
+                    header: () => <Menu />,
                     tabBarIcon: () => (
                         <Entypo name="map" size={24} color={appSecondaryColor} />
                     )

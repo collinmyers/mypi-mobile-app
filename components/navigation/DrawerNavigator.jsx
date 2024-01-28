@@ -8,6 +8,7 @@ import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./AuthStackNavigator";
 import { account } from "../../utils/Config/appwriteConfig";
+import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
 
 import { Entypo, Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 
@@ -18,10 +19,6 @@ export default function DrawerNavigator() {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [isSigningOut, setIsSigningOut] = useState(false);
     const [refreshDrawer, setRefreshDrawer] = useState(0);
-
-    const appPrimaryColor = "#134C77";
-    const appSecondaryColor = "#8FA063";
-    const appTextColor = "#FFFFFF";
 
     const checkAuthState = async () => {
         try {

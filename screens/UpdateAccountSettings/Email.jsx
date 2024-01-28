@@ -3,13 +3,11 @@ import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
 import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
-
 import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
-
 import AuthLogo from "../../components/logo/AuthLogo";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
-
+import { appPrimaryColor, appTextColor } from "../../utils/colors/appColors";
 import { validateEmail } from "../../utils/Regex/Validators";
 
 ChangeEmailScreen.propTypes = {
@@ -24,9 +22,6 @@ export default function ChangeEmailScreen({ navigation }) {
         email: "",
         password: ""
     });
-
-    const appPrimaryColor = "#134C77";
-    const appTextColor = "#FFFFFF";
 
     const handleEmailChange = async () => {
         try {

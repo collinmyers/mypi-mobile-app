@@ -1,18 +1,13 @@
 import { Dimensions, Platform, StyleSheet } from "react-native";
+import { appPrimaryColor, appSecondaryColor, appTextColor, appWarningColor } from "../utils/colors/appColors";
 
 let fontSizeAlert = 16;
 
 if (Platform.OS === "android") fontSizeAlert = 13;
 
 const deviceWidth = Dimensions.get("window").width;
-
 const cardWidth = deviceWidth * .75;
 const buttonWidth = deviceWidth * .5;
-
-const appPrimaryColor = "#134C77";
-const appSecondaryColor = "#8FA063";
-const appTextColor = "#FFFFFF";
-const appWarningColor = "#C70039";
 
 export default StyleSheet.create({
 
@@ -455,8 +450,8 @@ export default StyleSheet.create({
         textAlign: "center",
         fontSize: 24
     },
-    navBackButton:{
-        
-    
+    navBackButton: {
+
+
     }
 });

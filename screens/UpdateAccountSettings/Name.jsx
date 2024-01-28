@@ -3,12 +3,11 @@ import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
 import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
-
 import AuthLogo from "../../components/logo/AuthLogo";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
-
+import { appPrimaryColor, appTextColor } from "../../utils/colors/appColors";
 import { validateName } from "../../utils/Regex/Validators";
 
 ChangeNameScreen.propTypes = {
@@ -24,13 +23,10 @@ export default function ChangeNameScreen({ navigation }) {
         lastName: ""
     });
 
-    const appPrimaryColor = "#134C77";
-    const appTextColor = "#FFFFFF";
-
     const handleNameChange = async () => {
         try {
             const updatedName = `${name.firstName} ${name.lastName}`;
-            
+
             await account.updateName(updatedName);
 
             setName({
