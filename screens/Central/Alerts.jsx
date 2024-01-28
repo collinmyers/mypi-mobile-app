@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { Alert, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
 import client, { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
@@ -52,7 +53,7 @@ export default function AlertsScreen() {
     const [fullList, setFull] = useState([]);
 
 
-    useEffect(() => {
+    useFocusEffect(React.useCallback(() => {
         // Function to handle real-time updates
         const handleSubscription = () => {
             getAlerts();
@@ -95,7 +96,7 @@ export default function AlertsScreen() {
             unsubscribe();
         };
 
-    }, []);
+    }, []));
 
     const getAlerts = async () => {
         try {

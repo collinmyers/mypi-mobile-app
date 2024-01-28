@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
 import client, { database, storage, DATABASE_ID, EVENTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
@@ -15,24 +15,22 @@ export default function EventListScreen() {
 
     const PAGE_SIZE = 25;
 
-    useEffect(() => {
+    useFocusEffect(React.useCallback(() => {
         // Function to handle real-time updates
         const handleSubscription = () => {
             getEvents();
         };
+
         // Subscribe to real-time updates
-        const unsubscribe = client.subscribe(
-            `databases.${DATABASE_ID}.collections.${EVENTS_COLLECTION_ID}.documents`,
-            handleSubscription
-        );
+        const unsubscribe = client.subscribe(`databases.${DATABASE_ID}.collections.${EVENTS_COLLECTION_ID}.documents`, handleSubscription);
 
         getEvents();
 
+        // Cleanup function
         return () => {
             unsubscribe();
         };
-
-    }, []);
+    }, []));
 
     const getEvents = async () => {
         try {
@@ -104,8 +102,6 @@ export default function EventListScreen() {
             console.error(error);
         }
     };
-
-
 
     return (
         <SafeAreaView style={HomeStyle.eventContainer}>
