@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
-import client, { database, storage, DATABASE_ID, EVENTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { database, storage, DATABASE_ID, EVENTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
 import HomeStyle from "../../styling/HomeStyle";
-
-
+import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 
 export default function EventListScreen() {
     const navigation = useNavigation();
@@ -21,8 +20,7 @@ export default function EventListScreen() {
             getEvents();
         };
 
-        // Subscribe to real-time updates
-        const unsubscribe = client.subscribe(`databases.${DATABASE_ID}.collections.${EVENTS_COLLECTION_ID}.documents`, handleSubscription);
+        const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, EVENTS_COLLECTION_ID);
 
         getEvents();
 

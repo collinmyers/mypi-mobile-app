@@ -2,20 +2,18 @@ import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { Alert, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
-import client, { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
+import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 
 export default function AlertsScreen() {
 
     const navigation = useNavigation();
-
-
-    const appSecondaryColor = "#8FA063";
-    const appTextColor = "#FFFFFF";
 
     const PAGE_SIZE = 25;
 
@@ -59,10 +57,7 @@ export default function AlertsScreen() {
             getAlerts();
         };
         // Subscribe to real-time updates
-        const unsubscribe = client.subscribe(
-            `databases.${DATABASE_ID}.collections.${ALERTS_COLLECTION_ID}.documents`,
-            handleSubscription
-        );
+        const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
 
         // Request notification permissions when the component mounts
         (async () => {

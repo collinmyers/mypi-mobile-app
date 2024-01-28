@@ -9,6 +9,7 @@ import MapStyle from "../../styling/MapStyle";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { showLocation } from "react-native-map-link";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { appTextColor } from "../../utils/colors/appColors";
 
 export default function MapList() {
     const navigation = useNavigation();
@@ -19,7 +20,6 @@ export default function MapList() {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
 
     const PAGE_SIZE = 25;
-    const appTextColor = "#FFFFFF";
 
     useFocusEffect(React.useCallback(() => {
         fetchNavPreference();

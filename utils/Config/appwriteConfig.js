@@ -20,4 +20,15 @@ export const account = new Account(client); // Named export use {account} when i
 export const database = new Databases(client); // Named export use {databases} when importing
 export const storage = new Storage(client); // Named export use {storage} when importing
 
+export const subscribeToRealTimeUpdates = (handleSubscription, CURRENT_COLLECTION_ID) => {
+    // Subscribe to real-time updates
+    const unsubscribe = client.subscribe(
+        `databases.${DATABASE_ID}.collections.${CURRENT_COLLECTION_ID}.documents`,
+        handleSubscription
+    );
+
+    // Return unsubscribe function
+    return unsubscribe;
+};
+
 export default client; // default export use the word client when exporting

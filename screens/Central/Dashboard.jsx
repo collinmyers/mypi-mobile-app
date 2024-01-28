@@ -8,6 +8,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import Logo from "../../components/logo/AuthLogo";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { appTextColor } from "../../utils/colors/appColors";
 
 export default function Dashboard() {
 
@@ -17,8 +18,6 @@ export default function Dashboard() {
     const [profileInfo, setProfileInfo] = useState({
         name: "",
     });
-
-    const appTextColor = "#FFFFFF";
 
     const getNameAndEmail = async () => {
         try {

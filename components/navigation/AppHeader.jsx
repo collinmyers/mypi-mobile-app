@@ -4,10 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 
 import AppStyle from "../../styling/AppStyle";
+import { appSecondaryColor } from "../../utils/colors/appColors";
 
 export default function AppHeader() {
     const navigation = useNavigation();
-    const appSecondaryColor = "#8FA063";
 
     return (
         <SafeAreaView style={AppStyle.drawerHeader}>

@@ -4,10 +4,11 @@ import AlertsScreen from "../../screens/Central/Alerts";
 import PushNotificationScreen from "../../screens/Central/PushNotification";
 import Menu from "./AppHeader";
 import MenuBack from "./AppHeaderNavBack";
+import { appPrimaryColor } from "../../utils/colors/appColors";
 
 const fade = ({ current }) => ({
     cardStyle: {
-      opacity: current.progress,
+        opacity: current.progress,
     },
 });
 
@@ -15,25 +16,21 @@ const fade = ({ current }) => ({
 const Stack = createStackNavigator();
 
 export default function AlertsStackNavigator() {
-
-    const appBlue = "#134C77";
-
-
     return (
-        <Stack.Navigator initialRouteName="AlertsScreen" screenOptions={{ headerShown: false,  cardStyleInterpolator: fade}}>
-            <Stack.Screen name="AlertsScreen" component={AlertsScreen} 
-                    options={{
+        <Stack.Navigator initialRouteName="AlertsScreen" screenOptions={{ headerShown: false, cardStyleInterpolator: fade }}>
+            <Stack.Screen name="AlertsScreen" component={AlertsScreen}
+                options={{
                     headerShown: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <Menu />
                 }}
             />
             <Stack.Screen name="PushNotificationScreen" component={PushNotificationScreen}
-                    options={{
+                options={{
                     headerShown: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appBlue },
+                    headerStyle: { backgroundColor: appPrimaryColor },
                     header: () => <MenuBack />
                 }}
             />
