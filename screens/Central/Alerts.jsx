@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
-import { Account, Databases, Client, Query } from "appwrite";
+import client, { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { Query } from "appwrite";
 import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
-import { useFocusEffect } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
 
 export default function AlertsScreen() {
 
@@ -53,69 +52,60 @@ export default function AlertsScreen() {
     const [fullList, setFull] = useState([]);
 
 
-    useFocusEffect(
-        React.useCallback(() => {
-            // Initialize Appwrite client
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            // Function to handle real-time updates
-            const handleSubscription = () => {
-                getAlerts();
-            };
-            // Subscribe to real-time updates
-            client.subscribe(
-                "databases.653ae4b2740b9f0a5139.collections.6552848655e88d169d7d.documents",
-                handleSubscription
-            );
-
-            // Request notification permissions when the component mounts
-            (async () => {
-                const { status } = await Notifications.requestPermissionsAsync();
-                if (status !== "granted") {
-                    console.log("Permission to receive notifications denied.");
-                    return;
-                }
-            })();
-
-            // Define the notification handler
-            const notificationHandler = {
-                handleNotification: async (notification) => {
-                    // Handle the presented notification here
-                    const { title, body } = notification.request.content;
-
-                    // For example, show an alert with the notification content
-                    Alert.alert(title, body);
-
-                    // You can add more customized behavior here, such as navigating to a specific screen.
-                },
-            };
-
-            // Set the notification handler
-            Notifications.setNotificationHandler(notificationHandler);
-
+    useEffect(() => {
+        // Function to handle real-time updates
+        const handleSubscription = () => {
             getAlerts();
-            getNameAndRole();
+        };
+        // Subscribe to real-time updates
+        const unsubscribe = client.subscribe(
+            `databases.${DATABASE_ID}.collections.${ALERTS_COLLECTION_ID}.documents`,
+            handleSubscription
+        );
 
-        }, [])
-    ); // Empty dependency array means this effect will only run once when the component mounts
+        // Request notification permissions when the component mounts
+        (async () => {
+            const { status } = await Notifications.requestPermissionsAsync();
+            if (status !== "granted") {
+                console.log("Permission to receive notifications denied.");
+                return;
+            }
+        })();
+
+        // Define the notification handler
+        const notificationHandler = {
+            handleNotification: async (notification) => {
+                // Handle the presented notification here
+                const { title, body } = notification.request.content;
+
+                // For example, show an alert with the notification content
+                Alert.alert(title, body);
+
+                // You can add more customized behavior here, such as navigating to a specific screen.
+            },
+        };
+
+        // Set the notification handler
+        Notifications.setNotificationHandler(notificationHandler);
+
+        getAlerts();
+        getNameAndRole();
+
+        return () => {
+            unsubscribe();
+        };
+
+    }, []);
 
     const getAlerts = async () => {
         try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const database = new Databases(client);
-
             let offset = 0;
             let allData = [];
 
             const fetchPage = async (offset) => {
                 const response = await database.listDocuments(
-                    "653ae4b2740b9f0a5139", // DB ID
-                    "6552848655e88d169d7d", // Collection ID
+                    DATABASE_ID, // DB ID
+                    ALERTS_COLLECTION_ID, // Collection ID
                     [
                         Query.limit(PAGE_SIZE),
                         Query.offset(offset)
@@ -177,11 +167,6 @@ export default function AlertsScreen() {
 
     const getNameAndRole = async () => {
         try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const account = new Account(client);
             const response = await account.get();
 
             setProfileRole({
@@ -236,7 +221,7 @@ export default function AlertsScreen() {
                 {filterList}
 
                 {isSignedIn && (profileRole.role == "admin") ?
-                    (<TouchableOpacity onPress={()=>navigation.navigate("PushNotificationScreen")}>
+                    (<TouchableOpacity onPress={() => navigation.navigate("PushNotificationScreen")}>
                         <AntDesign name="pluscircle" size={30} color="#8fa063" />
                     </TouchableOpacity>
                     ) :

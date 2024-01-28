@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
-import { Account, Client } from "appwrite";
+import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 
 import AuthLogo from "../../components/logo/AuthLogo";
@@ -29,14 +29,7 @@ export default function ChangePasswordScreen({ navigation }) {
     const appTextColor = "#FFFFFF";
 
     const handlePasswordChange = async () => {
-
         try {
-
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const account = new Account(client);
             await account.updatePassword(passwords.newPassword, passwords.oldPassword);
 
             setPasswords({

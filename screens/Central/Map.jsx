@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { View, SafeAreaView, Text, TouchableOpacity } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
-import { Databases, Client, Query } from "appwrite";
+import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { Query } from "appwrite";
 import MapStyle from "../../styling/MapStyle";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
+
+
 
 export default function MapScreen() {
     const navigation = useNavigation();
@@ -20,27 +23,23 @@ export default function MapScreen() {
     const [fabVisible, setFabVisible] = useState(false);
 
     const PAGE_SIZE = 25;
-    const appTextColor = "#FFFFFF";
-    const appSecondaryColor = "#8FA063";
-    const appPrimaryColor = "#134C77";
 
+    const appPrimaryColor = "#134C77";
+    // const appSecondaryColor = "#8FA063";
+    const appTextColor = "#FFFFFF";
 
     const getMarkers = async (directionsPreference, filters) => {
         setCurrentNavPreference(directionsPreference);
 
         try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
 
-            const database = new Databases(client);
             let offset = 0;
             let allMarkers = [];
 
             const fetchPage = async (offset) => {
                 const response = await database.listDocuments(
-                    "653ae4b2740b9f0a5139", // DB ID
-                    "65565099921adc2d835b", // Collection ID
+                    DATABASE_ID,
+                    MAP_COLLECTION_ID,
                     [Query.limit(PAGE_SIZE), Query.offset(offset)]
                 );
 
@@ -132,23 +131,21 @@ export default function MapScreen() {
     const fetchNavPreference = async () => {
         try {
             const preference = await getNavigationPreference();
-
             setCurrentNavPreference(preference);
         } catch (error) {
             console.error(error);
         }
     };
 
-    useFocusEffect(React.useCallback(() => {
-        fetchNavPreference();
-    }, []));
-
     useFocusEffect(
         React.useCallback(() => {
+            fetchNavPreference();
+
             if (currentNavPreference !== null) {
                 setMarkers([]);
                 getMarkers(currentNavPreference, selectedFilters);
             }
+
         }, [currentNavPreference, selectedFilters])
     );
 

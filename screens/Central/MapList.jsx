@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, TouchableOpacity } from "react-native";
 import { Card, Searchbar, Text } from "react-native-paper";
-import { Databases, Client, Query } from "appwrite";
+import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
 import MapStyle from "../../styling/MapStyle";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
@@ -20,25 +21,6 @@ export default function MapList() {
     const PAGE_SIZE = 25;
     const appTextColor = "#FFFFFF";
 
-    useFocusEffect(
-        React.useCallback(() => {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const handleSubscription = () => {
-                getPOI();
-            };
-
-            client.subscribe(
-                "databases.653ae4b2740b9f0a5139.collections.65565099921adc2d835b.documents",
-                handleSubscription
-            );
-
-            getPOI();
-
-        }, []));
-
     useFocusEffect(React.useCallback(() => {
         fetchNavPreference();
     }, []));
@@ -51,7 +33,6 @@ export default function MapList() {
             }
         }, [currentNavPreference])
     );
-
 
     const fetchNavPreference = async () => {
         try {
@@ -79,19 +60,13 @@ export default function MapList() {
     const getPOI = async (directionsPreference) => {
         setCurrentNavPreference(directionsPreference);
         try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const database = new Databases(client);
-
             let offset = 0;
             let allData = [];
 
             const fetchPage = async (offset) => {
                 const response = await database.listDocuments(
-                    "653ae4b2740b9f0a5139",
-                    "65565099921adc2d835b",
+                    DATABASE_ID,
+                    MAP_COLLECTION_ID,
                     [
                         Query.limit(PAGE_SIZE),
                         Query.offset(offset)

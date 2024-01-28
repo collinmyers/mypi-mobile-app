@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
-import { Account, Client, ID } from "appwrite";
+import { account } from "../../../utils/Config/appwriteConfig";
+import { ID } from "appwrite";
 import PropTypes from "prop-types";
 import { validateName, validateEmail, validatePassword } from "../../../utils/Regex/Validators";
 import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
@@ -30,14 +31,7 @@ export default function SignUpScreen({ navigation }) {
     const appTextColor = "#FFFFFF";
 
     const handleSignUp = async () => {
-
         try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const account = new Account(client);
-
             await account.create(ID.unique(), signUpInfo.email, signUpInfo.password, `${signUpInfo.firstName} ${signUpInfo.lastName}`);
 
             navigation.navigate("Login");

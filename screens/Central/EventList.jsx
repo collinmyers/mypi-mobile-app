@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 
 import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
-import { Databases, Client, Storage, Query } from "appwrite";
+import client, { database, storage, DATABASE_ID, EVENTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
 import HomeStyle from "../../styling/HomeStyle";
+
+
 
 export default function EventListScreen() {
     const navigation = useNavigation();
@@ -13,43 +15,35 @@ export default function EventListScreen() {
 
     const PAGE_SIZE = 25;
 
-    useFocusEffect(
-        React.useCallback(() => {
-            // Initialize Appwrite client
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            // Function to handle real-time updates
-            const handleSubscription = () => {
-                getEvents();
-            };
-            // Subscribe to real-time updates
-            client.subscribe(
-                "databases.653ae4b2740b9f0a5139.collections.655280f07e30eb37c8e8.documents",
-                handleSubscription
-            );
-
+    useEffect(() => {
+        // Function to handle real-time updates
+        const handleSubscription = () => {
             getEvents();
+        };
+        // Subscribe to real-time updates
+        const unsubscribe = client.subscribe(
+            `databases.${DATABASE_ID}.collections.${EVENTS_COLLECTION_ID}.documents`,
+            handleSubscription
+        );
 
-        }, [])); // Empty dependency array means this effect will only run once when the component mounts
+        getEvents();
+
+        return () => {
+            unsubscribe();
+        };
+
+    }, []);
 
     const getEvents = async () => {
         try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const database = new Databases(client);
-            const storage = new Storage(client);
 
             let offset = 0;
             let allData = [];
 
             const fetchPage = async (offset) => {
                 const response = await database.listDocuments(
-                    "653ae4b2740b9f0a5139", // DB ID
-                    "655280f07e30eb37c8e8", // Collection ID
+                    DATABASE_ID,
+                    EVENTS_COLLECTION_ID,
                     [
                         Query.limit(PAGE_SIZE),
                         Query.offset(offset)
@@ -111,13 +105,13 @@ export default function EventListScreen() {
         }
     };
 
+
+
     return (
         <SafeAreaView style={HomeStyle.eventContainer}>
             <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
                 {data}
             </ScrollView>
         </SafeAreaView>
-
-
     );
 }

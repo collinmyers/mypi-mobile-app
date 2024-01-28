@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { Card, Text } from "react-native-paper";
-import { Account, Client } from "appwrite";
+import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
 import { saveNavigationPreference, getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
@@ -23,11 +23,6 @@ export default function SettingsScreen({ navigation }) {
 
     const getNameAndEmail = async () => {
         try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const account = new Account(client);
             const response = await account.get();
 
             setProfileInfo({

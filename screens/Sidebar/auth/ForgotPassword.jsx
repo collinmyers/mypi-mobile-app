@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
-import { Account, Client } from "appwrite";
 import PropTypes from "prop-types";
-
+import { account } from "../../../utils/Config/appwriteConfig";
 import AuthLogo from "../../../components/logo/AuthLogo";
 import AppStyle from "../../../styling/AppStyle";
 import AuthStyle from "../../../styling/AuthStyle";
@@ -27,13 +26,7 @@ export default function ForgotPasswordScreen({ navigation }) {
     const handlePasswordReset = async () => {
 
         try {
-
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const account = new Account(client);
-            await account.createRecovery(`${email}`, process.env.EXPO_PUBLIC_DDNS);
+            await account.createRecovery(`${email}`, process.env.EXPO_PUBLIC_RECOVERY_DOMAIN);
 
             setEmail("");
             navigation.navigate("Login");

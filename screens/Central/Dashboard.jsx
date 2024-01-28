@@ -3,7 +3,7 @@ import { Text } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
-import { Account, Client } from "appwrite";
+import { account } from "../../utils/Config/appwriteConfig";
 import { useFocusEffect } from "@react-navigation/native";
 import Logo from "../../components/logo/AuthLogo";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -22,11 +22,6 @@ export default function Dashboard() {
 
     const getNameAndEmail = async () => {
         try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const account = new Account(client);
             const response = await account.get();
 
             setProfileInfo({

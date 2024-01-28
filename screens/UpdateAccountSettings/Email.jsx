@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
-import { Account, Client } from "appwrite";
+import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 
 import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
@@ -29,21 +29,13 @@ export default function ChangeEmailScreen({ navigation }) {
     const appTextColor = "#FFFFFF";
 
     const handleEmailChange = async () => {
-
         try {
-
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const account = new Account(client);
             await account.updateEmail(credentials.email, credentials.password);
 
             setCredentials({
                 email: "",
                 password: ""
             });
-
 
             navigation.navigate("Settings");
 

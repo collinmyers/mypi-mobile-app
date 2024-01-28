@@ -7,7 +7,7 @@ import ParkInfoScreen from "../../screens/Sidebar/ParkInfo";
 import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./AuthStackNavigator";
-import { Client, Account } from "appwrite";
+import { account } from "../../utils/Config/appwriteConfig";
 
 import { Entypo, Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 
@@ -25,12 +25,6 @@ export default function DrawerNavigator() {
 
     const checkAuthState = async () => {
         try {
-            const client = new Client()
-                .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-            const account = new Account(client);
-
             await account.get();
 
             setIsSignedIn(true);
@@ -43,7 +37,7 @@ export default function DrawerNavigator() {
     useEffect(() => {
         checkAuthState();
     }, [refreshDrawer]);
-    
+
 
     const handleLoginSuccess = () => {
         setIsSignedIn(true);
@@ -54,11 +48,6 @@ export default function DrawerNavigator() {
         if (!isSigningOut) {
             try {
                 setIsSigningOut(true);
-                const client = new Client()
-                    .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-                    .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-                const account = new Account(client);
 
                 await account.deleteSessions("current");
 
@@ -123,7 +112,7 @@ export default function DrawerNavigator() {
                         name="Sign In"
                         component={AuthStackWithLoginSuccess}
                         options={{
-                            header: () => {false;},
+                            header: () => { false; },
                             drawerIcon: () => <Ionicons name="person-circle" size={24} color={appPrimaryColor} />
                         }} />
                 )}
