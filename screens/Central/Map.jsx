@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, Text, TouchableOpacity } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
@@ -12,105 +12,62 @@ import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
 import { appPrimaryColor, appTextColor } from "../../utils/colors/appColors";
 
-
 export default function MapScreen() {
     const navigation = useNavigation();
 
-    const [markers, setMarkers] = useState([]);
+    const [markersData, setMarkersData] = useState([]);
+    const [filteredMarkers, setFilteredMarkers] = useState([]);
+
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState([]);
-
     const [fabVisible, setFabVisible] = useState(false);
 
     const PAGE_SIZE = 25;
 
-    const getMarkers = async (directionsPreference, filters) => {
-        setCurrentNavPreference(directionsPreference);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let offset = 0;
+                let allMarkers = [];
 
-        try {
-
-            let offset = 0;
-            let allMarkers = [];
-
-            const fetchPage = async (offset) => {
                 const response = await database.listDocuments(
                     DATABASE_ID,
                     MAP_COLLECTION_ID,
                     [Query.limit(PAGE_SIZE), Query.offset(offset)]
                 );
 
-                const newMarkers = response.documents.map((doc, index) => {
-                    const poiLatitude = doc.Latitude;
-                    const poiLongitude = doc.Longitude;
-                    const poiName = doc.Name;
-                    const poiParkStatus = doc.Status;
-                    const poiType = doc.Type;
-                    const key = `${doc.id}_${offset + index}`;
-
-                    if (filters.length > 0 && !filters.includes(poiType)) {
-                        return null; // Skip this marker if it doesn't match any selected filter
-                    }
-
-                    let markerColor = "#000000";
-
-                    switch (poiType) {
-                        case "Beach":
-                            markerColor = "#FF0000";
-                            break;
-                        case "Attraction":
-                            markerColor = "#FFC000";
-                            break;
-                        case "Restroom":
-                            markerColor = "#3399FF";
-                            break;
-                        case "Parking":
-                            markerColor = "#D2691E";
-                            break;
-                        case "Information":
-                            markerColor = "#33CC33";
-                            break;
-                        case "Amenities":
-                            markerColor = "#9966CC";
-                            break;
-                        default:
-                            break;
-                    }
-
-                    return (
-                        <Marker
-                            key={key}
-                            coordinate={{ latitude: poiLatitude, longitude: poiLongitude }}
-                            pinColor={markerColor}
-                        >
-                            <Callout>
-                                <View>
-                                    <Text style={MapStyle.poiMarkerTitle}>{poiName} ({poiParkStatus})</Text>
-                                    <Text style={MapStyle.poiMarkerDirectionsText} onPress={() => {
-                                        getDirections(poiLatitude, poiLongitude, directionsPreference);
-                                    }}
-                                    >
-                                        Get Directions
-                                    </Text>
-                                </View>
-                            </Callout>
-                        </Marker>
+                while (response.documents.length > 0) {
+                    allMarkers = [...allMarkers, ...response.documents];
+                    offset += PAGE_SIZE;
+                    const nextResponse = await database.listDocuments(
+                        DATABASE_ID,
+                        MAP_COLLECTION_ID,
+                        [Query.limit(PAGE_SIZE), Query.offset(offset)]
                     );
-                });
-
-                allMarkers = [...allMarkers, ...newMarkers.filter((marker) => marker)]; // Filter out null markers
-
-                if (response.documents.length === PAGE_SIZE) {
-                    await fetchPage(offset + PAGE_SIZE);
+                    response.documents = nextResponse.documents;
                 }
-            };
 
-            await fetchPage(offset);
+                setMarkersData(allMarkers);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-            setMarkers(allMarkers);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const filterMarkers = () => {
+            if (selectedFilters.length === 0) {
+                setFilteredMarkers(markersData);
+            } else {
+                const filtered = markersData.filter(marker => selectedFilters.includes(marker.Type));
+                setFilteredMarkers(filtered);
+            }
+        };
+
+        filterMarkers();
+    }, [selectedFilters, markersData]);
 
     const getDirections = (lat, long, directionsPreference) => {
         showLocation({
@@ -138,11 +95,11 @@ export default function MapScreen() {
             fetchNavPreference();
 
             if (currentNavPreference !== null) {
-                setMarkers([]);
-                getMarkers(currentNavPreference, selectedFilters);
+                setFilteredMarkers([]);
+                setSelectedFilters([]);
             }
 
-        }, [currentNavPreference, selectedFilters])
+        }, [currentNavPreference])
     );
 
     const toggleFilter = (filter) => {
@@ -153,8 +110,48 @@ export default function MapScreen() {
         }
     };
 
+    const renderMarkers = () => {
+        return filteredMarkers.map((marker, index) => (
+            <Marker
+                key={index}
+                coordinate={{ latitude: marker.Latitude, longitude: marker.Longitude }}
+                pinColor={getMarkerColor(marker.Type)}
+            >
+                <Callout>
+                    <View>
+                        <Text style={MapStyle.poiMarkerTitle}>{marker.Name} ({marker.Status})</Text>
+                        <Text style={MapStyle.poiMarkerDirectionsText} onPress={() => {
+                            getDirections(marker.Latitude, marker.Longitude, currentNavPreference);
+                        }}>
+                            Get Directions
+                        </Text>
+                    </View>
+                </Callout>
+            </Marker>
+        ));
+    };
+
+    const getMarkerColor = (poiType) => {
+        switch (poiType) {
+            case "Beach":
+                return "#FF0000";
+            case "Attraction":
+                return "#FFC000";
+            case "Restroom":
+                return "#3399FF";
+            case "Parking":
+                return "#D2691E";
+            case "Information":
+                return "#33CC33";
+            case "Amenities":
+                return "#9966CC";
+            default:
+                return "#000000";
+        }
+    };
+
     const renderFilterCheckboxes = () => {
-        const filterAliases = { // alias key value pair
+        const filterAliases = {
             "Amenities": "Amenities",
             "Attraction": "Attractions",
             "Beach": "Beaches",
@@ -175,7 +172,6 @@ export default function MapScreen() {
         ));
     };
 
-
     const toggleFabVisible = () => {
         setFabVisible(!fabVisible);
     };
@@ -187,7 +183,6 @@ export default function MapScreen() {
                 <Text style={MapStyle.changeMapText}>View as List</Text>
             </TouchableOpacity>
 
-
             <MapView
                 style={MapStyle.map}
                 initialRegion={{
@@ -196,7 +191,7 @@ export default function MapScreen() {
                     latitudeDelta: 0.115,
                     longitudeDelta: 0.0421,
                 }}>
-                {markers}
+                {renderMarkers()}
             </MapView>
 
             <TouchableOpacity style={MapStyle.fab} onPress={toggleFabVisible}>
