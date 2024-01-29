@@ -148,7 +148,7 @@ export default function AlertsScreen() {
 
         data.forEach(element => {
             if (element.props.id == filterId) {
-                setList(element);
+                setList(prevElement => [...prevElement, element]);
             }
         });
     };
