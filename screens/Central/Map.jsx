@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, SafeAreaView, Text, TouchableOpacity } from "react-native";
+import { View, SafeAreaView, Text, TouchableOpacity, Platform } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
 import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
@@ -25,6 +25,9 @@ export default function MapScreen() {
     const PAGE_SIZE = 25;
 
     useEffect(() => {
+
+        // console.log(Platform.OS)
+
         const fetchData = async () => {
             try {
                 let offset = 0;
@@ -117,16 +120,26 @@ export default function MapScreen() {
                 coordinate={{ latitude: marker.Latitude, longitude: marker.Longitude }}
                 pinColor={getMarkerColor(marker.Type)}
             >
-                <Callout>
-                    <View>
-                        <Text style={MapStyle.poiMarkerTitle}>{marker.Name} ({marker.Status})</Text>
-                        <Text style={MapStyle.poiMarkerDirectionsText} onPress={() => {
-                            getDirections(marker.Latitude, marker.Longitude, currentNavPreference);
-                        }}>
-                            Get Directions
-                        </Text>
-                    </View>
-                </Callout>
+                {Platform.OS === "ios" ? (
+                    <Callout>
+                        <View>
+                            <Text style={MapStyle.poiMarkerTitle}>{marker.Name} ({marker.Status})</Text>
+                            <Text style={MapStyle.poiMarkerDirectionsText} onPress={() => {
+                                getDirections(marker.Latitude, marker.Longitude, currentNavPreference);
+                            }}>
+                                Get Directions
+                            </Text>
+                        </View>
+                    </Callout>) : (
+                    <Callout onPress={() => {
+                        getDirections(marker.Latitude, marker.Longitude, currentNavPreference);
+                    }}>
+                        <View>
+                            <Text style={MapStyle.poiMarkerTitle}>{marker.Name} ({marker.Status})</Text>
+                            <Text style={MapStyle.poiMarkerDirectionsText}>Get Directions</Text>
+                        </View>
+                    </Callout>
+                )}
             </Marker>
         ));
     };
