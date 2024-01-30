@@ -3,7 +3,7 @@ import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
 import { account } from "../../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
-import AuthLogo from "../../../components/logo/AuthLogo";
+import Logo from "../../../components/logo/AppLogo";
 import AppStyle from "../../../styling/AppStyle";
 import AuthStyle from "../../../styling/AuthStyle";
 import { appPrimaryColor, appTextColor } from "../../../utils/colors/appColors";
@@ -44,7 +44,7 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
     return (
         <SafeAreaView style={AppStyle.container}>
             <KeyboardAvoidingComponent style={AuthStyle.keyboardAdj}>
-                <AuthLogo style={AuthStyle.logo} />
+                <Logo style={AuthStyle.logo} />
 
                 <Card style={AuthStyle.card}>
 

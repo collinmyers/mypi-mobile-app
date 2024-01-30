@@ -5,7 +5,7 @@ import HomeStyle from "../../styling/HomeStyle";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import { account } from "../../utils/Config/appwriteConfig";
 import { useFocusEffect } from "@react-navigation/native";
-import Logo from "../../components/logo/AuthLogo";
+import Logo from "../../components/logo/AppLogo";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { appTextColor } from "../../utils/colors/appColors";

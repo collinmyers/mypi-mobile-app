@@ -3,7 +3,7 @@ import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Text, TextInput } from "react-native-paper";
 import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
-import AuthLogo from "../../components/logo/AuthLogo";
+import Logo from "../../components/logo/AppLogo";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
@@ -44,7 +44,7 @@ export default function ChangeNameScreen({ navigation }) {
     return (
         <SafeAreaView style={AppStyle.container}>
             <KeyboardAvoidingComponent style={HomeStyle.updateAccountKeyboardAdj}>
-                <AuthLogo style={HomeStyle.updateAccountLogo} />
+                <Logo style={HomeStyle.updateAccountLogo} />
 
                 <Card style={HomeStyle.updateAccountCard}>
 

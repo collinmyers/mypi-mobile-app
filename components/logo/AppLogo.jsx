@@ -1,24 +1,24 @@
 import React from "react";
 import { Image } from "react-native";
-import appLogo from "../../assets/my-pi-logo-alt.png";
+import Logo from "../../assets/myPILogo.png";
 import PropTypes from "prop-types";
 
 // import image from assets folder and define the size
-export default function AuthLogo({ logoWidth, logoHeight, style }) {
+export default function AppLogo({ logoWidth, logoHeight, style }) {
     return (
-        <Image source={appLogo}
+        <Image source={Logo}
             style={[{ width: logoWidth, height: logoHeight, objectFit: "contain"  }, style]}
         />
     );
 }
 
-AuthLogo.propTypes = {
+AppLogo.propTypes = {
     logoWidth: PropTypes.number.isRequired,
     logoHeight: PropTypes.number.isRequired,
     style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
-AuthLogo.defaultProps = {
+AppLogo.defaultProps = {
     logoWidth: 200,
     logoHeight: 120,
 };

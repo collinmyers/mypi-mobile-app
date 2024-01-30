@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { validateName, validateEmail, validatePassword } from "../../../utils/Regex/Validators";
 import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
 import { appPrimaryColor, appTextColor } from "../../../utils/colors/appColors";
-import AuthLogo from "../../../components/logo/AuthLogo";
+import Logo from "../../../components/logo/AppLogo";
 import AppStyle from "../../../styling/AppStyle";
 import AuthStyle from "../../../styling/AuthStyle";
 
@@ -43,7 +43,7 @@ export default function SignUpScreen({ navigation }) {
         <SafeAreaView style={AppStyle.container}>
 
             <KeyboardAvoidingComponent style={AuthStyle.keyboardAdj}>
-                <AuthLogo style={AuthStyle.logo} />
+                <Logo style={AuthStyle.logo} />
 
                 <Card style={AuthStyle.card}>
 
