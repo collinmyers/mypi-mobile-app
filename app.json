@@ -4,12 +4,12 @@
         "slug": "myPI",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/my-pi-logo-alt.png",
+        "icon": "./assets/myPILogo.png",
         "userInterfaceStyle": "automatic",
         "splash": {
-            "image": "./assets/my-pi-logo-alt.png",
+            "image": "./assets/myPILogo.png",
             "resizeMode": "contain",
-            "backgroundColor": "#134C77"
+            "backgroundColor": "#FFFFFF"
         },
         "assetBundlePatterns": [
             "**/*"
@@ -19,14 +19,14 @@
         },
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./assets/my-pi-logo-alt.png",
+                "foregroundImage": "./assets/myPILogo.png",
                 "backgroundColor": "#134C77"
             },
             "package": "com.discoverpi.mypi",
             "versionCode": 1
         },
         "web": {
-            "favicon": "./assets/my-pi-logo-alt.png"
+            "favicon": "./assets/myPILogo.png"
         }
     }
 }
