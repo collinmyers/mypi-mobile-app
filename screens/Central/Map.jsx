@@ -17,7 +17,6 @@ export default function MapScreen() {
 
     const [markersData, setMarkersData] = useState([]);
     const [filteredMarkers, setFilteredMarkers] = useState([]);
-
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [fabVisible, setFabVisible] = useState(false);
@@ -25,9 +24,6 @@ export default function MapScreen() {
     const PAGE_SIZE = 25;
 
     useEffect(() => {
-
-        // console.log(Platform.OS)
-
         const fetchData = async () => {
             try {
                 let offset = 0;
