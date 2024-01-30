@@ -2,8 +2,12 @@ import { Dimensions, Platform, StyleSheet } from "react-native";
 import { appPrimaryColor, appSecondaryColor, appTextColor, appWarningColor } from "../utils/colors/appColors";
 
 let fontSizeAlert = 16;
+let marginBottomEventDetails = 0;
 
-if (Platform.OS === "android") fontSizeAlert = 13;
+if (Platform.OS === "android") {
+    fontSizeAlert = 13;
+    marginBottomEventDetails = 70;
+}
 
 const deviceWidth = Dimensions.get("window").width;
 const cardWidth = deviceWidth * .75;
@@ -25,7 +29,7 @@ export default StyleSheet.create({
     },
     scrollableView: {
         marginTop: "2%",
-        flexGrow: 1,
+        // flexGrow: 1,
         justifyContent: "space",
         backgroundColor: appPrimaryColor
     },
@@ -273,6 +277,7 @@ export default StyleSheet.create({
         padding: 10,
         paddingBottom: 0,
         backgroundColor: appSecondaryColor,
+        marginBottom: marginBottomEventDetails
     },
     eventDetailsCardContent: {
         alignItems: "center",
@@ -351,6 +356,7 @@ export default StyleSheet.create({
     modalNavButtonContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
+
     },
     modalNavCancelContentContainer: {
         marginTop: 30
@@ -378,10 +384,12 @@ export default StyleSheet.create({
         flexDirection: "column",
         overflow: "hidden",
         backgroundColor: appSecondaryColor,
+        maxWidth: "34%"
+
     },
     modalNavButtonText: {
         color: appTextColor,
-        textAlign: "center"
+        textAlign: "center",
     },
     alertContainer: {
         display: "flex",
@@ -432,12 +440,12 @@ export default StyleSheet.create({
     },
     dashboardDonoOpac: {
         flexDirection: "row",
+        alignSelf: "center",
         justifyContent: "space-evenly",
         width: buttonWidth,
         marginVertical: 10,
         paddingTop: 10,
         paddingBottom: 10,
-        fontSize: 20,
         margin: "5%",
         borderRadius: 20,
         color: appTextColor,
