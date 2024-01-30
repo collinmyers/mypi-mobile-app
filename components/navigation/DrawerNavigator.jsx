@@ -8,7 +8,7 @@ import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./AuthStackNavigator";
 import { account } from "../../utils/Config/appwriteConfig";
-import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 
 import { Entypo, Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 
@@ -73,7 +73,7 @@ export default function DrawerNavigator() {
                             color: appTextColor,
                             fontSize: 20,
                         }}
-                        icon={() => (<Ionicons name="person-circle" size={24} color={appPrimaryColor} />)}
+                        icon={() => (<Ionicons name="person-circle" size={24} color={appTertiaryColor} />)}
 
                         onPress={handleLogout} />
 
@@ -110,13 +110,13 @@ export default function DrawerNavigator() {
                         component={AuthStackWithLoginSuccess}
                         options={{
                             header: () => { false; },
-                            drawerIcon: () => <Ionicons name="person-circle" size={24} color={appPrimaryColor} />
+                            drawerIcon: () => <Ionicons name="person-circle" size={24} color={appTertiaryColor} />
                         }} />
                 )}
-                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => false, drawerIcon: () => <Entypo name="home" size={24} color={appPrimaryColor} /> }} />
-                <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="volunteer-activism" size={24} color={appPrimaryColor} /> }} />
-                <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <Menu />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color={appPrimaryColor} /> }} />
-                <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="park" size={24} color={appPrimaryColor} /> }} />
+                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => false, drawerIcon: () => <Entypo name="home" size={24} color={appTertiaryColor} /> }} />
+                <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="volunteer-activism" size={24} color={appTertiaryColor} /> }} />
+                <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <Menu />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color={appTertiaryColor} /> }} />
+                <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="park" size={24} color={appTertiaryColor} /> }} />
             </Drawer.Navigator>
         </NavigationContainer >
     );

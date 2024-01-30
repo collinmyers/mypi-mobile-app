@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appPrimaryColor, appSecondaryColor, appTextColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../utils/colors/appColors";
 
 export default StyleSheet.create({
 
@@ -14,7 +14,7 @@ export default StyleSheet.create({
         width: "100%",
         padding: 10,
         backgroundColor: appSecondaryColor,
-        margin: "5%"
+        margin: "2%"
     },
     cardContent: {
         alignItems: "center"
@@ -22,7 +22,7 @@ export default StyleSheet.create({
 
     title: {
         fontSize: 30,
-        color: appPrimaryColor,
+        color: appTertiaryColor,
         fontWeight: "bold",
         marginBottom: 16,
     },
@@ -44,7 +44,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appPrimaryColor,
+        backgroundColor: appTertiaryColor,
         overflow: "hidden"
     },
 
@@ -58,7 +58,7 @@ export default StyleSheet.create({
         marginTop: 10
     },
     additionalOptionsText: {
-        color: "#134C77",
+        color: appTextColor,
         fontSize: 16
     }
 });

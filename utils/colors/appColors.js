@@ -1,4 +1,5 @@
-export const appPrimaryColor = "#134C77";
-export const appSecondaryColor = "#8FA063";
+export const appPrimaryColor = "#FFFFFF";
+export const appSecondaryColor = "#005588";
+export const appTertiaryColor = "#FFB238";
 export const appTextColor = "#FFFFFF";
 export const appWarningColor = "#C70039";

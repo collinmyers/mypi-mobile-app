@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 export default function AppLogo({ logoWidth, logoHeight, style }) {
     return (
         <Image source={Logo}
-            style={[{ width: logoWidth, height: logoHeight, objectFit: "contain"  }, style]}
+            style={[{ width: logoWidth, height: logoHeight, objectFit: "contain" }, style]}
         />
     );
 }
@@ -19,6 +19,6 @@ AppLogo.propTypes = {
 };
 
 AppLogo.defaultProps = {
-    logoWidth: 200,
-    logoHeight: 120,
+    logoWidth: 250,
+    logoHeight: 200,
 };

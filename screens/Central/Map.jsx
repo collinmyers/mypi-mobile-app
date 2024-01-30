@@ -10,7 +10,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
-import { appPrimaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 
 export default function MapScreen() {
     const navigation = useNavigation();
@@ -174,7 +174,7 @@ export default function MapScreen() {
                 <Checkbox
                     value={selectedFilters.includes(filter)}
                     onValueChange={() => toggleFilter(filter)}
-                    color={appPrimaryColor}
+                    color={appTertiaryColor}
                 />
                 <Text style={MapStyle.checkboxText}>{filterAliases[filter]}</Text>
             </View>
@@ -204,7 +204,7 @@ export default function MapScreen() {
             </MapView>
 
             <TouchableOpacity style={MapStyle.fab} onPress={toggleFabVisible}>
-                <AntDesign name="filter" size={26} color={appTextColor} />
+                <AntDesign name="filter" size={26} color={appSecondaryColor} />
             </TouchableOpacity>
 
             {fabVisible && (

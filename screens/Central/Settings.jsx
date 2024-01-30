@@ -184,7 +184,7 @@ export default function SettingsScreen({ navigation }) {
                                 <Card.Content style={HomeStyle.settingsCardContent}>
                                     <TouchableOpacity
                                         onPress={() => navigation.navigate("Change Name")}
-                                        style={HomeStyle.changeInfoOpac}
+                                        style={HomeStyle.settingsButtonOpac}
                                     >
                                         <Text style={HomeStyle.changeInfoText}>Change Name</Text>
                                     </TouchableOpacity>
@@ -193,7 +193,7 @@ export default function SettingsScreen({ navigation }) {
                                 <Card.Content style={HomeStyle.settingsCardContent}>
                                     <TouchableOpacity
                                         onPress={() => navigation.navigate("Change Email")}
-                                        style={HomeStyle.changeInfoOpac}
+                                        style={HomeStyle.settingsButtonOpac}
                                     >
                                         <Text style={HomeStyle.changeInfoText}>Change Email</Text>
                                     </TouchableOpacity>
@@ -202,7 +202,7 @@ export default function SettingsScreen({ navigation }) {
                                 <Card.Content style={HomeStyle.settingsCardContent}>
                                     <TouchableOpacity
                                         onPress={() => navigation.navigate("Change Password")}
-                                        style={HomeStyle.changeInfoOpac}
+                                        style={HomeStyle.settingsButtonOpac}
                                     >
                                         <Text style={HomeStyle.changeInfoText}>Change Password</Text>
                                     </TouchableOpacity>
@@ -231,19 +231,19 @@ export default function SettingsScreen({ navigation }) {
                             <Text style={HomeStyle.settingsSectionHeader}>Notification Settings</Text>
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity onPress={() => navigation.navigate("Park Notifications")} style={HomeStyle.changeInfoOpac} >
+                                <TouchableOpacity onPress={() => navigation.navigate("Park Notifications")} style={HomeStyle.settingsButtonOpac} >
                                     <Text style={HomeStyle.changeInfoText}>Park Alerts</Text>
                                 </TouchableOpacity>
                             </Card.Content>
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity onPress={() => navigation.navigate("Event Notifications")} style={HomeStyle.changeInfoOpac}>
+                                <TouchableOpacity onPress={() => navigation.navigate("Event Notifications")} style={HomeStyle.settingsButtonOpac}>
                                     <Text style={HomeStyle.changeInfoText}>Events</Text>
                                 </TouchableOpacity>
                             </Card.Content>
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity onPress={() => navigation.navigate("Promotion Notifications")} style={HomeStyle.changeInfoOpac}>
+                                <TouchableOpacity onPress={() => navigation.navigate("Promotion Notifications")} style={HomeStyle.settingsButtonOpac}>
                                     <Text style={HomeStyle.changeInfoText}>Promotions</Text>
                                 </TouchableOpacity>
                             </Card.Content>
@@ -263,7 +263,7 @@ export default function SettingsScreen({ navigation }) {
                             <Card.Content style={HomeStyle.settingsCardContent}>
                                 <TouchableOpacity
                                     onPress={showNavModal}
-                                    style={HomeStyle.changeInfoOpac}
+                                    style={HomeStyle.settingsButtonOpac}
                                 >
                                     <Text style={HomeStyle.changeInfoText}>Navigation Type</Text>
                                 </TouchableOpacity>

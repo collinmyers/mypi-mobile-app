@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { appPrimaryColor, appSecondaryColor, appTextColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../utils/colors/appColors";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -31,7 +31,7 @@ export default StyleSheet.create({
         padding: 10,
         borderRadius: 20,
         zIndex: 1,
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appTertiaryColor,
     },
     changeMapText: {
         color: appTextColor,
@@ -44,7 +44,7 @@ export default StyleSheet.create({
         padding: 10,
         borderRadius: 20,
         zIndex: 1,
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appTertiaryColor,
     },
     changeListText: {
         color: appTextColor,
@@ -104,7 +104,7 @@ export default StyleSheet.create({
         position: "absolute",
         bottom: 20,
         right: 20,
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appTertiaryColor,
         borderRadius: 30,
         width: 60,
         height: 60,
@@ -123,7 +123,9 @@ export default StyleSheet.create({
     },
     mapSearchBar: {
         width: "90%",
-        marginBottom: "3%"
+        marginBottom: "3%",
+        backgroundColor: appSecondaryColor,
+        color: appTextColor
     },
     directionsIcon: {
 

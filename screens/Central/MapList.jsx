@@ -9,7 +9,7 @@ import MapStyle from "../../styling/MapStyle";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { showLocation } from "react-native-map-link";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { appTextColor } from "../../utils/colors/appColors";
+import { appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 
 export default function MapList() {
     const navigation = useNavigation();
@@ -87,7 +87,7 @@ export default function MapList() {
                             <Card style={MapStyle.poiCard}>
                                 <Card.Content style={MapStyle.poiCardContent}>
                                     <Text style={MapStyle.poiListTitle}>{Name} ({Status})</Text>
-                                    <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={30} color={appTextColor} onPress={() => {
+                                    <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={30} color={appTertiaryColor} onPress={() => {
                                         getDirections(Latitude, Longitude, directionsPreference);
                                     }} />
                                 </Card.Content>
@@ -166,7 +166,10 @@ export default function MapList() {
             </TouchableOpacity>
             <Searchbar
                 style={MapStyle.mapSearchBar}
+                iconColor={appTertiaryColor}
+                inputStyle={{ color: appTextColor }}
                 placeholder="Search"
+                placeholderTextColor={appTextColor}
                 value={searchQuery}
                 onChangeText={(text) => {
                     setSearchQuery(text);

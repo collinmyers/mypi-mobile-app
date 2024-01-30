@@ -42,7 +42,7 @@ export default function Dashboard() {
     return (
         <SafeAreaView style={AppStyle.container}>
             <View style={AppStyle.imageContainer}>
-                <Logo />
+                <Logo logoWidth={250} logoHeight={250}/>
             </View>
 
             <View style={HomeStyle.dbContainer}>

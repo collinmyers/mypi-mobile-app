@@ -1,5 +1,5 @@
 import { Dimensions, Platform, StyleSheet } from "react-native";
-import { appPrimaryColor, appSecondaryColor, appTextColor, appWarningColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, appWarningColor } from "../utils/colors/appColors";
 
 let fontSizeAlert = 16;
 let marginBottomEventDetails = 0;
@@ -35,25 +35,25 @@ export default StyleSheet.create({
     },
     dbText: {
         textAlign: "center",
-        color: appTextColor,
+        color: appSecondaryColor,
         fontSize: 18,
         marginBottom: 10,
     },
     // Dashboard container styling
     dbContainer: {
         paddingHorizontal: 20,
-        marginTop: 100,
+        margin: "5%"
     },
     // Dashboard title styling
     dbTitleText: {
         textAlign: "center",
-        color: appTextColor,
+        color: appSecondaryColor,
         fontSize: 24,
         marginBottom: 20,
     },
     parkInfoText: {
         textAlign: "center",
-        color: appTextColor,
+        color: appSecondaryColor,
         fontSize: 14,
         marginBottom: 20,
     },
@@ -78,7 +78,7 @@ export default StyleSheet.create({
     },
     settingsSectionHeader: {
         alignSelf: "center",
-        color: appTextColor,
+        color: appSecondaryColor,
         fontWeight: "bold",
         fontSize: 20,
         marginBottom: 10
@@ -92,7 +92,7 @@ export default StyleSheet.create({
     },
     profileText: {
         textAlign: "center",
-        color: appTextColor,
+        color: appSecondaryColor,
         fontWeight: "bold",
         fontSize: 20
     },
@@ -101,7 +101,7 @@ export default StyleSheet.create({
         alignSelf: "center",
         marginTop: 20
     },
-    changeInfoOpac: {
+    settingsButtonOpac: {
         fontSize: 20,
         width: buttonWidth,
         margin: "2%",
@@ -110,7 +110,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appTertiaryColor,
         overflow: "hidden"
     },
     changeInfoText: {
@@ -127,7 +127,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appWarningColor,
+        backgroundColor: appSecondaryColor,
         overflow: "hidden"
     },
     modalContainer: {
@@ -145,7 +145,7 @@ export default StyleSheet.create({
     },
     modalText: {
         marginBottom: 20,
-        color: appTextColor,
+        color: appSecondaryColor,
         textAlign: "center"
     },
     modalButtonContainer: {
@@ -160,7 +160,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appTertiaryColor,
         overflow: "hidden"
     },
     modalDeleteButton: {
@@ -172,7 +172,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appWarningColor,
+        backgroundColor: appSecondaryColor,
         overflow: "hidden"
     },
     modalButtonText: {
@@ -305,7 +305,7 @@ export default StyleSheet.create({
         fontSize: 16
     },
     homeButtonOpacity: {
-        backgroundColor: appPrimaryColor,
+        backgroundColor: appTertiaryColor,
         paddingHorizontal: 30,
         paddingVertical: 10,
         marginVertical: "10%",
@@ -337,7 +337,7 @@ export default StyleSheet.create({
     },
     modalNavContentContainer: {
         backgroundColor: appPrimaryColor,
-        maxWidth: "99%",
+        maxWidth: "98%",
         paddingVertical: 20,
         paddingHorizontal: 30,
         alignItems: "center",
@@ -350,7 +350,7 @@ export default StyleSheet.create({
         marginBottom: 20,
         fontWeight: "bold",
         fontSize: 18,
-        color: appTextColor,
+        color: appSecondaryColor,
         textAlign: "center"
     },
     modalNavButtonContainer: {
@@ -371,7 +371,7 @@ export default StyleSheet.create({
         textAlign: "center",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: appWarningColor,
+        backgroundColor: appSecondaryColor,
     },
     modalNavButton: {
         paddingVertical: 10,
@@ -383,7 +383,7 @@ export default StyleSheet.create({
         textAlign: "center",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appTertiaryColor,
         maxWidth: "34%"
 
     },
@@ -403,7 +403,7 @@ export default StyleSheet.create({
         marginBottom: "10%",
     },
     alertButton: {
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appTertiaryColor,
         borderRadius: 25,
         marginTop: "2%",
         marginHorizontal: "1%",
@@ -450,7 +450,7 @@ export default StyleSheet.create({
         borderRadius: 20,
         color: appTextColor,
         textAlign: "center",
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appTertiaryColor,
         overflow: "hidden"
     },
     dashboardDonoText: {

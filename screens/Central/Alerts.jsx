@@ -218,7 +218,7 @@ export default function AlertsScreen() {
 
                 {isSignedIn && (profileRole.role == "admin") ?
                     (<TouchableOpacity onPress={() => navigation.navigate("PushNotificationScreen")}>
-                        <AntDesign name="pluscircle" size={30} color="#8fa063" />
+                        <AntDesign name="pluscircle" size={30} color={appSecondaryColor} />
                     </TouchableOpacity>
                     ) :
                     null

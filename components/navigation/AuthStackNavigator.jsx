@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import PasswordResetScreen from "../../screens/Sidebar/auth/ForgotPassword";
 import Menu from "./AppHeader";
 import MenuBack from "./AppHeaderNavBack";
-import { appPrimaryColor } from "../../utils/colors/appColors";
+import { appTertiaryColor } from "../../utils/colors/appColors";
 
 const Stack = createStackNavigator();
 
@@ -18,7 +18,7 @@ export default function AuthStackNavigator({ handleLoginSuccess }) {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appPrimaryColor },
+                    headerStyle: { backgroundColor: appTertiaryColor },
                     header: () => <Menu />
                 }}
             >
@@ -30,7 +30,7 @@ export default function AuthStackNavigator({ handleLoginSuccess }) {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appPrimaryColor },
+                    headerStyle: { backgroundColor: appTertiaryColor },
                     header: () => <MenuBack />
                 }}
             />
@@ -39,7 +39,7 @@ export default function AuthStackNavigator({ handleLoginSuccess }) {
                     headerShown: true,
                     headerTransparent: true,
                     headerTitle: "",
-                    headerStyle: { backgroundColor: appPrimaryColor },
+                    headerStyle: { backgroundColor: appTertiaryColor },
                     header: () => <MenuBack />
                 }}
             />

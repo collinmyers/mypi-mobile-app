@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appPrimaryColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor } from "../utils/colors/appColors";
 
 export default StyleSheet.create({
     container: {
@@ -12,7 +12,7 @@ export default StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "flex-start",
         flexDirection: "row",
-        backgroundColor: appPrimaryColor,
+        backgroundColor: appSecondaryColor,
         paddingTop: 40,
         paddingBottom: 10,
     },
@@ -27,13 +27,13 @@ export default StyleSheet.create({
     // Image container for Dashboard
     imageContainer: {
         alignItems: "center",
-        position: "absolute",
+        // position: "absolute",
         top: 10,
         width: "100%",
     },
     // Image for Dashboard
-    image: {
-        width: 400,
-        height: 200,
-    },
+    // image: {
+    //     width: 400,
+    //     height: 200,
+    // },
 });
