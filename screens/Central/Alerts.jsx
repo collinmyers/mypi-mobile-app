@@ -66,7 +66,10 @@ export default function AlertsScreen() {
                 console.log("Permission to receive notifications denied.");
                 return;
             }
-        })();
+            const expoPushToken = (await Notifications.getExpoPushTokenAsync()).data;
+            console.log("Expo Push Token:", expoPushToken);
+        }
+        )();
 
         // Define the notification handler
         const notificationHandler = {

@@ -1,33 +1,40 @@
 {
-    "expo": {
-        "name": "myPI",
-        "slug": "myPI",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/myPILogo.png",
-        "userInterfaceStyle": "automatic",
-        "splash": {
-            "image": "./assets/myPILogo.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#FFFFFF"
-        },
-        "assetBundlePatterns": [
-            "**/*"
-        ],
-        "ios": {
-            "supportsTablet": true
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/myPILogo.png",
-                "backgroundColor": "#134C77"
-            },
-            "package": "com.discoverpi.mypi",
-            "versionCode": 1,
-            "googleServicesFile": "./google-services.json"
-        },
-        "web": {
-            "favicon": "./assets/myPILogo.png"
-        }
-    }
+  "expo": {
+    "name": "myPI",
+    "slug": "mypi",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/myPILogo.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/myPILogo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.discoverpi.mypi"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/myPILogo.png",
+        "backgroundColor": "#134C77"
+      },
+      "package": "com.discoverpi.mypi",
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "favicon": "./assets/myPILogo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8cc387dc-be95-4b8c-8460-3c674e04defe"
+      }
+    },
+    "owner": "epet"
+  }
 }
