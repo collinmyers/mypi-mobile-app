@@ -23,7 +23,8 @@
                 "backgroundColor": "#134C77"
             },
             "package": "com.discoverpi.mypi",
-            "versionCode": 1
+            "versionCode": 1,
+            "googleServicesFile": "./google-services.json"
         },
         "web": {
             "favicon": "./assets/myPILogo.png"
