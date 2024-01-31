@@ -16,12 +16,12 @@ export default StyleSheet.create({
     },
     poiMarkerTitle: {
         fontSize: 15,
-        color: appPrimaryColor,
+        color: appSecondaryColor,
         fontWeight: "bold",
     },
     poiMarkerDirectionsText: {
         fontSize: 15,
-        color: appSecondaryColor,
+        color: appTertiaryColor,
         fontWeight: "bold",
         alignSelf: "center"
     },
