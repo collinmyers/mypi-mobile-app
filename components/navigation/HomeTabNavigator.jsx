@@ -1,27 +1,43 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, Fontisto, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
-
 import DashboardScreen from "../../screens/Central/Dashboard";
 import SettingsStackNavigator from "./SettingsStackNavigator";
 import EventsStackNavigator from "./EventsStackNavigator";
 import MapStackNavigator from "./MapStackNavigator";
-import { appPrimaryColor, appSecondaryColor, appTextColor, appTertiaryColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTextColor, appTertiaryColor, useAltUI } from "../../utils/colors/appColors";
 import Menu from "./AppHeader";
 import AlertsStackNavigator from "./AlertsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
 export default function HomeTabNavigator() {
+
+    let TabTopBorderWidth = 0;
+    let TabBackgroundColor = appSecondaryColor;
+    let TabTopBorderColor = appSecondaryColor;
+    let TabActiveTextColor = appTertiaryColor;
+    let TabInactiveTextColor = appPrimaryColor;
+    let TabIconColor = appTertiaryColor;
+
+    if (useAltUI) {
+        TabTopBorderWidth = 1;
+        TabBackgroundColor = appPrimaryColor;
+        TabActiveTextColor = appTertiaryColor;
+        TabInactiveTextColor = appSecondaryColor;
+        TabIconColor = appSecondaryColor;
+    }
+
     return (
         <Tab.Navigator
             initialRouteName="Home"
             screenOptions={{
-                tabBarActiveTintColor: appTertiaryColor,
-                tabBarInactiveTintColor: appTextColor,
+                tabBarActiveTintColor: TabActiveTextColor,
+                tabBarInactiveTintColor: TabInactiveTextColor,
                 tabBarStyle: {
-                    backgroundColor: appSecondaryColor,
-                    borderTopWidth: 0,
+                    backgroundColor: TabBackgroundColor,
+                    borderTopWidth: TabTopBorderWidth,
+                    borderTopColor: TabTopBorderColor
                 },
             }}
         >
@@ -32,7 +48,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Dashboard",
                     header: () => <Menu />,
                     tabBarIcon: () => (
-                        <Entypo name="home" size={24} color={appTertiaryColor} />
+                        <Entypo name="home" size={24} color={TabIconColor} />
                     )
                 }}
             />
@@ -43,7 +59,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Map",
                     header: () => <Menu />,
                     tabBarIcon: () => (
-                        <Entypo name="map" size={24} color={appTertiaryColor} />
+                        <Entypo name="map" size={24} color={TabIconColor} />
                     )
                 }}
             />
@@ -54,7 +70,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Events",
                     header: () => false,
                     tabBarIcon: () => (
-                        <MaterialCommunityIcons name="calendar-month-outline" size={24} color={appTertiaryColor} />
+                        <MaterialCommunityIcons name="calendar-month-outline" size={24} color={TabIconColor} />
                     )
                 }}
             />
@@ -65,7 +81,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Alerts",
                     header: () => false,
                     tabBarIcon: () => (
-                        <Fontisto name="bell" size={24} color={appTertiaryColor} />
+                        <Fontisto name="bell" size={24} color={TabIconColor} />
                     )
                 }}
             />
@@ -76,7 +92,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Settings",
                     headerShown: false,
                     tabBarIcon: () => (
-                        <Octicons name="gear" size={24} color={appTertiaryColor} />
+                        <Octicons name="gear" size={24} color={TabIconColor} />
                     )
                 }}
             />

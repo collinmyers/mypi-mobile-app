@@ -75,7 +75,7 @@ export default function SettingsScreen({ navigation }) {
             <Modal visible={isNavModalVisible} transparent>
                 <View style={HomeStyle.modalNavContainer}>
                     <View style={HomeStyle.modalNavContentContainer}>
-                        <Text style={HomeStyle.modalNavText}>Current Mode: {currentNavPreference}</Text>
+                        <Text style={HomeStyle.modalNavText}>Current Preference: {currentNavPreference}</Text>
                         <View style={HomeStyle.modalNavButtonContainer}>
 
                             <TouchableOpacity onPress={() => handleNavPreferenceChange("bike")} style={HomeStyle.modalNavButton}>

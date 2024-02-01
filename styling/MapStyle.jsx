@@ -98,13 +98,13 @@ export default StyleSheet.create({
     checkboxText: {
         marginLeft: 10,
         fontSize: 16,
-        color: appTextColor
+        color: appSecondaryColor
     },
     fab: {
         position: "absolute",
         bottom: 20,
         right: 20,
-        backgroundColor: appTertiaryColor,
+        backgroundColor: appTertiaryColor, 
         borderRadius: 30,
         width: 60,
         height: 60,
@@ -116,8 +116,10 @@ export default StyleSheet.create({
         position: "absolute",
         bottom: 100,
         right: 20,
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appPrimaryColor,
         borderRadius: 10,
+        borderWidth: 2,
+        borderColor: appSecondaryColor,
         padding: 10,
         elevation: 8,
     },

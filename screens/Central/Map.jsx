@@ -204,7 +204,7 @@ export default function MapScreen() {
             </MapView>
 
             <TouchableOpacity style={MapStyle.fab} onPress={toggleFabVisible}>
-                <AntDesign name="filter" size={26} color={appSecondaryColor} />
+                <AntDesign name="filter" size={26} color={appPrimaryColor} />
             </TouchableOpacity>
 
             {fabVisible && (

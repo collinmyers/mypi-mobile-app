@@ -23,7 +23,7 @@ export default StyleSheet.create({
     title: {
         fontSize: 30,
         color: appTertiaryColor,
-        fontWeight: "bold",
+        fontWeight: "600",
         marginBottom: 16,
     },
 

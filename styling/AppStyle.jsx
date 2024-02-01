@@ -1,5 +1,11 @@
 import { StyleSheet } from "react-native";
-import { appPrimaryColor, appSecondaryColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, useAltUI} from "../utils/colors/appColors";
+
+let headerColor = appSecondaryColor;
+
+if (useAltUI){
+    headerColor = appPrimaryColor;
+}
 
 export default StyleSheet.create({
     container: {
@@ -12,7 +18,7 @@ export default StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "flex-start",
         flexDirection: "row",
-        backgroundColor: appSecondaryColor,
+        backgroundColor: headerColor,
         paddingTop: 40,
         paddingBottom: 10,
     },

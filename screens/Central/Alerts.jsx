@@ -8,8 +8,9 @@ import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
+import { Feather } from '@expo/vector-icons';
 
 export default function AlertsScreen() {
 
@@ -219,16 +220,16 @@ export default function AlertsScreen() {
                 {fullList}
                 {filterList}
 
-                {isSignedIn && (profileRole.role == "admin") ?
-                    (<TouchableOpacity onPress={() => navigation.navigate("PushNotificationScreen")}>
-                        <AntDesign name="pluscircle" size={30} color={appSecondaryColor} />
-                    </TouchableOpacity>
-                    ) :
-                    null
-                }
-
-
             </ScrollView>
+            {isSignedIn && (profileRole.role == "admin") ?
+                (<TouchableOpacity style={HomeStyle.fab} onPress={
+                    () => navigation.navigate("PushNotificationScreen")}>
+                    <Feather name="plus" size={24} color={appPrimaryColor} />
+                </TouchableOpacity>
+
+                ) :
+                null
+            }
         </SafeAreaView>
     );
 }

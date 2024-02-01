@@ -1,5 +1,5 @@
 import { Dimensions, Platform, StyleSheet } from "react-native";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, appWarningColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, appWarningColor, useAltUI } from "../utils/colors/appColors";
 
 let fontSizeAlert = 16;
 let marginBottomEventDetails = 0;
@@ -7,6 +7,12 @@ let marginBottomEventDetails = 0;
 if (Platform.OS === "android") {
     fontSizeAlert = 13;
     marginBottomEventDetails = 70;
+}
+
+let eventDateColor = appPrimaryColor;
+
+if (useAltUI) {
+    eventDateColor = appTertiaryColor;
 }
 
 const deviceWidth = Dimensions.get("window").width;
@@ -62,9 +68,7 @@ export default StyleSheet.create({
     },
 
     settingsCard: {
-        backgroundColor: appPrimaryColor,
-        borderWidth: 2,
-        borderColor: appSecondaryColor,
+        backgroundColor: appSecondaryColor,
         width: cardWidth,
         marginBottom: 10
     },
@@ -73,13 +77,11 @@ export default StyleSheet.create({
         borderTopColor: appSecondaryColor,
         width: cardWidth,
         alignItems: "center",
-        // marginTop: 20,
-        // marginHorizontal: 20,
     },
     settingsSectionHeader: {
         alignSelf: "center",
-        color: appSecondaryColor,
-        fontWeight: "bold",
+        color: appPrimaryColor,
+        fontWeight: "600",
         fontSize: 20,
         marginBottom: 10
     },
@@ -93,7 +95,7 @@ export default StyleSheet.create({
     profileText: {
         textAlign: "center",
         color: appSecondaryColor,
-        fontWeight: "bold",
+        fontWeight: "600",
         fontSize: 20
     },
     cardView: {
@@ -127,7 +129,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appWarningColor,
         overflow: "hidden"
     },
     modalContainer: {
@@ -206,15 +208,15 @@ export default StyleSheet.create({
         width: "100%",
     },
     eventListTitle: {
-        fontWeight: "bold",
+        fontWeight: "600",
         fontSize: 18,
-        color: appTextColor
+        color: appPrimaryColor
     },
     eventListDateTime: {
         textAlign: "left",
-        fontWeight: "bold",
+        fontWeight: "600",
         fontSize: 14,
-        color: appTextColor,
+        color: eventDateColor,
         marginVertical: "1%"
     },
     eventListDescription: {
@@ -240,8 +242,8 @@ export default StyleSheet.create({
 
     updateAccountTitle: {
         fontSize: 30,
-        color: appPrimaryColor,
-        fontWeight: "bold",
+        color: appTertiaryColor,
+        fontWeight: "600",
         marginBottom: 16,
     },
 
@@ -262,7 +264,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appPrimaryColor,
+        backgroundColor: appTertiaryColor,
         overflow: "hidden"
     },
 
@@ -284,13 +286,13 @@ export default StyleSheet.create({
     },
     eventDetailsTitle: {
         color: appTextColor,
-        fontWeight: "bold",
+        fontWeight: "600",
         fontSize: 24,
     },
     eventDetailsDateTime: {
         fontSize: 14,
-        fontWeight: "bold",
-        color: appTextColor,
+        fontWeight: "600",
+        color: eventDateColor,
         marginTop: "1%"
     },
     eventDetailsImage: {
@@ -348,7 +350,7 @@ export default StyleSheet.create({
     },
     modalNavText: {
         marginBottom: 20,
-        fontWeight: "bold",
+        fontWeight: "600",
         fontSize: 18,
         color: appSecondaryColor,
         textAlign: "center"
@@ -423,7 +425,7 @@ export default StyleSheet.create({
 
     },
     alertListTitle: {
-        fontWeight: "bold",
+        fontWeight: "600",
         textAlign: "center",
         fontSize: 18,
         color: appTextColor
@@ -508,4 +510,16 @@ export default StyleSheet.create({
         fontSize: 16,
         color: "#333",
     },
+    fab: {
+        position: "absolute",
+        bottom: 20,
+        right: 20,
+        backgroundColor: appTertiaryColor, 
+        borderRadius: 40,
+        width: 70,
+        height: 70,
+        justifyContent: "center",
+        alignItems: "center",
+        elevation: 8,
+    }
 });
