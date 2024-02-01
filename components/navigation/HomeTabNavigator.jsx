@@ -18,14 +18,14 @@ export default function HomeTabNavigator() {
     let TabTopBorderColor = appSecondaryColor;
     let TabActiveTextColor = appTertiaryColor;
     let TabInactiveTextColor = appPrimaryColor;
-    let TabIconColor = appTertiaryColor;
+    let TabIconInactiveIconColor = appPrimaryColor;
 
     if (useAltUI) {
         TabTopBorderWidth = 1;
         TabBackgroundColor = appPrimaryColor;
         TabActiveTextColor = appTertiaryColor;
         TabInactiveTextColor = appSecondaryColor;
-        TabIconColor = appSecondaryColor;
+        TabIconInactiveIconColor = appSecondaryColor;
     }
 
     return (
@@ -48,7 +48,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Dashboard",
                     header: () => <Menu />,
                     tabBarIcon: ({ focused }) => (
-                        <Entypo name="home" size={24} color={focused ? appTertiaryColor : appSecondaryColor} />
+                        <Entypo name="home" size={24} color={focused ? appTertiaryColor : TabIconInactiveIconColor} />
                     )
                 }}
             />
@@ -59,7 +59,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Map",
                     header: () => <Menu />,
                     tabBarIcon: ({ focused }) => (
-                        <Entypo name="map" size={24} color={focused ? appTertiaryColor : appSecondaryColor} />
+                        <Entypo name="map" size={24} color={focused ? appTertiaryColor : TabIconInactiveIconColor} />
                     )
                 }}
             />
@@ -70,7 +70,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Events",
                     header: () => false,
                     tabBarIcon: ({ focused }) => (
-                        <MaterialCommunityIcons name="calendar-month-outline" size={24} color={focused ? appTertiaryColor : appSecondaryColor} />
+                        <MaterialCommunityIcons name="calendar-month-outline" size={24} color={focused ? appTertiaryColor : TabIconInactiveIconColor} />
                     )
                 }}
             />
@@ -81,7 +81,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Alerts",
                     header: () => false,
                     tabBarIcon: ({ focused }) => (
-                        <Fontisto name="bell" size={24} color={focused ? appTertiaryColor : appSecondaryColor} />
+                        <Fontisto name="bell" size={24} color={focused ? appTertiaryColor : TabIconInactiveIconColor} />
                     )
                 }}
             />
@@ -92,7 +92,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Settings",
                     headerShown: false,
                     tabBarIcon: ({ focused }) => (
-                        <Octicons name="gear" size={24} color={focused ? appTertiaryColor : appSecondaryColor} />
+                        <Octicons name="gear" size={24} color={focused ? appTertiaryColor : TabIconInactiveIconColor} />
                     )
                 }}
             />
