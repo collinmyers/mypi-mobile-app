@@ -47,8 +47,8 @@ export default function HomeTabNavigator() {
                 options={{
                     tabBarLabel: "Dashboard",
                     header: () => <Menu />,
-                    tabBarIcon: () => (
-                        <Entypo name="home" size={24} color={TabIconColor} />
+                    tabBarIcon: ({ focused }) => (
+                        <Entypo name="home" size={24} color={focused ? appTertiaryColor : appSecondaryColor} />
                     )
                 }}
             />
@@ -58,8 +58,8 @@ export default function HomeTabNavigator() {
                 options={{
                     tabBarLabel: "Map",
                     header: () => <Menu />,
-                    tabBarIcon: () => (
-                        <Entypo name="map" size={24} color={TabIconColor} />
+                    tabBarIcon: ({ focused }) => (
+                        <Entypo name="map" size={24} color={focused ? appTertiaryColor : appSecondaryColor} />
                     )
                 }}
             />
@@ -69,8 +69,8 @@ export default function HomeTabNavigator() {
                 options={{
                     tabBarLabel: "Events",
                     header: () => false,
-                    tabBarIcon: () => (
-                        <MaterialCommunityIcons name="calendar-month-outline" size={24} color={TabIconColor} />
+                    tabBarIcon: ({ focused }) => (
+                        <MaterialCommunityIcons name="calendar-month-outline" size={24} color={focused ? appTertiaryColor : appSecondaryColor} />
                     )
                 }}
             />
@@ -80,8 +80,8 @@ export default function HomeTabNavigator() {
                 options={{
                     tabBarLabel: "Alerts",
                     header: () => false,
-                    tabBarIcon: () => (
-                        <Fontisto name="bell" size={24} color={TabIconColor} />
+                    tabBarIcon: ({ focused }) => (
+                        <Fontisto name="bell" size={24} color={focused ? appTertiaryColor : appSecondaryColor} />
                     )
                 }}
             />
@@ -91,8 +91,8 @@ export default function HomeTabNavigator() {
                 options={{
                     tabBarLabel: "Settings",
                     headerShown: false,
-                    tabBarIcon: () => (
-                        <Octicons name="gear" size={24} color={TabIconColor} />
+                    tabBarIcon: ({ focused }) => (
+                        <Octicons name="gear" size={24} color={focused ? appTertiaryColor : appSecondaryColor} />
                     )
                 }}
             />
