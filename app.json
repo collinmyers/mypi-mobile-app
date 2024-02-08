@@ -34,9 +34,6 @@
             "favicon": "./assets/myPILogo.png"
         },
         "extra": {
-            "eas": {
-                "projectId": "8cc387dc-be95-4b8c-8460-3c674e04defe"
-            }
         },
         "owner": "mypi"
     }
