@@ -197,8 +197,8 @@ export default function MapScreen() {
                 initialRegion={{
                     latitude: 42.158581,
                     longitude: -80.1079,
-                    latitudeDelta: 0.115,
-                    longitudeDelta: 0.0421,
+                    latitudeDelta: 0.085,
+                    longitudeDelta: 0.115,
                 }}>
                 {renderMarkers()}
             </MapView>

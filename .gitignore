@@ -34,5 +34,12 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# android prebuild folders
 .idea/*
 android/*
+
+# SHA keystores
+*.keystore*
+
+# Ignore any vscode overrides
+.vscode/

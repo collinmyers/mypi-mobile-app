@@ -1,43 +1,42 @@
 {
-  "expo": {
-    "name": "myPI",
-    "slug": "mypi",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/myPILogo.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/myPILogo.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#FFFFFF"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.discoverpi.mypi",
-      "infoPlist": {
-        "UIUserInterfaceStyle": "Light"
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/myPILogo.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.discoverpi.mypi",
-      "versionCode": 1,
-      "googleServicesFile": "./google-services.json"
-    },
-    "web": {
-      "favicon": "./assets/myPILogo.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "8cc387dc-be95-4b8c-8460-3c674e04defe"
-      }
-    },
-    "owner": "mypi"
-  }
+    "expo": {
+        "name": "myPI",
+        "slug": "mypi",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/myPI_Icon.png",
+        "userInterfaceStyle": "light",
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.discoverpi.mypi",
+            "infoPlist": {
+                "UIUserInterfaceStyle": "Light"
+            }
+        },
+        "android": {
+            "package": "com.discoverpi.mypi",
+            "versionCode": 1,
+            "permissions": [
+                "INTERNET"
+            ],
+            "googleServicesFile": "./google-services.json",
+            "config": {
+                "googleMaps": {
+                    "apiKey": "AIzaSyCUXlnnBE6OAV1kku4UMMYZb1eGuUeJAlg"
+                }
+            }
+        },
+        "web": {
+            "favicon": "./assets/myPILogo.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "8cc387dc-be95-4b8c-8460-3c674e04defe"
+            }
+        },
+        "owner": "Presque Isle Partnership"
+    }
 }
