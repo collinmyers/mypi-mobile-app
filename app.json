@@ -4,8 +4,13 @@
         "slug": "mypi",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/myPI_Icon.png",
+        "icon": "./assets/main/myPI-Icon.png",
         "userInterfaceStyle": "light",
+        "splash": {
+            "image": "./assets/main/myPI-Splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#FFFFFF"
+        },
         "assetBundlePatterns": [
             "**/*"
         ],
@@ -19,6 +24,15 @@
         "android": {
             "package": "com.discoverpi.mypi",
             "versionCode": 1,
+            "splash": {
+                "mdpi": "assets/android-splash/myPI-Splash-320.png",
+                "hdpi": "assets/android-splash/myPI-Splash-480.png",
+                "xhdpi": "assets/android-splash/myPI-Splash-720.png",
+                "xxhdpi": "assets/android-splash/myPI-Splash-1080.png",
+                "xxxhdpi": "assets/android-splash/myPI-Splash-1440.png",
+                "resizeMode": "contain",
+                "backgroundColor": "#FFFFFF"
+            },
             "permissions": [
                 "INTERNET"
             ],
@@ -30,7 +44,7 @@
             }
         },
         "web": {
-            "favicon": "./assets/myPILogo.png"
+            "favicon": "./assets/main/myPILogo.png"
         },
         "extra": {
             "eas": {

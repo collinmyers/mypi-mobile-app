@@ -1,7 +1,7 @@
 import React from "react";
 import { Image } from "react-native";
-import Logo from "../../assets/myPILogo.png";
-import LogoAlt from "../../assets/myPILogoAlt.png";
+import Logo from "../../assets/main/myPILogo.png";
+import LogoAlt from "../../assets/main/myPILogo.png";
 import { useAltUI } from "../../utils/colors/appColors";
 import PropTypes from "prop-types";
 
