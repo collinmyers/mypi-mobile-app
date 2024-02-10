@@ -10,7 +10,8 @@ import AuthStackNavigator from "./AuthStackNavigator";
 import { account } from "../../utils/Config/appwriteConfig";
 import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 
-import { Entypo, Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { Entypo, Ionicons, AntDesign, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import FoodTruckAdminScreen from "../../screens/Sidebar/FoodTruck";
 
 const Drawer = createDrawerNavigator();
 
@@ -19,10 +20,17 @@ export default function DrawerNavigator() {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [isSigningOut, setIsSigningOut] = useState(false);
     const [refreshDrawer, setRefreshDrawer] = useState(0);
+    const [profileRole, setProfileRole] = useState({
+        role: "",
+    });
 
     const checkAuthState = async () => {
         try {
-            await account.get();
+            const response = await account.get();
+
+            setProfileRole({
+                role: response.labels,
+            });
 
             setIsSignedIn(true);
 
@@ -57,9 +65,6 @@ export default function DrawerNavigator() {
             }
         }
     };
-
-
-
 
 
     const SignOutDrawerItem = (props) => {
@@ -117,6 +122,19 @@ export default function DrawerNavigator() {
                 <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="volunteer-activism" size={24} color={appTertiaryColor} /> }} />
                 <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <Menu />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color={appTertiaryColor} /> }} />
                 <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="park" size={24} color={appTertiaryColor} /> }} />
+                
+                {isSignedIn && ( (profileRole.role == "admin") || (profileRole.role == "premium") ) ?
+                ( <Drawer.Screen
+                    name="Food Truck"
+                    component={FoodTruckAdminScreen}
+                    options={{
+                        header: () => <Menu/>,
+                        drawerIcon: () => <MaterialCommunityIcons name="food-hot-dog" size={24} color={appTertiaryColor} />
+                    }} />
+
+                ) :
+                null
+                }
             </Drawer.Navigator>
         </NavigationContainer >
     );
