@@ -43,6 +43,10 @@
                 }
             }
         },
+        "androidStatusBar": {
+            "backgroundColor": "#FFFFFF",
+            "translucent": true
+        },
         "web": {
             "favicon": "./assets/main/myPILogo.png"
         },

@@ -2,7 +2,6 @@ import React from "react";
 import DrawerNavigator from "./components/navigation/DrawerNavigator";
 import { setupURLPolyfill } from "react-native-url-polyfill";
 import storage from "local-storage-fallback";
-import { StatusBar } from "expo-status-bar";
 
 
 export default function App() {
@@ -10,8 +9,6 @@ export default function App() {
     if (!("localStorage" in window)) window.localStorage = storage;
 
     return (
-        <DrawerNavigator>
-            <StatusBar style="dark" />
-        </DrawerNavigator>
+        <DrawerNavigator />
     );
 }
