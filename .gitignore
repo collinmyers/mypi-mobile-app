@@ -43,3 +43,7 @@ android/*
 
 # Ignore any vscode overrides
 .vscode/
+
+# Ignore aab/apk's in android build folder
+*.apk*
+*.aab*
