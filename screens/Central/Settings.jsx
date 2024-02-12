@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Modal, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import { Card, Text } from "react-native-paper";
+import { Card, RadioButton, Text } from "react-native-paper";
 import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
 import { saveNavigationPreference, getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
+import { appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 
 
 export default function SettingsScreen({ navigation }) {
@@ -14,6 +15,7 @@ export default function SettingsScreen({ navigation }) {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isNavModalVisible, setIsNavModalVisible] = useState(false);
+    const [navTypeChecked, setNavTypeChecked] = useState("car");
     const [profileInfo, setProfileInfo] = useState({
         name: "",
         email: "",
@@ -41,6 +43,8 @@ export default function SettingsScreen({ navigation }) {
         try {
             const preference = await getNavigationPreference();
 
+            setNavTypeChecked(preference);
+
             switch (preference) {
                 case "bike":
                     setCurrentNavPreference("Biking");
@@ -60,6 +64,7 @@ export default function SettingsScreen({ navigation }) {
     };
 
     const handleNavPreferenceChange = async (newPreference) => {
+        setNavTypeChecked(newPreference);
         await saveNavigationPreference(newPreference);
         setCurrentNavPreference(currentNavPreference);
         setIsNavModalVisible(false);
@@ -75,18 +80,41 @@ export default function SettingsScreen({ navigation }) {
             <Modal visible={isNavModalVisible} transparent>
                 <View style={HomeStyle.modalNavContainer}>
                     <View style={HomeStyle.modalNavContentContainer}>
-                        <Text style={HomeStyle.modalNavText}>Current Preference: {currentNavPreference}</Text>
+                        <Text style={HomeStyle.modalNavText}>Navigation Preference</Text>
                         <View style={HomeStyle.modalNavButtonContainer}>
+                            <View style={HomeStyle.radioButton}>
+                                <RadioButton.Android
+                                    value="bike"
+                                    status={navTypeChecked === "bike" ? "checked" : "unchecked"}
+                                    onPress={() => handleNavPreferenceChange("bike")}
+                                    color={appTertiaryColor}
+                                    uncheckedColor={appTertiaryColor}
+                                />
+                                <Text style={HomeStyle.radioText}>Biking</Text>
+                            </View>
 
-                            <TouchableOpacity onPress={() => handleNavPreferenceChange("bike")} style={HomeStyle.modalNavButton}>
-                                <Text style={HomeStyle.modalNavButtonText}>Biking</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => handleNavPreferenceChange("car")} style={HomeStyle.modalNavButton}>
-                                <Text style={HomeStyle.modalNavButtonText}>Driving</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => handleNavPreferenceChange("walk")} style={HomeStyle.modalNavButton}>
-                                <Text style={HomeStyle.modalNavButtonText}>Walking</Text>
-                            </TouchableOpacity>
+                            <View style={HomeStyle.radioButton}>
+                                <RadioButton.Android
+                                    value="car"
+                                    status={navTypeChecked === "car" ? "checked" : "unchecked"}
+                                    onPress={() => handleNavPreferenceChange("car")}
+                                    color={appTertiaryColor}
+                                    uncheckedColor={appTertiaryColor}
+                                />
+                                <Text style={HomeStyle.radioText}>Driving</Text>
+                            </View>
+
+                            <View style={HomeStyle.radioButton}>
+                                <RadioButton.Android
+                                    value="bike"
+                                    status={navTypeChecked === "walk" ? "checked" : "unchecked"}
+                                    onPress={() => handleNavPreferenceChange("walk")}
+                                    style={HomeStyle.radioButton}
+                                    color={appTertiaryColor}
+                                    uncheckedColor={appTertiaryColor}
+                                />
+                                <Text style={HomeStyle.radioText}>Walking</Text>
+                            </View>
                         </View>
 
                         <View style={HomeStyle.modalNavCancelContentContainer}>
@@ -265,7 +293,7 @@ export default function SettingsScreen({ navigation }) {
                                     onPress={showNavModal}
                                     style={HomeStyle.settingsButtonOpac}
                                 >
-                                    <Text style={HomeStyle.changeInfoText}>Navigation Type</Text>
+                                    <Text style={HomeStyle.changeInfoText}>Navigation</Text>
                                 </TouchableOpacity>
                             </Card.Content>
 

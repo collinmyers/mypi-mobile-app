@@ -140,7 +140,7 @@ export default StyleSheet.create({
     },
     modalContentContainer: {
         backgroundColor: appPrimaryColor,
-        width: "99%",
+        width: "90%",
         padding: 30,
         alignItems: "center",
         borderRadius: 5
@@ -154,21 +154,20 @@ export default StyleSheet.create({
         flexDirection: "row",
     },
     modalCancelButton: {
-        paddingVertical: 10,
         paddingHorizontal: 30,
-        margin: 10,
+        marginVertical: 10,
+        marginHorizontal: 5,
         padding: 10,
         borderRadius: 20,
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
         backgroundColor: appTertiaryColor,
-        overflow: "hidden"
     },
     modalDeleteButton: {
-        paddingVertical: 10,
         paddingHorizontal: 30,
-        margin: 10,
+        marginVertical: 10,
+        marginHorizontal: 5,
         padding: 10,
         borderRadius: 20,
         color: appTextColor,
@@ -339,7 +338,7 @@ export default StyleSheet.create({
     },
     modalNavContentContainer: {
         backgroundColor: appPrimaryColor,
-        maxWidth: "98%",
+        width: "90%",
         paddingVertical: 20,
         paddingHorizontal: 30,
         alignItems: "center",
@@ -357,8 +356,8 @@ export default StyleSheet.create({
     },
     modalNavButtonContainer: {
         flexDirection: "row",
-        justifyContent: "space-between",
-
+        alignItems: "center",
+        justifyContent: "space-around",
     },
     modalNavCancelContentContainer: {
         marginTop: 30
@@ -504,6 +503,10 @@ export default StyleSheet.create({
     radioButton: {
         flexDirection: "row",
         alignItems: "center",
+        marginHorizontal: "5%"
+    },
+    radioText:{
+        color: appSecondaryColor
     },
     radioLabel: {
         marginLeft: 8,
@@ -514,7 +517,7 @@ export default StyleSheet.create({
         position: "absolute",
         bottom: 20,
         right: 20,
-        backgroundColor: appTertiaryColor, 
+        backgroundColor: appTertiaryColor,
         borderRadius: 40,
         width: 70,
         height: 70,
