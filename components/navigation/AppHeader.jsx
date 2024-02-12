@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView } from "react-native";
+import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 
@@ -15,8 +15,8 @@ export default function AppHeader() {
     }
 
     return (
-        <SafeAreaView style={AppStyle.drawerHeader}>
+        <View style={AppStyle.drawerHeader}>
             <Feather style={AppStyle.drawerMenuBar} name="menu" size={30} color={menuColor} onPress={() => navigation.toggleDrawer()} />
-        </SafeAreaView>
+        </View>
     );
 }
