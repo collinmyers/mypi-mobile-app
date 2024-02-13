@@ -7,7 +7,7 @@
         "icon": "./assets/main/myPI-Icon.png",
         "userInterfaceStyle": "light",
         "splash": {
-            "image": "./assets/main/myPI-Splash.png",
+            "image": "./assets/main/myPI-Splash-alt.png",
             "resizeMode": "contain",
             "backgroundColor": "#FFFFFF"
         },
@@ -24,15 +24,6 @@
         "android": {
             "package": "com.discoverpi.mypi",
             "versionCode": 1,
-            "splash": {
-                "mdpi": "assets/android-splash/myPI-Splash-320.png",
-                "hdpi": "assets/android-splash/myPI-Splash-480.png",
-                "xhdpi": "assets/android-splash/myPI-Splash-720.png",
-                "xxhdpi": "assets/android-splash/myPI-Splash-1080.png",
-                "xxxhdpi": "assets/android-splash/myPI-Splash-1440.png",
-                "resizeMode": "contain",
-                "backgroundColor": "#FFFFFF"
-            },
             "permissions": [
                 "INTERNET"
             ],
