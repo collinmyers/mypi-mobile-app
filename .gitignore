@@ -29,7 +29,7 @@ yarn-error.*
 *.pem
 
 # env files
-.env*
+#.env*
 
 # typescript
 *.tsbuildinfo
@@ -37,6 +37,9 @@ yarn-error.*
 # android prebuild folders
 .idea/*
 android/*
+
+# ios prebuild folders
+ios/
 
 # SHA keystores
 *.keystore*

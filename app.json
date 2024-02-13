@@ -7,7 +7,7 @@
         "icon": "./assets/main/myPI-Icon.png",
         "userInterfaceStyle": "light",
         "splash": {
-            "image": "./assets/main/myPI-Splash-alt.png",
+            "image": "./assets/main/splashscreen.png",
             "resizeMode": "contain",
             "backgroundColor": "#FFFFFF"
         },
