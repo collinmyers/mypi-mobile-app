@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { Alert, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import { Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
 import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
@@ -61,27 +61,31 @@ export default function AlertsScreen() {
 
         // Request notification permissions when the component mounts
         (async () => {
+            let token;
+            if(Platform.OS === "android"){
+                    Notifications.setNotificationChannelAsync("default", {
+                    name: "default",
+                });
+            }
+
             const { status } = await Notifications.requestPermissionsAsync();
             if (status !== "granted") {
                 console.log("Permission to receive notifications denied.");
                 return;
             }
-            const expoPushToken = (await Notifications.getExpoPushTokenAsync()).data;
-            console.log("Expo Push Token:", expoPushToken);
+
+            token = (await Notifications.getExpoPushTokenAsync({projectID:"myPI"})).data;
+            console.log(token);
         }
         )();
 
         // Define the notification handler
         const notificationHandler = {
-            handleNotification: async (notification) => {
-                // Handle the presented notification here
-                const { title, body } = notification.request.content;
-
-                // For example, show an alert with the notification content
-                Alert.alert(title, body);
-
-                // You can add more customized behavior here, such as navigating to a specific screen.
-            },
+            handleNotification: async () => ({
+                shouldShowAlert: true,
+                shouldPlaySound: false,
+                shouldSetBadge: true,
+            }),
         };
 
         // Set the notification handler

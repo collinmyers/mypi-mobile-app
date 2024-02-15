@@ -6,6 +6,15 @@
         "orientation": "portrait",
         "icon": "./assets/main/myPI-Icon.png",
         "userInterfaceStyle": "light",
+        "plugins":[
+            [
+                "expo-notifications",
+                {
+                    "icon":"./assets/main/myPI-Icon.png",
+                    "color": "#FFFFFF"
+                }
+            ]
+        ],
         "splash": {
             "image": "./assets/main/splashscreen.png",
             "resizeMode": "contain",

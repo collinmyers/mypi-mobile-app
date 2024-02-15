@@ -13,7 +13,7 @@ Notifications.setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
         shouldPlaySound: false,
-        shouldSetBadge: false,
+        shouldSetBadge: true,
     }),
 });
 
@@ -22,9 +22,11 @@ async function schedulePushNotification(notifTitle, notifBody) {
         content: {
             title: notifTitle,
             body: notifBody,
-            data: { data: "goes here" },
         },
-        trigger: { seconds: 2 },
+        trigger: null, //Send immediately
+        presentation: {
+            style: "notification",
+        },
     });
 }
 
