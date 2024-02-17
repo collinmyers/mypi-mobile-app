@@ -12,7 +12,6 @@ import { appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColor
 export default function SettingsScreen({ navigation }) {
 
     const [isSignedIn, setIsSignedIn] = useState(false);
-    const [currentNavPreference, setCurrentNavPreference] = useState(null);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isNavModalVisible, setIsNavModalVisible] = useState(false);
     const [navTypeChecked, setNavTypeChecked] = useState("car");
@@ -39,39 +38,16 @@ export default function SettingsScreen({ navigation }) {
         }
     };
 
-    const fetchNavPreference = async () => {
-        try {
-            const preference = await getNavigationPreference();
 
-            setNavTypeChecked(preference);
-
-            switch (preference) {
-                case "bike":
-                    setCurrentNavPreference("Biking");
-                    break;
-                case "car":
-                    setCurrentNavPreference("Driving");
-                    break;
-                case "walk":
-                    setCurrentNavPreference("Walking");
-                    break;
-                default:
-                    break;
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     const handleNavPreferenceChange = async (newPreference) => {
+        setIsNavModalVisible(false);
         setNavTypeChecked(newPreference);
         await saveNavigationPreference(newPreference);
-        setCurrentNavPreference(currentNavPreference);
-        setIsNavModalVisible(false);
     };
 
+
     const showNavModal = async () => {
-        await fetchNavPreference();
         setIsNavModalVisible(true);
     };
 
@@ -106,7 +82,7 @@ export default function SettingsScreen({ navigation }) {
 
                             <View style={HomeStyle.radioButton}>
                                 <RadioButton.Android
-                                    value="bike"
+                                    value="walk"
                                     status={navTypeChecked === "walk" ? "checked" : "unchecked"}
                                     onPress={() => handleNavPreferenceChange("walk")}
                                     style={HomeStyle.radioButton}
@@ -156,27 +132,6 @@ export default function SettingsScreen({ navigation }) {
 
     const deleteUserAndData = async () => {
         try {
-
-            // Client Side deletion doesnt work, will need to implement serverside solution
-
-            // const client = new Client()
-            //     .setEndpoint(process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT)
-            //     .setProject(process.env.EXPO_PUBLIC_APPWRITE_PROJECT);
-
-
-            // console.log(typeof(profileInfo.identity));
-
-            // const account = new Account(client);
-            // await account.deleteIdentity(profileInfo.identity);
-
-            // setProfileInfo({
-            //     name: "",
-            //     email: "",
-            //     identity: ""
-            // });
-
-            // // Deletion of data from storage bucket and database will need to be implemented as well
-            // setIsSignedIn(false);
             setIsDeleteModalVisible(false);
         } catch (error) {
             console.error(error);
@@ -186,7 +141,6 @@ export default function SettingsScreen({ navigation }) {
 
     useFocusEffect(
         React.useCallback(() => {
-            fetchNavPreference();
             getNameAndEmail();
         }, [])
     );
@@ -296,7 +250,6 @@ export default function SettingsScreen({ navigation }) {
                                     <Text style={HomeStyle.changeInfoText}>Navigation</Text>
                                 </TouchableOpacity>
                             </Card.Content>
-
 
                         </Card.Content>
 
