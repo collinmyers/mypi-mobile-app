@@ -1,3 +1,4 @@
+import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, Text, TouchableOpacity, Platform } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
@@ -11,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
 import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import * as FileSystem from "expo-file-system";
 
 export default function MapScreen() {
     const navigation = useNavigation();
@@ -47,13 +49,59 @@ export default function MapScreen() {
                 }
 
                 setMarkersData(allMarkers);
+                await saveDataToFile(allMarkers); // Save fetched data to file
             } catch (error) {
                 console.error(error);
             }
         };
+        const saveDataToFile = async (data) => {
+            try {
+                const fileUri = FileSystem.documentDirectory + "markersData.json";
+                await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(data));
+                console.log("Data saved to file: ", fileUri);
+            } catch (error) {
+                console.error("Error saving data to file: ", error);
+            }
+        };
 
-        fetchData();
+        const loadDataFromFile = async () => {
+            try {
+                const fileUri = FileSystem.documentDirectory + "markersData.json";
+                const fileContents = await FileSystem.readAsStringAsync(fileUri);
+                const data = JSON.parse(fileContents);
+                setMarkersData(data);
+            } catch (error) {
+                console.error("Error reading data from file: ", error);
+            }
+        };
+
+        const checkNetworkConnectivityAndFetchData = async () => {
+            try {
+                const networkState = await Network.getNetworkStateAsync();
+                if (networkState.isConnected) {
+                    fetchData(); // Fetch data from appwrite if connected
+                }
+            } catch (error) {
+                console.error("Error checking network connectivity: ", error);
+            }
+        };
+
+        // Check if data is available offline
+        FileSystem.getInfoAsync(FileSystem.documentDirectory + "markersData.json")
+            .then(({ exists }) => {
+                if (exists) {
+                    loadDataFromFile(); // Load data from file if available
+                } else {
+                    fetchData(); // Fetch data from network if not available
+                }
+            })
+            .catch(error => console.error("Error checking file: ", error));
+
+        // Check network connectivity and fetch data if connected
+        checkNetworkConnectivityAndFetchData();
+
     }, []);
+
 
     useEffect(() => {
         const filterMarkers = () => {
