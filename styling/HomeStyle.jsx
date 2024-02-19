@@ -285,6 +285,7 @@ export default StyleSheet.create({
         color: appTextColor,
         fontWeight: "600",
         fontSize: 24,
+        textAlign: "center"
     },
     eventDetailsDateTime: {
         fontSize: 14,
