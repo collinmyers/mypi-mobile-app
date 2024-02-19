@@ -2,11 +2,9 @@ import { Dimensions, Platform, StyleSheet } from "react-native";
 import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, appWarningColor, useAltUI } from "../utils/colors/appColors";
 
 let fontSizeAlert = 16;
-let marginBottomEventDetails = 0;
 
 if (Platform.OS === "android") {
     fontSizeAlert = 13;
-    marginBottomEventDetails = 70;
 }
 
 let eventDateColor = appPrimaryColor;
@@ -34,8 +32,8 @@ export default StyleSheet.create({
         width: "100%"
     },
     scrollableView: {
-        marginTop: "2%",
-        // flexGrow: 1,
+        margin: "2%",
+        marginBottom: "5%",
         justifyContent: "space",
         backgroundColor: appPrimaryColor
     },
@@ -278,7 +276,7 @@ export default StyleSheet.create({
         padding: 10,
         paddingBottom: 0,
         backgroundColor: appSecondaryColor,
-        marginBottom: marginBottomEventDetails
+        marginBottom: "15%"
     },
     eventDetailsCardContent: {
         alignItems: "center",
