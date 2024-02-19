@@ -524,5 +524,10 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         elevation: 8,
+    },
+    noNotificationsMessage: {
+        color: appSecondaryColor,
+        fontWeight: 600,
+        fontSize: 20
     }
 });

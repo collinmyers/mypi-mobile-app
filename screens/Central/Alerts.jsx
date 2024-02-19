@@ -17,7 +17,11 @@ export default function AlertsScreen() {
 
     const PAGE_SIZE = 25;
 
+    const [selectedCategory, setSelectedCategory] = useState("all");
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const [alertData, setAlertData] = useState([]);
+    const [filterList, setList] = useState([]);
+    const [fullList, setFull] = useState([]);
     const [profileRole, setProfileRole] = useState({
         role: "",
     });
@@ -46,15 +50,16 @@ export default function AlertsScreen() {
     };
     */
 
-    const [data, setData] = useState([]);
-    const [filterList, setList] = useState([]);
-    const [fullList, setFull] = useState([]);
+
 
 
     useFocusEffect(React.useCallback(() => {
+
+        // handleFilterById("notifications");
+
         // Function to handle real-time updates
         const handleSubscription = () => {
-            getAlerts();
+            fetchData();
         };
         // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
@@ -62,8 +67,8 @@ export default function AlertsScreen() {
         // Request notification permissions when the component mounts
         (async () => {
             let token;
-            if(Platform.OS === "android"){
-                    Notifications.setNotificationChannelAsync("default", {
+            if (Platform.OS === "android") {
+                Notifications.setNotificationChannelAsync("default", {
                     name: "default",
                 });
             }
@@ -74,7 +79,7 @@ export default function AlertsScreen() {
                 return;
             }
 
-            token = (await Notifications.getExpoPushTokenAsync({projectID:"myPI"})).data;
+            token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
             console.log(token);
         }
         )();
@@ -91,7 +96,69 @@ export default function AlertsScreen() {
         // Set the notification handler
         Notifications.setNotificationHandler(notificationHandler);
 
-        getAlerts();
+        const fetchData = async () => {
+            try {
+                let offset = 0;
+                let allAlerts = [];
+
+                const response = await database.listDocuments(
+                    DATABASE_ID,
+                    ALERTS_COLLECTION_ID,
+                    [Query.limit(PAGE_SIZE), Query.offset(offset)]
+                );
+
+                while (response.documents.length > 0) {
+                    allAlerts = [...allAlerts, ...response.documents];
+                    offset += PAGE_SIZE;
+                    const nextResponse = await database.listDocuments(
+                        DATABASE_ID,
+                        ALERTS_COLLECTION_ID,
+                        [Query.limit(PAGE_SIZE), Query.offset(offset)]
+                    );
+                    response.documents = nextResponse.documents;
+                }
+
+                // Sort the notifications alphabetically by their name
+                allAlerts.sort((a, b) => {
+                    const nameA = a.Title.toLowerCase();
+                    const nameB = b.Title.toLowerCase();
+
+                    const splitA = nameA.match(/(\D+|\d+)/g);
+                    const splitB = nameB.match(/(\D+|\d+)/g);
+
+                    for (let i = 0; i < Math.max(splitA.length, splitB.length); i++) {
+                        if (i >= splitA.length) return -1;
+                        if (i >= splitB.length) return 1;
+
+                        const partA = splitA[i];
+                        const partB = splitB[i];
+
+                        if (!isNaN(partA) && !isNaN(partB)) {
+                            const numA = parseInt(partA);
+                            const numB = parseInt(partB);
+                            if (numA !== numB) {
+                                return numA - numB;
+                            }
+                        } else {
+                            if (partA !== partB) {
+                                return partA.localeCompare(partB);
+                            }
+                        }
+                    }
+
+                    return 0;
+                });
+
+                setAlertData(allAlerts);
+                setFull(allAlerts);
+                //await saveDataToFile(allAlerts); // Save fetched data to file
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+
+        fetchData();
         getNameAndRole();
 
         return () => {
@@ -100,72 +167,26 @@ export default function AlertsScreen() {
 
     }, []));
 
-    const getAlerts = async () => {
-        try {
-            let offset = 0;
-            let allData = [];
 
-            const fetchPage = async (offset) => {
-                const response = await database.listDocuments(
-                    DATABASE_ID, // DB ID
-                    ALERTS_COLLECTION_ID, // Collection ID
-                    [
-                        Query.limit(PAGE_SIZE),
-                        Query.offset(offset)
-                    ]
-                );
-
-                const newData = response.documents.map((document, index) => {
-                    const Title = document.Title;
-                    const Details = document.Details;
-                    const NotificationType = document.NotificationType;
-
-                    return (
-                        <Card style={HomeStyle.alertCard} key={`${offset}_${index}`} id={NotificationType}>
-                            <Card.Content style={HomeStyle.alertCardContent}>
-                                <Text style={HomeStyle.alertListTitle}>{Title}</Text>
-                                <Text style={HomeStyle.alertListDetails}>{Details}</Text>
-                                <Text style={HomeStyle.alertListTypeDesc}>{NotificationType}</Text>
-                            </Card.Content>
-                        </Card>
-                    );
-                });
-
-                allData = [...allData, ...newData];
-
-                if (response.documents.length === PAGE_SIZE) {
-                    await fetchPage(offset + PAGE_SIZE); // Fetch next page
-                }
-            };
-
-            await fetchPage(offset); // Start fetching from the initial offset
-
-            setData(allData);
-            setFull(allData);
-        } catch (error) {
-            console.error(error);
-        }
+    const renderAlerts = (alerts) => {
+        return alerts.map((alert, index) => (
+            <Card style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
+                <Card.Content style={HomeStyle.alertCardContent}>
+                    <Text style={HomeStyle.alertListTitle}>{alert.Title}</Text>
+                    <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
+                </Card.Content>
+            </Card>
+        ));
     };
-
 
     const handleFilterById = (filterId) => {
-
-        setFull([]);
-        setList([]);
-
-        data.forEach(element => {
-            if (element.props.id == filterId) {
-                setList(prevElement => [...prevElement, element]);
-            }
-        });
-    };
-
-    const handleGetFullList = () => {
-
-        setFull([]);
-        setList([]);
-
-        setFull(data);
+        setSelectedCategory(filterId);
+        if (filterId === "notifications") {
+            setList(alertData);
+        } else {
+            const filteredAlerts = fullList.filter(alert => alert.NotificationType === filterId);
+            setList(filteredAlerts);
+        }
     };
 
     const getNameAndRole = async () => {
@@ -186,25 +207,7 @@ export default function AlertsScreen() {
     return (
         <SafeAreaView style={HomeStyle.alertContainer}>
             <View style={HomeStyle.alertButtons}>
-
-                {/* <TouchableOpacity onPress={() => handleGetFullList()} style={HomeStyle.alertButton}>
-                    <Text style={HomeStyle.alertButtonText}>All</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => handleFilterById("alerts")} style={HomeStyle.alertButton}>
-                    <Text style={HomeStyle.alertButtonText}>Alerts</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => handleFilterById("events")} style={HomeStyle.alertButton}>
-                    <Text style={HomeStyle.alertButtonText}>Events</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => handleFilterById("promos")} style={HomeStyle.alertButton}>
-                    <Text style={HomeStyle.alertButtonText}>Promos</Text>
-                </TouchableOpacity> */}
-
-
-                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appTextColor} buttonColor={appSecondaryColor} onPress={() => handleGetFullList()}>
+                <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appTextColor} buttonColor={appSecondaryColor} onPress={() => handleFilterById("notifications")}>
                     All
                 </Button>
                 <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appTextColor} buttonColor={appSecondaryColor} onPress={() => handleFilterById("alerts")}>
@@ -216,14 +219,16 @@ export default function AlertsScreen() {
                 <Button style={HomeStyle.alertButton} labelStyle={HomeStyle.alertButtonText} mode="elevated" textColor={appTextColor} buttonColor={appSecondaryColor} onPress={() => handleFilterById("promos")}>
                     Promos
                 </Button>
-
             </View>
 
             <ScrollView contentContainerStyle={[HomeStyle.scrollableView, { alignItems: "center" }]} showsVerticalScrollIndicator={false}>
-                {fullList}
-                {filterList}
-
+                {filterList.length !== 0 ? (filterList.length > 0 ? renderAlerts(filterList) :
+                    (filterList.length === 0 && alertData.length === 0 && (
+                        <Text style={HomeStyle.noNotificationsMessage}>No {selectedCategory === "notifications" ? "notifications" : selectedCategory} at this time</Text>
+                    ))) : (renderAlerts(fullList))
+                }
             </ScrollView>
+
             {isSignedIn && (profileRole.role == "admin") ?
                 (<TouchableOpacity style={HomeStyle.fab} onPress={
                     () => navigation.navigate("PushNotificationScreen")}>
