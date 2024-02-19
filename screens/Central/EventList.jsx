@@ -1,3 +1,4 @@
+import * as Network from "expo-network";
 import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
@@ -7,6 +8,8 @@ import { Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
 import HomeStyle from "../../styling/HomeStyle";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
+import * as FileSystem from "expo-file-system";
+
 
 export default function EventListScreen() {
     const navigation = useNavigation();
@@ -46,6 +49,7 @@ export default function EventListScreen() {
                     response.documents = nextResponse.documents;
                 }
 
+                
                 // Fetch images for each event concurrently
                 const eventsWithImages = await Promise.all(allEvents.map(async (event) => {
                     const EventListDescription = event.EventListDescription;
@@ -70,14 +74,57 @@ export default function EventListScreen() {
                 }));
 
                 setEventData(eventsWithImages);
-                // await saveDataToFile(allPoints); // Save fetched data to file
+                await saveDataToFile(eventsWithImages); // Save fetched data to file
             } catch (error) {
                 console.error(error);
             }
         };
 
+        const saveDataToFile = async (data) => {
+            try {
+                const fileUri = FileSystem.documentDirectory + "eventList.json";
+                await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(data));
+                console.log("Data saved to file: ", fileUri);
+            } catch (error) {
+                console.error("Error saving data to file: ", error);
+            }
+        };
 
-        fetchData();
+        const loadDataFromFile = async () => {
+            try {
+                const fileUri = FileSystem.documentDirectory + "eventList.json";
+                const fileContents = await FileSystem.readAsStringAsync(fileUri);
+                const data = JSON.parse(fileContents);
+                setEventData(data);
+            } catch (error) {
+                console.error("Error reading data from file: ", error);
+            }
+        };
+
+        const checkNetworkConnectivityAndFetchData = async () => {
+            try {
+                const networkState = await Network.getNetworkStateAsync();
+                if (networkState.isConnected) {
+                    fetchData(); // Fetch data from appwrite if connected
+                }
+            } catch (error) {
+                console.error("Error checking network connectivity: ", error);
+            }
+        };
+
+        // Check if data is available offline
+        FileSystem.getInfoAsync(FileSystem.documentDirectory + "eventList.json")
+            .then(({ exists }) => {
+                if (exists) {
+                    loadDataFromFile(); // Load data from file if available
+                } else {
+                    fetchData(); // Fetch data from network if not available
+                }
+            })
+            .catch(error => console.error("Error checking file: ", error));
+
+        // Check network connectivity and fetch data if connected
+        checkNetworkConnectivityAndFetchData();
 
         // Cleanup function
         return () => {
@@ -87,8 +134,6 @@ export default function EventListScreen() {
 
     const renderEvents = () => {
         return eventData.map((event, index) => {
-
-
             const EventName = event.EventName;
             const EventDateTime = event.EventDateTime;
             const EventListDescription = event.EventListDescription;
