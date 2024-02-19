@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import * as Network from "expo-network";
+import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, TouchableOpacity } from "react-native";
 import { Card, Searchbar, Text } from "react-native-paper";
@@ -10,6 +11,7 @@ import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPref
 import { showLocation } from "react-native-map-link";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import * as FileSystem from "expo-file-system";
 
 export default function MapList() {
     const navigation = useNavigation();
@@ -27,7 +29,7 @@ export default function MapList() {
         const fetchData = async () => {
             try {
                 let offset = 0;
-                let allMarkers = [];
+                let allPoints = [];
 
                 const response = await database.listDocuments(
                     DATABASE_ID,
@@ -36,7 +38,7 @@ export default function MapList() {
                 );
 
                 while (response.documents.length > 0) {
-                    allMarkers = [...allMarkers, ...response.documents];
+                    allPoints = [...allPoints, ...response.documents];
                     offset += PAGE_SIZE;
                     const nextResponse = await database.listDocuments(
                         DATABASE_ID,
@@ -46,7 +48,7 @@ export default function MapList() {
                     response.documents = nextResponse.documents;
                 }
 
-                allMarkers.sort((a, b) => {
+                allPoints.sort((a, b) => {
                     const nameA = a.Name.toLowerCase();
                     const nameB = b.Name.toLowerCase();
 
@@ -77,13 +79,58 @@ export default function MapList() {
                 });
 
 
-                setPointData(allMarkers);
-
+                setPointData(allPoints);
+                await saveDataToFile(allPoints); // Save fetched data to file
             } catch (error) {
                 console.error(error);
             }
         };
-        fetchData();
+
+        const saveDataToFile = async (data) => {
+            try {
+                const fileUri = FileSystem.documentDirectory + "pointsCard.json";
+                await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(data));
+                console.log("Data saved to file: ", fileUri);
+            } catch (error) {
+                console.error("Error saving data to file: ", error);
+            }
+        };
+
+        const loadDataFromFile = async () => {
+            try {
+                const fileUri = FileSystem.documentDirectory + "pointsCard.json";
+                const fileContents = await FileSystem.readAsStringAsync(fileUri);
+                const data = JSON.parse(fileContents);
+                setPointData(data);
+            } catch (error) {
+                console.error("Error reading data from file: ", error);
+            }
+        };
+
+        const checkNetworkConnectivityAndFetchData = async () => {
+            try {
+                const networkState = await Network.getNetworkStateAsync();
+                if (networkState.isConnected) {
+                    fetchData(); // Fetch data from appwrite if connected
+                }
+            } catch (error) {
+                console.error("Error checking network connectivity: ", error);
+            }
+        };
+
+        // Check if data is available offline
+        FileSystem.getInfoAsync(FileSystem.documentDirectory + "pointsCard.json")
+            .then(({ exists }) => {
+                if (exists) {
+                    loadDataFromFile(); // Load data from file if available
+                } else {
+                    fetchData(); // Fetch data from network if not available
+                }
+            })
+            .catch(error => console.error("Error checking file: ", error));
+
+        // Check network connectivity and fetch data if connected
+        checkNetworkConnectivityAndFetchData();
 
     }, []));
 
