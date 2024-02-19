@@ -1,3 +1,4 @@
+import * as Network from "expo-network";
 import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
@@ -10,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import { Feather } from "@expo/vector-icons";
+import * as FileSystem from "expo-file-system";
 
 export default function AlertsScreen() {
 
@@ -54,8 +56,6 @@ export default function AlertsScreen() {
 
 
     useFocusEffect(React.useCallback(() => {
-
-        // handleFilterById("notifications");
 
         // Function to handle real-time updates
         const handleSubscription = () => {
@@ -151,14 +151,58 @@ export default function AlertsScreen() {
 
                 setAlertData(allAlerts);
                 setFull(allAlerts);
-                //await saveDataToFile(allAlerts); // Save fetched data to file
+                await saveDataToFile(allAlerts); // Save fetched data to file
             } catch (error) {
                 console.error(error);
             }
         };
 
+        const saveDataToFile = async (data) => {
+            try {
+                const fileUri = FileSystem.documentDirectory + "alertsCard.json";
+                await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(data));
+                console.log("Data saved to file: ", fileUri);
+            } catch (error) {
+                console.error("Error saving data to file: ", error);
+            }
+        };
 
-        fetchData();
+        const loadDataFromFile = async () => {
+            try {
+                const fileUri = FileSystem.documentDirectory + "alertsCard.json";
+                const fileContents = await FileSystem.readAsStringAsync(fileUri);
+                const data = JSON.parse(fileContents);
+                setAlertData(data);
+            } catch (error) {
+                console.error("Error reading data from file: ", error);
+            }
+        };
+
+        const checkNetworkConnectivityAndFetchData = async () => {
+            try {
+                const networkState = await Network.getNetworkStateAsync();
+                if (networkState.isConnected) {
+                    fetchData(); // Fetch data from appwrite if connected
+                }
+            } catch (error) {
+                console.error("Error checking network connectivity: ", error);
+            }
+        };
+
+        // Check if data is available offline
+        FileSystem.getInfoAsync(FileSystem.documentDirectory + "alertsCard.json")
+            .then(({ exists }) => {
+                if (exists) {
+                    loadDataFromFile(); // Load data from file if available
+                } else {
+                    fetchData(); // Fetch data from network if not available
+                }
+            })
+            .catch(error => console.error("Error checking file: ", error));
+
+        // Check network connectivity and fetch data if connected
+        checkNetworkConnectivityAndFetchData();
+        
         getNameAndRole();
 
         return () => {
