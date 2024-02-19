@@ -137,9 +137,12 @@ export default function MapScreen() {
         }
     };
 
+    useFocusEffect(React.useCallback(() => {
+        fetchNavPreference();
+    }, []));
+
     useFocusEffect(
         React.useCallback(() => {
-            fetchNavPreference();
 
             if (currentNavPreference !== null) {
                 setFilteredMarkers([]);
