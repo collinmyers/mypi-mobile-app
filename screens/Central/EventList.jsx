@@ -14,6 +14,8 @@ export default function EventListScreen() {
 
     const PAGE_SIZE = 25;
 
+    const FILE_BUCKET_ID = process.env.EXPO_PUBLIC_FILE_BUCKET_ID;
+
     useFocusEffect(React.useCallback(() => {
         // Function to handle real-time updates
         const handleSubscription = () => {
@@ -55,7 +57,7 @@ export default function EventListScreen() {
                     const EventLongitude = document.Longitude;
 
                     const EventImage = storage.getFileView(
-                        "653ae4d2b3fcc68c10bf", // BucketID
+                        FILE_BUCKET_ID, // BucketID
                         document.FileID // File ID
                     ).toString();
 
