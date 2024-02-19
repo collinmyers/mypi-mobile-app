@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, TouchableOpacity } from "react-native";
 import { Card, Searchbar, Text } from "react-native-paper";
@@ -13,7 +13,7 @@ import { appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 
 export default function MapList() {
     const navigation = useNavigation();
-    const [data, setData] = useState([]);
+    const [pointData, setPointData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredCards, setFilteredCards] = useState([]);
     const [filterOn, setFilterOn] = useState(false);
@@ -28,11 +28,94 @@ export default function MapList() {
     useFocusEffect(
         React.useCallback(() => {
             if (currentNavPreference !== null) {
-                setData([]);
-                getPOI(currentNavPreference);
+                setPointData([]);
+
             }
         }, [currentNavPreference])
     );
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let offset = 0;
+                let allMarkers = [];
+
+                const response = await database.listDocuments(
+                    DATABASE_ID,
+                    MAP_COLLECTION_ID,
+                    [Query.limit(PAGE_SIZE), Query.offset(offset)]
+                );
+
+                while (response.documents.length > 0) {
+                    allMarkers = [...allMarkers, ...response.documents];
+                    offset += PAGE_SIZE;
+                    const nextResponse = await database.listDocuments(
+                        DATABASE_ID,
+                        MAP_COLLECTION_ID,
+                        [Query.limit(PAGE_SIZE), Query.offset(offset)]
+                    );
+                    response.documents = nextResponse.documents;
+                }
+
+                allMarkers.sort((a, b) => {
+                    const nameA = a.Name.toLowerCase();
+                    const nameB = b.Name.toLowerCase();
+                
+                    const splitA = nameA.match(/(\D+|\d+)/g);
+                    const splitB = nameB.match(/(\D+|\d+)/g);
+                
+                    for (let i = 0; i < Math.max(splitA.length, splitB.length); i++) {
+                        if (i >= splitA.length) return -1;
+                        if (i >= splitB.length) return 1;
+                
+                        const partA = splitA[i];
+                        const partB = splitB[i];
+                
+                        if (!isNaN(partA) && !isNaN(partB)) {
+                            const numA = parseInt(partA);
+                            const numB = parseInt(partB);
+                            if (numA !== numB) {
+                                return numA - numB;
+                            }
+                        } else {
+                            if (partA !== partB) {
+                                return partA.localeCompare(partB);
+                            }
+                        }
+                    }
+                
+                    return 0;
+                });
+                
+    
+                setPointData(allMarkers);
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+
+    }, []);
+
+    const renderPoints = () => {
+        return pointData.map((point, index) => (
+            <Pressable
+                id={point.Name}
+                key={`${index}_${point.Name}`}
+            >
+                <Card style={MapStyle.poiCard}>
+                    <Card.Content style={MapStyle.poiCardContent}>
+                        <Text style={MapStyle.poiListTitle}>{point.Name} ({point.Status})</Text>
+                        <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={30} color={appTertiaryColor} onPress={() => {
+                            getDirections(point.Latitude, point.Longitude, currentNavPreference);
+                        }} />
+                    </Card.Content>
+                </Card>
+            </Pressable>
+        ));
+
+    };
 
     const fetchNavPreference = async () => {
         try {
@@ -57,106 +140,30 @@ export default function MapList() {
     };
 
 
-    const getPOI = async (directionsPreference) => {
-        setCurrentNavPreference(directionsPreference);
-        try {
-            let offset = 0;
-            let allData = [];
-
-            const fetchPage = async (offset) => {
-                const response = await database.listDocuments(
-                    DATABASE_ID,
-                    MAP_COLLECTION_ID,
-                    [
-                        Query.limit(PAGE_SIZE),
-                        Query.offset(offset)
-                    ]
-                );
-
-                const newData = response.documents.map((document, index) => {
-                    const Name = document.Name;
-                    const Status = document.Status;
-                    const Latitude = document.Latitude;
-                    const Longitude = document.Longitude;
-
-                    return (
-                        <Pressable
-                            id={Name}
-                            key={`${offset}_${index}`}
-                        >
-                            <Card style={MapStyle.poiCard}>
-                                <Card.Content style={MapStyle.poiCardContent}>
-                                    <Text style={MapStyle.poiListTitle}>{Name} ({Status})</Text>
-                                    <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={30} color={appTertiaryColor} onPress={() => {
-                                        getDirections(Latitude, Longitude, directionsPreference);
-                                    }} />
-                                </Card.Content>
-                            </Card>
-                        </Pressable>
-                    );
-                });
-
-                allData = [...allData, ...newData];
-
-                if (response.documents.length === PAGE_SIZE) {
-                    await fetchPage(offset + PAGE_SIZE);
-                } else {
-                    allData.sort((a, b) => {
-                        const nameA = a.props.id.toLowerCase();
-                        const nameB = b.props.id.toLowerCase();
-
-                        const splitA = nameA.match(/(\D+|\d+)/g);
-                        const splitB = nameB.match(/(\D+|\d+)/g);
-
-                        for (let i = 0; i < Math.max(splitA.length, splitB.length); i++) {
-                            if (i >= splitA.length) return -1;
-                            if (i >= splitB.length) return 1;
-
-                            const partA = splitA[i];
-                            const partB = splitB[i];
-
-                            if (!isNaN(partA) && !isNaN(partB)) {
-                                const numA = parseInt(partA);
-                                const numB = parseInt(partB);
-                                if (numA !== numB) {
-                                    return numA - numB;
-                                }
-                            } else {
-                                if (partA !== partB) {
-                                    return partA.localeCompare(partB);
-                                }
-                            }
-                        }
-
-                        return 0;
-                    });
-
-                    setData(allData);
-
-
-                }
-            };
-
-            await fetchPage(offset);
-
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     const handleSearch = (query) => {
-        setFilteredCards([]);
-        setFilterOn(true);
+        setSearchQuery(query); // Update search query state
 
-        data.forEach(element => {
-            const cardIdString = element.props.id;
-            if (cardIdString.toLowerCase().includes(query.toLowerCase())) {
-                setFilteredCards(prevFilter => [...prevFilter, element]);
-            }
-        });
-        if (query === "") {
-            setFilterOn(false);
-        }
+        const filtered = pointData.filter(element => {
+            const pointName = element.Name.toLowerCase();
+            return pointName.includes(query.toLowerCase());
+        }).map((point, index) => (
+            <Pressable
+                id={point.Name}
+                key={`${index}_${point.Name}`}
+            >
+                <Card style={MapStyle.poiCard}>
+                    <Card.Content style={MapStyle.poiCardContent}>
+                        <Text style={MapStyle.poiListTitle}>{point.Name} ({point.Status})</Text>
+                        <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={30} color={appTertiaryColor} onPress={() => {
+                            getDirections(point.Latitude, point.Longitude, currentNavPreference);
+                        }} />
+                    </Card.Content>
+                </Card>
+            </Pressable>
+        ));
+
+        setFilteredCards(filtered);
+        setFilterOn(query !== ""); // Set filterOn based on whether the query is empty or not
     };
 
     return (
@@ -178,8 +185,9 @@ export default function MapList() {
             />
 
             <ScrollView contentContainerStyle={MapStyle.scrollableView} showsVerticalScrollIndicator={false}>
-                {filterOn ? (filteredCards) : (data)}
+                {filterOn ? (filteredCards) : (renderPoints())}
             </ScrollView>
         </SafeAreaView>
     );
+
 }
