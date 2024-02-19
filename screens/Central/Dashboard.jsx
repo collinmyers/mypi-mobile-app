@@ -54,7 +54,7 @@ export default function Dashboard() {
 
                 <TouchableOpacity style={HomeStyle.dashboardDonoOpac} onPress={() => { navigation.navigate("Donate"); }}>
                     <MaterialIcons name="volunteer-activism" size={24} color={appTextColor} />
-                    <Text style={HomeStyle.dashboardDonoText}>Donate Here</Text>
+                    <Text style={HomeStyle.dashboardDonoText}>Donate Now</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
