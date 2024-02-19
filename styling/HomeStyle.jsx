@@ -209,7 +209,7 @@ export default StyleSheet.create({
         fontSize: 18,
         color: appPrimaryColor
     },
-    eventListDateTime: {
+    eventListDate: {
         textAlign: "left",
         fontWeight: "600",
         fontSize: 14,
@@ -288,6 +288,7 @@ export default StyleSheet.create({
         textAlign: "center"
     },
     eventDetailsDateTime: {
+        textAlign: "center",
         fontSize: 14,
         fontWeight: "600",
         color: eventDateColor,
@@ -504,7 +505,7 @@ export default StyleSheet.create({
         alignItems: "center",
         marginHorizontal: "5%"
     },
-    radioText:{
+    radioText: {
         color: appSecondaryColor
     },
     radioLabel: {

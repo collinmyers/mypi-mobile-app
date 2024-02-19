@@ -13,7 +13,7 @@ export default function EventDetailsScreen() {
 
     const route = useRoute();
 
-    const { EventImage, EventName, EventDateTime, EventDetailsDescription, EventLatitude, EventLongitude } = route.params;
+    const { EventImage, EventName, EventDate, EventDetailsDescription, EventLatitude, EventLongitude, EventTime } = route.params;
 
     const getDirections = (lat, long, directionsPreference) => {
         showLocation({
@@ -52,7 +52,7 @@ export default function EventDetailsScreen() {
                 <Card style={HomeStyle.eventDetailsCard}>
                     <Card.Content style={HomeStyle.eventDetailsCardContent}>
                         <Text style={HomeStyle.eventDetailsTitle}>{EventName}</Text>
-                        <Text style={HomeStyle.eventDetailsDateTime}>{EventDateTime}</Text>
+                        <Text style={HomeStyle.eventDetailsDateTime}>{EventDate} {EventTime}</Text>
                         <Image source={{ uri: EventImage }} style={HomeStyle.eventDetailsImage} />
                         <Text style={HomeStyle.eventDetailsDescription}>{EventDetailsDescription}</Text>
                         <TouchableOpacity

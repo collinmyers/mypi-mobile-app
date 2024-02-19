@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import HomeStyle from "../../styling/HomeStyle";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import * as FileSystem from "expo-file-system";
-
+import { parse } from "date-fns";
 
 export default function EventListScreen() {
     const navigation = useNavigation();
@@ -18,6 +18,7 @@ export default function EventListScreen() {
     const PAGE_SIZE = 25;
 
     const FILE_BUCKET_ID = process.env.EXPO_PUBLIC_FILE_BUCKET_ID;
+
 
     useFocusEffect(React.useCallback(() => {
         // Function to handle real-time updates
@@ -49,27 +50,36 @@ export default function EventListScreen() {
                     response.documents = nextResponse.documents;
                 }
 
-                
+                // Sort events based on start date
+                allEvents.sort((a, b) => {
+                    const { startDate: startDateA } = parseEventDate(a.Date);
+                    const { startDate: startDateB } = parseEventDate(b.Date);
+                    return startDateA - startDateB;
+                });
+
+
                 // Fetch images for each event concurrently
                 const eventsWithImages = await Promise.all(allEvents.map(async (event) => {
                     const EventListDescription = event.EventListDescription;
                     const EventName = event.Name;
-                    const EventDateTime = event.DateTime;
+                    const EventDate = event.Date;
                     const EventDetailsDescription = event.EventDetailsDescription;
                     const EventLatitude = event.Latitude;
                     const EventLongitude = event.Longitude;
+                    const EventTime = event.Time || "";
 
                     const imageResponse = await storage.getFileView(FILE_BUCKET_ID, event.FileID);
-                    const EventImage = imageResponse.toString(); // Assuming imageResponse is a URL
+                    const EventImage = imageResponse.toString();
 
                     return {
                         EventName,
-                        EventDateTime,
+                        EventDate,
                         EventDetailsDescription,
                         EventListDescription,
                         EventLatitude,
                         EventLongitude,
-                        EventImage
+                        EventImage,
+                        EventTime
                     };
                 }));
 
@@ -132,15 +142,32 @@ export default function EventListScreen() {
         };
     }, []));
 
+
+    const parseEventDate = (dateString) => {
+        const dateParts = dateString.split(" - ");
+        
+        if (dateParts.length === 2) {
+            // Date range
+            const startDate = parse(dateParts[0], "MMMM d, yyyy", new Date());
+            const endDate = parse(dateParts[1], "MMMM d, yyyy", new Date());
+            return { startDate, endDate };
+        } else {
+            // Single date
+            const parsedDate = parse(dateString, "MMMM d, yyyy", new Date());
+            return { startDate: parsedDate, endDate: parsedDate };
+        }
+    };
+
     const renderEvents = () => {
         return eventData.map((event, index) => {
             const EventName = event.EventName;
-            const EventDateTime = event.EventDateTime;
+            const EventDate = event.EventDate;
             const EventListDescription = event.EventListDescription;
             const EventDetailsDescription = event.EventDetailsDescription;
             const EventLatitude = event.EventLatitude;
             const EventLongitude = event.EventLongitude;
             const EventImage = event.EventImage;
+            const EventTime = event.EventTime;
 
             return (
                 <Pressable
@@ -149,11 +176,12 @@ export default function EventListScreen() {
                         navigation.navigate("EventDetailsScreen", {
                             EventImage: EventImage,
                             EventName: EventName,
-                            EventDateTime: EventDateTime,
+                            EventDate: EventDate,
                             EventDetailsDescription: EventDetailsDescription,
                             EventListDescription: EventListDescription,
                             EventLatitude: EventLatitude,
-                            EventLongitude: EventLongitude
+                            EventLongitude: EventLongitude,
+                            EventTime: EventTime
                         })
                     }
                 >
@@ -161,7 +189,7 @@ export default function EventListScreen() {
                         <Card.Content style={HomeStyle.eventCardContent}>
                             <Image source={{ uri: EventImage }} style={HomeStyle.eventListImage} />
                             <Text style={HomeStyle.eventListTitle}>{EventName}</Text>
-                            <Text style={HomeStyle.eventListDateTime}>{EventDateTime}</Text>
+                            <Text style={HomeStyle.eventListDate}>{EventDate}</Text>
                             <Text style={HomeStyle.eventListDescription}>{EventListDescription}</Text>
                         </Card.Content>
                     </Card>
@@ -169,7 +197,6 @@ export default function EventListScreen() {
             );
         });
     };
-
 
     return (
         <SafeAreaView style={HomeStyle.eventContainer}>
