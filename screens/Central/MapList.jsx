@@ -23,18 +23,7 @@ export default function MapList() {
 
     useFocusEffect(React.useCallback(() => {
         fetchNavPreference();
-    }, []));
 
-    useFocusEffect(
-        React.useCallback(() => {
-            if (currentNavPreference !== null) {
-                setPointData([]);
-
-            }
-        }, [currentNavPreference])
-    );
-
-    useEffect(() => {
         const fetchData = async () => {
             try {
                 let offset = 0;
@@ -60,17 +49,17 @@ export default function MapList() {
                 allMarkers.sort((a, b) => {
                     const nameA = a.Name.toLowerCase();
                     const nameB = b.Name.toLowerCase();
-                
+
                     const splitA = nameA.match(/(\D+|\d+)/g);
                     const splitB = nameB.match(/(\D+|\d+)/g);
-                
+
                     for (let i = 0; i < Math.max(splitA.length, splitB.length); i++) {
                         if (i >= splitA.length) return -1;
                         if (i >= splitB.length) return 1;
-                
+
                         const partA = splitA[i];
                         const partB = splitB[i];
-                
+
                         if (!isNaN(partA) && !isNaN(partB)) {
                             const numA = parseInt(partA);
                             const numB = parseInt(partB);
@@ -83,11 +72,11 @@ export default function MapList() {
                             }
                         }
                     }
-                
+
                     return 0;
                 });
-                
-    
+
+
                 setPointData(allMarkers);
 
             } catch (error) {
@@ -96,7 +85,16 @@ export default function MapList() {
         };
         fetchData();
 
-    }, []);
+    }, []));
+
+    useFocusEffect(
+        React.useCallback(() => {
+            if (currentNavPreference !== null) {
+                setPointData([]);
+
+            }
+        }, [currentNavPreference])
+    );
 
     const renderPoints = () => {
         return pointData.map((point, index) => (
