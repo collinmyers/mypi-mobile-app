@@ -11,6 +11,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
+import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import * as FileSystem from "expo-file-system";
 
@@ -26,6 +27,13 @@ export default function MapScreen() {
     const PAGE_SIZE = 25;
 
     useFocusEffect(React.useCallback(() => {
+
+        const handleSubscription = () => {
+            checkNetworkConnectivityAndFetchData();
+        };
+        // Subscribe to real-time updates
+        const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, MAP_COLLECTION_ID);
+
         const fetchData = async () => {
             try {
                 let offset = 0;
@@ -99,6 +107,11 @@ export default function MapScreen() {
 
         // Check network connectivity and fetch data if connected
         checkNetworkConnectivityAndFetchData();
+
+        // Cleanup function
+        return () => {
+            unsubscribe();
+        };
 
     }, []));
 

@@ -23,7 +23,7 @@ export default function EventListScreen() {
     useFocusEffect(React.useCallback(() => {
         // Function to handle real-time updates
         const handleSubscription = () => {
-            fetchData();
+            checkNetworkConnectivityAndFetchData();
         };
 
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, EVENTS_COLLECTION_ID);
@@ -145,7 +145,7 @@ export default function EventListScreen() {
 
     const parseEventDate = (dateString) => {
         const dateParts = dateString.split(" - ");
-        
+
         if (dateParts.length === 2) {
             // Date range
             const startDate = parse(dateParts[0], "MMMM d, yyyy", new Date());

@@ -1,5 +1,5 @@
 import * as Network from "expo-network";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
@@ -22,44 +22,17 @@ export default function AlertsScreen() {
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [alertData, setAlertData] = useState([]);
-    const [filterList, setList] = useState([]);
-    const [fullList, setFull] = useState([]);
+    const [filterList, setFilterList] = useState([]);
+    const [fullList, setFullList] = useState([]);
     const [profileRole, setProfileRole] = useState({
         role: "",
     });
 
-
-    /* For sending notifications from mobile (possibly add in future)
-  
-    const [notificationCount, setNotificationCount] = useState(0);
-  
-    const sendNotification = async () => {
-      // Create a simple notification
-      console.log("new notification");
-  
-      Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Park Alert",
-          body: "There is a tree down near Beach 8, use caution.",
-        },
-        trigger: null,
-        presentation: {
-          style: "notification",
-        },
-      });
-  
-      setNotificationCount(notificationCount + 1);
-    };
-    */
-
-
-
-
-    useFocusEffect(React.useCallback(() => {
-
+    useEffect(() => {
         // Function to handle real-time updates
         const handleSubscription = () => {
-            fetchData();
+            checkNetworkConnectivityAndFetchData();
+            renderAlerts(fullList);
         };
         // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
@@ -150,7 +123,7 @@ export default function AlertsScreen() {
                 });
 
                 setAlertData(allAlerts);
-                setFull(allAlerts);
+                setFullList(allAlerts);
                 await saveDataToFile(allAlerts); // Save fetched data to file
             } catch (error) {
                 console.error(error);
@@ -202,14 +175,14 @@ export default function AlertsScreen() {
 
         // Check network connectivity and fetch data if connected
         checkNetworkConnectivityAndFetchData();
-        
+
         getNameAndRole();
 
         return () => {
             unsubscribe();
         };
 
-    }, []));
+    }, []);
 
 
     const renderAlerts = (alerts) => {
@@ -226,10 +199,10 @@ export default function AlertsScreen() {
     const handleFilterById = (filterId) => {
         setSelectedCategory(filterId);
         if (filterId === "notifications") {
-            setList(alertData);
+            setFilterList(alertData);
         } else {
             const filteredAlerts = fullList.filter(alert => alert.NotificationType === filterId);
-            setList(filteredAlerts);
+            setFilterList(filteredAlerts);
         }
     };
 

@@ -11,6 +11,7 @@ import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPref
 import { showLocation } from "react-native-map-link";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import * as FileSystem from "expo-file-system";
 
 export default function MapList() {
@@ -25,6 +26,13 @@ export default function MapList() {
 
     useFocusEffect(React.useCallback(() => {
         fetchNavPreference();
+
+        const handleSubscription = () => {
+            checkNetworkConnectivityAndFetchData();
+        };
+        // Subscribe to real-time updates
+        const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, MAP_COLLECTION_ID);
+
 
         const fetchData = async () => {
             try {
@@ -131,6 +139,11 @@ export default function MapList() {
 
         // Check network connectivity and fetch data if connected
         checkNetworkConnectivityAndFetchData();
+
+        // Cleanup function
+        return () => {
+            unsubscribe();
+        };
 
     }, []));
 
