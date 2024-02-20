@@ -34,7 +34,6 @@ export default StyleSheet.create({
     scrollableView: {
         margin: "2%",
         marginBottom: "5%",
-        justifyContent: "space",
         backgroundColor: appPrimaryColor
     },
     dbText: {
@@ -452,7 +451,6 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         backgroundColor: appTertiaryColor,
-        overflow: "hidden"
     },
     dashboardDonoText: {
         color: appTextColor,
@@ -464,47 +462,36 @@ export default StyleSheet.create({
 
     },
     pushNotifOpac: {
-        flexDirection: "row",
         alignSelf: "center",
-        justifyContent: "space-evenly",
+        justifyContent: "center",
         width: buttonWidth,
-        marginVertical: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        margin: "5%",
+        paddingVertical: 10,
         borderRadius: 20,
-        color: appTextColor,
         textAlign: "center",
-        backgroundColor: appSecondaryColor,
-        overflow: "hidden"
+        backgroundColor: appTertiaryColor
     },
     pushNotifText: {
         color: appTextColor,
         textAlign: "center",
-        fontSize: 24,
+        fontSize: 20,
     },
     radioGroup: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-around",
-        marginTop: 20,
+        alignSelf: "center",
+        justifyContent: "center",
+        width: "100%",
+        marginTop: "2%",
         borderRadius: 8,
         backgroundColor: "white",
         padding: 16,
-        elevation: 4,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
     },
-    radioButton: {
+    radioButtons: {
         flexDirection: "row",
+        justifyContent: "space-evenly",
         alignItems: "center",
-        marginHorizontal: "5%"
+        marginTop: "2%",
+        marginBottom: "5%",
     },
+
     radioText: {
         color: appSecondaryColor
     },
@@ -529,5 +516,31 @@ export default StyleSheet.create({
         color: appSecondaryColor,
         fontWeight: 600,
         fontSize: 20
+    },
+    pushRadioText: {
+        color: appSecondaryColor,
+        alignSelf: "center",
+        flex: 1,
+        fontSize: 16, // Adjust the font size as needed
+        marginLeft: 8, // Add margin to the left of the text
+    },
+    notificationTypeRadioText: {
+        color: appSecondaryColor
+    },
+    radioTitle: {
+        textAlign: "center",
+        color: appSecondaryColor,
+        marginBottom: 8,
+        fontSize: 20,
+        fontWeight: "600"
+    },
+    radio: {
+        flexDirection: "row",
+        justifyContent: "center", // Center the buttons horizontally
+        alignItems: "center", // Align items vertically
+        width: "30%",
+    },
+    notificatonMessage: {
+        backgroundColor: "#FFFFFF",
     }
 });

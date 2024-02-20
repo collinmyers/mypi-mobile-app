@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { Keyboard, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import HomeStyle from "../../styling/HomeStyle";
 import * as Notifications from "expo-notifications";
 import { RadioButton, TextInput } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
+import { appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 
 
 
@@ -84,75 +85,119 @@ export default function PushNotificationScreen() {
         }
     }
 
-
+    // make sure to see what max length of title and message field is to set limits
     return (
         <SafeAreaView style={HomeStyle.alertContainer}>
             <ScrollView>
+                <TextInput
+                    value={title}
+                    onChangeText={title => setTitle(title)}
+                    mode="flat"
+                    placeholder="Notification title"
+                    multiline={true}
+                    placeholderTextColor='gray'
+                    textColor={appSecondaryColor}
+                    style={HomeStyle.notificatonMessage}
+                    underlineColor={appTertiaryColor}
+                    activeUnderlineColor={appTertiaryColor}
+                    selectionColor={appSecondaryColor}
+                    returnKeyType="done"
+                    blurOnSubmit={true}
+                />
 
-                <TextInput value={title} onChangeText={title => setTitle(title)} mode="outlined" placeholder="Title"></TextInput>
-                <TextInput value={body} onChangeText={body => setBody(body)} mode="outlined" placeholder="Body"></TextInput>
-
-                <View style={HomeStyle.radioGroup}>
-
-                    <View style={HomeStyle.radioButton}>
-                        <RadioButton.Android
-                            value="in-app"
-                            status={deliveryTypeChecked === "in-app" ? "checked" : "unchecked"}
-                            onPress={() => setDeliveryTypeChecked("in-app")}
-                        />
-                        <Text>In App</Text>
-                    </View>
-
-                    <View style={HomeStyle.radioButton}>
-                        <RadioButton.Android
-                            value="push"
-                            status={deliveryTypeChecked === "push" ? "checked" : "unchecked"}
-                            onPress={() => setDeliveryTypeChecked("push")}
-                        />
-                        <Text>Out Of App Push</Text>
-                    </View>
-
-                    <View style={HomeStyle.radioButton}>
-                        <RadioButton.Android
-                            value="both"
-                            status={deliveryTypeChecked === "both" ? "checked" : "unchecked"}
-                            onPress={() => setDeliveryTypeChecked("both")}
-                            style={HomeStyle.radioButton}
-                        />
-                        <Text>Both</Text>
-                    </View>
-
-                </View>
-
+                <TextInput
+                    value={body}
+                    onChangeText={body => setBody(body)}
+                    mode="flat"
+                    placeholder="Notification message"
+                    multiline={true}
+                    placeholderTextColor='gray'
+                    textColor={appSecondaryColor}
+                    style={HomeStyle.notificatonMessage}
+                    underlineColor={appTertiaryColor}
+                    activeUnderlineColor={appTertiaryColor}
+                    selectionColor={appSecondaryColor}
+                    returnKeyType="done"
+                    blurOnSubmit={true}
+                />
 
                 <View style={HomeStyle.radioGroup}>
 
-                    <View style={HomeStyle.radioButton}>
-                        <RadioButton.Android
-                            value="alerts"
-                            status={alertTypeChecked === "alerts" ? "checked" : "unchecked"}
-                            onPress={() => setAlertTypeChecked("alerts")}
-                        />
-                        <Text>Alert</Text>
+                    <Text style={HomeStyle.radioTitle}>Category</Text>
+                    <View style={HomeStyle.radioButtons}>
+                        <View style={HomeStyle.radio}>
+                            <RadioButton.Android
+                                value="in-app"
+                                status={deliveryTypeChecked === "in-app" ? "checked" : "unchecked"}
+                                onPress={() => setDeliveryTypeChecked("in-app")}
+                                uncheckedColor={appTertiaryColor}
+                                color={appTertiaryColor}
+                            />
+                            <Text style={HomeStyle.pushRadioText}>In App</Text>
+                        </View>
+
+                        <View style={HomeStyle.radio}>
+                            <RadioButton.Android
+                                value="push"
+                                status={deliveryTypeChecked === "push" ? "checked" : "unchecked"}
+                                onPress={() => setDeliveryTypeChecked("push")}
+                                uncheckedColor={appTertiaryColor}
+                                color={appTertiaryColor}
+                            />
+                            <Text style={HomeStyle.pushRadioText}>Push</Text>
+                        </View>
+
+                        <View style={HomeStyle.radio}>
+                            <RadioButton.Android
+                                value="both"
+                                status={deliveryTypeChecked === "both" ? "checked" : "unchecked"}
+                                onPress={() => setDeliveryTypeChecked("both")}
+                                style={HomeStyle.radioButtons}
+                                uncheckedColor={appTertiaryColor}
+                                color={appTertiaryColor}
+                            />
+                            <Text style={HomeStyle.pushRadioText}>Both</Text>
+                        </View>
                     </View>
 
-                    <View style={HomeStyle.radioButton}>
-                        <RadioButton.Android
-                            value="events"
-                            status={alertTypeChecked === "events" ? "checked" : "unchecked"}
-                            onPress={() => setAlertTypeChecked("events")}
-                        />
-                        <Text>Event</Text>
-                    </View>
 
-                    <View style={HomeStyle.radioButton}>
-                        <RadioButton.Android
-                            value="promos"
-                            status={alertTypeChecked === "promos" ? "checked" : "unchecked"}
-                            onPress={() => setAlertTypeChecked("promos")}
-                            style={HomeStyle.radioButton}
-                        />
-                        <Text>Promo</Text>
+                    <View>
+                        <Text style={HomeStyle.radioTitle}>Notification Type</Text>
+                        <View style={HomeStyle.radioButtons}>
+                            <View style={HomeStyle.radio}>
+                                <RadioButton.Android
+                                    value="alerts"
+                                    status={alertTypeChecked === "alerts" ? "checked" : "unchecked"}
+                                    onPress={() => setAlertTypeChecked("alerts")}
+                                    uncheckedColor={appTertiaryColor}
+                                    color={appTertiaryColor}
+                                />
+                                <Text style={HomeStyle.pushRadioText}>Alert</Text>
+                            </View>
+
+                            <View style={HomeStyle.radio}>
+                                <RadioButton.Android
+                                    value="events"
+                                    status={alertTypeChecked === "events" ? "checked" : "unchecked"}
+                                    onPress={() => setAlertTypeChecked("events")}
+                                    uncheckedColor={appTertiaryColor}
+                                    color={appTertiaryColor}
+                                />
+                                <Text style={HomeStyle.pushRadioText}>Event</Text>
+                            </View>
+
+                            <View style={HomeStyle.radio}>
+                                <RadioButton.Android
+                                    value="promos"
+                                    status={alertTypeChecked === "promos" ? "checked" : "unchecked"}
+                                    onPress={() => setAlertTypeChecked("promos")}
+                                    style={HomeStyle.radioButtons}
+                                    uncheckedColor={appTertiaryColor}
+                                    color={appTertiaryColor}
+                                />
+                                <Text style={HomeStyle.pushRadioText}>Promo</Text>
+                            </View>
+                        </View>
                     </View>
 
                 </View>
