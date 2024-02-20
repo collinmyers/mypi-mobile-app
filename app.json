@@ -6,11 +6,11 @@
         "orientation": "portrait",
         "icon": "./assets/main/myPI-Icon.png",
         "userInterfaceStyle": "light",
-        "plugins":[
+        "plugins": [
             [
                 "expo-notifications",
                 {
-                    "icon":"./assets/main/myPI-Icon.png",
+                    "icon": "./assets/main/myPI-Icon.png",
                     "color": "#FFFFFF"
                 }
             ]
@@ -25,7 +25,7 @@
         ],
         "ios": {
             "supportsTablet": true,
-            "bundleIdentifier": "com.discoverpi.mypi",
+            "bundleIdentifier": "com.discoverpi.mypiseniordesign",
             "infoPlist": {
                 "UIUserInterfaceStyle": "Light"
             }
