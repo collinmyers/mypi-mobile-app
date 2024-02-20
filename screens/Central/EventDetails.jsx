@@ -52,7 +52,8 @@ export default function EventDetailsScreen() {
                 <Card style={HomeStyle.eventDetailsCard}>
                     <Card.Content style={HomeStyle.eventDetailsCardContent}>
                         <Text style={HomeStyle.eventDetailsTitle}>{EventName}</Text>
-                        <Text style={HomeStyle.eventDetailsDateTime}>{EventDate} {EventTime}</Text>
+                        <Text style={HomeStyle.eventDetailsDateTime}>{EventDate}</Text>
+                        <Text style={HomeStyle.eventDetailsDateTime}>{EventTime}</Text>
                         <Image source={{ uri: EventImage }} style={HomeStyle.eventDetailsImage} />
                         <Text style={HomeStyle.eventDetailsDescription}>{EventDetailsDescription}</Text>
                         <TouchableOpacity
