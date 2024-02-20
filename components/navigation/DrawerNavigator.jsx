@@ -9,11 +9,11 @@ import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./AuthStackNavigator";
 import { account } from "../../utils/Config/appwriteConfig";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
 
 import { Entypo, Ionicons, AntDesign, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-import FoodTruckAdminScreen from "../../screens/Sidebar/FoodTruck";
+import FoodTruckStackNavigator from "./FoodTruckStackNavigator";
 
 const Drawer = createDrawerNavigator();
 
@@ -125,12 +125,12 @@ export default function DrawerNavigator() {
                 <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <Menu />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color={appTertiaryColor} /> }} />
                 <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="park" size={24} color={appTertiaryColor} /> }} />
 
-                {isSignedIn && ((profileRole.role == "admin") || (profileRole.role == "premium")) ?
+                {isSignedIn && ((profileRole.role == "admin") || (profileRole.role == "foodtruck")) ?
                     (<Drawer.Screen
                         name="Food Truck"
-                        component={FoodTruckAdminScreen}
+                        component={FoodTruckStackNavigator}
                         options={{
-                            header: () => <Menu />,
+                            header: () => { false; },
                             drawerIcon: () => <MaterialCommunityIcons name="food-hot-dog" size={24} color={appTertiaryColor} />
                         }} />
 
