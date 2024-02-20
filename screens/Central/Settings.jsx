@@ -58,7 +58,7 @@ export default function SettingsScreen({ navigation }) {
                     <View style={HomeStyle.modalNavContentContainer}>
                         <Text style={HomeStyle.modalNavText}>Navigation Preference</Text>
                         <View style={HomeStyle.modalNavButtonContainer}>
-                            <View style={HomeStyle.radioButton}>
+                            <View style={HomeStyle.settingsRadio}>
                                 <RadioButton.Android
                                     value="bike"
                                     status={navTypeChecked === "bike" ? "checked" : "unchecked"}
@@ -69,7 +69,7 @@ export default function SettingsScreen({ navigation }) {
                                 <Text style={HomeStyle.radioText}>Biking</Text>
                             </View>
 
-                            <View style={HomeStyle.radioButton}>
+                            <View style={HomeStyle.settingsRadio}>
                                 <RadioButton.Android
                                     value="car"
                                     status={navTypeChecked === "car" ? "checked" : "unchecked"}
@@ -80,7 +80,7 @@ export default function SettingsScreen({ navigation }) {
                                 <Text style={HomeStyle.radioText}>Driving</Text>
                             </View>
 
-                            <View style={HomeStyle.radioButton}>
+                            <View style={HomeStyle.settingsRadio}>
                                 <RadioButton.Android
                                     value="walk"
                                     status={navTypeChecked === "walk" ? "checked" : "unchecked"}

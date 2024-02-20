@@ -542,5 +542,10 @@ export default StyleSheet.create({
     },
     notificatonMessage: {
         backgroundColor: "#FFFFFF",
-    }
+    },
+    settingsRadio: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginHorizontal: "5%"
+    },
 });
