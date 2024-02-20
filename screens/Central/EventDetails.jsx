@@ -53,7 +53,7 @@ export default function EventDetailsScreen() {
                     <Card.Content style={HomeStyle.eventDetailsCardContent}>
                         <Text style={HomeStyle.eventDetailsTitle}>{EventName}</Text>
                         <Text style={HomeStyle.eventDetailsDateTime}>{EventDate}</Text>
-                        <Text style={HomeStyle.eventDetailsDateTime}>{EventTime}</Text>
+                        {EventTime !== "Invalid Date" ? (<Text style={HomeStyle.eventDetailsDateTime}>{EventTime}</Text>) : (null)}
                         <Image source={{ uri: EventImage }} style={HomeStyle.eventDetailsImage} />
                         <Text style={HomeStyle.eventDetailsDescription}>{EventDetailsDescription}</Text>
                         <TouchableOpacity
