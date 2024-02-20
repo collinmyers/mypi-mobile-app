@@ -32,7 +32,14 @@ export default function AlertsScreen() {
         // Function to handle real-time updates
         const handleSubscription = () => {
             checkNetworkConnectivityAndFetchData();
-            renderAlerts(fullList);
+            if (selectedCategory !== "notifications") {
+                // If the user is not on the "All" tab, update the filtered list
+                handleFilterById(selectedCategory);
+                renderAlerts(fullList);
+            } else {
+                renderAlerts(fullList);
+            }
+
         };
         // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);

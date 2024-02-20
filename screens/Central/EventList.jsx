@@ -1,5 +1,5 @@
 import * as Network from "expo-network";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
@@ -20,7 +20,7 @@ export default function EventListScreen() {
     const FILE_BUCKET_ID = process.env.EXPO_PUBLIC_FILE_BUCKET_ID;
 
 
-    useFocusEffect(React.useCallback(() => {
+    useEffect(() => {
         // Function to handle real-time updates
         const handleSubscription = () => {
             checkNetworkConnectivityAndFetchData();
@@ -140,7 +140,7 @@ export default function EventListScreen() {
         return () => {
             unsubscribe();
         };
-    }, []));
+    }, []);
 
 
     const parseEventDate = (dateString) => {
