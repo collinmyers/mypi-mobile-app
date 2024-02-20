@@ -25,7 +25,7 @@ export default function MapScreen() {
 
     const PAGE_SIZE = 25;
 
-    useEffect(() => {
+    useFocusEffect(React.useCallback(() => {
         const fetchData = async () => {
             try {
                 let offset = 0;
@@ -100,7 +100,7 @@ export default function MapScreen() {
         // Check network connectivity and fetch data if connected
         checkNetworkConnectivityAndFetchData();
 
-    }, []);
+    }, []));
 
 
     useEffect(() => {
