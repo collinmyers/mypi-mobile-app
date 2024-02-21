@@ -123,7 +123,7 @@ export default function PushNotificationScreen() {
 
                 <View style={HomeStyle.radioGroup}>
 
-                    <Text style={HomeStyle.radioTitle}>Category</Text>
+                    <Text style={HomeStyle.radioTitle}>Notification Type</Text>
                     <View style={HomeStyle.radioButtons}>
                         <View style={HomeStyle.radio}>
                             <RadioButton.Android
@@ -162,7 +162,7 @@ export default function PushNotificationScreen() {
 
 
                     <View>
-                        <Text style={HomeStyle.radioTitle}>Notification Type</Text>
+                        <Text style={HomeStyle.radioTitle}>Category</Text>
                         <View style={HomeStyle.radioButtons}>
                             <View style={HomeStyle.radio}>
                                 <RadioButton.Android
