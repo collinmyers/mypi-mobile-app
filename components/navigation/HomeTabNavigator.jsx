@@ -45,7 +45,7 @@ export default function HomeTabNavigator() {
                 name="Dashboard"
                 component={DashboardScreen}
                 options={{
-                    tabBarLabel: "Dashboard",
+                    tabBarLabel: "Home",
                     header: () => <Menu />,
                     tabBarIcon: ({ focused }) => (
                         <Entypo name="home" size={24} color={focused ? appTertiaryColor : TabIconInactiveIconColor} />
@@ -78,7 +78,7 @@ export default function HomeTabNavigator() {
                 name="Alerts"
                 component={AlertsStackNavigator}
                 options={{
-                    tabBarLabel: "Alerts",
+                    tabBarLabel: "Notifications",
                     header: () => false,
                     tabBarIcon: ({ focused }) => (
                         <Fontisto name="bell" size={24} color={focused ? appTertiaryColor : TabIconInactiveIconColor} />
