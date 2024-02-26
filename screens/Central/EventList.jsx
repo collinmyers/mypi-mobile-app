@@ -68,8 +68,19 @@ export default function EventListScreen() {
                     const EventLongitude = event.Longitude;
                     const EventTime = event.Time || "";
 
-                    const imageResponse = await storage.getFileView(FILE_BUCKET_ID, event.FileID);
-                    const EventImage = imageResponse.toString();
+                    const imageFileUri = `${FileSystem.documentDirectory}${event.FileID}.png`;
+                    const fileInfo = await FileSystem.getInfoAsync(imageFileUri);
+
+                    let EventImage;
+                    if (fileInfo.exists) {
+                        EventImage = imageFileUri;
+                    } else {
+                        const imageResponse = await storage.getFileView(FILE_BUCKET_ID, event.FileID);
+                        EventImage = imageResponse.toString();
+
+                        // Download and save image
+                        await FileSystem.downloadAsync(EventImage, imageFileUri);
+                    }
 
                     return {
                         EventName,
@@ -105,6 +116,7 @@ export default function EventListScreen() {
                 const fileUri = FileSystem.documentDirectory + "eventList.json";
                 const fileContents = await FileSystem.readAsStringAsync(fileUri);
                 const data = JSON.parse(fileContents);
+                console.log(data);
                 setEventData(data);
             } catch (error) {
                 console.error("Error reading data from file: ", error);
