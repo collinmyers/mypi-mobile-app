@@ -153,6 +153,7 @@ export default function AlertsScreen() {
                 const fileContents = await FileSystem.readAsStringAsync(fileUri);
                 const data = JSON.parse(fileContents);
                 setAlertData(data);
+                setFullList(data);
             } catch (error) {
                 console.error("Error reading data from file: ", error);
             }
@@ -203,24 +204,17 @@ export default function AlertsScreen() {
         ));
     };
 
+
     const handleFilterById = (filterId) => {
         setSelectedCategory(filterId);
         if (filterId === "notifications") {
             setFilterList(alertData);
         } else {
-            // Check if the app is offline
-            const networkState = Network.getNetworkStateAsync();
-            if (!networkState.isConnected) {
-                // If offline, filter alerts from fullList directly
-                const filteredAlerts = fullList.filter(alert => alert.NotificationType === filterId);
-                setFilterList(filteredAlerts);
-            } else {
-                // If online, use the original alertData to filter
-                const filteredAlerts = alertData.filter(alert => alert.NotificationType === filterId);
-                setFilterList(filteredAlerts);
-            }
+            const filteredAlerts = fullList.filter(alert => alert.NotificationType === filterId);
+            setFilterList(filteredAlerts);
         }
     };
+
 
 
     const getNameAndRole = async () => {
