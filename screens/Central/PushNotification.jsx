@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Keyboard, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import HomeStyle from "../../styling/HomeStyle";
 import * as Notifications from "expo-notifications";
 import { RadioButton, TextInput } from "react-native-paper";
@@ -34,7 +35,6 @@ async function schedulePushNotification(notifTitle, notifBody) {
 
 export default function PushNotificationScreen() {
 
-
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [deliveryTypeChecked, setDeliveryTypeChecked] = useState("in-app");
@@ -47,42 +47,53 @@ export default function PushNotificationScreen() {
         NotificationType: alertTypeChecked,
     };
 
+    const navigation = useNavigation();
+
 
     async function handleNotificationCreation(notificationTitle, notificationBody) {
-        if (deliveryTypeChecked == "in-app") {
-            //create doc for in app
-            const createAlert = database.createDocument(
-                DATABASE_ID,
-                ALERTS_COLLECTION_ID,
-                ID.unique(),
-                alertData
-            );
-            createAlert.then(function (response) {
-                console.log(response);
-            }, function (error) {
-                console.log(error);
-            });
-        }
-        else if (deliveryTypeChecked == "push") {
-            schedulePushNotification(notificationTitle, notificationBody); //Send out of app
-        }
-        else {
-            //Create doc for in app
-            const createAlert = database.createDocument(
-                DATABASE_ID,
-                ALERTS_COLLECTION_ID,
-                ID.unique(),
-                alertData
-            );
+        try {
+            if (title.length === 0 || body.length == 0) throw new Error("Enter all required fields");
+            if (deliveryTypeChecked == "in-app") {
+                //create doc for in app
+                const createAlert = database.createDocument(
+                    DATABASE_ID,
+                    ALERTS_COLLECTION_ID,
+                    ID.unique(),
+                    alertData
+                );
+                createAlert.then(function (response) {
+                    console.log(response);
+                }, function (error) {
+                    console.log(error);
+                });
+            }
+            else if (deliveryTypeChecked == "push") {
+                schedulePushNotification(notificationTitle, notificationBody); //Send out of app
+            }
+            else {
+                //Create doc for in app
+                const createAlert = database.createDocument(
+                    DATABASE_ID,
+                    ALERTS_COLLECTION_ID,
+                    ID.unique(),
+                    alertData
+                );
 
-            createAlert.then(function (response) {
-                console.log(response);
-            }, function (error) {
-                console.log(error);
-            });
+                createAlert.then(function (response) {
+                    console.log(response);
+                }, function (error) {
+                    console.log(error);
+                });
 
-            schedulePushNotification(notificationTitle, notificationBody); //Send out of app
+                schedulePushNotification(notificationTitle, notificationBody); //Send out of app
+            }
+
+            navigation.goBack();
+
+        } catch (error) {
+            console.error(error);
         }
+
     }
 
     // make sure to see what max length of title and message field is to set limits
