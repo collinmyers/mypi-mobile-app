@@ -208,10 +208,20 @@ export default function AlertsScreen() {
         if (filterId === "notifications") {
             setFilterList(alertData);
         } else {
-            const filteredAlerts = fullList.filter(alert => alert.NotificationType === filterId);
-            setFilterList(filteredAlerts);
+            // Check if the app is offline
+            const networkState = Network.getNetworkStateAsync();
+            if (!networkState.isConnected) {
+                // If offline, filter alerts from fullList directly
+                const filteredAlerts = fullList.filter(alert => alert.NotificationType === filterId);
+                setFilterList(filteredAlerts);
+            } else {
+                // If online, use the original alertData to filter
+                const filteredAlerts = alertData.filter(alert => alert.NotificationType === filterId);
+                setFilterList(filteredAlerts);
+            }
         }
     };
+
 
     const getNameAndRole = async () => {
         try {
