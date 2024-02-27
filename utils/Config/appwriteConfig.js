@@ -9,6 +9,8 @@ export const MAP_COLLECTION_ID = process.env.EXPO_PUBLIC_MAP_COLLECTION_ID;
 export const EVENTS_COLLECTION_ID = process.env.EXPO_PUBLIC_EVENT_COLLECTION_ID;
 export const ALERTS_COLLECTION_ID = process.env.EXPO_PUBLIC_ALERTS_COLLECTION_ID;
 export const ACCOUNT_RECOVERY_DOMAIN = process.env.EXPO_PUBLIC_RECOVERY_DOMAIN;
+export const USER_NOTIFICATION_TOKENS = process.env.EXPO_PUBLIC_USER_NOTIFICATION_TOKENS_COLLECTION_ID;
+
 
 // Create a client to connect
 const client = new Client()

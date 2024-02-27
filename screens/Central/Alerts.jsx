@@ -1,7 +1,6 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
-import { useFocusEffect } from "@react-navigation/native";
-import { Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
 import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
@@ -44,25 +43,7 @@ export default function AlertsScreen() {
         // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
 
-        // Request notification permissions when the component mounts
-        (async () => {
-            let token;
-            if (Platform.OS === "android") {
-                Notifications.setNotificationChannelAsync("default", {
-                    name: "default",
-                });
-            }
 
-            const { status } = await Notifications.requestPermissionsAsync();
-            if (status !== "granted") {
-                console.log("Permission to receive notifications denied.");
-                return;
-            }
-
-            token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
-            console.log(token);
-        }
-        )();
 
         // Define the notification handler
         const notificationHandler = {
