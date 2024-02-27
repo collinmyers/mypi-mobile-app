@@ -19,7 +19,7 @@ export default function AlertsScreen() {
 
     const PAGE_SIZE = 25;
 
-    const [selectedCategory, setSelectedCategory] = useState("all");
+    const [selectedCategory, setSelectedCategory] = useState("notifications");
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [alertData, setAlertData] = useState([]);
     const [filterList, setFilterList] = useState([]);

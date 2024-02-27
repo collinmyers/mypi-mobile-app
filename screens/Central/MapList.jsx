@@ -86,7 +86,6 @@ export default function MapList() {
                     return 0;
                 });
 
-
                 setPointData(allPoints);
                 await saveDataToFile(allPoints); // Save fetched data to file
             } catch (error) {
@@ -120,6 +119,8 @@ export default function MapList() {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
                     fetchData(); // Fetch data from appwrite if connected
+                } else {
+                    loadDataFromFile();
                 }
             } catch (error) {
                 console.error("Error checking network connectivity: ", error);
@@ -146,15 +147,6 @@ export default function MapList() {
         };
 
     }, []));
-
-    useFocusEffect(
-        React.useCallback(() => {
-            if (currentNavPreference !== null) {
-                setPointData([]);
-
-            }
-        }, [currentNavPreference])
-    );
 
     const renderPoints = () => {
         return pointData.map((point, index) => (

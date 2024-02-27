@@ -154,17 +154,6 @@ export default function MapScreen() {
         fetchNavPreference();
     }, []));
 
-    useFocusEffect(
-        React.useCallback(() => {
-
-            if (currentNavPreference !== null) {
-                setFilteredMarkers([]);
-                setSelectedFilters([]);
-            }
-
-        }, [currentNavPreference])
-    );
-
     const toggleFilter = (filter) => {
         if (selectedFilters.includes(filter)) {
             setSelectedFilters(selectedFilters.filter((f) => f !== filter)); // Deselect filter

@@ -86,7 +86,7 @@ export default StyleSheet.create({
     },
     scrollableView: {
         flexGrow: 1,
-        justifyContent: "space",
+        // justifyContent: "space",
         backgroundColor: appPrimaryColor,
         paddingTop: 10
     },
