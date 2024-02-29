@@ -116,7 +116,6 @@ export default function EventListScreen() {
                 const fileUri = FileSystem.documentDirectory + "eventList.json";
                 const fileContents = await FileSystem.readAsStringAsync(fileUri);
                 const data = JSON.parse(fileContents);
-                console.log(data);
                 setEventData(data);
             } catch (error) {
                 console.error("Error reading data from file: ", error);
