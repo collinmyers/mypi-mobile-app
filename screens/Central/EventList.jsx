@@ -1,6 +1,5 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
-import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { database, storage, DATABASE_ID, EVENTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
@@ -18,7 +17,6 @@ export default function EventListScreen() {
     const PAGE_SIZE = 25;
 
     const FILE_BUCKET_ID = process.env.EXPO_PUBLIC_FILE_BUCKET_ID;
-
 
     useEffect(() => {
         // Function to handle real-time updates
