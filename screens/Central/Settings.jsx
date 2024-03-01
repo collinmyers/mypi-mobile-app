@@ -25,7 +25,6 @@ export default function SettingsScreen({ navigation }) {
     const getNameAndEmail = async () => {
         try {
             const response = await account.get();
-            console.log(response);
 
             if (response.email === "") throw new Error("Not a email user (guest)");
 

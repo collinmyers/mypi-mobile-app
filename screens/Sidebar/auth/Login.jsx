@@ -43,6 +43,7 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
 
     return (
         <SafeAreaView style={AppStyle.container}>
+            
             <KeyboardAvoidingComponent style={AuthStyle.keyboardAdj}>
                 <Logo style={AuthStyle.logo} />
 

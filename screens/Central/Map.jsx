@@ -1,11 +1,13 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, Text, TouchableOpacity, Platform } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
 import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import MapStyle from "../../styling/MapStyle";
+import HomeStyle from "../../styling/HomeStyle";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
@@ -23,6 +25,7 @@ export default function MapScreen() {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [fabVisible, setFabVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const PAGE_SIZE = 25;
 
@@ -106,7 +109,9 @@ export default function MapScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData();
+        checkNetworkConnectivityAndFetchData().then(() => {
+            setIsLoading(false);
+        });
 
         // Cleanup function
         return () => {
@@ -260,11 +265,19 @@ export default function MapScreen() {
                 <AntDesign name="filter" size={26} color={appPrimaryColor} />
             </TouchableOpacity>
 
-            {fabVisible && (
-                <View style={MapStyle.filterOptionsContainer}>
-                    {renderFilterCheckboxes()}
+            {isLoading ? (
+                <View style={HomeStyle.loadingContainer}>
+                    <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
                 </View>
+            ) : (
+                 fabVisible && (
+                    <View style={MapStyle.filterOptionsContainer}>
+                        {renderFilterCheckboxes()}
+                    </View>
+                )
             )}
+
+
         </SafeAreaView>
     );
 }

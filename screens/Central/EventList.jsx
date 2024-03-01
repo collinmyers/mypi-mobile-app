@@ -1,7 +1,7 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
-import { ScrollView, SafeAreaView, Pressable, Image } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { ScrollView, SafeAreaView, Pressable, Image, View } from "react-native";
+import { ActivityIndicator, Card, Text } from "react-native-paper";
 import { database, storage, DATABASE_ID, EVENTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
@@ -9,11 +9,12 @@ import HomeStyle from "../../styling/HomeStyle";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import * as FileSystem from "expo-file-system";
 import { parse } from "date-fns";
+import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
 
 export default function EventListScreen() {
     const navigation = useNavigation();
     const [eventData, setEventData] = useState([]);
-
+    const [isLoading, setIsLoading] = useState(true);
     const PAGE_SIZE = 25;
 
     const FILE_BUCKET_ID = process.env.EXPO_PUBLIC_FILE_BUCKET_ID;
@@ -143,7 +144,9 @@ export default function EventListScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData();
+        checkNetworkConnectivityAndFetchData().then(() => {
+            setIsLoading(false);
+        });
 
         // Cleanup function
         return () => {
@@ -209,9 +212,16 @@ export default function EventListScreen() {
 
     return (
         <SafeAreaView style={HomeStyle.eventContainer}>
-            <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
-                {renderEvents()}
-            </ScrollView>
+            {isLoading ? (
+                <View style={HomeStyle.loadingContainer}>
+                    <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
+                </View>
+            ) : (
+                <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
+                    {renderEvents()}
+                </ScrollView>
+            )}
+
         </SafeAreaView>
     );
 }

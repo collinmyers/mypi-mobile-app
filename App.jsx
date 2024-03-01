@@ -53,9 +53,8 @@ export default function App() {
                     const fileUri = FileSystem.documentDirectory + "expoPushToken.json";
                     const fileContents = await FileSystem.readAsStringAsync(fileUri);
                     const data = JSON.parse(fileContents);
-                    console.log("Loaded Stored Token: " + data);
                     if (data === token) {
-                        console.log("Already Stored");
+                        console.log("Notification Token already stored");
                         return;
                     }
                 }

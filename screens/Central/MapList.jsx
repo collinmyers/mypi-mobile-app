@@ -1,16 +1,17 @@
 import * as Network from "expo-network";
 import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { ScrollView, SafeAreaView, Pressable, TouchableOpacity } from "react-native";
-import { Card, Searchbar, Text } from "react-native-paper";
+import { ScrollView, SafeAreaView, Pressable, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Card, Searchbar, Text } from "react-native-paper";
 import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
 import MapStyle from "../../styling/MapStyle";
+import HomeStyle from "../../styling/HomeStyle";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { showLocation } from "react-native-map-link";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import * as FileSystem from "expo-file-system";
 
@@ -21,6 +22,7 @@ export default function MapList() {
     const [filteredCards, setFilteredCards] = useState([]);
     const [filterOn, setFilterOn] = useState(false);
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const PAGE_SIZE = 25;
 
@@ -139,7 +141,9 @@ export default function MapList() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData();
+        checkNetworkConnectivityAndFetchData().then(() => {
+            setIsLoading(false);
+        });
 
         // Cleanup function
         return () => {
@@ -233,10 +237,17 @@ export default function MapList() {
                     handleSearch(text);
                 }}
             />
+            {isLoading ? (
+                <View style={HomeStyle.loadingContainer}>
+                    <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
+                </View>
+            ) : (
+                <ScrollView contentContainerStyle={MapStyle.scrollableView} showsVerticalScrollIndicator={false}>
+                    {filterOn ? (filteredCards) : (renderPoints())}
+                </ScrollView>
+            )}
 
-            <ScrollView contentContainerStyle={MapStyle.scrollableView} showsVerticalScrollIndicator={false}>
-                {filterOn ? (filteredCards) : (renderPoints())}
-            </ScrollView>
+
         </SafeAreaView>
     );
 

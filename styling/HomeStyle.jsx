@@ -548,4 +548,8 @@ export default StyleSheet.create({
         alignItems: "center",
         marginHorizontal: "5%"
     },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: "center",
+    },
 });

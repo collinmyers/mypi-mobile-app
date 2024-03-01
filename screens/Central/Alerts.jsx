@@ -1,7 +1,7 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
-import { Card, Text, Button } from "react-native-paper";
+import { ActivityIndicator, Card, Text, Button } from "react-native-paper";
 import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import * as Notifications from "expo-notifications";
@@ -19,6 +19,7 @@ export default function AlertsScreen() {
     const PAGE_SIZE = 25;
 
     const [selectedCategory, setSelectedCategory] = useState("notifications");
+    const [isLoading, setIsLoading] = useState(true);
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [alertData, setAlertData] = useState([]);
     const [filterList, setFilterList] = useState([]);
@@ -163,7 +164,9 @@ export default function AlertsScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData();
+        checkNetworkConnectivityAndFetchData().then(() => {
+            setIsLoading(false);
+        });
 
         getNameAndRole();
 
@@ -230,13 +233,21 @@ export default function AlertsScreen() {
                 </Button>
             </View>
 
-            <ScrollView contentContainerStyle={[HomeStyle.scrollableView, { alignItems: "center" }]} showsVerticalScrollIndicator={false}>
-                {filterList.length !== 0 ? (filterList.length > 0 ? renderAlerts(filterList) :
-                    (filterList.length === 0 && alertData.length === 0 && (
-                        <Text style={HomeStyle.noNotificationsMessage}>No {selectedCategory === "notifications" ? "notifications" : selectedCategory} at this time</Text>
-                    ))) : (renderAlerts(fullList))
-                }
-            </ScrollView>
+            {isLoading ? (
+                <View style={HomeStyle.loadingContainer}>
+                    <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
+                </View>
+            ) : (
+                <ScrollView contentContainerStyle={[HomeStyle.scrollableView, { alignItems: "center" }]} showsVerticalScrollIndicator={false}>
+                    {filterList.length !== 0 ? (filterList.length > 0 ? renderAlerts(filterList) :
+                        (filterList.length === 0 && alertData.length === 0 && (
+                            <Text style={HomeStyle.noNotificationsMessage}>No {selectedCategory === "notifications" ? "notifications" : selectedCategory} at this time</Text>
+                        ))) : (renderAlerts(fullList))
+                    }
+                </ScrollView>
+            )}
+
+
 
             {isSignedIn && (profileRole.role == "admin") ?
                 (<TouchableOpacity style={HomeStyle.fab} onPress={
