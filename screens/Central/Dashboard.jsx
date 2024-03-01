@@ -23,6 +23,8 @@ export default function Dashboard() {
         try {
             const response = await account.get();
 
+            if (response.email === "") throw new Error("Not a email user (guest)");
+
             setProfileInfo({
                 name: response.name,
             });
@@ -42,7 +44,7 @@ export default function Dashboard() {
     return (
         <SafeAreaView style={AppStyle.container}>
             <View style={AppStyle.imageContainer}>
-                <Logo logoWidth={250} logoHeight={250}/>
+                <Logo logoWidth={250} logoHeight={250} />
             </View>
 
             <View style={HomeStyle.dbContainer}>

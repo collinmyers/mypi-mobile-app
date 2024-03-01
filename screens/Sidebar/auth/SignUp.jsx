@@ -29,10 +29,17 @@ export default function SignUpScreen({ navigation }) {
 
     const handleSignUp = async () => {
         try {
-            await account.create(ID.unique(), signUpInfo.email, signUpInfo.password, `${signUpInfo.firstName} ${signUpInfo.lastName}`);
+            const response = await account.get();
+
+            if (response.email === "") {
+                await account.updateName(`${signUpInfo.firstName} ${signUpInfo.lastName}`);
+                await account.updateEmail(signUpInfo.email, signUpInfo.password);
+                console.log("Converted guest user to email user");
+            } else {
+                await account.create(ID.unique(), signUpInfo.email, signUpInfo.password, `${signUpInfo.firstName} ${signUpInfo.lastName}`);
+            }
 
             navigation.navigate("Login");
-
         } catch (error) {
             console.error(error);
         }

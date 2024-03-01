@@ -4,7 +4,7 @@ import { setupURLPolyfill } from "react-native-url-polyfill";
 import storage from "local-storage-fallback";
 import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
-import { database, DATABASE_ID, USER_NOTIFICATION_TOKENS } from "./utils/Config/appwriteConfig";
+import { account, database, DATABASE_ID, USER_NOTIFICATION_TOKENS } from "./utils/Config/appwriteConfig";
 import { ID } from "appwrite";
 import * as FileSystem from "expo-file-system";
 
@@ -13,7 +13,22 @@ export default function App() {
     if (!("localStorage" in window)) window.localStorage = storage;
 
     useEffect(() => {
+        const handleUserSession = async () => {
+            try {
+                const authUserStatus = await account.get();
+
+                if (authUserStatus.email === "") console.log("User session already exists (guest user)");
+
+                else console.log("User session already exists (email user)");
+
+            } catch {
+                account.createAnonymousSession();
+                console.log("Created guest sessions");
+            }
+        };
+
         const getPermissions = async () => {
+            await handleUserSession();
             try {
                 let token = "";
                 if (Platform.OS === "android") {

@@ -30,6 +30,8 @@ export default function DrawerNavigator() {
         try {
             const response = await account.get();
 
+            if (response.email === "") throw new Error("Not a email user (guest)");
+
             setProfileRole({
                 role: response.labels,
             });
