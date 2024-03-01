@@ -164,9 +164,7 @@ export default function AlertsScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData().then(() => {
-            setIsLoading(false);
-        });
+        checkNetworkConnectivityAndFetchData();
 
         getNameAndRole();
 
@@ -175,6 +173,12 @@ export default function AlertsScreen() {
         };
 
     }, []);
+
+    useEffect(() => {
+        if (alertData.length > 0) {
+            setIsLoading(false);
+        }
+    }, [alertData]);
 
 
     const renderAlerts = (alerts) => {

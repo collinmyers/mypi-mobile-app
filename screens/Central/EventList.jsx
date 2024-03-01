@@ -144,15 +144,18 @@ export default function EventListScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData().then(() => {
-            setIsLoading(false);
-        });
-
+        checkNetworkConnectivityAndFetchData();
         // Cleanup function
         return () => {
             unsubscribe();
         };
     }, []);
+
+    useEffect(() => {
+        if (eventData.length > 0) {
+            setIsLoading(false);
+        }
+    }, [eventData]);
 
 
     const parseEventDate = (dateString) => {
@@ -208,6 +211,7 @@ export default function EventListScreen() {
                 </Pressable>
             );
         });
+        
     };
 
     return (

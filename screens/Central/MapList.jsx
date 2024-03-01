@@ -1,5 +1,5 @@
 import * as Network from "expo-network";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Card, Searchbar, Text } from "react-native-paper";
@@ -141,9 +141,7 @@ export default function MapList() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData().then(() => {
-            setIsLoading(false);
-        });
+        checkNetworkConnectivityAndFetchData();
 
         // Cleanup function
         return () => {
@@ -151,6 +149,13 @@ export default function MapList() {
         };
 
     }, []));
+
+    useEffect(() => {
+        if (pointData.length > 0) {
+            setIsLoading(false);
+        }
+    }, [pointData]);
+
 
     const renderPoints = () => {
         return pointData.map((point, index) => (

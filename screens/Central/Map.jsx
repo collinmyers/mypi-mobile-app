@@ -109,9 +109,7 @@ export default function MapScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData().then(() => {
-            setIsLoading(false);
-        });
+        checkNetworkConnectivityAndFetchData();
 
         // Cleanup function
         return () => {
@@ -119,6 +117,12 @@ export default function MapScreen() {
         };
 
     }, []));
+
+    useEffect(() => {
+        if (markersData.length > 0) {
+            setIsLoading(false);
+        }
+    }, [markersData]);
 
 
     useEffect(() => {
