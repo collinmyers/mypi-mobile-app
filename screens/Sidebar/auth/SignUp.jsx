@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
-import { Card, Text, TextInput } from "react-native-paper";
+import { Card, Snackbar, Text, TextInput } from "react-native-paper";
 import { account } from "../../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
 import PropTypes from "prop-types";
@@ -20,23 +20,69 @@ SignUpScreen.propTypes = {
 export default function SignUpScreen({ navigation }) {
 
     const [signUpInfo, setSignUpInfo] = useState({
-        firstName: "",
-        lastName: "",
+        fullName: "",
         email: "",
         password: "",
         confirmPassword: ""
     });
 
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+
+
+    const validateForm = () => {
+        const { fullName, email, password, confirmPassword } = signUpInfo;
+
+        let validationErrors = [];
+
+        // Check each validation without immediately setting the error message
+        if (!validateName(fullName)) {
+            validationErrors.push("Enter your full name");
+        }
+        if (!validateEmail(email)) {
+            validationErrors.push("Enter a valid email");
+        }
+
+        const passwordError = validatePassword(password, confirmPassword);
+        if (passwordError !== "") {
+            validationErrors.push(passwordError);
+        }
+
+        if (validationErrors.length > 0) {
+            let snackbarMessage = "";
+            if (validationErrors.length > 1) {
+                snackbarMessage += "Multiple Errors:\n";
+            }
+            snackbarMessage += validationErrors.join("\n");
+
+            setErrorMessage(snackbarMessage);
+            setIsSnackbarVisible(true);
+            return false;
+        }
+
+
+        // If validation passes clear error message
+        setErrorMessage("");
+        return true;
+
+    };
+
     const handleSignUp = async () => {
+
+        if (!validateForm()) {
+            setIsSnackbarVisible(true);
+            return;
+        }
+
         try {
             const response = await account.get();
 
             if (response.email === "") {
-                await account.updateName(`${signUpInfo.firstName} ${signUpInfo.lastName}`);
+                await account.updateName(signUpInfo.fullName);
                 await account.updateEmail(signUpInfo.email, signUpInfo.password);
                 console.log("Converted guest user to email user");
             } else {
-                await account.create(ID.unique(), signUpInfo.email, signUpInfo.password, `${signUpInfo.firstName} ${signUpInfo.lastName}`);
+                await account.create(ID.unique(), signUpInfo.email, signUpInfo.password, signUpInfo.fullName);
             }
 
             navigation.navigate("Login");
@@ -61,29 +107,14 @@ export default function SignUpScreen({ navigation }) {
                         <TextInput
                             style={AuthStyle.userInput}
                             numberOfLines={1}
-                            placeholder="First Name"
+                            placeholder="Full Name"
                             placeholderTextColor={appTextColor}
                             textColor={appTextColor}
                             mode="flat"
                             underlineColor={appPrimaryColor}
                             activeUnderlineColor={appPrimaryColor}
-                            onChangeText={(text) => setSignUpInfo({ ...signUpInfo, firstName: text })}
-                            value={signUpInfo.firstName}
-                            onBlur={() => validateName(signUpInfo.firstName, (text) => setSignUpInfo({ ...signUpInfo, firstName: text }))}
-                        />
-
-                        <TextInput
-                            style={AuthStyle.userInput}
-                            numberOfLines={1}
-                            placeholder="Last Name"
-                            placeholderTextColor={appTextColor}
-                            textColor={appTextColor}
-                            mode="flat"
-                            underlineColor={appPrimaryColor}
-                            activeUnderlineColor={appPrimaryColor}
-                            onChangeText={(text) => setSignUpInfo({ ...signUpInfo, lastName: text })}
-                            onBlur={() => validateName(signUpInfo.lastName, (text) => setSignUpInfo({ ...signUpInfo, lastName: text }))}
-                            value={signUpInfo.lastName}
+                            onChangeText={(text) => setSignUpInfo({ ...signUpInfo, fullName: text })}
+                            value={signUpInfo.fullName}
                         />
 
                         <TextInput
@@ -96,7 +127,6 @@ export default function SignUpScreen({ navigation }) {
                             underlineColor={appPrimaryColor}
                             activeUnderlineColor={appPrimaryColor}
                             onChangeText={(text) => setSignUpInfo({ ...signUpInfo, email: text })}
-                            onBlur={() => validateEmail(signUpInfo.email, (text) => setSignUpInfo({ ...signUpInfo, email: text }))}
                             value={signUpInfo.email}
                         />
 
@@ -126,11 +156,6 @@ export default function SignUpScreen({ navigation }) {
                             secureTextEntry
                             onChangeText={(text) => setSignUpInfo({ ...signUpInfo, confirmPassword: text })}
                             value={signUpInfo.confirmPassword}
-                            onBlur={
-                                () => validatePassword(signUpInfo.password, signUpInfo.confirmPassword,
-                                    (text) => setSignUpInfo({ ...signUpInfo, password: text }),
-                                    (text) => setSignUpInfo({ ...signUpInfo, confirmPassword: text }))
-                            }
                         />
                         <TouchableOpacity onPress={handleSignUp} style={AuthStyle.ButtonOpacity}>
                             <Text style={AuthStyle.buttonText}>Sign Up</Text>
@@ -139,6 +164,16 @@ export default function SignUpScreen({ navigation }) {
                     </Card.Content>
                 </Card>
             </KeyboardAvoidingComponent>
+            <Snackbar
+                visible={isSnackbarVisible}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                    setErrorMessage(""); // Clear the error message
+                }}
+                duration={3000}
+            >
+                {errorMessage}
+            </Snackbar>
         </SafeAreaView>
     );
 }
