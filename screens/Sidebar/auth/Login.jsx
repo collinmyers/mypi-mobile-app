@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
-import { Card, Text, TextInput } from "react-native-paper";
+import { Card, Snackbar, Text, TextInput } from "react-native-paper";
 import { account } from "../../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import Logo from "../../../components/logo/AppLogo";
@@ -24,26 +24,68 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
         password: ""
     });
 
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+    const [isActionOcurring, setIsActionOccuring] = useState(false);
+
     const handleLogin = async () => {
-        try {
 
-            await account.createEmailSession(`${authentication.email}`, `${authentication.password}`);
+        if (!isActionOcurring) {
+            try {
+                setIsActionOccuring(true);
 
-            setAuthentication({
-                email: "",
-                password: ""
-            });
-            handleLoginSuccess();
-            navigation.navigate("Home");
+                try {
+                    await account.createEmailSession(`${authentication.email}`, `${authentication.password}`);
 
-        } catch (error) {
-            console.error(error);
+                    setAuthentication({
+                        email: "",
+                        password: ""
+                    });
+                    handleLoginSuccess();
+                    navigation.navigate("Home");
+
+                } catch (error) {
+                    const emailError = "AppwriteException: Invalid `email` param: Value must be a valid email address";
+                    const passwordError = "AppwriteException: Invalid `password` param: Password must be at least 8 characters";
+                    const credentialError = "AppwriteException: Invalid credentials. Please check the email and password.";
+                    const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
+
+                    switch (error.toString()) {
+                        case emailError:
+                            setErrorMessage("Invalid username or password");
+                            setIsSnackbarVisible(true);
+                            break;
+                        case passwordError:
+                            setErrorMessage("Invalid username or password");
+                            setIsSnackbarVisible(true);
+                            break;
+                        case credentialError:
+                            setErrorMessage("Invalid username or password");
+                            setIsSnackbarVisible(true);
+                            break;
+                        case rateLimitError:
+                            setErrorMessage("Sign in attempts exceeded, please try again later");
+                            setIsSnackbarVisible(true);
+                            break;
+                        default:
+                            setErrorMessage("Unknown error occured, please try again");
+                            setIsSnackbarVisible(true);
+                            break;
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setIsActionOccuring(false);
+            }
         }
+
+
     };
 
     return (
         <SafeAreaView style={AppStyle.container}>
-            
+
             <KeyboardAvoidingComponent style={AuthStyle.keyboardAdj}>
                 <Logo style={AuthStyle.logo} />
 
@@ -97,7 +139,18 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                 </Card>
 
             </KeyboardAvoidingComponent>
-
+            <Snackbar
+                visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={AppStyle.snackBar}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                    setErrorMessage(""); // Clear the error message
+                }}
+                duration={3000}
+            >
+                {errorMessage}
+            </Snackbar>
         </SafeAreaView>
     );
 }

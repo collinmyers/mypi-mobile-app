@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, useAltUI} from "../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, useAltUI} from "../utils/colors/appColors";
 
 let headerColor = appSecondaryColor;
 
@@ -33,13 +33,11 @@ export default StyleSheet.create({
     // Image container for Dashboard
     imageContainer: {
         alignItems: "center",
-        // position: "absolute",
         top: 10,
         width: "100%",
     },
-    // Image for Dashboard
-    // image: {
-    //     width: 400,
-    //     height: 200,
-    // },
+    snackBar: {
+        backgroundColor: appSecondaryColor,
+        color: appTextColor
+    }
 });

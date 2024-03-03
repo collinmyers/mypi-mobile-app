@@ -28,7 +28,7 @@ export default function SignUpScreen({ navigation }) {
 
     const [errorMessage, setErrorMessage] = useState("");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
-
+    const [isActionOcurring, setIsActionOccuring] = useState(false);
 
     const validateForm = () => {
         const { fullName, email, password, confirmPassword } = signUpInfo;
@@ -69,26 +69,56 @@ export default function SignUpScreen({ navigation }) {
 
     const handleSignUp = async () => {
 
-        if (!validateForm()) {
-            setIsSnackbarVisible(true);
-            return;
-        }
+        if (!isActionOcurring) {
+            try {
+                setIsActionOccuring(true);
 
-        try {
-            const response = await account.get();
+                if (!validateForm()) {
+                    setIsSnackbarVisible(true);
+                    return;
+                }
 
-            if (response.email === "") {
-                await account.updateName(signUpInfo.fullName);
-                await account.updateEmail(signUpInfo.email, signUpInfo.password);
-                console.log("Converted guest user to email user");
-            } else {
-                await account.create(ID.unique(), signUpInfo.email, signUpInfo.password, signUpInfo.fullName);
+                try {
+                    const response = await account.get();
+
+                    if (response.email === "") {
+                        await account.updateName(signUpInfo.fullName);
+                        await account.updateEmail(signUpInfo.email, signUpInfo.password);
+                        console.log("Converted guest user to email user");
+                    } else {
+                        await account.create(ID.unique(), signUpInfo.email, signUpInfo.password, signUpInfo.fullName);
+                    }
+
+                    navigation.navigate("Login");
+                } catch (error) {
+                    const emailExistsError = "AppwriteException: A user with the same email already exists in the current project."
+                    const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
+
+                    switch (error.toString()) {
+                        case emailExistsError:
+                            setErrorMessage("Email already in use, please try a different email");
+                            setIsSnackbarVisible(true);
+                            break;
+                        case rateLimitError:
+                            setErrorMessage("Sign up attempts exceeded, please try again later");
+                            setIsSnackbarVisible(true);
+                            break;
+                        default:
+                            setErrorMessage("Unknown error, please try again");
+                            setIsSnackbarVisible(true);
+                            break;
+                    }
+                }
+
+
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setIsActionOccuring(false);
             }
-
-            navigation.navigate("Login");
-        } catch (error) {
-            console.error(error);
         }
+
+
     };
 
 
@@ -166,6 +196,8 @@ export default function SignUpScreen({ navigation }) {
             </KeyboardAvoidingComponent>
             <Snackbar
                 visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={AppStyle.snackBar}
                 onDismiss={() => {
                     setIsSnackbarVisible(false);
                     setErrorMessage(""); // Clear the error message
