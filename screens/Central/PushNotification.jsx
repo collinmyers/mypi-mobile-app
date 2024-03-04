@@ -5,10 +5,11 @@ import HomeStyle from "../../styling/HomeStyle";
 import * as Notifications from "expo-notifications";
 import { RadioButton, TextInput } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
-import { database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { database, functions, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
 import { appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 
+export const PUSH_NOTIFICATION_ID = process.env.EXPO_PUBLIC_PUSH_NOTIFICATION_FUNCTION_ID;
 
 
 Notifications.setNotificationHandler({
@@ -20,16 +21,41 @@ Notifications.setNotificationHandler({
 });
 
 async function schedulePushNotification(notifTitle, notifBody) {
-    await Notifications.scheduleNotificationAsync({
-        content: {
-            title: notifTitle,
-            body: notifBody,
-        },
-        trigger: null, //Send immediately
-        presentation: {
-            style: "notification",
-        },
-    });
+    /*
+    Old cod for pushing notifications.  Would only push locally
+    */
+    // await Notifications.scheduleNotificationAsync({
+    //     content: {
+    //         title: notifTitle,
+    //         body: notifBody,
+    //     },
+    //     trigger: null, //Send immediately
+    //     presentation: {
+    //         style: "notification",
+    //     },
+    // });
+
+
+    // Function parameters
+    const params = {
+        expoPushTokens: "[ExponentPushToken[pRdun1GsDANPqMGFK_3-8f]]", //FUTURE UPDATE: ALL EXPO TOKENS GO HERE
+        title: notifTitle,
+        body: notifBody
+    };
+
+    try {
+        const execution = await functions.createExecution(
+            PUSH_NOTIFICATION_ID,
+            JSON.stringify(params),
+            false,
+            "/",
+            "POST",
+        );
+        console.log(execution);
+    } catch (err) {
+        console.error(err.message);
+    }
+
 }
 
 

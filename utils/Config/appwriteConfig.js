@@ -1,5 +1,5 @@
 // Imports needed to function
-import { Client, Account, Databases, Storage } from "appwrite";
+import { Client, Account, Databases, Storage, Functions } from "appwrite";
 
 // Named Exports
 export const API_ENDPOINT = process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT;
@@ -21,6 +21,7 @@ const client = new Client()
 export const account = new Account(client); // Named export use {account} when importing
 export const database = new Databases(client); // Named export use {databases} when importing
 export const storage = new Storage(client); // Named export use {storage} when importing
+export const functions = new Functions(client); // Named export use {functions} when importing
 
 export const subscribeToRealTimeUpdates = (handleSubscription, CURRENT_COLLECTION_ID) => {
     // Subscribe to real-time updates
