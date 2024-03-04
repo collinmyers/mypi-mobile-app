@@ -30,8 +30,8 @@ export default function ForgotPasswordScreen({ navigation }) {
 
                 try {
                     await account.createRecovery(`${email}`, process.env.EXPO_PUBLIC_RECOVERY_DOMAIN);
-        
-                    setErrorMessage("If an account exists, a reset link will be sent to the email.");
+
+                    setErrorMessage("If an account exists, a password reset will be sent to the provided email.");
                     setIsSnackbarVisible(true);
                     setTimeout(() => {
                         setEmail("");
@@ -40,7 +40,7 @@ export default function ForgotPasswordScreen({ navigation }) {
                 } catch (error) {
                     const emailError = "AppwriteException: Invalid `email` param: Value must be a valid email address";
                     const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
-        
+
                     switch (error.toString()) {
                         case emailError:
                             setErrorMessage("Please enter a valid email address");
@@ -51,7 +51,7 @@ export default function ForgotPasswordScreen({ navigation }) {
                             setIsSnackbarVisible(true);
                             break;
                         default:
-                            setErrorMessage("If an account exists, a reset link will be sent to the email.");
+                            setErrorMessage("If an account exists, a password reset will be sent to the provided email.");
                             setIsSnackbarVisible(true);
                             setTimeout(() => {
                                 setEmail("");
@@ -67,7 +67,7 @@ export default function ForgotPasswordScreen({ navigation }) {
             }
         }
 
-        
+
     };
 
     return (
