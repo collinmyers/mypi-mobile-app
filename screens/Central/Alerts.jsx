@@ -9,12 +9,16 @@ import HomeStyle from "../../styling/HomeStyle";
 import { useNavigation } from "@react-navigation/native";
 import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
+import { useRoute } from "@react-navigation/native";
 
 export default function AlertsScreen() {
 
     const navigation = useNavigation();
+
+    const route = useRoute();
+    const { showEditNotifications } = route.params;
 
     const PAGE_SIZE = 25;
 
@@ -180,15 +184,61 @@ export default function AlertsScreen() {
         }
     }, [alertData]);
 
+    const toggleDismissed = async (alertId) => {
+        const newAlertData = alertData.map((alert) => {
+            if (alert.$id === alertId) {
+                return { ...alert, isDismissed: !alert.isDismissed };
+            } else {
+                return alert;
+            }
+        });
+        setAlertData(newAlertData);
+        // console.log(newAlertData);
+
+        // Find the alert with the provided alertId
+        const alertToUpdate = newAlertData.find(alert => alert.$id === alertId);
+        if (alertToUpdate) {
+            // Update the dismissed state of the notification in the file
+            await updateAlertFile(alertId, alertToUpdate.isDismissed);
+        } else {
+            console.error(`Alert with ID ${alertId} not found.`);
+        }
+    };
+
+    const updateAlertFile = async (alertId, isDismissed) => {
+        try {
+            const fileUri = FileSystem.documentDirectory + "alertsCard.json";
+            const fileContents = await FileSystem.readAsStringAsync(fileUri);
+            const data = JSON.parse(fileContents);
+            const updatedData = data.map(alert => {
+                if (alert.$id === alertId) {
+                    return { ...alert, isDismissed: isDismissed };
+                } else {
+                    return alert;
+                }
+            });
+            await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(updatedData));
+        } catch (error) {
+            console.error("Error updating alert file: ", error);
+        }
+    };
 
     const renderAlerts = (alerts) => {
         return alerts.map((alert, index) => (
-            <Card style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
-                <Card.Content style={HomeStyle.alertCardContent}>
+            <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
+
+                <View style={HomeStyle.alertCardContent}>
                     <Text style={HomeStyle.alertListTitle}>{alert.Title}</Text>
                     <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
-                </Card.Content>
-            </Card>
+                </View>
+                <View style={HomeStyle.notificationEditIcons}>
+                    {showEditNotifications && (alert.isDismissed ?
+                        (<Ionicons name="eye" size={24} color={appSecondaryColor} onPress={() => toggleDismissed(alert.$id)} />)
+                        :
+                        (<Ionicons name="eye-off" size={24} color={appSecondaryColor} onPress={() => toggleDismissed(alert.$id)} />)
+                    )}
+                </View>
+            </View>
         ));
     };
 
@@ -202,8 +252,6 @@ export default function AlertsScreen() {
             setFilterList(filteredAlerts);
         }
     };
-
-
 
     const getNameAndRole = async () => {
         try {

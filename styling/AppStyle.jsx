@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, useAltUI} from "../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, useAltUI } from "../utils/colors/appColors";
 
 let headerColor = appSecondaryColor;
 
-if (useAltUI){
+if (useAltUI) {
     headerColor = appPrimaryColor;
 }
 
@@ -39,5 +39,16 @@ export default StyleSheet.create({
     snackBar: {
         backgroundColor: appSecondaryColor,
         color: appTextColor
-    }
+    },
+    appHeaderEdit: {
+        paddingHorizontal: 12,
+        paddingTop: 9,
+        paddingBottom: 10,
+        marginLeft: 10,
+    },
+    appHeaderEditDone: {
+        padding: 10,
+        paddingHorizontal: 13,
+        marginLeft: 10,
+    },
 });

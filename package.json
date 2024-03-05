@@ -39,8 +39,7 @@
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
     "react-native-url-polyfill": "^2.0.0",
-    "react-native-webview": "13.6.4",
-    "tabler-icons-react-native": "^2.42.1"
+    "react-native-webview": "13.6.4"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",

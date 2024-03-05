@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import AlertsScreen from "../../screens/Central/Alerts";
 import PushNotificationScreen from "../../screens/Central/PushNotification";
-import Menu from "./AppHeader";
 import MenuBack from "./AppHeaderNavBack";
+import MenuEditNotification from "./AppHeaderEditNotifications";
 import { appPrimaryColor } from "../../utils/colors/appColors";
 
 const fade = ({ current }) => ({
@@ -16,14 +16,19 @@ const fade = ({ current }) => ({
 const Stack = createStackNavigator();
 
 export default function AlertsStackNavigator() {
+
+    const [showEditNotifications, setShowEditNotifications] = useState(false);
+
     return (
         <Stack.Navigator initialRouteName="AlertsScreen" screenOptions={{ headerShown: false, cardStyleInterpolator: fade }}>
-            <Stack.Screen name="AlertsScreen" component={AlertsScreen}
+            <Stack.Screen name="AlertsScreen" component={AlertsScreen} initialParams={{ showEditNotifications: showEditNotifications }}
                 options={{
                     headerShown: true,
                     headerTitle: "",
                     headerStyle: { backgroundColor: appPrimaryColor },
-                    header: () => <Menu />
+                    header: () => <MenuEditNotification
+                        showEditNotifications={showEditNotifications}
+                        onToggleEditNotifications={setShowEditNotifications} />
                 }}
             />
             <Stack.Screen name="PushNotificationScreen" component={PushNotificationScreen}

@@ -400,7 +400,7 @@ export default StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-around",
-        marginBottom: "10%",
+        marginBottom: "2%",
     },
     alertButton: {
         backgroundColor: appTertiaryColor,
@@ -415,23 +415,29 @@ export default StyleSheet.create({
         fontSize: fontSizeAlert
     },
     alertCard: {
-        width: deviceWidth * .9,
-        marginBottom: deviceWidth * .1,
-        backgroundColor: appSecondaryColor,
-    },
-    alertCardContent: {
+        width: deviceWidth,
+        flexDirection: "row",
+        alignItems: "center",
+        borderBottomWidth: 2,
+        borderBottomColor: appTertiaryColor,
+        backgroundColor: appPrimaryColor,
 
     },
+    alertCardContent: {
+        flex: 1,
+        margin: "1%",
+    },
+    notificationEditIcons: {
+        marginRight: "2%"
+    },
     alertListTitle: {
-        fontWeight: "600",
-        textAlign: "center",
+        fontWeight: "700",
         fontSize: 18,
-        color: appTextColor
+        color: appSecondaryColor
     },
     alertListDetails: {
         fontSize: 14,
-        textAlign: "center",
-        color: appTextColor
+        color: appSecondaryColor
     },
     alertListTypeDesc: {
         fontSize: 12,
@@ -551,5 +557,9 @@ export default StyleSheet.create({
     loadingContainer: {
         flex: 1,
         justifyContent: "center",
+    },
+    scrollableViewNotifications: {
+        marginBottom: "5%",
+        backgroundColor: appPrimaryColor
     },
 });
