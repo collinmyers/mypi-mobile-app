@@ -418,14 +418,14 @@ export default StyleSheet.create({
         width: "100%",
         flexDirection: "row",
         alignItems: "center",
-        // borderBottomWidth: 2,
+        borderBottomWidth: 1,
         borderBottomColor: appTertiaryColor,
         backgroundColor: appPrimaryColor,
-
     },
     alertCardContent: {
         flex: 1,
-        margin: "1%",
+        marginHorizontal: "1%",
+        marginVertical: "2%"
     },
     notificationEditIcons: {
         marginRight: "2%"
