@@ -7,7 +7,7 @@ import { Query } from "appwrite";
 import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
 import { useNavigation } from "@react-navigation/native";
-import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
@@ -226,14 +226,13 @@ export default function AlertsScreen() {
     const renderAlerts = (alerts) => {
         return alerts.map((alert, index) => (
             <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
-
                 <View style={HomeStyle.alertCardContent}>
                     <Text style={HomeStyle.alertListTitle}>{alert.Title}</Text>
                     <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
                 </View>
                 <View style={HomeStyle.notificationEditIcons}>
                     {showEditNotifications && (alert.isDismissed ?
-                        (<Ionicons name="eye" size={24} color={appSecondaryColor} onPress={() => toggleDismissed(alert.$id)} />)
+                        (<Ionicons name="eye" size={24} color={appTertiaryColor} onPress={() => toggleDismissed(alert.$id)} />)
                         :
                         (<Ionicons name="eye-off" size={24} color={appSecondaryColor} onPress={() => toggleDismissed(alert.$id)} />)
                     )}

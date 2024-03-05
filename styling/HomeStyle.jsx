@@ -415,10 +415,10 @@ export default StyleSheet.create({
         fontSize: fontSizeAlert
     },
     alertCard: {
-        width: deviceWidth,
+        width: "100%",
         flexDirection: "row",
         alignItems: "center",
-        borderBottomWidth: 2,
+        // borderBottomWidth: 2,
         borderBottomColor: appTertiaryColor,
         backgroundColor: appPrimaryColor,
 
