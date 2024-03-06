@@ -67,6 +67,20 @@ export default function AlertsScreen() {
                 let offset = 0;
                 let allAlerts = [];
 
+                // Load data from the local file
+                const fileUri = FileSystem.documentDirectory + "alertsCard.json";
+                let fileContents;
+                try {
+                    fileContents = await FileSystem.readAsStringAsync(fileUri);
+                } catch (error) {
+                    // If the file doesn't exist, initialize with an empty array
+                    fileContents = "[]";
+                }
+                const localData = JSON.parse(fileContents);
+
+                // Create a mapping of the local data with $id and isDismissed state
+                const existingAlertsMap = new Map(localData.map((alert) => [alert.$id, alert.isDismissed]));
+
                 const response = await database.listDocuments(
                     DATABASE_ID,
                     ALERTS_COLLECTION_ID,
@@ -115,9 +129,16 @@ export default function AlertsScreen() {
                     return 0;
                 });
 
-                setAlertData(allAlerts);
-                setFullList(allAlerts);
-                await saveDataToFile(allAlerts); // Save fetched data to file
+                const updatedAlerts = allAlerts.map((newAlert) => {
+                    const isDismissed = existingAlertsMap.get(newAlert.$id) || false;
+                    return { ...newAlert, isDismissed };
+                });
+
+                console.log("Updated alerts with isDismissed state: ", updatedAlerts);
+
+                setAlertData(updatedAlerts);
+                setFullList(updatedAlerts);
+                await saveDataToFile(updatedAlerts); // Save fetched data to file
             } catch (error) {
                 console.error(error);
             }
@@ -138,10 +159,13 @@ export default function AlertsScreen() {
                 const fileUri = FileSystem.documentDirectory + "alertsCard.json";
                 const fileContents = await FileSystem.readAsStringAsync(fileUri);
                 const data = JSON.parse(fileContents);
+                console.log("Data loaded from file: ", data);
                 setAlertData(data);
                 setFullList(data);
             } catch (error) {
                 console.error("Error reading data from file: ", error);
+                setAlertData([]);
+                setFullList([]);
             }
         };
 
@@ -188,15 +212,13 @@ export default function AlertsScreen() {
         const newAlertData = alertData.map((alert) => {
             if (alert.$id === alertId) {
                 return { ...alert, isDismissed: !alert.isDismissed };
-            } else {
-                return alert;
             }
+            return alert;
         });
         setAlertData(newAlertData);
-        // console.log(newAlertData);
 
         // Find the alert with the provided alertId
-        const alertToUpdate = newAlertData.find(alert => alert.$id === alertId);
+        const alertToUpdate = newAlertData.find((alert) => alert.$id === alertId);
         if (alertToUpdate) {
             // Update the dismissed state of the notification in the file
             await updateAlertFile(alertId, alertToUpdate.isDismissed);
@@ -210,14 +232,14 @@ export default function AlertsScreen() {
             const fileUri = FileSystem.documentDirectory + "alertsCard.json";
             const fileContents = await FileSystem.readAsStringAsync(fileUri);
             const data = JSON.parse(fileContents);
-            const updatedData = data.map(alert => {
+            const updatedData = data.map((alert) => {
                 if (alert.$id === alertId) {
-                    return { ...alert, isDismissed: isDismissed };
-                } else {
-                    return alert;
+                    return { ...alert, isDismissed };
                 }
+                return alert;
             });
             await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(updatedData));
+            console.log("Data saved to file: ", fileUri);
         } catch (error) {
             console.error("Error updating alert file: ", error);
         }
@@ -232,7 +254,7 @@ export default function AlertsScreen() {
                 </View>
                 <View style={HomeStyle.notificationEditIcons}>
                     {showEditNotifications && (alert.isDismissed ?
-                        (<Ionicons name="eye" size={24} color={appTertiaryColor} onPress={() => toggleDismissed(alert.$id)} />)
+                        (<Ionicons name="eye" size={24} color={appSecondaryColor} onPress={() => toggleDismissed(alert.$id)} />)
                         :
                         (<Ionicons name="eye-off" size={24} color={appSecondaryColor} onPress={() => toggleDismissed(alert.$id)} />)
                     )}
