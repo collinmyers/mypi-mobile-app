@@ -208,24 +208,53 @@ export default function AlertsScreen() {
         }
     }, [alertData]);
 
-    const toggleDismissed = async (alertId) => {
-        const newAlertData = alertData.map((alert) => {
-            if (alert.$id === alertId) {
-                return { ...alert, isDismissed: !alert.isDismissed };
-            }
-            return alert;
-        });
-        setAlertData(newAlertData);
+    // const toggleDismissed = async (alertId) => {
+    //     setAlertData((prevAlertData) => {
+    //         const newAlertData = prevAlertData.map((alert) => {
+    //             if (alert.$id === alertId) {
+    //                 return { ...alert, isDismissed: !alert.isDismissed };
+    //             }
+    //             return alert;
+    //         });
 
-        // Find the alert with the provided alertId
-        const alertToUpdate = newAlertData.find((alert) => alert.$id === alertId);
-        if (alertToUpdate) {
-            // Update the dismissed state of the notification in the file
-            await updateAlertFile(alertId, alertToUpdate.isDismissed);
-        } else {
-            console.error(`Alert with ID ${alertId} not found.`);
+    //         // Find the alert with the provided alertId
+    //         const alertToUpdate = newAlertData.find((alert) => alert.$id === alertId);
+    //         if (alertToUpdate) {
+    //             // Update the dismissed state of the notification in the file
+    //             updateAlertFile(alertId, alertToUpdate.isDismissed);
+    //         } else {
+    //             console.error(`Alert with ID ${alertId} not found.`);
+    //         }
+
+    //         return newAlertData;
+    //     });
+    // };
+
+    const toggleDismissed = async (alertId) => {
+        try {
+            // 1. Create a copy for immediate UI updates
+            const newAlertData = [...alertData];
+
+            // 2. Find the alert to update
+            const alertIndex = newAlertData.findIndex((alert) => alert.$id === alertId);
+
+            if (alertIndex !== -1) {
+                // 3. Toggle the isDismissed property
+                newAlertData[alertIndex].isDismissed = !newAlertData[alertIndex].isDismissed;
+
+                // 4. Update the state for UI changes
+                setAlertData(newAlertData);
+
+                // 5. Update the file system
+                await updateAlertFile(alertId, newAlertData[alertIndex].isDismissed);
+            } else {
+                console.error(`Alert with ID ${alertId} not found.`);
+            }
+        } catch (error) {
+            console.error("Error toggling dismissed state:", error);
         }
     };
+
 
     const updateAlertFile = async (alertId, isDismissed) => {
         try {
@@ -267,10 +296,15 @@ export default function AlertsScreen() {
     const handleFilterById = (filterId) => {
         setSelectedCategory(filterId);
         if (filterId === "notifications") {
-            setFilterList(alertData);
+            const visibleAlerts = alertData.filter((alert) => !alert.isDismissed);
+            setFilterList(visibleAlerts);
+            setFullList(visibleAlerts);
         } else {
-            const filteredAlerts = fullList.filter(alert => alert.NotificationType === filterId);
+            const filteredAlerts = alertData.filter(
+                (alert) => alert.NotificationType === filterId && !alert.isDismissed
+            );
             setFilterList(filteredAlerts);
+            setFullList(filteredAlerts);
         }
     };
 
