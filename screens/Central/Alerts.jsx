@@ -34,65 +34,14 @@ export default function AlertsScreen() {
 
     useEffect(() => {
         handleFilterById(selectedCategory);
+        renderAlerts(filterList.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
     }, [showEditNotifications, selectedCategory]);
 
     useEffect(() => {
         // Function to handle real-time updates
         const handleSubscription = async () => {
             try {
-                await fetchData();
-
-                // Update alertData and fullList states when real-time changes occur
-                const updatedAlerts = await database.listDocuments(DATABASE_ID, ALERTS_COLLECTION_ID);
-                const fileUri = FileSystem.documentDirectory + "alertsCard.json";
-                let fileContents;
-                try {
-                    fileContents = await FileSystem.readAsStringAsync(fileUri);
-                } catch (error) {
-                    // If the file doesn't exist, initialize with an empty array
-                    fileContents = "[]";
-                }
-                const localData = JSON.parse(fileContents);
-                const existingAlertsMap = new Map(localData.map((alert) => [alert.$id, alert.isDismissed]));
-                const updatedData = updatedAlerts.documents.map((newAlert) => {
-                    const isDismissed = existingAlertsMap.get(newAlert.$id) || false;
-                    return { ...newAlert, isDismissed };
-                });
-
-                // Sort the notifications alphabetically by their name
-                updatedData.sort((a, b) => {
-                    const nameA = a.Title.toLowerCase();
-                    const nameB = b.Title.toLowerCase();
-
-                    const splitA = nameA.match(/(\D+|\d+)/g);
-                    const splitB = nameB.match(/(\D+|\d+)/g);
-
-                    for (let i = 0; i < Math.max(splitA.length, splitB.length); i++) {
-                        if (i >= splitA.length) return -1;
-                        if (i >= splitB.length) return 1;
-
-                        const partA = splitA[i];
-                        const partB = splitB[i];
-
-                        if (!isNaN(partA) && !isNaN(partB)) {
-                            const numA = parseInt(partA);
-                            const numB = parseInt(partB);
-                            if (numA !== numB) {
-                                return numA - numB;
-                            }
-                        } else {
-                            if (partA !== partB) {
-                                return partA.localeCompare(partB);
-                            }
-                        }
-                    }
-
-                    return 0;
-                });
-
-                setAlertData(updatedData);
-                setFullList(updatedData);
-                await saveDataToFile(updatedData);
+                await fetchData(true); // Pass true to indicate a real-time update
 
                 // Update filterList based on the current category
                 handleFilterById(selectedCategory);
@@ -118,7 +67,6 @@ export default function AlertsScreen() {
 
         const fetchData = async () => {
             try {
-                let offset = 0;
                 let allAlerts = [];
 
                 // Load data from the local file
@@ -135,22 +83,19 @@ export default function AlertsScreen() {
                 // Create a mapping of the local data with $id and isDismissed state
                 const existingAlertsMap = new Map(localData.map((alert) => [alert.$id, alert.isDismissed]));
 
-                const response = await database.listDocuments(
-                    DATABASE_ID,
-                    ALERTS_COLLECTION_ID,
-                    [Query.limit(PAGE_SIZE), Query.offset(offset)]
-                );
-
-                while (response.documents.length > 0) {
-                    allAlerts = [...allAlerts, ...response.documents];
-                    offset += PAGE_SIZE;
-                    const nextResponse = await database.listDocuments(
+                let offset = 0;
+                let response;
+                do {
+                    response = await database.listDocuments(
                         DATABASE_ID,
                         ALERTS_COLLECTION_ID,
                         [Query.limit(PAGE_SIZE), Query.offset(offset)]
                     );
-                    response.documents = nextResponse.documents;
-                }
+
+                    allAlerts = [...allAlerts, ...response.documents];
+                    offset += PAGE_SIZE;
+                } while (response.documents.length > 0);
+
 
                 // Sort the notifications alphabetically by their name
                 allAlerts.sort((a, b) => {
@@ -187,7 +132,6 @@ export default function AlertsScreen() {
                     const isDismissed = existingAlertsMap.get(newAlert.$id) || false;
                     return { ...newAlert, isDismissed };
                 });
-                console.log("Updated Alerts Length: ", updatedAlerts.length);
 
                 setAlertData(updatedAlerts);
                 setFullList(updatedAlerts);
@@ -196,6 +140,7 @@ export default function AlertsScreen() {
                 console.error(error);
             }
         };
+
 
         const saveDataToFile = async (data) => {
             try {
@@ -264,30 +209,24 @@ export default function AlertsScreen() {
 
     const toggleDismissed = async (alertId) => {
         try {
-            const newAlertData = alertData.map(alert => {
-                if (alert.$id === alertId) {
-                    return { ...alert, isDismissed: !alert.isDismissed };
-                }
-                return alert;
-            });
-            setAlertData(newAlertData);
+            // 1. Create a copy for immediate UI updates
+            const newAlertData = [...alertData];
 
-            // Update filterList if necessary
-            if (selectedCategory === "notifications" || showEditNotifications) {
-                setFilterList(newAlertData.filter((alert) => {
-                    if (selectedCategory === "notifications") {
-                        return true; // Always show all notifications in this case
-                    } else {
-                        return alert.NotificationType === selectedCategory;
-                    }
-                }));
+            // 2. Find the alert to update
+            const alertIndex = newAlertData.findIndex((alert) => alert.$id === alertId);
+
+            if (alertIndex !== -1) {
+                // 3. Toggle the isDismissed property
+                newAlertData[alertIndex].isDismissed = !newAlertData[alertIndex].isDismissed;
+
+                // 4. Update the state for UI changes
+                setAlertData(newAlertData);
+
+                // 5. Update the file system
+                await updateAlertFile(alertId, newAlertData[alertIndex].isDismissed);
             } else {
-                // Filter out dismissed alerts
-                setFilterList(newAlertData.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
+                console.error(`Alert with ID ${alertId} not found.`);
             }
-
-            // Update alert file
-            await updateAlertFile(alertId, newAlertData.find(alert => alert.$id === alertId).isDismissed);
         } catch (error) {
             console.error("Error toggling dismissed state:", error);
         }
