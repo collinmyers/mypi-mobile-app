@@ -34,22 +34,17 @@ export default function AlertsScreen() {
 
     useEffect(() => {
         handleFilterById(selectedCategory);
-    }, [showEditNotifications]);
+    }, [showEditNotifications, selectedCategory]);
 
     useEffect(() => {
         // Function to handle real-time updates
         const handleSubscription = () => {
             checkNetworkConnectivityAndFetchData();
             const visibleAlerts = alertData.filter((alert) => !alert.isDismissed);
-            if (selectedCategory !== "notifications") {
-                // If the user is not on the "All" tab, update the filtered list
-                handleFilterById(selectedCategory);
-                renderAlerts(visibleAlerts);
-            } else {
-                renderAlerts(visibleAlerts);
-            }
-
+            handleFilterById("notifications");
+            renderAlerts(visibleAlerts);
         };
+
         // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
 
@@ -211,25 +206,35 @@ export default function AlertsScreen() {
 
     const toggleDismissed = async (alertId) => {
         try {
-            //Create a copy for immediate UI updates
-            const newAlertData = [...alertData];
+            const newAlertData = alertData.map(alert => {
+                if (alert.$id === alertId) {
+                    return { ...alert, isDismissed: !alert.isDismissed };
+                }
+                return alert;
+            });
+            setAlertData(newAlertData);
 
-            const alertIndex = newAlertData.findIndex((alert) => alert.$id === alertId);
-
-            if (alertIndex !== -1) { // if alert index exists
-
-                newAlertData[alertIndex].isDismissed = !newAlertData[alertIndex].isDismissed;
-
-                setAlertData(newAlertData);
-
-                await updateAlertFile(alertId, newAlertData[alertIndex].isDismissed);
+            // Update filterList if necessary
+            if (selectedCategory === "notifications" || showEditNotifications) {
+                setFilterList(newAlertData.filter((alert) => {
+                    if (selectedCategory === "notifications") {
+                        return true; // Always show all notifications in this case
+                    } else {
+                        return alert.NotificationType === selectedCategory;
+                    }
+                }));
             } else {
-                console.error(`Alert with ID ${alertId} not found.`);
+                // Filter out dismissed alerts
+                setFilterList(newAlertData.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
             }
+
+            // Update alert file
+            await updateAlertFile(alertId, newAlertData.find(alert => alert.$id === alertId).isDismissed);
         } catch (error) {
             console.error("Error toggling dismissed state:", error);
         }
     };
+
 
     const updateAlertFile = async (alertId, isDismissed) => {
         try {
@@ -250,11 +255,6 @@ export default function AlertsScreen() {
     };
 
     const renderAlerts = (alerts) => {
-
-        if (showEditNotifications) {
-            alerts = fullList;
-        }
-
         return alerts.map((alert, index) => (
             <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
                 <View style={HomeStyle.alertCardContent}>
@@ -275,22 +275,17 @@ export default function AlertsScreen() {
         ));
     };
 
-
     const handleFilterById = (filterId) => {
         setSelectedCategory(filterId);
+
         if (filterId === "notifications") {
-            const visibleAlerts = alertData.filter((alert) => !alert.isDismissed);
-            setFilterList(visibleAlerts);
-            setFullList(visibleAlerts);
+            // Always show all notifications when the category is "Notifications"
+            setFilterList(showEditNotifications ? fullList : alertData.filter((alert) => !alert.isDismissed));
         } else {
-            const filteredAlerts = alertData.filter(
-                (alert) => alert.NotificationType === filterId && !alert.isDismissed
-            );
-            setFilterList(filteredAlerts);
-            setFullList(alertData.filter((alert) => alert.NotificationType === filterId));
+            // Filter alerts based on the selected category when it's not "Notifications"
+            setFilterList(showEditNotifications ? fullList.filter((alert) => alert.NotificationType === filterId) : alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === filterId));
         }
     };
-
 
     const getNameAndRole = async () => {
         try {
@@ -333,15 +328,23 @@ export default function AlertsScreen() {
                         renderAlerts(filterList)
                     ) : (
                         <View>
-                            {selectedCategory === "notifications" ? (
-                                renderAlerts(alertData.filter((alert) => !alert.isDismissed))
+                            {(selectedCategory === "notifications") ? (
+                                alertData.filter((alert) => !alert.isDismissed).length > 0 ?
+                                    (renderAlerts(alertData.filter((alert) => !alert.isDismissed)))
+                                    :
+                                    (
+                                        <Text style={HomeStyle.noNotificationsMessage}>
+                                            No new {selectedCategory} at this time
+                                        </Text>
+                                    )
                             ) : (
                                 <Text style={HomeStyle.noNotificationsMessage}>
-                                    No new {selectedCategory === "notifications" ? "notifications" : selectedCategory} at this time
+                                    No new {selectedCategory} at this time
                                 </Text>
                             )}
                         </View>
                     )}
+
                 </ScrollView>
             )}
 
