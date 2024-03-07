@@ -39,7 +39,7 @@ export default function AlertsScreen() {
     useEffect(() => {
         // Function to handle real-time updates
         const handleSubscription = async () => {
-            await checkNetworkConnectivityAndFetchData();
+            await fetchData();
         };
 
         // Subscribe to real-time updates
