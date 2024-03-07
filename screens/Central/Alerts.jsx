@@ -38,11 +38,8 @@ export default function AlertsScreen() {
 
     useEffect(() => {
         // Function to handle real-time updates
-        const handleSubscription = () => {
-            checkNetworkConnectivityAndFetchData();
-            const visibleAlerts = alertData.filter((alert) => !alert.isDismissed);
-            handleFilterById("notifications");
-            renderAlerts(visibleAlerts);
+        const handleSubscription = async () => {
+            await checkNetworkConnectivityAndFetchData();
         };
 
         // Subscribe to real-time updates
@@ -131,6 +128,7 @@ export default function AlertsScreen() {
                     const isDismissed = existingAlertsMap.get(newAlert.$id) || false;
                     return { ...newAlert, isDismissed };
                 });
+                console.log("Updated Alerts Length: ", updatedAlerts.length);
 
                 setAlertData(updatedAlerts);
                 setFullList(updatedAlerts);
@@ -169,7 +167,7 @@ export default function AlertsScreen() {
             try {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
-                    fetchData(); // Fetch data from appwrite if connected
+                    await fetchData(); // Fetch data from appwrite if connected
                 }
             } catch (error) {
                 console.error("Error checking network connectivity: ", error);
@@ -196,7 +194,7 @@ export default function AlertsScreen() {
             unsubscribe();
         };
 
-    }, [showEditNotifications]);
+    }, [alertData.length]);
 
     useEffect(() => {
         if (alertData.length > 0) {
