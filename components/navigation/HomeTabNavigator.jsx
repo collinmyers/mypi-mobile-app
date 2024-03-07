@@ -1,11 +1,11 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Entypo, Fontisto, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
+import { Entypo, FontAwesome5, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
 import DashboardScreen from "../../screens/Central/Dashboard";
 import SettingsStackNavigator from "./SettingsStackNavigator";
 import EventsStackNavigator from "./EventsStackNavigator";
 import MapStackNavigator from "./MapStackNavigator";
-import { appPrimaryColor, appSecondaryColor, appTextColor, appTertiaryColor, useAltUI } from "../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, useAltUI } from "../../utils/colors/appColors";
 import Menu from "./AppHeader";
 import AlertsStackNavigator from "./AlertsStackNavigator";
 
@@ -81,7 +81,7 @@ export default function HomeTabNavigator() {
                     tabBarLabel: "Notifications",
                     header: () => false,
                     tabBarIcon: ({ focused }) => (
-                        <Fontisto name="bell" size={24} color={focused ? appTertiaryColor : TabIconInactiveIconColor} />
+                        <FontAwesome5 name="bell" size={24} color={focused ? appTertiaryColor : TabIconInactiveIconColor} />
                     )
                 }}
             />

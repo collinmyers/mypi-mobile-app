@@ -1,15 +1,15 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
-import { ActivityIndicator, Card, Text, Button } from "react-native-paper";
+import { ActivityIndicator, Text, Button } from "react-native-paper";
 import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
 import { useNavigation } from "@react-navigation/native";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 import { useRoute } from "@react-navigation/native";
 
@@ -33,22 +33,25 @@ export default function AlertsScreen() {
     });
 
     useEffect(() => {
+        handleFilterById(selectedCategory);
+    }, [showEditNotifications]);
+
+    useEffect(() => {
         // Function to handle real-time updates
         const handleSubscription = () => {
             checkNetworkConnectivityAndFetchData();
+            const visibleAlerts = alertData.filter((alert) => !alert.isDismissed);
             if (selectedCategory !== "notifications") {
                 // If the user is not on the "All" tab, update the filtered list
                 handleFilterById(selectedCategory);
-                renderAlerts(fullList);
+                renderAlerts(visibleAlerts);
             } else {
-                renderAlerts(fullList);
+                renderAlerts(visibleAlerts);
             }
 
         };
         // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
-
-
 
         // Define the notification handler
         const notificationHandler = {
@@ -134,8 +137,6 @@ export default function AlertsScreen() {
                     return { ...newAlert, isDismissed };
                 });
 
-                console.log("Updated alerts with isDismissed state: ", updatedAlerts);
-
                 setAlertData(updatedAlerts);
                 setFullList(updatedAlerts);
                 await saveDataToFile(updatedAlerts); // Save fetched data to file
@@ -159,7 +160,7 @@ export default function AlertsScreen() {
                 const fileUri = FileSystem.documentDirectory + "alertsCard.json";
                 const fileContents = await FileSystem.readAsStringAsync(fileUri);
                 const data = JSON.parse(fileContents);
-                console.log("Data loaded from file: ", data);
+                console.log("Data loaded from file:", fileUri);
                 setAlertData(data);
                 setFullList(data);
             } catch (error) {
@@ -200,7 +201,7 @@ export default function AlertsScreen() {
             unsubscribe();
         };
 
-    }, []);
+    }, [showEditNotifications]);
 
     useEffect(() => {
         if (alertData.length > 0) {
@@ -208,44 +209,19 @@ export default function AlertsScreen() {
         }
     }, [alertData]);
 
-    // const toggleDismissed = async (alertId) => {
-    //     setAlertData((prevAlertData) => {
-    //         const newAlertData = prevAlertData.map((alert) => {
-    //             if (alert.$id === alertId) {
-    //                 return { ...alert, isDismissed: !alert.isDismissed };
-    //             }
-    //             return alert;
-    //         });
-
-    //         // Find the alert with the provided alertId
-    //         const alertToUpdate = newAlertData.find((alert) => alert.$id === alertId);
-    //         if (alertToUpdate) {
-    //             // Update the dismissed state of the notification in the file
-    //             updateAlertFile(alertId, alertToUpdate.isDismissed);
-    //         } else {
-    //             console.error(`Alert with ID ${alertId} not found.`);
-    //         }
-
-    //         return newAlertData;
-    //     });
-    // };
-
     const toggleDismissed = async (alertId) => {
         try {
-            // 1. Create a copy for immediate UI updates
+            //Create a copy for immediate UI updates
             const newAlertData = [...alertData];
 
-            // 2. Find the alert to update
             const alertIndex = newAlertData.findIndex((alert) => alert.$id === alertId);
 
-            if (alertIndex !== -1) {
-                // 3. Toggle the isDismissed property
+            if (alertIndex !== -1) { // if alert index exists
+
                 newAlertData[alertIndex].isDismissed = !newAlertData[alertIndex].isDismissed;
 
-                // 4. Update the state for UI changes
                 setAlertData(newAlertData);
 
-                // 5. Update the file system
                 await updateAlertFile(alertId, newAlertData[alertIndex].isDismissed);
             } else {
                 console.error(`Alert with ID ${alertId} not found.`);
@@ -254,7 +230,6 @@ export default function AlertsScreen() {
             console.error("Error toggling dismissed state:", error);
         }
     };
-
 
     const updateAlertFile = async (alertId, isDismissed) => {
         try {
@@ -268,26 +243,34 @@ export default function AlertsScreen() {
                 return alert;
             });
             await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(updatedData));
-            console.log("Data saved to file: ", fileUri);
+            console.log("Data saved to file:", fileUri);
         } catch (error) {
             console.error("Error updating alert file: ", error);
         }
     };
 
     const renderAlerts = (alerts) => {
+
+        if (showEditNotifications) {
+            alerts = fullList;
+        }
+
         return alerts.map((alert, index) => (
             <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
                 <View style={HomeStyle.alertCardContent}>
                     <Text style={HomeStyle.alertListTitle}>{alert.Title}</Text>
                     <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
                 </View>
-                <View style={HomeStyle.notificationEditIcons}>
-                    {showEditNotifications && (alert.isDismissed ?
-                        (<Ionicons name="eye" size={24} color={appSecondaryColor} onPress={() => toggleDismissed(alert.$id)} />)
-                        :
-                        (<Ionicons name="eye-off" size={24} color={appSecondaryColor} onPress={() => toggleDismissed(alert.$id)} />)
-                    )}
-                </View>
+                {showEditNotifications && (
+                    <View style={alert.isDismissed ? HomeStyle.notificationEditIconsFalse : HomeStyle.notificationEditIconsTrue}>
+                        <FontAwesome5
+                            name={alert.isDismissed ? "bell-slash" : "bell"}
+                            size={22}
+                            color={appSecondaryColor}
+                            onPress={() => toggleDismissed(alert.$id)}
+                        />
+                    </View>
+                )}
             </View>
         ));
     };
@@ -304,9 +287,10 @@ export default function AlertsScreen() {
                 (alert) => alert.NotificationType === filterId && !alert.isDismissed
             );
             setFilterList(filteredAlerts);
-            setFullList(filteredAlerts);
+            setFullList(alertData.filter((alert) => alert.NotificationType === filterId));
         }
     };
+
 
     const getNameAndRole = async () => {
         try {
@@ -321,7 +305,6 @@ export default function AlertsScreen() {
             setIsSignedIn(false);
         }
     };
-
 
     return (
         <SafeAreaView style={HomeStyle.alertContainer}>
@@ -346,23 +329,30 @@ export default function AlertsScreen() {
                 </View>
             ) : (
                 <ScrollView contentContainerStyle={[HomeStyle.scrollableView, { alignItems: "center" }]} showsVerticalScrollIndicator={false}>
-                    {filterList.length !== 0 ? (filterList.length > 0 ? renderAlerts(filterList) :
-                        (filterList.length === 0 && alertData.length === 0 && (
-                            <Text style={HomeStyle.noNotificationsMessage}>No {selectedCategory === "notifications" ? "notifications" : selectedCategory} at this time</Text>
-                        ))) : (renderAlerts(fullList))
-                    }
+                    {filterList.length > 0 ? (
+                        renderAlerts(filterList)
+                    ) : (
+                        <View>
+                            {selectedCategory === "notifications" ? (
+                                renderAlerts(alertData.filter((alert) => !alert.isDismissed))
+                            ) : (
+                                <Text style={HomeStyle.noNotificationsMessage}>
+                                    No new {selectedCategory === "notifications" ? "notifications" : selectedCategory} at this time
+                                </Text>
+                            )}
+                        </View>
+                    )}
                 </ScrollView>
             )}
 
 
-
             {isSignedIn && (profileRole.role == "admin") ?
-                (<TouchableOpacity style={HomeStyle.fab} onPress={
-                    () => navigation.navigate("PushNotificationScreen")}>
-                    <Feather name="plus" size={24} color={appPrimaryColor} />
-                </TouchableOpacity>
-
-                ) :
+                (
+                    <TouchableOpacity style={HomeStyle.fab} onPress={() => navigation.navigate("PushNotificationScreen")}>
+                        <Feather name="plus" size={24} color={appPrimaryColor} />
+                    </TouchableOpacity>
+                )
+                :
                 null
             }
         </SafeAreaView>

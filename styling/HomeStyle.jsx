@@ -427,7 +427,10 @@ export default StyleSheet.create({
         marginHorizontal: "1%",
         marginVertical: "2%"
     },
-    notificationEditIcons: {
+    notificationEditIconsTrue: {
+        marginRight: "3%"
+    },
+    notificationEditIconsFalse: {
         marginRight: "2%"
     },
     alertListTitle: {
