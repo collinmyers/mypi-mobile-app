@@ -39,7 +39,66 @@ export default function AlertsScreen() {
     useEffect(() => {
         // Function to handle real-time updates
         const handleSubscription = async () => {
-            await fetchData();
+            try {
+                await fetchData();
+
+                // Update alertData and fullList states when real-time changes occur
+                const updatedAlerts = await database.listDocuments(DATABASE_ID, ALERTS_COLLECTION_ID);
+                const fileUri = FileSystem.documentDirectory + "alertsCard.json";
+                let fileContents;
+                try {
+                    fileContents = await FileSystem.readAsStringAsync(fileUri);
+                } catch (error) {
+                    // If the file doesn't exist, initialize with an empty array
+                    fileContents = "[]";
+                }
+                const localData = JSON.parse(fileContents);
+                const existingAlertsMap = new Map(localData.map((alert) => [alert.$id, alert.isDismissed]));
+                const updatedData = updatedAlerts.documents.map((newAlert) => {
+                    const isDismissed = existingAlertsMap.get(newAlert.$id) || false;
+                    return { ...newAlert, isDismissed };
+                });
+
+                // Sort the notifications alphabetically by their name
+                updatedData.sort((a, b) => {
+                    const nameA = a.Title.toLowerCase();
+                    const nameB = b.Title.toLowerCase();
+
+                    const splitA = nameA.match(/(\D+|\d+)/g);
+                    const splitB = nameB.match(/(\D+|\d+)/g);
+
+                    for (let i = 0; i < Math.max(splitA.length, splitB.length); i++) {
+                        if (i >= splitA.length) return -1;
+                        if (i >= splitB.length) return 1;
+
+                        const partA = splitA[i];
+                        const partB = splitB[i];
+
+                        if (!isNaN(partA) && !isNaN(partB)) {
+                            const numA = parseInt(partA);
+                            const numB = parseInt(partB);
+                            if (numA !== numB) {
+                                return numA - numB;
+                            }
+                        } else {
+                            if (partA !== partB) {
+                                return partA.localeCompare(partB);
+                            }
+                        }
+                    }
+
+                    return 0;
+                });
+
+                setAlertData(updatedData);
+                setFullList(updatedData);
+                await saveDataToFile(updatedData);
+
+                // Update filterList based on the current category
+                handleFilterById(selectedCategory);
+            } catch (error) {
+                console.error(error);
+            }
         };
 
         // Subscribe to real-time updates
@@ -194,7 +253,8 @@ export default function AlertsScreen() {
             unsubscribe();
         };
 
-    }, [alertData.length]);
+    }, []);
+
 
     useEffect(() => {
         if (alertData.length > 0) {
