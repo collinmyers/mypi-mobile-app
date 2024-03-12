@@ -85,7 +85,7 @@ export default function App() {
         try {
             const fileUri = FileSystem.documentDirectory + "expoPushToken.json";
             await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(data));
-            console.log("Data saved to file: ", fileUri);
+            console.log("Data saved to file:", fileUri);
         } catch (error) {
             console.error("Error saving data to file: ", error);
         }
