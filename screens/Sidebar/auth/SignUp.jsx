@@ -37,10 +37,10 @@ export default function SignUpScreen({ navigation }) {
 
         // Check each validation without immediately setting the error message
         if (!validateName(fullName)) {
-            validationErrors.push("Enter your full name");
+            validationErrors.push("Please enter your full name");
         }
         if (!validateEmail(email)) {
-            validationErrors.push("Enter a valid email");
+            validationErrors.push("Please enter a valid email");
         }
 
         const passwordError = validatePassword(password, confirmPassword);
@@ -74,7 +74,6 @@ export default function SignUpScreen({ navigation }) {
                 setIsActionOccuring(true);
 
                 if (!validateForm()) {
-                    setIsSnackbarVisible(true);
                     return;
                 }
 

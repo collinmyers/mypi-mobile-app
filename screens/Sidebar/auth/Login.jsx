@@ -28,12 +28,40 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [isActionOcurring, setIsActionOccuring] = useState(false);
 
+    const validateForm = () => {
+        const { email, password } = authentication;
+
+        let validationErrors = [];
+
+        if (email === "") {
+            validationErrors.push("Please enter an email");
+        }
+        if (password === "") {
+            validationErrors.push("Please enter a password");
+        }
+
+        if (validationErrors.length > 0) {
+            let snackbarMessage = "";
+            if (validationErrors.length > 1) {
+                snackbarMessage += "Multiple Errors:\n";
+            }
+            snackbarMessage += validationErrors.join("\n");
+
+            setErrorMessage(snackbarMessage);
+            setIsSnackbarVisible(true);
+            return false;
+        }
+    };
+
     const handleLogin = async () => {
 
         if (!isActionOcurring) {
             try {
                 setIsActionOccuring(true);
-
+                if (!validateForm()) {
+                    return;
+                }
+                
                 try {
                     await account.createEmailSession(`${authentication.email}`, `${authentication.password}`);
 
