@@ -7,8 +7,6 @@ import FoodTruckAdminScreen from "../../screens/Sidebar/FoodTruck";
 import FoodTruckShareScreen from "../../screens/Sidebar/FoodTruckShare";
 import FoodTruckUnshareScreen from "../../screens/Sidebar/FoodTruckUnshare";
 
-
-
 const Stack = createStackNavigator();
 
 export default function FoodTruckStackNavigator() {

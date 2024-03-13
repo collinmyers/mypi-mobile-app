@@ -16,7 +16,6 @@ ForgotPasswordScreen.propTypes = {
     }).isRequired,
 };
 
-
 export default function ForgotPasswordScreen({ navigation }) {
     const [email, setEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -66,8 +65,6 @@ export default function ForgotPasswordScreen({ navigation }) {
                 setIsActionOccuring(false);
             }
         }
-
-
     };
 
     return (

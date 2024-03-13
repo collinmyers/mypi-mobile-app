@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import * as FileSystem from "expo-file-system";
 
 export default function MapScreen() {

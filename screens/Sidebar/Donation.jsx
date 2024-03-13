@@ -6,7 +6,7 @@ import HomeStyle from "../../styling/HomeStyle";
 export default function DonationsScreen() {
     return (
         <SafeAreaView style={HomeStyle.donationsWebViewContainer}>
-            <WebView source={{ uri: "https://www.discoverpi.com/support" }} style={HomeStyle.donationsWebView} />
+            <WebView source={{ uri: process.env.EXPO_PUBLIC_DONATION_PROVIDER_LINK }} style={HomeStyle.donationsWebView} />
         </SafeAreaView>
     );
 }

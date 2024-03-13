@@ -1,9 +1,6 @@
 import { StyleSheet } from "react-native";
 import { appPrimaryColor, appTextColor, appWarningColor } from "../utils/colors/appColors";
 
-let headerColor = appPrimaryColor;
-
-
 export default StyleSheet.create({
     container: {
         flex: 1,
@@ -15,7 +12,7 @@ export default StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "flex-start",
         flexDirection: "row",
-        backgroundColor: headerColor,
+        backgroundColor: appPrimaryColor,
         paddingTop: 40,
         paddingBottom: 10,
     },

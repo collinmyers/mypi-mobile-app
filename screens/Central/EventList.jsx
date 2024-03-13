@@ -9,7 +9,7 @@ import HomeStyle from "../../styling/HomeStyle";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import * as FileSystem from "expo-file-system";
 import { parse } from "date-fns";
-import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appSecondaryColor } from "../../utils/colors/appColors";
 
 export default function EventListScreen() {
     const navigation = useNavigation();
@@ -211,7 +211,7 @@ export default function EventListScreen() {
                 </Pressable>
             );
         });
-        
+
     };
 
     return (

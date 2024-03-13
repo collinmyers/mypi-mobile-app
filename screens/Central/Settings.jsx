@@ -5,8 +5,8 @@ import { Card, RadioButton, Text } from "react-native-paper";
 import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
-import { saveNavigationPreference, getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
-import { appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
+import { saveNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
+import {appTertiaryColor } from "../../utils/colors/appColors";
 
 
 export default function SettingsScreen({ navigation }) {

@@ -21,20 +21,6 @@ Notifications.setNotificationHandler({
 });
 
 async function schedulePushNotification(notifTitle, notifBody) {
-    /*
-    Old cod for pushing notifications.  Would only push locally
-    */
-    // await Notifications.scheduleNotificationAsync({
-    //     content: {
-    //         title: notifTitle,
-    //         body: notifBody,
-    //     },
-    //     trigger: null, //Send immediately
-    //     presentation: {
-    //         style: "notification",
-    //     },
-    // });
-
 
     // Function parameters
     const params = {

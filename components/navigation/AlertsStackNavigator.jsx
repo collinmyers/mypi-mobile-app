@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import AlertsScreen from "../../screens/Central/Alerts";
 import PushNotificationScreen from "../../screens/Central/PushNotification";

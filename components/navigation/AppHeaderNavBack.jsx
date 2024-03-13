@@ -7,14 +7,12 @@ import { appQuarternaryColor } from "../../utils/colors/appColors";
 
 export default function AppHeaderNavBack() {
     const navigation = useNavigation();
-
-    let headerButtons = appQuarternaryColor;
-
+    
     return (
         <View style={AppStyle.drawerHeader}>
-            <Feather style={AppStyle.drawerMenuBar} name="menu" size={30} color={headerButtons} onPress={() => navigation.toggleDrawer()} />
+            <Feather style={AppStyle.drawerMenuBar} name="menu" size={30} color={appQuarternaryColor} onPress={() => navigation.toggleDrawer()} />
 
-            <Feather style={AppStyle.navBackButton} name="arrow-left" size={30} color={headerButtons} onPress={() => navigation.goBack()} />
+            <Feather style={AppStyle.navBackButton} name="arrow-left" size={30} color={appQuarternaryColor} onPress={() => navigation.goBack()} />
         </View>
     );
 }
