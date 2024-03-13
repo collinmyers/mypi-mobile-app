@@ -8,7 +8,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import Logo from "../../components/logo/AppLogo";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { appTextColor } from "../../utils/colors/appColors";
+import { appPrimaryColor } from "../../utils/colors/appColors";
 
 export default function Dashboard() {
 
@@ -55,7 +55,7 @@ export default function Dashboard() {
                 }
 
                 <TouchableOpacity style={HomeStyle.dashboardDonoOpac} onPress={() => { navigation.navigate("Donate"); }}>
-                    <MaterialIcons name="volunteer-activism" size={24} color={appTextColor} />
+                    <MaterialIcons name="volunteer-activism" size={24} color={appPrimaryColor} />
                     <Text style={HomeStyle.dashboardDonoText}>Donate Now</Text>
                 </TouchableOpacity>
             </View>

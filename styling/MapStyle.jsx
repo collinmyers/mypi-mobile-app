@@ -75,13 +75,6 @@ export default StyleSheet.create({
         color: appTextColor,
         flexShrink: 1
     },
-    poiListLatLon: {
-        textAlign: "left",
-        fontWeight: "bold",
-        fontSize: 14,
-        color: appTextColor,
-        marginVertical: "1%"
-    },
     poiListStatus: {
         fontSize: 14,
         color: appTextColor

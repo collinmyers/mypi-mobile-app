@@ -71,7 +71,7 @@ export default StyleSheet.create({
     },
     settingsSectionHeader: {
         alignSelf: "center",
-        color: appPrimaryColor,
+        color: appTextColor,
         fontWeight: "600",
         fontSize: 20,
         marginBottom: 10
@@ -204,7 +204,7 @@ export default StyleSheet.create({
     eventListTitle: {
         fontWeight: "600",
         fontSize: 18,
-        color: appPrimaryColor
+        color: appTextColor
     },
     eventListDate: {
         textAlign: "left",
