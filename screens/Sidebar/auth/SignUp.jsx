@@ -90,7 +90,7 @@ export default function SignUpScreen({ navigation }) {
 
                     navigation.navigate("Login");
                 } catch (error) {
-                    const emailExistsError = "AppwriteException: A user with the same email already exists in the current project."
+                    const emailExistsError = "AppwriteException: A user with the same email already exists in the current project.";
                     const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
 
                     switch (error.toString()) {
