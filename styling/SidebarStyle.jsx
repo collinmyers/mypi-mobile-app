@@ -23,6 +23,23 @@ export default StyleSheet.create({
         textAlign: "center",
         fontSize: 18
     },
+    UnshareLocationButtonOpac: {
+        fontSize: 20,
+        width: buttonWidth,
+        margin: "2%",
+        padding: 10,
+        borderRadius: 20,
+        color: appTextColor,
+        textAlign: "center",
+        flexDirection: "column",
+        backgroundColor: appTertiaryColor,
+        overflow: "hidden"
+    },
+    UnshareLocationText: {
+        color: appTextColor,
+        textAlign: "center",
+        fontSize: 18
+    },
     PickerDropdown: {
         width: deviceWidth * 0.5,
         backgroundColor: appPrimaryColor,
