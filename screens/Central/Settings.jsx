@@ -6,7 +6,7 @@ import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
 import { saveNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
-import {appTertiaryColor } from "../../utils/colors/appColors";
+import { appTertiaryColor } from "../../utils/colors/appColors";
 
 
 export default function SettingsScreen({ navigation }) {
@@ -43,8 +43,10 @@ export default function SettingsScreen({ navigation }) {
 
 
     const handleNavPreferenceChange = async (newPreference) => {
-        setIsNavModalVisible(false);
         setNavTypeChecked(newPreference);
+        setTimeout(() => {
+            setIsNavModalVisible(false);
+        }, 300);
         await saveNavigationPreference(newPreference);
     };
 

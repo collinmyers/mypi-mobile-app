@@ -76,13 +76,17 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                     navigation.navigate("Home");
 
                 } catch (error) {
-                    console.error(error);
                     const emailError = "AppwriteException: Invalid `email` param: Value must be a valid email address";
                     const passwordError = "AppwriteException: Invalid `password` param: Password must be at least 8 characters";
                     const credentialError = "AppwriteException: Invalid credentials. Please check the email and password.";
                     const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
+                    const alreadySignedInError = "AppwriteException: Creation of a session is prohibited when a session is active.";
 
                     switch (error.toString()) {
+                        case alreadySignedInError: // edge case to prevent e
+                            await account.deleteSessions("current");
+                            handleLogin();
+                            break;
                         case emailError:
                             setErrorMessage("Invalid username or password");
                             setIsSnackbarVisible(true);
