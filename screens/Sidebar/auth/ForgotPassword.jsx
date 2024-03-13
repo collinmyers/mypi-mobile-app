@@ -72,7 +72,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
     return (
         <SafeAreaView style={AppStyle.container}>
-            <KeyboardAvoidingComponent>
+            <KeyboardAvoidingComponent style={AuthStyle.keyboardAdj}>
                 <Logo style={AuthStyle.logo} />
 
                 <Card style={AuthStyle.card}>

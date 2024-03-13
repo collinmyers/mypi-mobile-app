@@ -1,11 +1,8 @@
 import { StyleSheet } from "react-native";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, appWarningColor, useAltUI } from "../utils/colors/appColors";
+import { appPrimaryColor, appTextColor, appWarningColor } from "../utils/colors/appColors";
 
-let headerColor = appSecondaryColor;
+let headerColor = appPrimaryColor;
 
-if (useAltUI) {
-    headerColor = appPrimaryColor;
-}
 
 export default StyleSheet.create({
     container: {

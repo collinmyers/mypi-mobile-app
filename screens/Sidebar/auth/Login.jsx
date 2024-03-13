@@ -29,16 +29,16 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
     const [isActionOcurring, setIsActionOccuring] = useState(false);
 
     const validateForm = () => {
-        const { email, password } = authentication;
 
         let validationErrors = [];
 
-        if (email === "") {
+        if (authentication.email === "") {
             validationErrors.push("Please enter an email");
         }
-        if (password === "") {
+        if (authentication.password === "") {
             validationErrors.push("Please enter a password");
         }
+        console.log(validationErrors);
 
         if (validationErrors.length > 0) {
             let snackbarMessage = "";
@@ -51,17 +51,20 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
             setIsSnackbarVisible(true);
             return false;
         }
+        return true;
     };
 
     const handleLogin = async () => {
 
+
         if (!isActionOcurring) {
             try {
                 setIsActionOccuring(true);
+
                 if (!validateForm()) {
                     return;
                 }
-                
+
                 try {
                     await account.createEmailSession(`${authentication.email}`, `${authentication.password}`);
 
@@ -73,6 +76,7 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                     navigation.navigate("Home");
 
                 } catch (error) {
+                    console.error(error);
                     const emailError = "AppwriteException: Invalid `email` param: Value must be a valid email address";
                     const passwordError = "AppwriteException: Invalid `password` param: Password must be at least 8 characters";
                     const credentialError = "AppwriteException: Invalid credentials. Please check the email and password.";

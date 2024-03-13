@@ -7,7 +7,7 @@ import { RadioButton, TextInput } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { database, functions, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
-import { appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
+import { appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 
 export const PUSH_NOTIFICATION_ID = process.env.EXPO_PUBLIC_PUSH_NOTIFICATION_FUNCTION_ID;
 
@@ -135,9 +135,9 @@ export default function PushNotificationScreen() {
                     placeholderTextColor='gray'
                     textColor={appSecondaryColor}
                     style={HomeStyle.notificatonMessage}
-                    underlineColor={appTertiaryColor}
-                    activeUnderlineColor={appTertiaryColor}
-                    selectionColor={appSecondaryColor}
+                    underlineColor={appQuarternaryColor}
+                    activeUnderlineColor={appQuarternaryColor}
+                    selectionColor={appQuarternaryColor}
                     returnKeyType="done"
                     blurOnSubmit={true}
                 />
@@ -151,9 +151,9 @@ export default function PushNotificationScreen() {
                     placeholderTextColor='gray'
                     textColor={appSecondaryColor}
                     style={HomeStyle.notificatonMessage}
-                    underlineColor={appTertiaryColor}
-                    activeUnderlineColor={appTertiaryColor}
-                    selectionColor={appSecondaryColor}
+                    underlineColor={appQuarternaryColor}
+                    activeUnderlineColor={appQuarternaryColor}
+                    selectionColor={appQuarternaryColor}
                     returnKeyType="done"
                     blurOnSubmit={true}
                 />

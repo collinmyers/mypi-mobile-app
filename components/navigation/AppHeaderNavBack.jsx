@@ -3,12 +3,12 @@ import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import AppStyle from "../../styling/AppStyle";
-import { appPrimaryColor, appQuarternary, appSecondaryColor, appTertiaryColor, useAltUI } from "../../utils/colors/appColors";
+import { appQuarternaryColor } from "../../utils/colors/appColors";
 
 export default function AppHeaderNavBack() {
     const navigation = useNavigation();
 
-    let headerButtons = appQuarternary;
+    let headerButtons = appQuarternaryColor;
 
     return (
         <View style={AppStyle.drawerHeader}>

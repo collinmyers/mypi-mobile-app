@@ -4,15 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 
 import AppStyle from "../../styling/AppStyle";
-import { appPrimary, appQuarternary, appSecondaryColor, appTertiaryColor, useAltUI } from "../../utils/colors/appColors";
+import {appQuarternaryColor } from "../../utils/colors/appColors";
 
 export default function AppHeader() {
     const navigation = useNavigation();
 
-    let menuColor = appTertiaryColor;
-    if (useAltUI){
-        menuColor = appQuarternary;
-    }
+    let menuColor = appQuarternaryColor;
+
 
     return (
         <View style={AppStyle.drawerHeader}>

@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { appPrimaryColor, appQuarternary, appSecondaryColor, appTertiaryColor, appTextColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../utils/colors/appColors";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -28,10 +28,13 @@ export default StyleSheet.create({
     changeMapOpac: {
         fontSize: 20,
         marginTop: "2%",
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 22.5,
         borderRadius: 20,
         zIndex: 1,
-        backgroundColor: appQuarternary,
+        backgroundColor: appQuarternaryColor,
+        borderWidth: .25,
+        borderColor: appSecondaryColor
     },
     changeMapText: {
         color: appTextColor,
@@ -41,10 +44,13 @@ export default StyleSheet.create({
         fontSize: 20,
         marginTop: "2%",
         marginBottom: "3%",
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         borderRadius: 20,
         zIndex: 1,
-        backgroundColor: appQuarternary,
+        backgroundColor: appQuarternaryColor,
+        borderWidth: .25,
+        borderColor: appSecondaryColor
     },
     changeListText: {
         color: appTextColor,
@@ -53,7 +59,9 @@ export default StyleSheet.create({
     poiCard: {
         width: deviceWidth * .9,
         marginBottom: "5%",
-        backgroundColor: appQuarternary,
+        backgroundColor: appSecondaryColor,
+        borderWidth: 1.25,
+        borderColor: appQuarternaryColor
     },
     poiCardContent: {
         flexDirection: "row",
@@ -118,18 +126,20 @@ export default StyleSheet.create({
         backgroundColor: appPrimaryColor,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: appQuarternary,
+        borderColor: appQuarternaryColor,
         padding: 10,
         elevation: 8,
     },
     mapSearchBar: {
         width: "90%",
         marginBottom: "3%",
-        backgroundColor: appQuarternary,
+        backgroundColor: appSecondaryColor,
+        borderWidth: 1.25,
+        borderColor: appQuarternaryColor,
         color: appTextColor
     },
     directionsIcon: {
-
+        
     }
 });
 

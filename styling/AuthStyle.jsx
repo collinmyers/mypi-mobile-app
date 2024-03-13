@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
-import { appPrimaryColor, appQuarternary, appSecondaryColor, appTertiaryColor, appTextColor } from "../utils/colors/appColors";
+import {appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../utils/colors/appColors";
+
 
 export default StyleSheet.create({
 
@@ -21,9 +22,9 @@ export default StyleSheet.create({
     },
 
     title: {
-        fontSize: 30,
-        color: appPrimaryColor,
-        fontWeight: "600",
+        fontSize: 28,
+        color: appTertiaryColor,
+        fontWeight: "500",
         marginBottom: 16,
     },
 
@@ -44,7 +45,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appQuarternary,
+        backgroundColor: appQuarternaryColor,
         overflow: "hidden"
     },
 
@@ -58,7 +59,7 @@ export default StyleSheet.create({
         marginTop: 10
     },
     additionalOptionsText: {
-        color: appTextColor,
+        color: appTertiaryColor,
         fontSize: 16
     }
 });

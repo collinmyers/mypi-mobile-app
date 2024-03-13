@@ -1,16 +1,10 @@
 import { Dimensions, Platform, StyleSheet } from "react-native";
-import { appPrimaryColor, appQuarternary, appSecondaryColor, appTertiaryColor, appTextColor, appWarningColor, useAltUI } from "../utils/colors/appColors";
+import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor, appWarningColor } from "../utils/colors/appColors";
 
 let fontSizeAlert = 16;
 
 if (Platform.OS === "android") {
     fontSizeAlert = 13;
-}
-
-let eventDateColor = appPrimaryColor;
-
-if (useAltUI) {
-    eventDateColor = appTertiaryColor;
 }
 
 const deviceWidth = Dimensions.get("window").width;
@@ -50,7 +44,7 @@ export default StyleSheet.create({
     // Dashboard title styling
     dbTitleText: {
         textAlign: "center",
-        color: appSecondaryColor,
+        color: appQuarternaryColor,
         fontSize: 24,
         marginBottom: 20,
     },
@@ -109,7 +103,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appTertiaryColor,
+        backgroundColor: appQuarternaryColor,
         overflow: "hidden"
     },
     changeInfoText: {
@@ -159,7 +153,7 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appTertiaryColor,
+        backgroundColor: appQuarternaryColor,
     },
     modalDeleteButton: {
         paddingHorizontal: 30,
@@ -192,6 +186,8 @@ export default StyleSheet.create({
         width: deviceWidth * .9,
         marginBottom: deviceWidth * .1,
         backgroundColor: appSecondaryColor,
+        borderWidth: 1.25,
+        borderColor: appQuarternaryColor
     },
     eventCardContent: {
 
@@ -202,6 +198,8 @@ export default StyleSheet.create({
         marginBottom: "5%",
         resizeMode: "cover",
         width: "100%",
+        borderWidth: .75,
+        borderColor: appQuarternaryColor
     },
     eventListTitle: {
         fontWeight: "600",
@@ -212,7 +210,7 @@ export default StyleSheet.create({
         textAlign: "left",
         fontWeight: "600",
         fontSize: 14,
-        color: eventDateColor,
+        color: appTertiaryColor,
         marginVertical: "1%"
     },
     eventListDescription: {
@@ -275,7 +273,9 @@ export default StyleSheet.create({
         padding: 10,
         paddingBottom: 0,
         backgroundColor: appSecondaryColor,
-        marginBottom: "15%"
+        marginBottom: "15%",
+        borderWidth: 1.25,
+        borderColor: appQuarternaryColor
     },
     eventDetailsCardContent: {
         alignItems: "center",
@@ -290,7 +290,7 @@ export default StyleSheet.create({
         textAlign: "center",
         fontSize: 14,
         fontWeight: "600",
-        color: eventDateColor,
+        color: appTertiaryColor,
         marginTop: "1%"
     },
     eventDetailsImage: {
@@ -299,13 +299,15 @@ export default StyleSheet.create({
         marginVertical: "10%",
         resizeMode: "cover",
         width: "100%",
+        borderWidth: .75,
+        borderColor: appQuarternaryColor
     },
     eventDetailsDescription: {
         color: appTextColor,
         fontSize: 16
     },
     homeButtonOpacity: {
-        backgroundColor: appQuarternary,
+        backgroundColor: appQuarternaryColor,
         paddingHorizontal: 30,
         paddingVertical: 10,
         marginVertical: "10%",
@@ -313,7 +315,7 @@ export default StyleSheet.create({
         fontSize: 20,
         borderRadius: 20,
         color: appTextColor,
-        overflow: "hidden"
+        overflow: "hidden",
     },
     homeButtonText: {
         color: appTextColor,
@@ -371,7 +373,7 @@ export default StyleSheet.create({
         textAlign: "center",
         flexDirection: "column",
         overflow: "hidden",
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appQuarternaryColor,
     },
     modalNavButton: {
         paddingVertical: 10,
@@ -403,10 +405,12 @@ export default StyleSheet.create({
         marginBottom: "2%",
     },
     alertButton: {
-        backgroundColor: appQuarternary,
+        backgroundColor: appQuarternaryColor,
         borderRadius: 25,
         marginTop: "2%",
         marginHorizontal: "1%",
+        borderWidth: .25,
+        borderColor: appSecondaryColor
     },
     alertButtonText: {
         color: appTextColor,
@@ -428,10 +432,10 @@ export default StyleSheet.create({
         marginVertical: "2%"
     },
     notificationEditIconsTrue: {
-        marginRight: "3%"
+        marginRight: "5%"
     },
     notificationEditIconsFalse: {
-        marginRight: "2%"
+        marginRight: "3.9%"
     },
     alertListTitle: {
         fontWeight: "700",
@@ -460,6 +464,8 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         backgroundColor: appSecondaryColor,
+        borderWidth: 1.25,
+        borderColor: appQuarternaryColor
     },
     dashboardDonoText: {
         color: appTextColor,
@@ -477,7 +483,9 @@ export default StyleSheet.create({
         paddingVertical: 10,
         borderRadius: 20,
         textAlign: "center",
-        backgroundColor: appTertiaryColor
+        backgroundColor: appQuarternaryColor,
+        borderWidth: .25,
+        borderColor: appSecondaryColor
     },
     pushNotifText: {
         color: appTextColor,
