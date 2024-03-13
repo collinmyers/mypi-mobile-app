@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appQuarternary, appSecondaryColor, appTertiaryColor, appTextColor } from "../utils/colors/appColors";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -31,7 +31,7 @@ export default StyleSheet.create({
         padding: 10,
         borderRadius: 20,
         zIndex: 1,
-        backgroundColor: appTertiaryColor,
+        backgroundColor: appQuarternary,
     },
     changeMapText: {
         color: appTextColor,
@@ -44,7 +44,7 @@ export default StyleSheet.create({
         padding: 10,
         borderRadius: 20,
         zIndex: 1,
-        backgroundColor: appTertiaryColor,
+        backgroundColor: appQuarternary,
     },
     changeListText: {
         color: appTextColor,
@@ -53,7 +53,7 @@ export default StyleSheet.create({
     poiCard: {
         width: deviceWidth * .9,
         marginBottom: "5%",
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appQuarternary,
     },
     poiCardContent: {
         flexDirection: "row",
@@ -118,14 +118,14 @@ export default StyleSheet.create({
         backgroundColor: appPrimaryColor,
         borderRadius: 10,
         borderWidth: 2,
-        borderColor: appSecondaryColor,
+        borderColor: appQuarternary,
         padding: 10,
         elevation: 8,
     },
     mapSearchBar: {
         width: "90%",
         marginBottom: "3%",
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appQuarternary,
         color: appTextColor
     },
     directionsIcon: {

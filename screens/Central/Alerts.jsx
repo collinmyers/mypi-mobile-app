@@ -7,7 +7,7 @@ import { Query } from "appwrite";
 import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
 import { useNavigation } from "@react-navigation/native";
-import { appPrimaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appQuarternary, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
@@ -263,7 +263,7 @@ export default function AlertsScreen() {
                         <FontAwesome5
                             name={alert.isDismissed ? "bell-slash" : "bell"}
                             size={22}
-                            color={appSecondaryColor}
+                            color={appQuarternary}
                             onPress={() => toggleDismissed(alert.$id)}
                         />
                     </View>

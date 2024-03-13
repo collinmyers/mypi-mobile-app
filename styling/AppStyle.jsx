@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, useAltUI } from "../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, appWarningColor, useAltUI } from "../utils/colors/appColors";
 
 let headerColor = appSecondaryColor;
 
@@ -37,7 +37,7 @@ export default StyleSheet.create({
         width: "100%",
     },
     snackBar: {
-        backgroundColor: appSecondaryColor,
+        backgroundColor: appWarningColor,
         color: appTextColor
     },
     appHeaderEdit: {

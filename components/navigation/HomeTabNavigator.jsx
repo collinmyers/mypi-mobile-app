@@ -5,28 +5,20 @@ import DashboardScreen from "../../screens/Central/Dashboard";
 import SettingsStackNavigator from "./SettingsStackNavigator";
 import EventsStackNavigator from "./EventsStackNavigator";
 import MapStackNavigator from "./MapStackNavigator";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, useAltUI } from "../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import Menu from "./AppHeader";
 import AlertsStackNavigator from "./AlertsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
 export default function HomeTabNavigator() {
-
-    let TabTopBorderWidth = 0;
-    let TabBackgroundColor = appSecondaryColor;
+    
+    let TabTopBorderWidth = 1;
     let TabTopBorderColor = appSecondaryColor;
+    let TabBackgroundColor = appPrimaryColor;
     let TabActiveTextColor = appTertiaryColor;
-    let TabInactiveTextColor = appPrimaryColor;
-    let TabIconInactiveIconColor = appPrimaryColor;
-
-    if (useAltUI) {
-        TabTopBorderWidth = 1;
-        TabBackgroundColor = appPrimaryColor;
-        TabActiveTextColor = appTertiaryColor;
-        TabInactiveTextColor = appSecondaryColor;
-        TabIconInactiveIconColor = appSecondaryColor;
-    }
+    let TabInactiveTextColor = appSecondaryColor;
+    let TabIconInactiveIconColor = appSecondaryColor;
 
     return (
         <Tab.Navigator

@@ -1,5 +1,5 @@
 import { Dimensions, Platform, StyleSheet } from "react-native";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor, appWarningColor, useAltUI } from "../utils/colors/appColors";
+import { appPrimaryColor, appQuarternary, appSecondaryColor, appTertiaryColor, appTextColor, appWarningColor, useAltUI } from "../utils/colors/appColors";
 
 let fontSizeAlert = 16;
 
@@ -305,7 +305,7 @@ export default StyleSheet.create({
         fontSize: 16
     },
     homeButtonOpacity: {
-        backgroundColor: appTertiaryColor,
+        backgroundColor: appQuarternary,
         paddingHorizontal: 30,
         paddingVertical: 10,
         marginVertical: "10%",
@@ -403,7 +403,7 @@ export default StyleSheet.create({
         marginBottom: "2%",
     },
     alertButton: {
-        backgroundColor: appTertiaryColor,
+        backgroundColor: appQuarternary,
         borderRadius: 25,
         marginTop: "2%",
         marginHorizontal: "1%",
@@ -459,7 +459,7 @@ export default StyleSheet.create({
         borderRadius: 20,
         color: appTextColor,
         textAlign: "center",
-        backgroundColor: appTertiaryColor,
+        backgroundColor: appSecondaryColor,
     },
     dashboardDonoText: {
         color: appTextColor,
