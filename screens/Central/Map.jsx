@@ -58,7 +58,7 @@ export default function MapScreen() {
                     );
                     response.documents = nextResponse.documents;
                 }
-
+                // TODO: Strip sensitive info
                 setMarkersData(allMarkers);
                 await saveDataToFile(allMarkers); // Save fetched data to file
             } catch (error) {
