@@ -24,7 +24,6 @@ async function schedulePushNotification(notifTitle, notifBody) {
 
     // Function parameters
     const params = {
-        expoPushTokens: ["ExponentPushToken[pRdun1GsDANPqMGFK_3-8f]", "ExponentPushToken[GylkgQPPh8DANHEcWbKN9K]"], //FUTURE UPDATE: ALL EXPO TOKENS GO HERE
         title: notifTitle,
         body: notifBody
     };
@@ -36,6 +35,7 @@ async function schedulePushNotification(notifTitle, notifBody) {
             false,
             "/",
             "POST",
+            params
         );
         console.log(execution);
     } catch (err) {
