@@ -87,7 +87,7 @@ export default function MapList() {
 
                     return 0;
                 });
-
+                // TODO: Strip sensitive info
                 setPointData(allPoints);
                 await saveDataToFile(allPoints); // Save fetched data to file
             } catch (error) {
