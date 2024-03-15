@@ -31,7 +31,7 @@ export const subscribeToRealTimeUpdates = (handleSubscription, CURRENT_COLLECTIO
     );
 
     // Return unsubscribe function
-    return unsubscribe;
+    return unsubscribe; // TODO: this may need removed
 };
 
 export default client; // default export use the word client when exporting
