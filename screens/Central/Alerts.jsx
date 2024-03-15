@@ -239,7 +239,10 @@ export default function AlertsScreen() {
         }
     };
 
+    // TODO: Fix notification age issue
     const notificationAge = (dateTime) => {
+        // console.log(dateTime);
+        // console.log(localDateTime);
         const secondsDifference = differenceInSeconds(localDateTime, dateTime);
         const days = Math.floor(secondsDifference / (24 * 60 * 60));
 
