@@ -12,6 +12,8 @@ import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 import { useRoute } from "@react-navigation/native";
+import { differenceInSeconds } from "date-fns";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function AlertsScreen() {
 
@@ -22,6 +24,7 @@ export default function AlertsScreen() {
 
     const PAGE_SIZE = 25;
 
+    const [localDateTime, setLocalDateTime] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState("notifications");
     const [isLoading, setIsLoading] = useState(true);
     const [isSignedIn, setIsSignedIn] = useState(false);
@@ -31,6 +34,15 @@ export default function AlertsScreen() {
     const [profileRole, setProfileRole] = useState({
         role: "",
     });
+
+
+    useFocusEffect(React.useCallback(() => {
+        const currentDate = new Date();
+        const localTimeZoneOffset = currentDate.getTimezoneOffset() * 60 * 1000;
+        const localDateTime = new Date(currentDate.getTime() - localTimeZoneOffset);
+
+        setLocalDateTime(localDateTime);
+    }, []));
 
     useEffect(() => {
         handleFilterById(selectedCategory);
@@ -96,41 +108,17 @@ export default function AlertsScreen() {
                     offset += PAGE_SIZE;
                 } while (response.documents.length > 0);
 
-
-                // Sort the notifications alphabetically by their name
-                allAlerts.sort((a, b) => {
-                    const nameA = a.Title.toLowerCase();
-                    const nameB = b.Title.toLowerCase();
-
-                    const splitA = nameA.match(/(\D+|\d+)/g);
-                    const splitB = nameB.match(/(\D+|\d+)/g);
-
-                    for (let i = 0; i < Math.max(splitA.length, splitB.length); i++) {
-                        if (i >= splitA.length) return -1;
-                        if (i >= splitB.length) return 1;
-
-                        const partA = splitA[i];
-                        const partB = splitB[i];
-
-                        if (!isNaN(partA) && !isNaN(partB)) {
-                            const numA = parseInt(partA);
-                            const numB = parseInt(partB);
-                            if (numA !== numB) {
-                                return numA - numB;
-                            }
-                        } else {
-                            if (partA !== partB) {
-                                return partA.localeCompare(partB);
-                            }
-                        }
-                    }
-
-                    return 0;
-                });
-
                 const updatedAlerts = allAlerts.map((newAlert) => {
                     const isDismissed = existingAlertsMap.get(newAlert.$id) || false;
-                    return { ...newAlert, isDismissed };
+                    const updatedAlert = { ...newAlert, isDismissed };
+
+                    delete updatedAlert.$collectionId;
+                    delete updatedAlert.$databaseId;
+                    delete updatedAlert.$permissions;
+                    delete updatedAlert.$updatedAt;
+                    delete updatedAlert.AlertType;
+
+                    return updatedAlert;
                 });
 
                 setAlertData(updatedAlerts);
@@ -251,6 +239,27 @@ export default function AlertsScreen() {
         }
     };
 
+    const notificationAge = (dateTime) => {
+        const secondsDifference = differenceInSeconds(localDateTime, dateTime);
+        const days = Math.floor(secondsDifference / (24 * 60 * 60));
+
+        if (days > 0) {
+            return `${days}d`;
+        }
+
+        const hours = Math.floor(secondsDifference / (60 * 60));
+        if (hours > 0) {
+            return `${hours}h`;
+        }
+
+        const minutes = Math.floor(secondsDifference / 60);
+        if (minutes > 0) {
+            return `${minutes}m`;
+        }
+
+        return "now";
+    };
+
     const renderAlerts = (alerts) => {
         return alerts.map((alert, index) => (
             <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
@@ -258,6 +267,14 @@ export default function AlertsScreen() {
                     <Text style={HomeStyle.alertListTitle}>{alert.Title}</Text>
                     <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
                 </View>
+
+                {!showEditNotifications && (<View style={HomeStyle.notificationAgeContainer}>
+                    <Text style={HomeStyle.notificationAge}>
+                        {notificationAge(alert.$createdAt)}
+                    </Text>
+                </View>)
+                }
+
                 {showEditNotifications && (
                     <View style={alert.isDismissed ? HomeStyle.notificationEditIconsFalse : HomeStyle.notificationEditIconsTrue}>
                         <FontAwesome5

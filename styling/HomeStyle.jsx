@@ -573,4 +573,12 @@ export default StyleSheet.create({
         marginBottom: "5%",
         backgroundColor: appPrimaryColor
     },
+    notificationAgeContainer:{
+        alignItems: "center",
+        marginHorizontal: "2%"
+    },
+    notificationAge: {
+        fontWeight: 400,
+        color: appQuarternaryColor
+    },
 });
