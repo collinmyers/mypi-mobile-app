@@ -38,7 +38,6 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
         if (authentication.password === "") {
             validationErrors.push("Please enter a password");
         }
-        console.log(validationErrors);
 
         if (validationErrors.length > 0) {
             let snackbarMessage = "";
