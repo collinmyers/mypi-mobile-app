@@ -37,11 +37,7 @@ export default function AlertsScreen() {
 
 
     useFocusEffect(React.useCallback(() => {
-        const currentDate = new Date();
-        const localTimeZoneOffset = currentDate.getTimezoneOffset() * 60 * 1000;
-        const localDateTime = new Date(currentDate.getTime() - localTimeZoneOffset);
-
-        setLocalDateTime(localDateTime);
+        setLocalDateTime(new Date());
     }, []));
 
     useEffect(() => {
@@ -120,6 +116,9 @@ export default function AlertsScreen() {
 
                     return updatedAlert;
                 });
+
+                // Sort to show newest notifications first
+                updatedAlerts.sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
 
                 setAlertData(updatedAlerts);
                 setFullList(updatedAlerts);
@@ -239,11 +238,9 @@ export default function AlertsScreen() {
         }
     };
 
-    // TODO: Fix notification age issue
     const notificationAge = (dateTime) => {
-        // console.log(dateTime);
-        // console.log(localDateTime);
         const secondsDifference = differenceInSeconds(localDateTime, dateTime);
+
         const days = Math.floor(secondsDifference / (24 * 60 * 60));
 
         if (days > 0) {
