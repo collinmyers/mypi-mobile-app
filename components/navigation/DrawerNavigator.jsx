@@ -9,7 +9,7 @@ import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./AuthStackNavigator";
 import { account } from "../../utils/Config/appwriteConfig";
-import { appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
 
 import { Entypo, Ionicons, AntDesign, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -105,10 +105,13 @@ export default function DrawerNavigator() {
                     drawerLabelStyle: {
                         color: appTextColor,
                         fontSize: 20,
+
                     },
                     drawerActiveBackgroundColor: "none",
                     drawerStyle: {
                         backgroundColor: appSecondaryColor,
+                        borderRightWidth: 2,
+                        borderRightColor: appQuarternaryColor
                     }
                 }}
             >
