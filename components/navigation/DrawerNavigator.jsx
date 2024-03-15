@@ -203,7 +203,7 @@ export default function DrawerNavigator() {
                                 <MaterialCommunityIcons
                                     name="food-hot-dog"
                                     size={24}
-                                    color={appTertiaryColor}
+                                    color={focused ? appPrimaryColor : appTertiaryColor}
                                 />
                         }}
                     />
