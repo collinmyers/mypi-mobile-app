@@ -9,7 +9,7 @@ import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./AuthStackNavigator";
 import { account } from "../../utils/Config/appwriteConfig";
-import { appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
 
 import { Entypo, Ionicons, AntDesign, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -82,10 +82,15 @@ export default function DrawerNavigator() {
                             color: appTextColor,
                             fontSize: 20,
                         }}
-                        icon={() => (<Ionicons name="person-circle" size={24} color={appTertiaryColor} />)}
-
+                        icon={({ focused }) => (
+                            <Ionicons
+                                name="person-circle"
+                                size={24}
+                                color={focused ? appPrimaryColor : appTertiaryColor}
+                            />
+                        )
+                        }
                         onPress={handleLogout} />
-
                 )}
                 <DrawerItemList {...props} />
             </DrawerContentScrollView>
@@ -122,13 +127,71 @@ export default function DrawerNavigator() {
                         component={AuthStackWithLoginSuccess}
                         options={{
                             header: () => { false; },
-                            drawerIcon: () => <Ionicons name="person-circle" size={24} color={appTertiaryColor} />
+                            drawerIcon: ({ focused }) =>
+                                <Ionicons
+                                    name="person-circle"
+                                    size={24}
+                                    color={focused ? appPrimaryColor : appTertiaryColor}
+                                />
                         }} />
                 )}
-                <Drawer.Screen name="Home" component={HomeTabNavigator} options={{ header: () => false, drawerIcon: () => <Entypo name="home" size={24} color={appTertiaryColor} /> }} />
-                <Drawer.Screen name="Donate" component={DonationsScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="volunteer-activism" size={24} color={appTertiaryColor} /> }} />
-                <Drawer.Screen name="FAQ" component={FAQScreen} options={{ header: () => <Menu />, drawerIcon: () => <AntDesign name="infocirlce" size={24} color={appTertiaryColor} /> }} />
-                <Drawer.Screen name="Park Info" component={ParkInfoScreen} options={{ header: () => <Menu />, drawerIcon: () => <MaterialIcons name="park" size={24} color={appTertiaryColor} /> }} />
+
+                <Drawer.Screen
+                    name="Home"
+                    component={HomeTabNavigator}
+                    options={{
+                        headerShown: false,
+                        drawerIcon: ({ focused }) => (
+                            <Entypo
+                                name="home"
+                                size={24}
+                                color={focused ? appPrimaryColor : appTertiaryColor}
+                            />
+                        )
+                    }}
+                />
+
+                <Drawer.Screen
+                    name="Donate"
+                    component={DonationsScreen}
+                    options={{
+                        header: () => <Menu />,
+                        drawerIcon: ({ focused }) =>
+                            <MaterialIcons
+                                name="volunteer-activism"
+                                size={24}
+                                color={focused ? appPrimaryColor : appTertiaryColor}
+                            />
+                    }}
+                />
+
+                <Drawer.Screen
+                    name="FAQ"
+                    component={FAQScreen}
+                    options={{
+                        header: () => <Menu />,
+                        drawerIcon: ({ focused }) =>
+                            <AntDesign
+                                name="infocirlce"
+                                size={24}
+                                color={focused ? appPrimaryColor : appTertiaryColor}
+                            />
+                    }}
+                />
+
+                <Drawer.Screen
+                    name="Park Info"
+                    component={ParkInfoScreen}
+                    options={{
+                        header: () => <Menu />,
+                        drawerIcon: ({ focused }) =>
+                            <MaterialIcons
+                                name="park"
+                                size={24}
+                                color={focused ? appPrimaryColor : appTertiaryColor}
+                            />
+                    }}
+                />
 
                 {isSignedIn && ((profileRole.role == "admin") || (profileRole.role == "foodtruck")) ?
                     (<Drawer.Screen
@@ -136,8 +199,14 @@ export default function DrawerNavigator() {
                         component={FoodTruckStackNavigator}
                         options={{
                             header: () => { false; },
-                            drawerIcon: () => <MaterialCommunityIcons name="food-hot-dog" size={24} color={appTertiaryColor} />
-                        }} />
+                            drawerIcon: ({ focused }) =>
+                                <MaterialCommunityIcons
+                                    name="food-hot-dog"
+                                    size={24}
+                                    color={appTertiaryColor}
+                                />
+                        }}
+                    />
 
                     ) :
                     null
