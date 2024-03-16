@@ -108,7 +108,7 @@ export default function PushNotificationScreen() {
 
     }
 
-    // make sure to see what max length of title and message field is to set limits
+    // TODO: make sure to see what max length of title and message field is to set limits
     return (
         <SafeAreaView style={HomeStyle.alertContainer}>
             <ScrollView>
