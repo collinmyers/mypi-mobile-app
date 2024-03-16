@@ -178,7 +178,7 @@ export default function ManageAlertsScreen() {
     };
 
     DeleteConfirmationModal.propTypes = {
-        documentID: PropTypes.string.isRequired,
+        documentID: PropTypes.string,
     };
 
     const goToEditScreen = (index) => {
