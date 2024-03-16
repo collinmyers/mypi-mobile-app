@@ -1,6 +1,6 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import { Modal, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
@@ -11,8 +11,9 @@ import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import { MaterialCommunityIcons, FontAwesome6, FontAwesome } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 import { useFocusEffect } from "@react-navigation/native";
+import PropTypes from "prop-types";
 
-export default function AlertsScreen() {
+export default function ManageAlertsScreen() {
 
     const navigation = useNavigation();
 
@@ -21,7 +22,8 @@ export default function AlertsScreen() {
     const [isLoading, setIsLoading] = useState(true);
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [alertData, setAlertData] = useState([]);
-    // const [fullList, setFullList] = useState([]);
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+    const [selectedDocumentId, setSelectedDocumentId] = useState(null);
     const [profileRole, setProfileRole] = useState({
         role: "",
     });
@@ -60,7 +62,6 @@ export default function AlertsScreen() {
                 allAlerts.sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
 
                 setAlertData(allAlerts);
-                // setFullList(allAlerts);
                 await saveDataToFile(allAlerts); // Save fetched data to file
             } catch (error) {
                 console.error(error);
@@ -85,11 +86,9 @@ export default function AlertsScreen() {
                 const data = JSON.parse(fileContents);
                 console.log("Data loaded from file:", fileUri);
                 setAlertData(data);
-                // setFullList(data);
             } catch (error) {
                 console.error("Error reading data from file: ", error);
                 setAlertData([]);
-                // setFullList([]);
             }
         };
 
@@ -133,6 +132,55 @@ export default function AlertsScreen() {
         }
     }, [alertData]);
 
+    const handleDeleteNotification = async (documentID) => {
+        try {
+            await database.deleteDocument(DATABASE_ID, ALERTS_COLLECTION_ID, documentID);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const showDeleteModal = (documentID) => {
+        setSelectedDocumentId(documentID);
+        setIsDeleteModalVisible(true);
+    };
+
+    const DeleteConfirmationModal = ({ documentID }) => {
+        return (
+            <Modal visible={isDeleteModalVisible} transparent>
+                <View style={HomeStyle.modalContainer}>
+                    <View style={HomeStyle.modalContentContainer}>
+                        <Text style={HomeStyle.modalText}>Are you sure you want to delete the notification?</Text>
+                        <View style={HomeStyle.deleteNotificationsButtonContainer}>
+                            <TouchableOpacity onPress={() => setIsDeleteModalVisible(false)} style={HomeStyle.modalCancelButton}>
+                                <Text style={HomeStyle.modalButtonText}>Cancel</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                handleDeleteNotification(documentID);
+                                setIsDeleteModalVisible(false);
+                                setSelectedDocumentId(null);
+                            }} style={HomeStyle.modalDeleteButton}>
+                                <Text style={HomeStyle.modalButtonText}>Delete</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+        );
+    };
+
+    DeleteConfirmationModal.propTypes = {
+        documentID: PropTypes.string.isRequired,
+    };
+
+    const goToEditScreen = (index) => {
+        navigation.navigate("EditNotificationScreen", {
+            DocumentID: alertData[index].$id,
+            Title: alertData[index].Title,
+            Body: alertData[index].Details,
+            Category: alertData[index].NotificationType
+        });
+    };
 
     const renderAlerts = (alerts) => {
         return alerts.map((alert, index) => (
@@ -142,10 +190,9 @@ export default function AlertsScreen() {
                     <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
                 </View>
                 <View style={HomeStyle.manageNotification}>
-                    <FontAwesome6 style={HomeStyle.manageEdit} name="pencil" size={24} color={appQuarternaryColor} />
-                    <FontAwesome style={HomeStyle.manageDelete} name="trash-o" size={26} color={appWarningColor} />
+                    <FontAwesome6 style={HomeStyle.manageEdit} name="pencil" size={26} color={appQuarternaryColor} onPress={() => goToEditScreen(index)} />
+                    <FontAwesome style={HomeStyle.manageDelete} name="trash-o" size={30} color={appWarningColor} onPress={() => showDeleteModal(alert.$id)} />
                 </View>
-
             </View>
         ));
     };
@@ -167,7 +214,6 @@ export default function AlertsScreen() {
 
     return (
         <SafeAreaView style={HomeStyle.alertContainer}>
-
             {isLoading ? (
                 <View style={HomeStyle.loadingContainer}>
                     <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
@@ -187,6 +233,7 @@ export default function AlertsScreen() {
                 :
                 null
             }
+            <DeleteConfirmationModal documentID={selectedDocumentId} />
         </SafeAreaView>
     );
 }

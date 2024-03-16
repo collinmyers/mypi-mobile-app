@@ -585,14 +585,22 @@ export default StyleSheet.create({
     },
     manageNotification: {
         flexDirection: "row",
+        marginLeft: "1%",
+        justifyContent: "center",
+        alignItems: "center"
 
     },
     manageEdit: {
-        paddingHorizontal: "2%",
-        marginRight: "2%"
+        paddingHorizontal: "3%",
+        marginHorizontal: "1%",
     },
     manageDelete: {
-        paddingLeft: "3%",
+        paddingHorizontal: "3%",
         marginRight: "1%"
+    },
+    deleteNotificationsButtonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        width: "90%"
     }
 });

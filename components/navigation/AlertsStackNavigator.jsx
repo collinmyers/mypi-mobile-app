@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import AlertsScreen from "../../screens/Central/Alerts";
 import PushNotificationScreen from "../../screens/Central/PushNotification";
 import ManageNotficationsScreen from "../../screens/Central/ManageNotifications";
+import EditNotificationScreen from "../../screens/Central/EditNotification";
 import MenuBack from "./AppHeaderNavBack";
 import MenuEditNotification from "./AppHeaderEditNotifications";
 import { appPrimaryColor } from "../../utils/colors/appColors";
@@ -33,6 +34,14 @@ export default function AlertsStackNavigator() {
                 }}
             />
             <Stack.Screen name="ManageNotficationsScreen" component={ManageNotficationsScreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: "",
+                    headerStyle: { backgroundColor: appPrimaryColor },
+                    header: () => <MenuBack />
+                }}
+            />
+            <Stack.Screen name="EditNotificationScreen" component={EditNotificationScreen}
                 options={{
                     headerShown: true,
                     headerTitle: "",
