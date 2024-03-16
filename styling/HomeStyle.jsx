@@ -434,10 +434,10 @@ export default StyleSheet.create({
         marginVertical: "2%"
     },
     notificationEditIconsTrue: {
-        marginRight: "5%"
+        paddingRight: "5%"
     },
     notificationEditIconsFalse: {
-        marginRight: "3.9%"
+        paddingRight: "3.9%"
     },
     alertListTitle: {
         fontWeight: "700",
