@@ -61,7 +61,7 @@ export default function ManageAlertsScreen() {
                 // Sort to show newest notifications first
                 allAlerts.sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
 
-                allAlerts.forEach(alert => {
+                allAlerts.map((alert) => {
                     delete alert.$collectionId;
                     delete alert.$databaseId;
                     delete alert.$permissions;
