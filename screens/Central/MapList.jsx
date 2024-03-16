@@ -87,7 +87,14 @@ export default function MapList() {
 
                     return 0;
                 });
-                // TODO: Strip sensitive info
+
+                allPoints.map((point) => {
+                    delete point.$collectionId;
+                    delete point.$databaseId;
+                    delete point.$permissions;
+                    delete point.$updatedAt;
+                });
+                
                 setPointData(allPoints);
                 await saveDataToFile(allPoints); // Save fetched data to file
             } catch (error) {

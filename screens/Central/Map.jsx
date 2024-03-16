@@ -58,7 +58,14 @@ export default function MapScreen() {
                     );
                     response.documents = nextResponse.documents;
                 }
-                // TODO: Strip sensitive info
+
+                allMarkers.map((marker) => {
+                    delete marker.$collectionId;
+                    delete marker.$databaseId;
+                    delete marker.$permissions;
+                    delete marker.$updatedAt;
+                });
+
                 setMarkersData(allMarkers);
                 await saveDataToFile(allMarkers); // Save fetched data to file
             } catch (error) {
