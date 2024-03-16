@@ -583,4 +583,16 @@ export default StyleSheet.create({
         fontWeight: 400,
         color: appQuarternaryColor
     },
+    manageNotification: {
+        flexDirection: "row",
+
+    },
+    manageEdit: {
+        paddingHorizontal: "2%",
+        marginRight: "2%"
+    },
+    manageDelete: {
+        paddingLeft: "3%",
+        marginRight: "1%"
+    }
 });

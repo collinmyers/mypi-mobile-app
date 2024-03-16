@@ -9,7 +9,7 @@ import HomeStyle from "../../styling/HomeStyle";
 import { useNavigation } from "@react-navigation/native";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
-import { Feather, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, FontAwesome6 } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 import { useRoute } from "@react-navigation/native";
 import { differenceInSeconds } from "date-fns";
@@ -365,8 +365,8 @@ export default function AlertsScreen() {
 
             {isSignedIn && (profileRole.role == "admin") ?
                 (
-                    <TouchableOpacity style={HomeStyle.fab} onPress={() => navigation.navigate("PushNotificationScreen")}>
-                        <Feather name="plus" size={24} color={appPrimaryColor} />
+                    <TouchableOpacity style={HomeStyle.fab} onPress={() => navigation.navigate("ManageNotficationsScreen")}>
+                        <FontAwesome6 name="pencil" size={28} color={appPrimaryColor} />
                     </TouchableOpacity>
                 )
                 :
