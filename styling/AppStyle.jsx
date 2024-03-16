@@ -17,7 +17,7 @@ export default StyleSheet.create({
         paddingBottom: 10,
     },
     drawerMenuBar: {
-        padding: 10,
+        padding: 11,
         marginLeft: 10,
     },
     navBackButton: {
@@ -35,14 +35,14 @@ export default StyleSheet.create({
         color: appTextColor
     },
     appHeaderEdit: {
-        paddingHorizontal: 12,
+        paddingHorizontal: 16,
         paddingTop: 9,
         paddingBottom: 10,
         marginLeft: 10,
     },
     appHeaderEditDone: {
         padding: 10,
-        paddingHorizontal: 13,
+        paddingHorizontal: 17,
         marginLeft: 10,
     },
 });
