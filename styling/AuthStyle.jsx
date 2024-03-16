@@ -46,7 +46,9 @@ export default StyleSheet.create({
         textAlign: "center",
         flexDirection: "column",
         backgroundColor: appQuarternaryColor,
-        overflow: "hidden"
+        overflow: "hidden",
+        borderWidth: .20,
+        borderColor: "#004466"
     },
 
     buttonText: {

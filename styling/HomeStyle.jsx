@@ -316,11 +316,13 @@ export default StyleSheet.create({
         borderRadius: 20,
         color: appTextColor,
         overflow: "hidden",
+        borderWidth: .20,
+        borderColor: "#004466"
     },
     homeButtonText: {
         color: appTextColor,
         textAlign: "center",
-        fontSize: 15
+        fontSize: 15,
     },
     donationsWebViewContainer: {
         justifyContent: "center",
