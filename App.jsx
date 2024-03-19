@@ -12,9 +12,13 @@ export default function App() {
     if (!("localStorage" in window)) window.localStorage = storage;
 
     useEffect(() => {
+
+        let userID = null;
+
         const handleUserSession = async () => {
             try {
                 const authUserStatus = await account.get();
+                userID = authUserStatus.$id;
 
                 if (authUserStatus.email === "") console.log("User session already exists (guest user)");
 
@@ -50,7 +54,10 @@ export default function App() {
                     DATABASE_ID,
                     USER_NOTIFICATION_TOKENS,
                     ID.unique(),
-                    { ExpoPushToken: token }
+                    {
+                        ExpoPushToken: token,
+                        UID: userID
+                    }
                 );
                 createTokenDoc.then(function (response) {
                     console.log(response);
