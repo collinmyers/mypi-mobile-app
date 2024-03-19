@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
-import DropDownPicker from "react-native-dropdown-picker";
 import SidebarStyle from "../../styling/SidebarStyle";
-import { account } from "../../utils/Config/appwriteConfig";
+import { DATABASE_ID, USER_ALIAS_TABLE_ID, account, database } from "../../utils/Config/appwriteConfig";
+import { RadioButton } from "react-native-paper";
+import { appTertiaryColor } from "../../utils/colors/appColors";
+import { ScrollView } from "react-native-gesture-handler";
+import { Query } from "appwrite";
 
 export default function FoodTruckShareScreen() {
 
@@ -13,23 +16,17 @@ export default function FoodTruckShareScreen() {
     });
     const [isSignedIn, setIsSignedIn] = useState(false);
 
-    const [selectedLocation, setSelectedLocation] = useState("");
+    const [selectedLocation, setSelectedLocation] = useState("Beach1");
+
     const [truckName, setTruckName] = useState();
-    const [open, setOpen] = useState(false);
-    const locations = [
-        { label: "Beach 1", value: "beach1" },
-        { label: "Beach 6", value: "beach6" },
-        { label: "Beach 8", value: "beach8" },
-        { label: "Beach 11", value: "beach11" },
-        { label: "Perry Monument", value: "perryMonumnet" },
-        { label: "Vista 3", value: "vista3" },
-    ];
+    const [userID, setUserID] = useState("");
+    const [goodStatus, setGoodStatus] = useState(true);
 
 
     const shareLocation = async () => {
-        console.log(profileRole);
-        if (isSignedIn && (profileRole.role == "admin" || profileRole.role == "foodtruck")) {
+        if (isSignedIn && (profileRole.role == "admin" || profileRole.role == "foodtruck") && goodStatus) {
             console.log("hello");
+            console.log(truckName);
         }
 
     };
@@ -38,45 +35,129 @@ export default function FoodTruckShareScreen() {
 
         const checkAuthState = async () => {
             try {
-                const response = await account.get();
 
+                const response = await account.get();
                 if (response.email === "") throw new Error("Not a email user (guest)");
 
                 setProfileRole({
                     role: response.labels,
                 });
-
+                setUserID(response.$id);
                 setIsSignedIn(true);
 
             } catch {
                 setIsSignedIn(false);
+                setGoodStatus(false);
+            }
+
+        };
+
+        const getUserAlias = async () => {
+            // Get User Alias
+            const response = await database.listDocuments(
+                DATABASE_ID,
+                USER_ALIAS_TABLE_ID,
+                [
+                    Query.equal("UserID", [userID])
+                ]
+            );
+            if (response.documents.length > 0) {
+                setTruckName(response.documents.at(0).UserName);
+                setGoodStatus(true);
+            }
+            else {
+                setGoodStatus(false);
             }
         };
 
         checkAuthState();
-    }, []);
+        getUserAlias();
+
+    }, [userID]);
 
     return (
         <SafeAreaView style={AppStyle.container}>
 
             <View style={{ flexDirection: "center", justifyContent: "center" }}>
 
+                <ScrollView>
 
-                <DropDownPicker
-                    open={open}
-                    value={selectedLocation}
-                    items={locations}
-                    setOpen={setOpen}
-                    setValue={setSelectedLocation}
-                    setItems={null}
-                    placeholder="Select a location"
-                    style={SidebarStyle.PickerDropdown}
-                    dropDownContainerStyle={SidebarStyle.PickerDropdownContainer}
-                    textStyle={SidebarStyle.PickerDropdownText}
-                />
+                    <View style={SidebarStyle.radioGroup}>
 
+                        <View style={SidebarStyle.radio}>
+                            <RadioButton.Android
+                                value="Beach1"
+                                status={selectedLocation === "Beach1" ? "checked" : "unchecked"}
+                                onPress={() => setSelectedLocation("Beach1")}
+                                uncheckedColor={appTertiaryColor}
+                                color={appTertiaryColor}
+                                style={SidebarStyle.radioButtons}
+                            />
+                            <Text style={SidebarStyle.setRadioText}>Beach 1</Text>
+                        </View>
 
+                        <View style={SidebarStyle.radio}>
+                            <RadioButton.Android
+                                value="Beach6"
+                                status={selectedLocation === "Beach6" ? "checked" : "unchecked"}
+                                onPress={() => setSelectedLocation("Beach6")}
+                                uncheckedColor={appTertiaryColor}
+                                color={appTertiaryColor}
+                            />
+                            <Text style={SidebarStyle.setRadioText}>Beach 6</Text>
+                        </View>
 
+                        <View style={SidebarStyle.radio}>
+                            <RadioButton.Android
+                                value="Beach8"
+                                status={selectedLocation === "Beach8" ? "checked" : "unchecked"}
+                                onPress={() => setSelectedLocation("Beach8")}
+                                style={SidebarStyle.radioButtons}
+                                uncheckedColor={appTertiaryColor}
+                                color={appTertiaryColor}
+                            />
+                            <Text style={SidebarStyle.setRadioText}>Beach 8</Text>
+                        </View>
+
+                        <View style={SidebarStyle.radio}>
+                            <RadioButton.Android
+                                value="Beach11"
+                                status={selectedLocation === "Beach11" ? "checked" : "unchecked"}
+                                onPress={() => setSelectedLocation("Beach11")}
+                                style={SidebarStyle.radioButtons}
+                                uncheckedColor={appTertiaryColor}
+                                color={appTertiaryColor}
+                            />
+                            <Text style={SidebarStyle.setRadioText}>Beach 11</Text>
+                        </View>
+
+                        <View style={SidebarStyle.radio}>
+                            <RadioButton.Android
+                                value="PerryMonument"
+                                status={selectedLocation === "PerryMonument" ? "checked" : "unchecked"}
+                                onPress={() => setSelectedLocation("PerryMonument")}
+                                style={SidebarStyle.radioButtons}
+                                uncheckedColor={appTertiaryColor}
+                                color={appTertiaryColor}
+                            />
+                            <Text style={SidebarStyle.setRadioText}>Perry Monument</Text>
+                        </View>
+
+                        <View style={SidebarStyle.radio}>
+                            <RadioButton.Android
+                                value="Vista3"
+                                status={selectedLocation === "Vista3" ? "checked" : "unchecked"}
+                                onPress={() => setSelectedLocation("Vista3")}
+                                style={SidebarStyle.radioButtons}
+                                uncheckedColor={appTertiaryColor}
+                                color={appTertiaryColor}
+                            />
+                            <Text style={SidebarStyle.setRadioText}>Vista 3</Text>
+                        </View>
+
+                    </View>
+
+                </ScrollView>
 
                 <View style={{ paddingTop: 50 }}>
                     <TouchableOpacity style={SidebarStyle.ShareLocationButtonOpac} onPress={() => shareLocation()}>

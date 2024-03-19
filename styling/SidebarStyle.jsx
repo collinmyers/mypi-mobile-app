@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { appPrimaryColor, appTertiaryColor, appTextColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appTertiaryColor, appTextColor, appSecondaryColor } from "../utils/colors/appColors";
 
 
 const deviceWidth = Dimensions.get("window").width;
@@ -40,19 +40,34 @@ export default StyleSheet.create({
         textAlign: "center",
         fontSize: 18
     },
-    PickerDropdown: {
-        width: deviceWidth * 0.5,
-        backgroundColor: appPrimaryColor,
+    radio: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
     },
-    PickerDropdownContainer: {
-        borderColor: "#000000",
-        borderWidth: 1,
-        borderRadius: 5,
-        width: deviceWidth * 0.5,
+    radioGroup: {
+        alignSelf: "center",
+        justifyContent: "center",
+        width: "100%",
+        marginTop: "2%",
+        borderRadius: 8,
+        backgroundColor: "white",
+        padding: 20,
     },
-    PickerDropdownText: {
-        fontSize: 16,
-        color: "#000000",
+    radioButtons: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        marginTop: "2%",
+        marginBottom: "5%",
+
+    },
+
+    radioText: {
+        color: appSecondaryColor,
+    },
+    setRadioText: {
+        color: appSecondaryColor,
 
     },
     TextInputStyle: {
