@@ -223,6 +223,8 @@ export default function MapScreen() {
                 return "#33CC33";
             case "Amenities":
                 return "#9966CC";
+            case "FoodTruck":
+                return "#FF00CE";
             default:
                 return "#000000";
         }
@@ -236,6 +238,7 @@ export default function MapScreen() {
             "Information": "Information",
             "Parking": "Parking",
             "Restroom": "Restrooms",
+            "FoodTruck": "Food Truck",
         };
 
         return Object.keys(filterAliases).map((filter) => (
@@ -281,7 +284,7 @@ export default function MapScreen() {
                     <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
                 </View>
             ) : (
-                 fabVisible && (
+                fabVisible && (
                     <View style={MapStyle.filterOptionsContainer}>
                         {renderFilterCheckboxes()}
                     </View>

@@ -6,6 +6,12 @@ const deviceWidth = Dimensions.get("window").width;
 const buttonWidth = deviceWidth * .5;
 
 export default StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: appPrimaryColor,
+    },
     ShareLocationButtonOpac: {
         fontSize: 20,
         width: buttonWidth,
@@ -73,5 +79,9 @@ export default StyleSheet.create({
     TextInputStyle: {
         backgroundColor: appPrimaryColor,
         fontSize: 16
-    }
+    },
+    snackBar: {
+        backgroundColor: appSecondaryColor,
+        color: appTextColor,
+    },
 });

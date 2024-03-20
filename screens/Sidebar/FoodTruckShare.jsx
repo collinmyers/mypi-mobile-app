@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
-import { Text } from "react-native-paper";
-import AppStyle from "../../styling/AppStyle";
+import { Text, Snackbar } from "react-native-paper";
 import SidebarStyle from "../../styling/SidebarStyle";
-import { DATABASE_ID, USER_ALIAS_TABLE_ID, account, database } from "../../utils/Config/appwriteConfig";
+import { DATABASE_ID, FOOD_TRUCK_POI, MAP_COLLECTION_ID, USER_ALIAS_TABLE_ID, account, database } from "../../utils/Config/appwriteConfig";
 import { RadioButton } from "react-native-paper";
 import { appTertiaryColor } from "../../utils/colors/appColors";
 import { ScrollView } from "react-native-gesture-handler";
-import { Query } from "appwrite";
+import { ID, Query } from "appwrite";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function FoodTruckShareScreen() {
 
@@ -16,22 +16,73 @@ export default function FoodTruckShareScreen() {
     });
     const [isSignedIn, setIsSignedIn] = useState(false);
 
-    const [selectedLocation, setSelectedLocation] = useState("Beach1");
+    const [selectedLocation, setSelectedLocation] = useState("Beach 1");
 
     const [truckName, setTruckName] = useState();
     const [userID, setUserID] = useState("");
     const [goodStatus, setGoodStatus] = useState(true);
+    const [pointData, setPointData] = useState([]);
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+
+
+    const PAGE_SIZE = 25;
 
 
     const shareLocation = async () => {
+
+        //Function to find subjson inside of the big json
+        function findIndex(attribute, value) {
+            for (let i = 0; i < pointData.length; i++) {
+                if (pointData[i][attribute] === value) {
+                    return i;
+                }
+            }
+            return -1; // If the attribute is not found
+        }
+
         if (isSignedIn && (profileRole.role == "admin" || profileRole.role == "foodtruck") && goodStatus) {
-            console.log("hello");
-            console.log(truckName);
+            let index = findIndex("Name", selectedLocation);
+
+            try {
+                await database.createDocument(
+                    DATABASE_ID,
+                    MAP_COLLECTION_ID,
+                    ID.unique(),
+                    { Name: truckName, Latitude: pointData.at(index).Latitude + 0.00006, Longitude: pointData.at(index).Longitude + 0.00006, Status: "Open", Type: "FoodTruck" }
+                );
+                setIsSnackbarVisible(true);
+
+            } catch (error) {
+                console.error(error);
+            }
+
         }
 
     };
 
-    useEffect(() => {
+    const renderButtons = () => {
+        return pointData.map((point, index) => (
+
+            <View style={SidebarStyle.radio}
+                id={point.Name}
+                key={`${index}_${point.Name}`}
+            >
+                <RadioButton.Android
+                    value={point.Name}
+                    status={selectedLocation === point.Name ? "checked" : "unchecked"}
+                    onPress={() => setSelectedLocation(point.Name)}
+                    uncheckedColor={appTertiaryColor}
+                    color={appTertiaryColor}
+                    style={SidebarStyle.radioButtons}
+                />
+                <Text style={SidebarStyle.setRadioText}>{point.Name}</Text>
+            </View>
+
+        ));
+
+    };
+
+    useFocusEffect(React.useCallback(() => {
 
         const checkAuthState = async () => {
             try {
@@ -70,103 +121,84 @@ export default function FoodTruckShareScreen() {
             }
         };
 
+        const getLocations = async () => {
+            //Get locations that trucks can go to
+            try {
+                let offset = 0;
+                let allPoints = [];
+
+                const response = await database.listDocuments(
+                    DATABASE_ID,
+                    FOOD_TRUCK_POI,
+                    [Query.limit(PAGE_SIZE), Query.offset(offset)]
+                );
+
+                while (response.documents.length > 0) {
+                    allPoints = [...allPoints, ...response.documents];
+                    offset += PAGE_SIZE;
+                    const nextResponse = await database.listDocuments(
+                        DATABASE_ID,
+                        FOOD_TRUCK_POI,
+                        [Query.limit(PAGE_SIZE), Query.offset(offset)]
+                    );
+                    response.documents = nextResponse.documents;
+                }
+
+                allPoints.map((point) => {
+                    delete point.$collectionId;
+                    delete point.$databaseId;
+                    delete point.$permissions;
+                    delete point.$updatedAt;
+                });
+
+                setPointData(allPoints);
+
+
+            } catch (error) {
+                console.error(error);
+            }
+
+        };
+
+        getLocations();
         checkAuthState();
         getUserAlias();
 
-    }, [userID]);
+    }, [userID]));
 
     return (
-        <SafeAreaView style={AppStyle.container}>
+        <SafeAreaView style={SidebarStyle.container}>
 
-            <View style={{ flexDirection: "center", justifyContent: "center" }}>
+            <ScrollView>
 
-                <ScrollView>
+                <View style={SidebarStyle.radioGroup}>
 
-                    <View style={SidebarStyle.radioGroup}>
+                    {renderButtons()}
 
-                        <View style={SidebarStyle.radio}>
-                            <RadioButton.Android
-                                value="Beach1"
-                                status={selectedLocation === "Beach1" ? "checked" : "unchecked"}
-                                onPress={() => setSelectedLocation("Beach1")}
-                                uncheckedColor={appTertiaryColor}
-                                color={appTertiaryColor}
-                                style={SidebarStyle.radioButtons}
-                            />
-                            <Text style={SidebarStyle.setRadioText}>Beach 1</Text>
-                        </View>
-
-                        <View style={SidebarStyle.radio}>
-                            <RadioButton.Android
-                                value="Beach6"
-                                status={selectedLocation === "Beach6" ? "checked" : "unchecked"}
-                                onPress={() => setSelectedLocation("Beach6")}
-                                uncheckedColor={appTertiaryColor}
-                                color={appTertiaryColor}
-                            />
-                            <Text style={SidebarStyle.setRadioText}>Beach 6</Text>
-                        </View>
-
-                        <View style={SidebarStyle.radio}>
-                            <RadioButton.Android
-                                value="Beach8"
-                                status={selectedLocation === "Beach8" ? "checked" : "unchecked"}
-                                onPress={() => setSelectedLocation("Beach8")}
-                                style={SidebarStyle.radioButtons}
-                                uncheckedColor={appTertiaryColor}
-                                color={appTertiaryColor}
-                            />
-                            <Text style={SidebarStyle.setRadioText}>Beach 8</Text>
-                        </View>
-
-                        <View style={SidebarStyle.radio}>
-                            <RadioButton.Android
-                                value="Beach11"
-                                status={selectedLocation === "Beach11" ? "checked" : "unchecked"}
-                                onPress={() => setSelectedLocation("Beach11")}
-                                style={SidebarStyle.radioButtons}
-                                uncheckedColor={appTertiaryColor}
-                                color={appTertiaryColor}
-                            />
-                            <Text style={SidebarStyle.setRadioText}>Beach 11</Text>
-                        </View>
-
-                        <View style={SidebarStyle.radio}>
-                            <RadioButton.Android
-                                value="PerryMonument"
-                                status={selectedLocation === "PerryMonument" ? "checked" : "unchecked"}
-                                onPress={() => setSelectedLocation("PerryMonument")}
-                                style={SidebarStyle.radioButtons}
-                                uncheckedColor={appTertiaryColor}
-                                color={appTertiaryColor}
-                            />
-                            <Text style={SidebarStyle.setRadioText}>Perry Monument</Text>
-                        </View>
-
-                        <View style={SidebarStyle.radio}>
-                            <RadioButton.Android
-                                value="Vista3"
-                                status={selectedLocation === "Vista3" ? "checked" : "unchecked"}
-                                onPress={() => setSelectedLocation("Vista3")}
-                                style={SidebarStyle.radioButtons}
-                                uncheckedColor={appTertiaryColor}
-                                color={appTertiaryColor}
-                            />
-                            <Text style={SidebarStyle.setRadioText}>Vista 3</Text>
-                        </View>
-
-                    </View>
-
-                </ScrollView>
-
-                <View style={{ paddingTop: 50 }}>
-                    <TouchableOpacity style={SidebarStyle.ShareLocationButtonOpac} onPress={() => shareLocation()}>
-                        <Text style={SidebarStyle.ShareLocationText}>Share Location</Text>
-
-                    </TouchableOpacity>
                 </View>
 
+            </ScrollView>
+
+            <View style={{ paddingTop: 50 }}>
+                <TouchableOpacity style={SidebarStyle.ShareLocationButtonOpac} onPress={() => shareLocation()}>
+                    <Text style={SidebarStyle.ShareLocationText}>Share Location</Text>
+
+                </TouchableOpacity>
             </View>
+
+
+
+            <Snackbar
+                visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={SidebarStyle.snackBar}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                }}
+                duration={5000}
+            >
+                {"Location Shared!"}
+            </Snackbar>
 
         </SafeAreaView>
     );
