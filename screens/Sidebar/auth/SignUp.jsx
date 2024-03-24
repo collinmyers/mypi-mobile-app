@@ -66,10 +66,7 @@ export default function SignUpScreen({ navigation }) {
         return true;
 
     };
-    // TODO: Edge case where if user signs up after signing out error of
-    // LOG  AppwriteException: User (role: guests) missing scope (account)
     const handleSignUp = async () => {
-
         if (!isActionOcurring) {
             try {
                 setIsActionOccuring(true);
@@ -79,11 +76,9 @@ export default function SignUpScreen({ navigation }) {
                 }
 
                 try {
-                    const response = await account.get();
-
-                    if (response.email === "") {
-                        await account.updateName(signUpInfo.fullName);
+                    if (account.get().email === "") { // if the user has an anonyomous session established
                         await account.updateEmail(signUpInfo.email, signUpInfo.password);
+                        await account.updateName(signUpInfo.fullName);
                         console.log("Converted guest user to email user");
                     } else {
                         await account.create(ID.unique(), signUpInfo.email, signUpInfo.password, signUpInfo.fullName);
@@ -93,7 +88,7 @@ export default function SignUpScreen({ navigation }) {
                 } catch (error) {
                     const emailExistsError = "AppwriteException: A user with the same email already exists in the current project.";
                     const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
-                    console.log(error.toString());
+
                     switch (error.toString()) {
                         case emailExistsError:
                             setErrorMessage("Email already in use, please try a different email");
@@ -109,16 +104,12 @@ export default function SignUpScreen({ navigation }) {
                             break;
                     }
                 }
-
-
             } catch (error) {
                 console.error(error);
             } finally {
                 setIsActionOccuring(false);
             }
         }
-
-
     };
 
 
