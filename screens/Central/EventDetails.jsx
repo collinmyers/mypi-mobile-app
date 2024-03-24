@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, Image, TouchableOpacity } from "react-native";
+import { Dimensions, SafeAreaView, Image, TouchableOpacity, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { useRoute } from "@react-navigation/native";
 import { showLocation } from "react-native-map-link";
@@ -7,13 +7,21 @@ import HomeStyle from "../../styling/HomeStyle";
 import { ScrollView } from "react-native-gesture-handler";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { useFocusEffect } from "@react-navigation/native";
+import Carousel from "react-native-reanimated-carousel";
+import { appPrimaryColor, appTertiaryColor } from "../../utils/colors/appColors";
+
 
 export default function EventDetailsScreen() {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    const deviceWidth = Dimensions.get('window').width;
+    const deviceHeight = Dimensions.get('window').height;
+
 
     const route = useRoute();
 
-    const { EventImage, EventName, EventDate, EventDetailsDescription, EventLatitude, EventLongitude, EventTime } = route.params;
+    const { EventImages, EventName, EventDate, EventDetailsDescription, EventLatitude, EventLongitude, EventTime } = route.params;
 
     const getDirections = (lat, long, directionsPreference) => {
         showLocation({
@@ -54,7 +62,43 @@ export default function EventDetailsScreen() {
                         <Text style={HomeStyle.eventDetailsTitle}>{EventName}</Text>
                         <Text style={HomeStyle.eventDetailsDateTime}>{EventDate}</Text>
                         {EventTime !== "Invalid Date" ? (<Text style={HomeStyle.eventDetailsDateTime}>{EventTime}</Text>) : (null)}
-                        <Image source={{ uri: EventImage }} style={HomeStyle.eventDetailsImage} />
+                        {EventImages.length > 1 ?
+                            (
+                                <>
+                                    <Carousel
+                                        loop
+                                        width={deviceWidth * 0.79}
+                                        height={deviceHeight * 0.27}
+                                        data={EventImages}
+                                        scrollAnimationDuration={750}
+                                        snapEnabled={true}
+                                        onSnapToItem={(index) => setActiveIndex(index)}
+                                        renderItem={({ item }) => (
+                                            <Image source={{ uri: item }} style={HomeStyle.eventDetailsImage} />
+                                        )}
+                                    />
+                                    <View style={{ flexDirection: "row", justifyContent: "center" , marginVertical: "3%"}}>
+                                        {EventImages.map((_, index) => (
+                                            <View
+                                                key={index}
+                                                style={[
+                                                    { width: 8, height: 8, borderRadius: 4, backgroundColor: appPrimaryColor, marginHorizontal: 4 },
+                                                    index === activeIndex && { backgroundColor: appTertiaryColor },
+                                                ]}
+                                            />
+                                        ))}
+                                    </View>
+                                </>
+                            )
+                            :
+                            (
+                                <Image
+                                    source={{ uri: EventImages[0] }}
+                                    style={HomeStyle.eventDetailsImage}
+                                />
+                            )
+                        }
+
                         <Text style={HomeStyle.eventDetailsDescription}>{EventDetailsDescription}</Text>
                         <TouchableOpacity
                             onPress={() => {

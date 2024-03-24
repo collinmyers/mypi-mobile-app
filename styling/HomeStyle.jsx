@@ -269,7 +269,7 @@ export default StyleSheet.create({
     },
     eventDetailsCard: {
         alignSelf: "center",
-        width: "95%",
+        width: "97%",
         padding: 10,
         paddingBottom: 0,
         backgroundColor: appSecondaryColor,
@@ -294,6 +294,8 @@ export default StyleSheet.create({
         marginTop: "1%"
     },
     eventDetailsImage: {
+  
+        alignSelf: "center",
         aspectRatio: 1.5,
         borderRadius: 5,
         marginVertical: "10%",

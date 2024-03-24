@@ -56,42 +56,48 @@ export default function EventListScreen() {
                     return startDateA - startDateB;
                 });
 
-
                 // Fetch images for each event concurrently
-                const eventsWithImages = await Promise.all(allEvents.map(async (event) => {
-                    const EventListDescription = event.EventListDescription;
-                    const EventName = event.Name;
-                    const EventDate = event.Date;
-                    const EventDetailsDescription = event.EventDetailsDescription;
-                    const EventLatitude = event.Latitude;
-                    const EventLongitude = event.Longitude;
-                    const EventTime = event.Time || "";
+                const eventsWithImages = await Promise.all(
+                    allEvents.map(async (event) => {
+                        const EventListDescription = event.EventListDescription;
+                        const EventName = event.Name;
+                        const EventDate = event.Date;
+                        const EventDetailsDescription = event.EventDetailsDescription;
+                        const EventLatitude = event.Latitude;
+                        const EventLongitude = event.Longitude;
+                        const EventTime = event.Time || "";
+                        const EventImages = []; // Initialize an empty array for images
 
-                    const imageFileUri = `${FileSystem.documentDirectory}${event.FileID}.png`;
-                    const fileInfo = await FileSystem.getInfoAsync(imageFileUri);
+                        // Loop through each FileID in the event
+                        for (const fileID of event.FileID) {
+                            const imageFileUri = `${FileSystem.documentDirectory}${fileID}.png`;
+                            const fileInfo = await FileSystem.getInfoAsync(imageFileUri);
+                            let image;
 
-                    let EventImage;
-                    if (fileInfo.exists) {
-                        EventImage = imageFileUri;
-                    } else {
-                        const imageResponse = await storage.getFileView(FILE_BUCKET_ID, event.FileID);
-                        EventImage = imageResponse.toString();
+                            if (fileInfo.exists) {
+                                image = imageFileUri;
+                            } else {
+                                const imageResponse = await storage.getFileView(FILE_BUCKET_ID, fileID);
+                                image = imageResponse.toString();
+                                // Download and save image
+                                await FileSystem.downloadAsync(image, imageFileUri);
+                            }
 
-                        // Download and save image
-                        await FileSystem.downloadAsync(EventImage, imageFileUri);
-                    }
+                            EventImages.push(image); // Add the image to the EventImages array
+                        }
 
-                    return {
-                        EventName,
-                        EventDate,
-                        EventDetailsDescription,
-                        EventListDescription,
-                        EventLatitude,
-                        EventLongitude,
-                        EventImage,
-                        EventTime
-                    };
-                }));
+                        return {
+                            EventListDescription,
+                            EventName,
+                            EventDate,
+                            EventDetailsDescription,
+                            EventLatitude,
+                            EventLongitude,
+                            EventTime,
+                            EventImages, // Include the EventImages array
+                        };
+                    })
+                );
 
                 setEventData(eventsWithImages);
                 await saveDataToFile(eventsWithImages); // Save fetched data to file
@@ -181,7 +187,7 @@ export default function EventListScreen() {
             const EventDetailsDescription = event.EventDetailsDescription;
             const EventLatitude = event.EventLatitude;
             const EventLongitude = event.EventLongitude;
-            const EventImage = event.EventImage;
+            const EventImages = event.EventImages;
             const EventTime = event.EventTime;
 
             return (
@@ -189,7 +195,7 @@ export default function EventListScreen() {
                     key={`${index}_${EventName}`}
                     onPress={() =>
                         navigation.navigate("EventDetailsScreen", {
-                            EventImage: EventImage,
+                            EventImages: EventImages,
                             EventName: EventName,
                             EventDate: EventDate,
                             EventDetailsDescription: EventDetailsDescription,
@@ -202,7 +208,7 @@ export default function EventListScreen() {
                 >
                     <Card style={HomeStyle.eventCard}>
                         <Card.Content style={HomeStyle.eventCardContent}>
-                            <Image source={{ uri: EventImage }} style={HomeStyle.eventListImage} />
+                            <Image source={{ uri: EventImages[0] }} style={HomeStyle.eventListImage} />
                             <Text style={HomeStyle.eventListTitle}>{EventName}</Text>
                             <Text style={HomeStyle.eventListDate}>{EventDate}</Text>
                             <Text style={HomeStyle.eventListDescription}>{EventListDescription}</Text>
