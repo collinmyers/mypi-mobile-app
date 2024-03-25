@@ -65,7 +65,8 @@ export default function EventDetailsScreen() {
                         {EventTime !== "" ?
                             (<Text style={[HomeStyle.eventDetailsDateTime, { marginBottom: "5%" }]}>{EventTime}</Text>)
                             :
-                            (<Text style={[HomeStyle.eventDetailsDateTime]}>{EventTime}</Text>)}
+                            (<Text style={[HomeStyle.eventDetailsDateTime]}>{EventTime}</Text>)
+                        }
                         {EventImages.length > 1 ?
                             (
                                 <>

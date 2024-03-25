@@ -297,7 +297,7 @@ export default StyleSheet.create({
         alignSelf: "center",
         aspectRatio: 1.5,
         borderRadius: 5,
-        marginVertical: "7%",
+        marginBottom: "7%",
         resizeMode: "cover",
         width: "100%",
         borderWidth: .75,
