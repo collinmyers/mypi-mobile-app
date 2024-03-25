@@ -48,7 +48,7 @@ export default function FoodTruckShareScreen() {
                     DATABASE_ID,
                     MAP_COLLECTION_ID,
                     ID.unique(),
-                    { Name: truckName, Latitude: pointData.at(index).Latitude + 0.00006, Longitude: pointData.at(index).Longitude + 0.00006, Status: "Open", Type: "FoodTruck" }
+                    { Name: truckName + " " + selectedLocation, Latitude: pointData.at(index).Latitude + 0.00006, Longitude: pointData.at(index).Longitude + 0.00006, Status: "Open", Type: "FoodTruck" }
                 );
                 setIsSnackbarVisible(true);
 
