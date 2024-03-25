@@ -294,11 +294,10 @@ export default StyleSheet.create({
         marginTop: "1%"
     },
     eventDetailsImage: {
-  
         alignSelf: "center",
         aspectRatio: 1.5,
         borderRadius: 5,
-        marginVertical: "10%",
+        marginVertical: "7%",
         resizeMode: "cover",
         width: "100%",
         borderWidth: .75,
@@ -577,7 +576,7 @@ export default StyleSheet.create({
         marginBottom: "5%",
         backgroundColor: appPrimaryColor
     },
-    notificationAgeContainer:{
+    notificationAgeContainer: {
         alignItems: "center",
         marginHorizontal: "2%"
     },
@@ -604,5 +603,16 @@ export default StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-evenly",
         width: "90%"
+    },
+    imageCarousel: {
+        marginVertical: "1%"
+    },
+    pageDots: {
+        marginBottom: "5%",
+        width: 8, 
+        height: 8, 
+        borderRadius: 4, 
+        backgroundColor: appPrimaryColor, 
+        marginHorizontal: 4 ,
     }
 });

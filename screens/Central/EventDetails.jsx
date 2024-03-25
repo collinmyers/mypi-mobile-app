@@ -15,8 +15,8 @@ export default function EventDetailsScreen() {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const deviceWidth = Dimensions.get('window').width;
-    const deviceHeight = Dimensions.get('window').height;
+    const deviceWidth = Dimensions.get("window").width;
+    const deviceHeight = Dimensions.get("window").height;
 
 
     const route = useRoute();
@@ -48,6 +48,7 @@ export default function EventDetailsScreen() {
     useFocusEffect(
         React.useCallback(() => {
             fetchNavPreference();
+            console.log(EventTime);
             if (currentNavPreference !== null) {
                 setCurrentNavPreference(currentNavPreference);
             }
@@ -61,30 +62,31 @@ export default function EventDetailsScreen() {
                     <Card.Content style={HomeStyle.eventDetailsCardContent}>
                         <Text style={HomeStyle.eventDetailsTitle}>{EventName}</Text>
                         <Text style={HomeStyle.eventDetailsDateTime}>{EventDate}</Text>
-                        {EventTime !== "Invalid Date" ? (<Text style={HomeStyle.eventDetailsDateTime}>{EventTime}</Text>) : (null)}
+                        {EventTime !== "" ?
+                            (<Text style={[HomeStyle.eventDetailsDateTime, { marginBottom: "5%" }]}>{EventTime}</Text>)
+                            :
+                            (<Text style={[HomeStyle.eventDetailsDateTime]}>{EventTime}</Text>)}
                         {EventImages.length > 1 ?
                             (
                                 <>
                                     <Carousel
                                         loop
                                         width={deviceWidth * 0.79}
-                                        height={deviceHeight * 0.27}
+                                        height={deviceHeight * 0.25}
                                         data={EventImages}
-                                        scrollAnimationDuration={750}
+                                        scrollAnimationDuration={700}
                                         snapEnabled={true}
                                         onSnapToItem={(index) => setActiveIndex(index)}
                                         renderItem={({ item }) => (
-                                            <Image source={{ uri: item }} style={HomeStyle.eventDetailsImage} />
+                                            <Image source={{ uri: item }} style={[HomeStyle.eventDetailsImage, { marginVertical: 0 }]} />
                                         )}
+                                        style={HomeStyle.imageCarousel}
                                     />
-                                    <View style={{ flexDirection: "row", justifyContent: "center" , marginVertical: "3%"}}>
+                                    <View style={{ flexDirection: "row", justifyContent: "center" }}>
                                         {EventImages.map((_, index) => (
                                             <View
                                                 key={index}
-                                                style={[
-                                                    { width: 8, height: 8, borderRadius: 4, backgroundColor: appPrimaryColor, marginHorizontal: 4 },
-                                                    index === activeIndex && { backgroundColor: appTertiaryColor },
-                                                ]}
+                                                style={[HomeStyle.pageDots, { backgroundColor: index === activeIndex ? appTertiaryColor : appPrimaryColor }]}
                                             />
                                         ))}
                                     </View>
