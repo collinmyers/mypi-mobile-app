@@ -101,6 +101,9 @@ export default StyleSheet.create({
         backgroundColor: appQuarternaryColor,
         overflow: "hidden"
     },
+    ClickableSettingsOption:{
+        width: "87%",
+    },
     changeInfoText: {
         color: appTextColor,
         marginLeft: "10%",
@@ -109,8 +112,8 @@ export default StyleSheet.create({
         fontSize: 20,
     },
     touchableOptionArea: {
-        width: "79%",
-        marginLeft: "20%",
+        width: "100%",
+        marginLeft: "10%",
         marginVertical: "2%",
         paddingBottom: "1%",
         borderBottomWidth: .25,
