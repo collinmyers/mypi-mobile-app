@@ -43,12 +43,18 @@ export default function FoodTruckShareScreen() {
         if (isSignedIn && (profileRole.role == "admin" || profileRole.role == "foodtruck") && goodStatus) {
             let index = findIndex("Name", selectedLocation);
 
+            let randomNum = Math.random();
+
+            console.log(randomNum);
+
+            let offset = randomNum * (0.00030 - 0.00006) + 0.00006;
+
             try {
                 await database.createDocument(
                     DATABASE_ID,
                     MAP_COLLECTION_ID,
                     ID.unique(),
-                    { Name: truckName + " " + selectedLocation, Latitude: pointData.at(index).Latitude + 0.00006, Longitude: pointData.at(index).Longitude + 0.00006, Status: "Open", Type: "FoodTruck" }
+                    { Name: truckName + " " + selectedLocation, Latitude: pointData.at(index).Latitude + offset, Longitude: pointData.at(index).Longitude + offset, Status: "Open", Type: "FoodTruck" }
                 );
                 setIsSnackbarVisible(true);
 
