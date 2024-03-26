@@ -103,15 +103,17 @@ export default StyleSheet.create({
     changeInfoText: {
         color: appTextColor,
         marginLeft: "10%",
+        marginVertical: "1%",
         width: "87%",
         fontSize: 20,
     },
-    touchableOptionArea:{
+    touchableOptionArea: {
         width: "79%",
         marginLeft: "20%",
         marginVertical: "1%",
-        borderBottomWidth: .55,
-        borderBottomColor: appPrimaryColor
+        paddingBottom: "1%",
+        borderBottomWidth: .25,
+        borderBottomColor: appQuarternaryColor
     },
     settingOptionView: {
         flexDirection: "row",
@@ -616,10 +618,10 @@ export default StyleSheet.create({
     },
     pageDots: {
         marginBottom: "5%",
-        width: 8, 
-        height: 8, 
-        borderRadius: 4, 
-        backgroundColor: appPrimaryColor, 
-        marginHorizontal: 4 ,
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: appPrimaryColor,
+        marginHorizontal: 4,
     }
 });
