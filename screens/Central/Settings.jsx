@@ -6,8 +6,8 @@ import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
 import { saveNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
-import { appTertiaryColor } from "../../utils/colors/appColors";
-
+import { appPrimaryColor, appTertiaryColor, appWarningColor } from "../../utils/colors/appColors";
+import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons } from "@expo/vector-icons";
 
 export default function SettingsScreen({ navigation }) {
 
@@ -20,7 +20,6 @@ export default function SettingsScreen({ navigation }) {
         email: "",
         identity: ""
     });
-
 
     const getNameAndEmail = async () => {
         try {
@@ -40,8 +39,6 @@ export default function SettingsScreen({ navigation }) {
         }
     };
 
-
-
     const handleNavPreferenceChange = async (newPreference) => {
         setNavTypeChecked(newPreference);
         setTimeout(() => {
@@ -49,7 +46,6 @@ export default function SettingsScreen({ navigation }) {
         }, 300);
         await saveNavigationPreference(newPreference);
     };
-
 
     const showNavModal = async () => {
         setIsNavModalVisible(true);
@@ -163,98 +159,55 @@ export default function SettingsScreen({ navigation }) {
 
                 {isSignedIn && (
                     <View style={HomeStyle.cardView}>
+                        <Text style={HomeStyle.settingsSectionHeader}>Account Settings</Text>
                         <Card style={HomeStyle.settingsCard}>
-                            <Card.Content style={HomeStyle.settingsCardContentContainer}>
-                                <Text style={HomeStyle.settingsSectionHeader}>Account Settings</Text>
 
-                                <Card.Content style={HomeStyle.settingsCardContent}>
-                                    <TouchableOpacity
-                                        onPress={() => navigation.navigate("Change Name")}
-                                        style={HomeStyle.settingsButtonOpac}
-                                    >
-                                        <Text style={HomeStyle.changeInfoText}>Change Name</Text>
-                                    </TouchableOpacity>
-                                </Card.Content>
+                            <Card.Content style={[HomeStyle.settingsCardContent, { paddingVertical: "1%" }]}>
+                                <Ionicons name="person" size={24} color={appPrimaryColor} />
+                                <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Name")}>Change Name</Text>
 
-                                <Card.Content style={HomeStyle.settingsCardContent}>
-                                    <TouchableOpacity
-                                        onPress={() => navigation.navigate("Change Email")}
-                                        style={HomeStyle.settingsButtonOpac}
-                                    >
-                                        <Text style={HomeStyle.changeInfoText}>Change Email</Text>
-                                    </TouchableOpacity>
-                                </Card.Content>
-
-                                <Card.Content style={HomeStyle.settingsCardContent}>
-                                    <TouchableOpacity
-                                        onPress={() => navigation.navigate("Change Password")}
-                                        style={HomeStyle.settingsButtonOpac}
-                                    >
-                                        <Text style={HomeStyle.changeInfoText}>Change Password</Text>
-                                    </TouchableOpacity>
-                                </Card.Content>
-
-                                <Card.Content style={HomeStyle.settingsCardContent}>
-                                    <TouchableOpacity
-                                        onPress={showDeleteModal}
-                                        style={HomeStyle.deleteAccountOpac}
-                                    >
-                                        <Text style={HomeStyle.changeInfoText}>Delete Account</Text>
-                                    </TouchableOpacity>
-                                </Card.Content>
                             </Card.Content>
+
+                            <View style={HomeStyle.touchableOptionArea} />
+
+                            <Card.Content style={HomeStyle.settingsCardContent}>
+                                <Entypo name="email" size={24} color={appPrimaryColor} />
+                                <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Email")}>Change Email</Text>
+                            </Card.Content>
+
+                            <View style={HomeStyle.touchableOptionArea} />
+
+                            <Card.Content style={HomeStyle.settingsCardContent}>
+                                <MaterialIcons name="password" size={24} color={appPrimaryColor} />
+                                <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Password")}>Change Password</Text>
+                            </Card.Content>
+
+                            <View style={HomeStyle.touchableOptionArea} />
+
+                            <Card.Content style={HomeStyle.settingsCardContent}>
+                                <MaterialIcons name="delete" size={24} color={appPrimaryColor} />
+                                <Text style={HomeStyle.changeInfoText} onPress={showDeleteModal}>Delete Account</Text>
+                            </Card.Content>
+
                         </Card>
                     </View>
                 )}
 
-
-
                 <View style={HomeStyle.cardView}>
+                    <Text style={HomeStyle.settingsSectionHeader}>App Settings</Text>
+
                     <Card style={HomeStyle.settingsCard}>
 
-                        <Card.Content style={HomeStyle.settingsCardContentContainer}>
-
-                            <Text style={HomeStyle.settingsSectionHeader}>Notification Settings</Text>
-
-                            <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity onPress={() => navigation.navigate("Park Notifications")} style={HomeStyle.settingsButtonOpac} >
-                                    <Text style={HomeStyle.changeInfoText}>Park Alerts</Text>
-                                </TouchableOpacity>
-                            </Card.Content>
-
-                            <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity onPress={() => navigation.navigate("Event Notifications")} style={HomeStyle.settingsButtonOpac}>
-                                    <Text style={HomeStyle.changeInfoText}>Events</Text>
-                                </TouchableOpacity>
-                            </Card.Content>
-
-                            <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity onPress={() => navigation.navigate("Promotion Notifications")} style={HomeStyle.settingsButtonOpac}>
-                                    <Text style={HomeStyle.changeInfoText}>Promotions</Text>
-                                </TouchableOpacity>
-                            </Card.Content>
-
+                        <Card.Content style={HomeStyle.settingsCardContent}>
+                            <MaterialCommunityIcons name="directions-fork" size={24} color={appPrimaryColor} />
+                            <Text style={HomeStyle.changeInfoText} onPress={showNavModal}>Navigation Preference</Text>
                         </Card.Content>
 
-                    </Card>
-                </View>
+                        <View style={HomeStyle.touchableOptionArea} />
 
-                <View style={HomeStyle.cardView}>
-                    <Card style={HomeStyle.settingsCard}>
-
-                        <Card.Content style={HomeStyle.settingsCardContentContainer}>
-
-                            <Text style={HomeStyle.settingsSectionHeader}>App Settings</Text>
-
-                            <Card.Content style={HomeStyle.settingsCardContent}>
-                                <TouchableOpacity
-                                    onPress={showNavModal}
-                                    style={HomeStyle.settingsButtonOpac}
-                                >
-                                    <Text style={HomeStyle.changeInfoText}>Navigation</Text>
-                                </TouchableOpacity>
-                            </Card.Content>
-
+                        <Card.Content style={HomeStyle.settingsCardContent}>
+                            <MaterialIcons name="notifications-on" size={24} color={appPrimaryColor} />
+                            <Text style={HomeStyle.changeInfoText} onPress={() => { console.log("needs implemented"); }}>Push Notifications</Text>
                         </Card.Content>
 
                     </Card>
@@ -264,7 +217,7 @@ export default function SettingsScreen({ navigation }) {
                 <NavPreferenceModal />
 
             </ScrollView>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 

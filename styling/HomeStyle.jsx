@@ -8,7 +8,7 @@ if (Platform.OS === "android") {
 }
 
 const deviceWidth = Dimensions.get("window").width;
-const cardWidth = deviceWidth * .75;
+const cardWidth = deviceWidth * .90;
 const buttonWidth = deviceWidth * .5;
 
 export default StyleSheet.create({
@@ -54,24 +54,18 @@ export default StyleSheet.create({
         fontSize: 14,
         marginBottom: 20,
     },
-    settingsCardContentContainer: {
-
-    },
-
     settingsCard: {
         backgroundColor: appSecondaryColor,
         width: cardWidth,
         marginBottom: 10
     },
     settingsCardContent: {
-        alignSelf: "center",
+        flexDirection: "row",
         borderTopColor: appSecondaryColor,
-        width: cardWidth,
-        alignItems: "center",
+        width: "100%",
     },
     settingsSectionHeader: {
-        alignSelf: "center",
-        color: appTextColor,
+        color: appQuarternaryColor,
         fontWeight: "600",
         fontSize: 20,
         marginBottom: 10
@@ -108,8 +102,21 @@ export default StyleSheet.create({
     },
     changeInfoText: {
         color: appTextColor,
-        textAlign: "center",
-        fontSize: 18
+        marginLeft: "10%",
+        width: "87%",
+        fontSize: 20,
+    },
+    touchableOptionArea:{
+        width: "79%",
+        marginLeft: "20%",
+        marginVertical: "1%",
+        borderBottomWidth: .55,
+        borderBottomColor: appPrimaryColor
+    },
+    settingOptionView: {
+        flexDirection: "row",
+        borderBottomColor: appPrimaryColor,
+        borderBottomWidth: 1
     },
     deleteAccountOpac: {
         fontSize: 18,
