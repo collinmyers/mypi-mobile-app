@@ -12,7 +12,7 @@ import { account } from "../../utils/Config/appwriteConfig";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
 
-import { Entypo, Ionicons, AntDesign, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Entypo, Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import FoodTruckStackNavigator from "./FoodTruckStackNavigator";
 
 const Drawer = createDrawerNavigator();
@@ -200,8 +200,8 @@ export default function DrawerNavigator() {
                         options={{
                             header: () => { false; },
                             drawerIcon: ({ focused }) =>
-                                <MaterialCommunityIcons
-                                    name="food-hot-dog"
+                                <MaterialIcons
+                                    name="fastfood"
                                     size={24}
                                     color={focused ? appPrimaryColor : appTertiaryColor}
                                 />
