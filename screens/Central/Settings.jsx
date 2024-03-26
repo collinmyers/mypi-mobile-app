@@ -6,7 +6,7 @@ import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
 import { saveNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
-import { appPrimaryColor, appTertiaryColor, appWarningColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons } from "@expo/vector-icons";
 
 export default function SettingsScreen({ navigation }) {
@@ -163,30 +163,37 @@ export default function SettingsScreen({ navigation }) {
                         <Card style={HomeStyle.settingsCard}>
 
                             <Card.Content style={[HomeStyle.settingsCardContent, { paddingTop: "3%" }]}>
-                                <Ionicons name="person" size={24} color={appPrimaryColor} />
-                                <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Name")}>Change Name</Text>
-
+                                <Ionicons style={{paddingBottom: "4%"}} name="person" size={24} color={appPrimaryColor} />
+                                <View style={HomeStyle.ClickableSettingsOption}>
+                                    <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Name")}>Change Name</Text>
+                                    <View style={HomeStyle.touchableOptionArea} />
+                                </View>
                             </Card.Content>
 
-                            <View style={HomeStyle.touchableOptionArea} />
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <Entypo name="email" size={24} color={appPrimaryColor} />
-                                <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Email")}>Change Email</Text>
+                                <Entypo style={{paddingBottom: "4%"}} name="email" size={24} color={appPrimaryColor} />
+                                <View style={HomeStyle.ClickableSettingsOption}>
+                                    <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Email")}>Change Email</Text>
+                                    <View style={HomeStyle.touchableOptionArea} />
+                                </View>
                             </Card.Content>
 
-                            <View style={HomeStyle.touchableOptionArea} />
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <MaterialIcons name="password" size={24} color={appPrimaryColor} />
-                                <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Password")}>Change Password</Text>
+                                <MaterialIcons style={{paddingBottom: "4%"}} name="password" size={24} color={appPrimaryColor} />
+                                <View style={HomeStyle.ClickableSettingsOption}>
+                                    <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Password")}>Change Password</Text>
+                                    <View style={HomeStyle.touchableOptionArea} />
+                                </View>
                             </Card.Content>
 
-                            <View style={HomeStyle.touchableOptionArea} />
 
                             <Card.Content style={[HomeStyle.settingsCardContent, { paddingBottom: "3%" }]}>
-                                <MaterialIcons name="delete" size={24} color={appPrimaryColor} />
-                                <Text style={HomeStyle.changeInfoText} onPress={showDeleteModal}>Delete Account</Text>
+                                <MaterialIcons style={{paddingBottom: "0%"}} name="delete" size={24} color={appPrimaryColor} />
+                                <View style={HomeStyle.ClickableSettingsOption}>
+                                    <Text style={HomeStyle.changeInfoText} onPress={showDeleteModal}>Delete Account</Text>
+                                </View>
                             </Card.Content>
 
                         </Card>
@@ -199,15 +206,19 @@ export default function SettingsScreen({ navigation }) {
                     <Card style={HomeStyle.settingsCard}>
 
                         <Card.Content style={[HomeStyle.settingsCardContent, { paddingTop: "3%" }]}>
-                            <MaterialCommunityIcons name="directions-fork" size={24} color={appPrimaryColor} />
-                            <Text style={HomeStyle.changeInfoText} onPress={showNavModal}>Navigation Preference</Text>
+                            <MaterialCommunityIcons style={{paddingBottom: "4%"}} name="directions-fork" size={24} color={appPrimaryColor} />
+                            <View style={HomeStyle.ClickableSettingsOption}>
+                                <Text style={HomeStyle.changeInfoText} onPress={showNavModal}>Navigation Preference</Text>
+                                <View style={HomeStyle.touchableOptionArea} />
+                            </View>
                         </Card.Content>
 
-                        <View style={HomeStyle.touchableOptionArea} />
-
                         <Card.Content style={[HomeStyle.settingsCardContent, { paddingBottom: "3%" }]}>
-                            <MaterialIcons name="notifications-on" size={24} color={appPrimaryColor} />
-                            <Text style={HomeStyle.changeInfoText} onPress={() => { console.log("needs implemented"); }}>Push Notifications</Text>
+                            <MaterialIcons style={{paddingBottom: "0%"}} name="notifications-on" size={24} color={appPrimaryColor} />
+                            <View style={HomeStyle.ClickableSettingsOption}>
+                                <Text style={HomeStyle.changeInfoText} onPress={() => { console.log("needs implemented"); }}>Push Notifications</Text>
+                            </View>
+
                         </Card.Content>
 
                     </Card>
