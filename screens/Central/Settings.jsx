@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
 import { saveNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { getPushNotificationPreference, savePushNotificationPreference } from "../../utils/AsyncStorage/PushNotificationsPreference";
+import { getAutoPlayPreference, saveAutoPlayPreference } from "../../utils/AsyncStorage/AutoPlayPreference";
 import * as Notifications from "expo-notifications";
 import { appPrimaryColor, appQuarternaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons } from "@expo/vector-icons";
@@ -18,6 +19,7 @@ export default function SettingsScreen({ navigation }) {
     const [isNavModalVisible, setIsNavModalVisible] = useState(false);
     const [navTypeChecked, setNavTypeChecked] = useState("car");
     const [isPushNotificationEnabled, setIsPushNotificationEnabled] = useState(false);
+    const [isAutoPlayEnabled, setIsAutoPlayEnabled] = useState(false);
     const [profileInfo, setProfileInfo] = useState({
         name: "",
         email: "",
@@ -50,6 +52,12 @@ export default function SettingsScreen({ navigation }) {
         } else {
             // await Notifications.removePushTokenAsync();
         }
+    };
+
+    const toggleAutoPlay = async () => {
+        const newValue = !isAutoPlayEnabled;
+        setIsAutoPlayEnabled(newValue);
+        await saveAutoPlayPreference(newValue);
     };
 
     const handleNavPreferenceChange = async (newPreference) => {
@@ -165,6 +173,15 @@ export default function SettingsScreen({ navigation }) {
         getPushNotificationPreferenceAsync();
     }, []);
 
+    useEffect(() => {
+        const getAutoPlayPreferenceAsync = async () => {
+            const preference = await getAutoPlayPreference();
+            setIsAutoPlayEnabled(preference);
+        };
+        getAutoPlayPreferenceAsync();
+    }, [isAutoPlayEnabled]);
+
+
     return (
         <SafeAreaView style={HomeStyle.settingsContainer}>
 
@@ -253,7 +270,7 @@ export default function SettingsScreen({ navigation }) {
                             <MaterialIcons style={{ paddingBottom: 0 }} name="notifications-on" size={24} color={appPrimaryColor} />
                             <View style={HomeStyle.ClickableSettingsOption}>
                                 <View style={HomeStyle.clickableRowToggle}>
-                                    <Text style={HomeStyle.changeInfoText} onPress={() => { console.log("needs implemented"); }}>Push Notifications</Text>
+                                    <Text style={HomeStyle.changeInfoText}>Push Notifications</Text>
                                     <Switch
                                         value={isPushNotificationEnabled}
                                         onValueChange={togglePushNotification}
@@ -271,10 +288,10 @@ export default function SettingsScreen({ navigation }) {
                             <MaterialIcons style={{ paddingBottom: "0%" }} name="notifications-on" size={24} color={appPrimaryColor} />
                             <View style={HomeStyle.ClickableSettingsOption}>
                                 <View style={HomeStyle.clickableRowToggle}>
-                                    <Text style={HomeStyle.changeInfoText} onPress={() => { console.log("needs implemented"); }}>Auto Play Images</Text>
+                                    <Text style={HomeStyle.changeInfoText}>Auto Play Images</Text>
                                     <Switch
-                                        value={isPushNotificationEnabled}
-                                        onValueChange={togglePushNotification}
+                                        value={isAutoPlayEnabled}
+                                        onValueChange={toggleAutoPlay}
                                         color={appTertiaryColor}
                                         ios_backgroundColor={appQuarternaryColor}
                                         style={HomeStyle.toggle}

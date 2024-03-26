@@ -7,12 +7,14 @@ import HomeStyle from "../../styling/HomeStyle";
 import { ScrollView } from "react-native-gesture-handler";
 import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { useFocusEffect } from "@react-navigation/native";
+import { getAutoPlayPreference } from "../../utils/AsyncStorage/AutoPlayPreference";
 import Carousel from "react-native-reanimated-carousel";
 import { appPrimaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 
 
 export default function EventDetailsScreen() {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
+    const [currentAutoPlayPreference, setCurrentAutoPlayPreference] = useState(null);
     const [activeIndex, setActiveIndex] = useState(0);
 
     const deviceWidth = Dimensions.get("window").width;
@@ -45,14 +47,31 @@ export default function EventDetailsScreen() {
         }
     };
 
+    const fetchAutoPlayPreference = async () => {
+        try {
+            const preference = await getAutoPlayPreference();
+            setCurrentAutoPlayPreference(preference);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     useFocusEffect(
         React.useCallback(() => {
             fetchNavPreference();
-            console.log(EventTime);
             if (currentNavPreference !== null) {
                 setCurrentNavPreference(currentNavPreference);
             }
         }, [currentNavPreference])
+    );
+
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchAutoPlayPreference();
+            if (currentAutoPlayPreference !== null) {
+                setCurrentAutoPlayPreference(currentAutoPlayPreference);
+            }
+        }, [currentAutoPlayPreference])
     );
 
     return (
@@ -75,6 +94,8 @@ export default function EventDetailsScreen() {
                                         width={deviceWidth * 0.79}
                                         height={deviceHeight * 0.25}
                                         data={EventImages}
+                                        autoPlay={currentAutoPlayPreference}
+                                        autoPlayInterval={3500}
                                         scrollAnimationDuration={700}
                                         snapEnabled={true}
                                         onSnapToItem={(index) => setActiveIndex(index)}
