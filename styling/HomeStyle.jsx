@@ -63,6 +63,7 @@ export default StyleSheet.create({
         flexDirection: "row",
         borderTopColor: appSecondaryColor,
         width: "100%",
+        alignItems: "center"
     },
     settingsSectionHeader: {
         color: appQuarternaryColor,
@@ -110,7 +111,7 @@ export default StyleSheet.create({
     touchableOptionArea: {
         width: "79%",
         marginLeft: "20%",
-        marginVertical: "1%",
+        marginVertical: "2%",
         paddingBottom: "1%",
         borderBottomWidth: .25,
         borderBottomColor: appQuarternaryColor

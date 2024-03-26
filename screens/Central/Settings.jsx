@@ -162,7 +162,7 @@ export default function SettingsScreen({ navigation }) {
                         <Text style={HomeStyle.settingsSectionHeader}>Account Settings</Text>
                         <Card style={HomeStyle.settingsCard}>
 
-                            <Card.Content style={[HomeStyle.settingsCardContent, { paddingVertical: "1%" }]}>
+                            <Card.Content style={[HomeStyle.settingsCardContent, { paddingTop: "3%" }]}>
                                 <Ionicons name="person" size={24} color={appPrimaryColor} />
                                 <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Name")}>Change Name</Text>
 
@@ -184,7 +184,7 @@ export default function SettingsScreen({ navigation }) {
 
                             <View style={HomeStyle.touchableOptionArea} />
 
-                            <Card.Content style={HomeStyle.settingsCardContent}>
+                            <Card.Content style={[HomeStyle.settingsCardContent, { paddingBottom: "3%" }]}>
                                 <MaterialIcons name="delete" size={24} color={appPrimaryColor} />
                                 <Text style={HomeStyle.changeInfoText} onPress={showDeleteModal}>Delete Account</Text>
                             </Card.Content>
@@ -198,14 +198,14 @@ export default function SettingsScreen({ navigation }) {
 
                     <Card style={HomeStyle.settingsCard}>
 
-                        <Card.Content style={HomeStyle.settingsCardContent}>
+                        <Card.Content style={[HomeStyle.settingsCardContent, { paddingTop: "3%" }]}>
                             <MaterialCommunityIcons name="directions-fork" size={24} color={appPrimaryColor} />
                             <Text style={HomeStyle.changeInfoText} onPress={showNavModal}>Navigation Preference</Text>
                         </Card.Content>
 
                         <View style={HomeStyle.touchableOptionArea} />
 
-                        <Card.Content style={HomeStyle.settingsCardContent}>
+                        <Card.Content style={[HomeStyle.settingsCardContent, { paddingBottom: "3%" }]}>
                             <MaterialIcons name="notifications-on" size={24} color={appPrimaryColor} />
                             <Text style={HomeStyle.changeInfoText} onPress={() => { console.log("needs implemented"); }}>Push Notifications</Text>
                         </Card.Content>
