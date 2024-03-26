@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, TouchableOpacity } from "react-native";
-import { Snackbar, Text } from "react-native-paper";
-import AppStyle from "../../styling/AppStyle";
-import { DATABASE_ID, MAP_COLLECTION_ID, account, database } from "../../utils/Config/appwriteConfig";
+import { SafeAreaView, TouchableOpacity, View } from "react-native";
+import { Snackbar, Text, RadioButton } from "react-native-paper";
+import { DATABASE_ID, MAP_COLLECTION_ID, account, database, USER_ALIAS_TABLE_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import SidebarStyle from "../../styling/SidebarStyle";
+import { appTertiaryColor } from "../../utils/colors/appColors";
+import { ScrollView } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/native";
+
 
 
 export default function FoodTruckUnshareScreen() {
@@ -15,11 +18,16 @@ export default function FoodTruckUnshareScreen() {
     });
     const [isSignedIn, setIsSignedIn] = useState(false);
 
+    const [selectedLocation, setSelectedLocation] = useState();
+
+
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [pointData, setPointData] = useState([]);
     const [truckName, setTruckName] = useState();
     const [userID, setUserID] = useState("");
     const [goodStatus, setGoodStatus] = useState(true);
+
+    const [buttons, setButtons] = useState();
 
 
     const PAGE_SIZE = 25;
@@ -37,55 +45,30 @@ export default function FoodTruckUnshareScreen() {
             return -1; // If the attribute is not found
         }
 
-        // try {
-        //     await database.deleteDocument(
-        //         DATABASE_ID,
-        //         MAP_COLLECTION_ID,
+        if (isSignedIn && (profileRole.role == "admin" || profileRole.role == "foodtruck") && goodStatus) {
 
-        //     );
-        // } catch (error) {
-        //     console.error(error);
-        // }
-    };
+            //Find attribute's index, in the point data use State, then delete based on it's id...
+            let index = findIndex("Name", selectedLocation);
 
-    useEffect(() => {
-        const getLocations = async () => {
-            //Get locations from the database
             try {
-                let offset = 0;
-                let allPoints = [];
-
-                const response = await database.listDocuments(
+                await database.deleteDocument(
                     DATABASE_ID,
                     MAP_COLLECTION_ID,
-                    [Query.limit(PAGE_SIZE), Query.offset(offset)]
+                    (pointData.at(index).$id)
                 );
+                setIsSnackbarVisible(true);
 
-                while (response.documents.length > 0) {
-                    allPoints = [...allPoints, ...response.documents];
-                    offset += PAGE_SIZE;
-                    const nextResponse = await database.listDocuments(
-                        DATABASE_ID,
-                        MAP_COLLECTION_ID,
-                        [Query.limit(PAGE_SIZE), Query.offset(offset)]
-                    );
-                    response.documents = nextResponse.documents;
-                }
-
-                allPoints.map((point) => {
-                    delete point.$collectionId;
-                    delete point.$databaseId;
-                    delete point.$permissions;
-                    delete point.$updatedAt;
-                });
-
-                setPointData(allPoints);
-
-
+                // Update pointData after successful deletion
+                const updatedPointData = pointData.filter((_, i) => i !== index);
+                setPointData(updatedPointData);
             } catch (error) {
                 console.error(error);
             }
-        };
+        }
+    };
+
+
+    useFocusEffect(React.useCallback(() => {
 
         const checkAuthState = async () => {
             try {
@@ -103,21 +86,119 @@ export default function FoodTruckUnshareScreen() {
                 setIsSignedIn(false);
                 setGoodStatus(false);
             }
+
+        };
+
+        const getUserAlias = async () => {
+            // Get User Alias
+            const response = await database.listDocuments(
+                DATABASE_ID,
+                USER_ALIAS_TABLE_ID,
+                [
+                    Query.equal("UserID", [userID])
+                ]
+            );
+            if (response.documents.length > 0) {
+                setTruckName(response.documents.at(0).UserName);
+                setGoodStatus(true);
+            }
+            else {
+                setGoodStatus(false);
+            }
+        };
+
+        const getLocations = async () => {
+            //Get locations from the database
+            try {
+                let offset = 0;
+                let allPoints = [];
+
+                const response = await database.listDocuments(
+                    DATABASE_ID,
+                    MAP_COLLECTION_ID,
+                    [Query.limit(PAGE_SIZE), Query.offset(offset), Query.search("Name", [truckName])]
+                );
+
+                while (response.documents.length > 0) {
+                    allPoints = [...allPoints, ...response.documents];
+                    offset += PAGE_SIZE;
+                    const nextResponse = await database.listDocuments(
+                        DATABASE_ID,
+                        MAP_COLLECTION_ID,
+                        [Query.limit(PAGE_SIZE), Query.offset(offset), Query.search("Name", [truckName])]
+                    );
+                    response.documents = nextResponse.documents;
+                }
+
+                allPoints.map((point) => {
+                    delete point.$collectionId;
+                    delete point.$databaseId;
+                    delete point.$permissions;
+                    delete point.$updatedAt;
+                });
+                setPointData(allPoints);
+
+            } catch (error) {
+                console.error(error);
+            }
         };
 
 
         checkAuthState();
+        getUserAlias();
         getLocations();
 
-    }, []);
+    }, [truckName, userID]));
+
+    useEffect(() => {
+
+        const renderButtons = async () => {
+            setButtons(pointData.map((point, index) => (
+
+                <View style={SidebarStyle.radio}
+                    id={point.Name}
+                    key={`${index}_${point.Name}`}
+                >
+                    <RadioButton.Android
+                        value={point.Name}
+                        status={selectedLocation === point.Name ? "checked" : "unchecked"}
+                        onPress={() => setSelectedLocation(point.Name)}
+                        uncheckedColor={appTertiaryColor}
+                        color={appTertiaryColor}
+                        style={SidebarStyle.radioButtons}
+                    />
+                    <Text style={SidebarStyle.setRadioText}>{point.Name}</Text>
+                </View>
+
+            )));
+
+        };
+
+        renderButtons();
+
+    }, [pointData, selectedLocation]);
 
     return (
-        <SafeAreaView style={AppStyle.container}>
+        <SafeAreaView style={SidebarStyle.container}>
+
+            <ScrollView>
 
 
-            <TouchableOpacity>
-                <Text>Unshare Location</Text>
-            </TouchableOpacity>
+                <View style={SidebarStyle.radioGroup}>
+
+                    {buttons}
+
+                </View>
+
+            </ScrollView>
+
+            <View style={{ paddingTop: 50 }}>
+                <TouchableOpacity style={SidebarStyle.ShareLocationButtonOpac} onPress={() => UnShareLocation()}>
+                    <Text style={SidebarStyle.ShareLocationText}>Unshare Location</Text>
+
+                </TouchableOpacity>
+            </View>
+
 
             <Snackbar
                 visible={isSnackbarVisible}
