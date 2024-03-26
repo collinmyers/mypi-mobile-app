@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import { AppState, Modal, Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { Card, RadioButton, Switch, Text } from "react-native-paper";
-import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
 import { saveNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
-import { getPushNotificationPreference, savePushNotificationPreference } from "../../utils/AsyncStorage/PushNotificationsPreference";
 import { getAutoPlayPreference, saveAutoPlayPreference } from "../../utils/AsyncStorage/AutoPlayPreference";
 import * as Notifications from "expo-notifications";
 import { appPrimaryColor, appQuarternaryColor, appTertiaryColor } from "../../utils/colors/appColors";
-import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 } from "@expo/vector-icons";
+import { account, database, DATABASE_ID, USER_NOTIFICATION_TOKENS } from "../../utils/Config/appwriteConfig";
+import * as Linking from "expo-linking";
+import { ID } from "appwrite";
 
 export default function SettingsScreen({ navigation }) {
 
@@ -43,14 +44,48 @@ export default function SettingsScreen({ navigation }) {
             setIsSignedIn(false);
         }
     };
+
+
     const togglePushNotification = async () => {
-        const newValue = !isPushNotificationEnabled;
-        setIsPushNotificationEnabled(newValue);
-        await savePushNotificationPreference(newValue);
-        if (newValue) {
-            //await registerForPushNotificationsAsync();
-        } else {
-            // await Notifications.removePushTokenAsync();
+
+        try {
+            await Linking.openSettings();
+
+            // Request push notification permissions
+            const { status } = await Notifications.getPermissionsAsync();
+
+            if (status !== "granted") {
+                console.log("Permission to receive notifications denied.");
+                setIsPushNotificationEnabled(false); // Revert the switch state if permission denied
+                return;
+            }
+            // Get the push token and create a document in Appwrite
+            const subscription = await Notifications.getPermissionsAsync();
+            if (subscription.status === "granted") {
+                const token = (await Notifications.getExpoPushTokenAsync()).data;
+
+                // Create doc for user's push token. This will run if the expo token is not stored or doesn't match.
+                const createTokenDoc = database.createDocument(
+                    DATABASE_ID,
+                    USER_NOTIFICATION_TOKENS,
+                    ID.unique(),
+                    {
+                        ExpoPushToken: token,
+                        UID: profileInfo.identity,
+                    }
+                );
+                createTokenDoc.then(
+                    function (response) {
+                        console.log(response);
+                    },
+                    function (error) {
+                        console.log(error);
+                    }
+                );
+                setIsPushNotificationEnabled(true);
+            }
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -157,7 +192,6 @@ export default function SettingsScreen({ navigation }) {
         } catch (error) {
             console.error(error);
         }
-
     };
 
     useFocusEffect(
@@ -165,13 +199,34 @@ export default function SettingsScreen({ navigation }) {
             getNameAndEmail();
         }, [])
     );
-    useEffect(() => {
-        const getPushNotificationPreferenceAsync = async () => {
-            const preference = await getPushNotificationPreference();
-            setIsPushNotificationEnabled(preference);
-        };
-        getPushNotificationPreferenceAsync();
-    }, []);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const pushStatus = async () => {
+                const { status } = await Notifications.getPermissionsAsync();
+                if (status === "granted") {
+                    setIsPushNotificationEnabled(true);
+                } else {
+                    setIsPushNotificationEnabled(false);
+                }
+            };
+            pushStatus();
+
+            const handleAppStateChange = (nextAppState) => {
+                if (nextAppState === "active") {
+                    pushStatus();
+                }
+            };
+
+            AppState.addEventListener("change", handleAppStateChange);
+
+            // Cleanup: remove the event listener when the component unmounts
+            return () => {
+                AppState.remove;
+            };
+
+        }, [])
+    );
 
     useEffect(() => {
         const getAutoPlayPreferenceAsync = async () => {
@@ -266,11 +321,11 @@ export default function SettingsScreen({ navigation }) {
                             </View>
                         </Card.Content>
 
-                        <Card.Content style={[HomeStyle.settingsCardContent, Platform == "ios" ? { paddingBottom: "3%" } : { marginBottom: 0 }]}>
-                            <MaterialIcons style={{ paddingBottom: 0 }} name="notifications-on" size={24} color={appPrimaryColor} />
+                        <Card.Content style={[HomeStyle.settingsCardContent, Platform == "ios" ? { marginBottom: "3%" } : { marginBottom: 0 }]}>
+                            <MaterialIcons style={{ paddingBottom: "4%" }} name="notifications-on" size={24} color={appPrimaryColor} />
                             <View style={HomeStyle.ClickableSettingsOption}>
                                 <View style={HomeStyle.clickableRowToggle}>
-                                    <Text style={HomeStyle.changeInfoText}>Push Notifications</Text>
+                                    <Text style={[HomeStyle.changeInfoText, { marginLeft: "16%" }]}>Push Notifications</Text>
                                     <Switch
                                         value={isPushNotificationEnabled}
                                         onValueChange={togglePushNotification}
@@ -285,7 +340,7 @@ export default function SettingsScreen({ navigation }) {
                         </Card.Content>
 
                         <Card.Content style={[HomeStyle.settingsCardContent, { paddingBottom: "3%" }]}>
-                            <MaterialIcons style={{ paddingBottom: "0%" }} name="notifications-on" size={24} color={appPrimaryColor} />
+                            <FontAwesome6 style={{ paddingBottom: "0%", marginLeft: "1%", marginRight: "1%" }} name="play" size={24} color={appPrimaryColor} />
                             <View style={HomeStyle.ClickableSettingsOption}>
                                 <View style={HomeStyle.clickableRowToggle}>
                                     <Text style={HomeStyle.changeInfoText}>Auto Play Images</Text>
