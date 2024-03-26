@@ -57,13 +57,15 @@ export default StyleSheet.create({
     settingsCard: {
         backgroundColor: appSecondaryColor,
         width: cardWidth,
-        marginBottom: 10
+        marginBottom: 10,
+        borderWidth: .75,
+        borderColor: appQuarternaryColor
     },
     settingsCardContent: {
         flexDirection: "row",
         borderTopColor: appSecondaryColor,
         width: "100%",
-        alignItems: "center"
+        alignItems: "center",
     },
     settingsSectionHeader: {
         color: appQuarternaryColor,
@@ -89,27 +91,36 @@ export default StyleSheet.create({
         alignSelf: "center",
         marginTop: 20
     },
-    settingsButtonOpac: {
-        fontSize: 20,
-        width: buttonWidth,
-        margin: "2%",
-        padding: 10,
-        borderRadius: 20,
-        color: appTextColor,
-        textAlign: "center",
-        flexDirection: "column",
-        backgroundColor: appQuarternaryColor,
-        overflow: "hidden"
-    },
-    ClickableSettingsOption:{
+    ClickableSettingsOption: {
         width: "87%",
+    },
+    clickableRow: {
+        flexDirection: "row",
+        justifyContent: "center"
+    },
+    clickableRowToggle: {
+        flexDirection: "row",
+        alignSelf: "baseline",
+        justifyContent: "center",
+        marginLeft: "6%",
+        marginRight: "2%"
     },
     changeInfoText: {
         color: appTextColor,
-        marginLeft: "10%",
+        marginLeft: "15%",
         marginVertical: "1%",
         width: "87%",
         fontSize: 20,
+        alignSelf: "center"
+    },
+    toggle: {
+        margin: "1%",
+        ...Platform.select({
+            android: {
+                alignSelf: "center",
+                height: 33
+            },
+        }),
     },
     touchableOptionArea: {
         width: "100%",

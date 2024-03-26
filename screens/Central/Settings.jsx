@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import { Modal, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Modal, Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import { Card, RadioButton, Text } from "react-native-paper";
+import { Card, RadioButton, Switch, Text } from "react-native-paper";
 import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
 import { saveNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
-import { appPrimaryColor, appTertiaryColor } from "../../utils/colors/appColors";
+import { getPushNotificationPreference, savePushNotificationPreference } from "../../utils/AsyncStorage/PushNotificationsPreference";
+import * as Notifications from "expo-notifications";
+import { appPrimaryColor, appQuarternaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons } from "@expo/vector-icons";
 
 export default function SettingsScreen({ navigation }) {
@@ -15,6 +17,7 @@ export default function SettingsScreen({ navigation }) {
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isNavModalVisible, setIsNavModalVisible] = useState(false);
     const [navTypeChecked, setNavTypeChecked] = useState("car");
+    const [isPushNotificationEnabled, setIsPushNotificationEnabled] = useState(false);
     const [profileInfo, setProfileInfo] = useState({
         name: "",
         email: "",
@@ -36,6 +39,16 @@ export default function SettingsScreen({ navigation }) {
             setIsSignedIn(true);
         } catch {
             setIsSignedIn(false);
+        }
+    };
+    const togglePushNotification = async () => {
+        const newValue = !isPushNotificationEnabled;
+        setIsPushNotificationEnabled(newValue);
+        await savePushNotificationPreference(newValue);
+        if (newValue) {
+            //await registerForPushNotificationsAsync();
+        } else {
+            // await Notifications.removePushTokenAsync();
         }
     };
 
@@ -144,6 +157,13 @@ export default function SettingsScreen({ navigation }) {
             getNameAndEmail();
         }, [])
     );
+    useEffect(() => {
+        const getPushNotificationPreferenceAsync = async () => {
+            const preference = await getPushNotificationPreference();
+            setIsPushNotificationEnabled(preference);
+        };
+        getPushNotificationPreferenceAsync();
+    }, []);
 
     return (
         <SafeAreaView style={HomeStyle.settingsContainer}>
@@ -163,36 +183,48 @@ export default function SettingsScreen({ navigation }) {
                         <Card style={HomeStyle.settingsCard}>
 
                             <Card.Content style={[HomeStyle.settingsCardContent, { paddingTop: "3%" }]}>
-                                <Ionicons style={{paddingBottom: "4%"}} name="person" size={24} color={appPrimaryColor} />
+                                <Ionicons style={{ paddingBottom: "4%" }} name="person" size={24} color={appPrimaryColor} />
                                 <View style={HomeStyle.ClickableSettingsOption}>
-                                    <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Name")}>Change Name</Text>
+                                    <View style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Name")}>Change Name</Text>
+                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
+                                    </View>
                                     <View style={HomeStyle.touchableOptionArea} />
                                 </View>
                             </Card.Content>
 
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <Entypo style={{paddingBottom: "4%"}} name="email" size={24} color={appPrimaryColor} />
+                                <Entypo style={{ paddingBottom: "4%" }} name="email" size={24} color={appPrimaryColor} />
                                 <View style={HomeStyle.ClickableSettingsOption}>
-                                    <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Email")}>Change Email</Text>
+                                    <View style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Email")}>Change Email</Text>
+                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
+                                    </View>
                                     <View style={HomeStyle.touchableOptionArea} />
                                 </View>
                             </Card.Content>
 
 
                             <Card.Content style={HomeStyle.settingsCardContent}>
-                                <MaterialIcons style={{paddingBottom: "4%"}} name="password" size={24} color={appPrimaryColor} />
+                                <MaterialIcons style={{ paddingBottom: "4%" }} name="password" size={24} color={appPrimaryColor} />
                                 <View style={HomeStyle.ClickableSettingsOption}>
-                                    <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Password")}>Change Password</Text>
+                                    <View style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Password")}>Change Password</Text>
+                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
+                                    </View>
                                     <View style={HomeStyle.touchableOptionArea} />
                                 </View>
                             </Card.Content>
 
 
                             <Card.Content style={[HomeStyle.settingsCardContent, { paddingBottom: "3%" }]}>
-                                <MaterialIcons style={{paddingBottom: "0%"}} name="delete" size={24} color={appPrimaryColor} />
+                                <MaterialIcons style={{ paddingBottom: 0 }} name="delete" size={24} color={appPrimaryColor} />
                                 <View style={HomeStyle.ClickableSettingsOption}>
-                                    <Text style={HomeStyle.changeInfoText} onPress={showDeleteModal}>Delete Account</Text>
+                                    <View style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText} onPress={showDeleteModal}>Delete Account</Text>
+                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
+                                    </View>
                                 </View>
                             </Card.Content>
 
@@ -206,19 +238,49 @@ export default function SettingsScreen({ navigation }) {
                     <Card style={HomeStyle.settingsCard}>
 
                         <Card.Content style={[HomeStyle.settingsCardContent, { paddingTop: "3%" }]}>
-                            <MaterialCommunityIcons style={{paddingBottom: "4%"}} name="directions-fork" size={24} color={appPrimaryColor} />
+                            <MaterialCommunityIcons style={{ paddingBottom: "4%" }} name="directions-fork" size={24} color={appPrimaryColor} />
                             <View style={HomeStyle.ClickableSettingsOption}>
-                                <Text style={HomeStyle.changeInfoText} onPress={showNavModal}>Navigation Preference</Text>
+                                <View style={HomeStyle.clickableRow}>
+                                    <Text style={HomeStyle.changeInfoText} onPress={showNavModal}>Navigation Preference</Text>
+                                    <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
+                                </View>
+
+                                <View style={HomeStyle.touchableOptionArea} />
+                            </View>
+                        </Card.Content>
+
+                        <Card.Content style={[HomeStyle.settingsCardContent, Platform == "ios" ? { paddingBottom: "3%" } : { marginBottom: 0 }]}>
+                            <MaterialIcons style={{ paddingBottom: 0 }} name="notifications-on" size={24} color={appPrimaryColor} />
+                            <View style={HomeStyle.ClickableSettingsOption}>
+                                <View style={HomeStyle.clickableRowToggle}>
+                                    <Text style={HomeStyle.changeInfoText} onPress={() => { console.log("needs implemented"); }}>Push Notifications</Text>
+                                    <Switch
+                                        value={isPushNotificationEnabled}
+                                        onValueChange={togglePushNotification}
+                                        color={appTertiaryColor}
+                                        ios_backgroundColor={appQuarternaryColor}
+                                        style={HomeStyle.toggle}
+                                    />
+                                </View>
+
                                 <View style={HomeStyle.touchableOptionArea} />
                             </View>
                         </Card.Content>
 
                         <Card.Content style={[HomeStyle.settingsCardContent, { paddingBottom: "3%" }]}>
-                            <MaterialIcons style={{paddingBottom: "0%"}} name="notifications-on" size={24} color={appPrimaryColor} />
+                            <MaterialIcons style={{ paddingBottom: "0%" }} name="notifications-on" size={24} color={appPrimaryColor} />
                             <View style={HomeStyle.ClickableSettingsOption}>
-                                <Text style={HomeStyle.changeInfoText} onPress={() => { console.log("needs implemented"); }}>Push Notifications</Text>
+                                <View style={HomeStyle.clickableRowToggle}>
+                                    <Text style={HomeStyle.changeInfoText} onPress={() => { console.log("needs implemented"); }}>Auto Play Images</Text>
+                                    <Switch
+                                        value={isPushNotificationEnabled}
+                                        onValueChange={togglePushNotification}
+                                        color={appTertiaryColor}
+                                        ios_backgroundColor={appQuarternaryColor}
+                                        style={HomeStyle.toggle}
+                                    />
+                                </View>
                             </View>
-
                         </Card.Content>
 
                     </Card>
