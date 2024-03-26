@@ -31,7 +31,6 @@ export default function App() {
         };
 
         const getPermissions = async () => {
-            let NotificationPreference = true;
             await handleUserSession();
             try {
                 let token = "";
@@ -44,7 +43,6 @@ export default function App() {
                 const { status } = await Notifications.requestPermissionsAsync();
                 if (status !== "granted") {
                     console.log("Permission to receive notifications denied.");
-                    NotificationPreference = false;
                     return;
                 }
 
