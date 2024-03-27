@@ -141,7 +141,6 @@ export default function SettingsScreen({ navigation }) {
                                     value="walk"
                                     status={navTypeChecked === "walk" ? "checked" : "unchecked"}
                                     onPress={() => handleNavPreferenceChange("walk")}
-                                    style={HomeStyle.radioButton}
                                     color={appTertiaryColor}
                                     uncheckedColor={appTertiaryColor}
                                 />
