@@ -257,10 +257,10 @@ export default function SettingsScreen({ navigation }) {
                             <Card.Content style={[HomeStyle.settingsCardContent, { paddingTop: "3%" }]}>
                                 <Ionicons style={{ paddingBottom: "4%" }} name="person" size={24} color={appPrimaryColor} />
                                 <View style={HomeStyle.ClickableSettingsOption}>
-                                    <View style={HomeStyle.clickableRow}>
-                                        <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Name")}>Change Name</Text>
+                                    <TouchableOpacity onPress={() => navigation.navigate("Change Name")} style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText} >Change Name</Text>
                                         <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
-                                    </View>
+                                    </TouchableOpacity>
                                     <View style={HomeStyle.touchableOptionArea} />
                                 </View>
                             </Card.Content>
@@ -269,10 +269,10 @@ export default function SettingsScreen({ navigation }) {
                             <Card.Content style={HomeStyle.settingsCardContent}>
                                 <Entypo style={{ paddingBottom: "4%" }} name="email" size={24} color={appPrimaryColor} />
                                 <View style={HomeStyle.ClickableSettingsOption}>
-                                    <View style={HomeStyle.clickableRow}>
-                                        <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Email")}>Change Email</Text>
+                                    <TouchableOpacity onPress={() => navigation.navigate("Change Email")} style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText}>Change Email</Text>
                                         <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
-                                    </View>
+                                    </TouchableOpacity>
                                     <View style={HomeStyle.touchableOptionArea} />
                                 </View>
                             </Card.Content>
@@ -281,10 +281,10 @@ export default function SettingsScreen({ navigation }) {
                             <Card.Content style={HomeStyle.settingsCardContent}>
                                 <MaterialIcons style={{ paddingBottom: "4%" }} name="password" size={24} color={appPrimaryColor} />
                                 <View style={HomeStyle.ClickableSettingsOption}>
-                                    <View style={HomeStyle.clickableRow}>
-                                        <Text style={HomeStyle.changeInfoText} onPress={() => navigation.navigate("Change Password")}>Change Password</Text>
+                                    <TouchableOpacity onPress={() => navigation.navigate("Change Password")} style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText}>Change Password</Text>
                                         <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
-                                    </View>
+                                    </TouchableOpacity>
                                     <View style={HomeStyle.touchableOptionArea} />
                                 </View>
                             </Card.Content>
@@ -293,10 +293,10 @@ export default function SettingsScreen({ navigation }) {
                             <Card.Content style={[HomeStyle.settingsCardContent, { paddingBottom: "3%" }]}>
                                 <MaterialIcons style={{ paddingBottom: 0 }} name="delete" size={24} color={appPrimaryColor} />
                                 <View style={HomeStyle.ClickableSettingsOption}>
-                                    <View style={HomeStyle.clickableRow}>
-                                        <Text style={HomeStyle.changeInfoText} onPress={showDeleteModal}>Delete Account</Text>
+                                    <TouchableOpacity onPress={showDeleteModal} style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText} >Delete Account</Text>
                                         <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
-                                    </View>
+                                    </TouchableOpacity>
                                 </View>
                             </Card.Content>
 
@@ -312,10 +312,10 @@ export default function SettingsScreen({ navigation }) {
                         <Card.Content style={[HomeStyle.settingsCardContent, { paddingTop: "3%" }]}>
                             <MaterialCommunityIcons style={{ paddingBottom: "4%" }} name="directions-fork" size={24} color={appPrimaryColor} />
                             <View style={HomeStyle.ClickableSettingsOption}>
-                                <View style={HomeStyle.clickableRow}>
-                                    <Text style={HomeStyle.changeInfoText} onPress={showNavModal}>Navigation Preference</Text>
+                                <TouchableOpacity onPress={showNavModal} style={HomeStyle.clickableRow}>
+                                    <Text style={HomeStyle.changeInfoText}>Navigation Preference</Text>
                                     <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
-                                </View>
+                                </TouchableOpacity>
 
                                 <View style={HomeStyle.touchableOptionArea} />
                             </View>
