@@ -21,10 +21,6 @@ export default function DrawerNavigator() {
 
     const { changeAuthState, isSignedIn, setIsSignedIn } = useAuth();
 
-    useEffect(() => {
-        console.log(changeAuthState);
-    }, []);
-
     const [isSigningOut, setIsSigningOut] = useState(false);
     const [profileRole, setProfileRole] = useState({
         role: "",
