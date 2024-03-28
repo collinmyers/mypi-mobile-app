@@ -9,14 +9,13 @@ import { getAutoPlayPreference, saveAutoPlayPreference } from "../../utils/Async
 import * as Notifications from "expo-notifications";
 import { appPrimaryColor, appQuarternaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 } from "@expo/vector-icons";
-import { account } from "../../utils/Config/appwriteConfig";
+import { account, functions } from "../../utils/Config/appwriteConfig";
 import * as Linking from "expo-linking";
 import { useAuth } from "../../components/navigation/AuthContext";
 
 export default function SettingsScreen({ navigation }) {
 
     const { changeAuthState, setChangeAuthState, isSignedIn, setIsSignedIn } = useAuth();
-    // const [isSignedIn, setIsSignedIn] = useState(false);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isNavModalVisible, setIsNavModalVisible] = useState(false);
     const [navTypeChecked, setNavTypeChecked] = useState("car");
@@ -30,7 +29,6 @@ export default function SettingsScreen({ navigation }) {
 
     useFocusEffect(
         React.useCallback(() => {
-
             const getNameAndEmail = async () => {
                 try {
                     const response = await account.get();
@@ -48,13 +46,10 @@ export default function SettingsScreen({ navigation }) {
                     setIsSignedIn(false);
                 }
             };
-
-
             getNameAndEmail();
+            
         }, [changeAuthState])
     );
-
-
 
     const togglePushNotification = async () => {
         try {
@@ -147,7 +142,6 @@ export default function SettingsScreen({ navigation }) {
         );
     };
 
-
     const showDeleteModal = () => {
         setIsDeleteModalVisible(true);
     };
@@ -173,7 +167,7 @@ export default function SettingsScreen({ navigation }) {
     };
 
     const renderAccountSettings = () => {
-        if (!isSignedIn){
+        if (!isSignedIn) {
             return null;
         }
 
@@ -246,6 +240,23 @@ export default function SettingsScreen({ navigation }) {
 
     const deleteUserAndData = async () => {
 
+        const DELETE_USER_FUNCTION_ID = process.env.EXPO_PUBLIC_DELETE_USER_AND_DATA_FUNCTION;
+
+        await functions.createExecution(
+            DELETE_USER_FUNCTION_ID,
+            "",
+            false,
+            "/",
+            "DELETE",
+            {}
+        )
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
         await account.deleteSession("current")
             .then(() => {
                 setChangeAuthState(!changeAuthState);
@@ -253,8 +264,6 @@ export default function SettingsScreen({ navigation }) {
             });
         setIsDeleteModalVisible(false);
     };
-
-
 
     useFocusEffect(
         React.useCallback(() => {
@@ -274,11 +283,11 @@ export default function SettingsScreen({ navigation }) {
                 }
             };
 
-            AppState.addEventListener("change", handleAppStateChange);
+            const appSub = AppState.addEventListener("change", handleAppStateChange);
 
             // Cleanup: remove the event listener when the component unmounts
             return () => {
-                AppState.remove;
+                appSub.remove();
             };
 
         }, [])
@@ -291,11 +300,6 @@ export default function SettingsScreen({ navigation }) {
         };
         getAutoPlayPreferenceAsync();
     }, [isAutoPlayEnabled]);
-
-    // useFocusEffect(React.useCallback(() => {
-    //     setIsSignedIn(changeAuthState);
-    //     console.log("hello its me")
-    // }, [changeAuthState]));
 
     return (
         <SafeAreaView style={HomeStyle.settingsContainer}>
