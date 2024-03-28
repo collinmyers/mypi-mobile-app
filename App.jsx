@@ -6,6 +6,8 @@ import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
 import { account, database, DATABASE_ID, USER_NOTIFICATION_TOKENS } from "./utils/Config/appwriteConfig";
 import { ID } from "appwrite";
+import { AuthProvider } from "./components/navigation/AuthContext";
+
 
 export default function App() {
     setupURLPolyfill();
@@ -73,6 +75,8 @@ export default function App() {
 
 
     return (
-        <DrawerNavigator />
+        <AuthProvider>
+            <DrawerNavigator />
+        </AuthProvider>
     );
 }

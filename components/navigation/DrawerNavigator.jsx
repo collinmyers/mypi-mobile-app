@@ -11,17 +11,21 @@ import AuthStackNavigator from "./AuthStackNavigator";
 import { account } from "../../utils/Config/appwriteConfig";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
-
 import { Entypo, Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import FoodTruckStackNavigator from "./FoodTruckStackNavigator";
+import { useAuth } from "./AuthContext";
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
 
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const { changeAuthState, isSignedIn, setIsSignedIn } = useAuth();
+
+    useEffect(() => {
+        console.log(changeAuthState);
+    }, []);
+
     const [isSigningOut, setIsSigningOut] = useState(false);
-    const [refreshDrawer, setRefreshDrawer] = useState(0);
     const [profileRole, setProfileRole] = useState({
         role: "",
     });
@@ -45,13 +49,7 @@ export default function DrawerNavigator() {
 
     useEffect(() => {
         checkAuthState();
-    }, [refreshDrawer]);
-
-
-    const handleLoginSuccess = () => {
-        setIsSignedIn(true);
-        setRefreshDrawer((prev) => prev + 1);
-    };
+    }, [changeAuthState]);
 
     const handleLogout = async () => {
         if (!isSigningOut) {
@@ -59,8 +57,7 @@ export default function DrawerNavigator() {
                 setIsSigningOut(true);
 
                 await account.deleteSessions("current");
-
-                setRefreshDrawer((prev) => prev + 1);
+                setIsSignedIn(false);
 
             } catch (error) {
                 console.error(error);
@@ -97,12 +94,9 @@ export default function DrawerNavigator() {
         );
     };
 
-    const AuthStackWithLoginSuccess = () => <AuthStackNavigator handleLoginSuccess={handleLoginSuccess} />;
-
     return (
         <NavigationContainer>
             <Drawer.Navigator
-                key={refreshDrawer}
                 initialRouteName="Home"
                 drawerContent={(props) => <SignOutDrawerItem {...props} />}
                 screenOptions={{
@@ -124,7 +118,7 @@ export default function DrawerNavigator() {
                 {!isSignedIn && (
                     <Drawer.Screen
                         name="Sign In"
-                        component={AuthStackWithLoginSuccess}
+                        component={AuthStackNavigator}
                         options={{
                             header: () => { false; },
                             drawerIcon: ({ focused }) =>
@@ -218,3 +212,4 @@ export default function DrawerNavigator() {
     );
 
 }
+

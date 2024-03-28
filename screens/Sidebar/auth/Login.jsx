@@ -9,20 +9,22 @@ import AuthStyle from "../../../styling/AuthStyle";
 import { appPrimaryColor, appTextColor } from "../../../utils/colors/appColors";
 import { validateEmail } from "../../../utils/Regex/Validators";
 import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
+import { useAuth } from "../../../components/navigation/AuthContext";
 
 LoginScreen.propTypes = {
     navigation: PropTypes.shape({
         navigate: PropTypes.func.isRequired,
     }).isRequired,
-    handleLoginSuccess: PropTypes.func.isRequired,
 };
 
-export default function LoginScreen({ navigation, handleLoginSuccess }) {
+export default function LoginScreen({ navigation }) {
 
     const [authentication, setAuthentication] = useState({
         email: "",
         password: ""
     });
+
+    const { changeAuthState, setChangeAuthState } = useAuth();
 
     const [errorMessage, setErrorMessage] = useState("");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
@@ -71,7 +73,7 @@ export default function LoginScreen({ navigation, handleLoginSuccess }) {
                         email: "",
                         password: ""
                     });
-                    handleLoginSuccess();
+                    setChangeAuthState(!changeAuthState);
                     navigation.navigate("Home");
 
                 } catch (error) {

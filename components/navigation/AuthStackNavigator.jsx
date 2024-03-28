@@ -2,7 +2,6 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import SignUpScreen from "../../screens/Sidebar/auth/SignUp";
 import LoginScreen from "../../screens/Sidebar/auth/Login";
-import PropTypes from "prop-types";
 import PasswordResetScreen from "../../screens/Sidebar/auth/ForgotPassword";
 import Menu from "./AppHeader";
 import MenuBack from "./AppHeaderNavBack";
@@ -10,10 +9,11 @@ import { appTertiaryColor } from "../../utils/colors/appColors";
 
 const Stack = createStackNavigator();
 
-export default function AuthStackNavigator({ handleLoginSuccess }) {
+export default function AuthStackNavigator() {
     return (
         <Stack.Navigator initialRouteName="Login" >
             <Stack.Screen name="Login"
+                component={LoginScreen}
                 options={{
                     headerShown: true,
                     headerTransparent: true,
@@ -21,10 +21,7 @@ export default function AuthStackNavigator({ handleLoginSuccess }) {
                     headerStyle: { backgroundColor: appTertiaryColor },
                     header: () => <Menu />
                 }}
-            >
-                {(props) => <LoginScreen {...props} handleLoginSuccess={handleLoginSuccess} />}
-            </Stack.Screen>
-
+            />
             <Stack.Screen name="Sign Up" component={SignUpScreen}
                 options={{
                     headerShown: true,
@@ -46,7 +43,3 @@ export default function AuthStackNavigator({ handleLoginSuccess }) {
         </Stack.Navigator>
     );
 }
-
-AuthStackNavigator.propTypes = {
-    handleLoginSuccess: PropTypes.func.isRequired,
-};

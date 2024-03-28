@@ -9,13 +9,14 @@ import { getAutoPlayPreference, saveAutoPlayPreference } from "../../utils/Async
 import * as Notifications from "expo-notifications";
 import { appPrimaryColor, appQuarternaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 } from "@expo/vector-icons";
-import { account, database, DATABASE_ID, USER_NOTIFICATION_TOKENS } from "../../utils/Config/appwriteConfig";
+import { account } from "../../utils/Config/appwriteConfig";
 import * as Linking from "expo-linking";
-import { ID } from "appwrite";
+import { useAuth } from "../../components/navigation/AuthContext";
 
 export default function SettingsScreen({ navigation }) {
 
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const { changeAuthState, setChangeAuthState, isSignedIn, setIsSignedIn } = useAuth();
+    // const [isSignedIn, setIsSignedIn] = useState(false);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isNavModalVisible, setIsNavModalVisible] = useState(false);
     const [navTypeChecked, setNavTypeChecked] = useState("car");
@@ -27,29 +28,37 @@ export default function SettingsScreen({ navigation }) {
         identity: ""
     });
 
-    const getNameAndEmail = async () => {
-        try {
-            const response = await account.get();
+    useFocusEffect(
+        React.useCallback(() => {
 
-            if (response.email === "") throw new Error("Not a email user (guest)");
+            const getNameAndEmail = async () => {
+                try {
+                    const response = await account.get();
 
-            setProfileInfo({
-                name: response.name,
-                email: response.email,
-                identity: response.$id
-            });
+                    if (response.email === "") throw new Error("Not a email user (guest)");
 
-            setIsSignedIn(true);
-        } catch {
-            setIsSignedIn(false);
-        }
-    };
+                    setProfileInfo({
+                        name: response.name,
+                        email: response.email,
+                        identity: response.$id
+                    });
+
+                    setIsSignedIn(true);
+                } catch {
+                    setIsSignedIn(false);
+                }
+            };
+
+
+            getNameAndEmail();
+        }, [changeAuthState])
+    );
+
 
 
     const togglePushNotification = async () => {
-
         try {
-            await Linking.openSettings();
+            await Linking.openSettings(); // device system settings for app
 
             // Request push notification permissions
             const { status } = await Notifications.getPermissionsAsync();
@@ -59,31 +68,9 @@ export default function SettingsScreen({ navigation }) {
                 setIsPushNotificationEnabled(false); // Revert the switch state if permission denied
                 return;
             }
-            // Get the push token and create a document in Appwrite
-            const subscription = await Notifications.getPermissionsAsync();
-            if (subscription.status === "granted") {
-                const token = (await Notifications.getExpoPushTokenAsync()).data;
 
-                // Create doc for user's push token. This will run if the expo token is not stored or doesn't match.
-                const createTokenDoc = database.createDocument(
-                    DATABASE_ID,
-                    USER_NOTIFICATION_TOKENS,
-                    ID.unique(),
-                    {
-                        ExpoPushToken: token,
-                        UID: profileInfo.identity,
-                    }
-                );
-                createTokenDoc.then(
-                    function (response) {
-                        console.log(response);
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                );
-                setIsPushNotificationEnabled(true);
-            }
+            setIsPushNotificationEnabled(true);
+
         } catch (error) {
             console.error(error);
         }
@@ -185,62 +172,13 @@ export default function SettingsScreen({ navigation }) {
         );
     };
 
-    const deleteUserAndData = async () => {
-        try {
-            setIsDeleteModalVisible(false);
-        } catch (error) {
-            console.error(error);
+    const renderAccountSettings = () => {
+        if (!isSignedIn){
+            return null;
         }
-    };
 
-    useFocusEffect(
-        React.useCallback(() => {
-            getNameAndEmail();
-        }, [])
-    );
-
-    useFocusEffect(
-        React.useCallback(() => {
-            const pushStatus = async () => {
-                const { status } = await Notifications.getPermissionsAsync();
-                if (status === "granted") {
-                    setIsPushNotificationEnabled(true);
-                } else {
-                    setIsPushNotificationEnabled(false);
-                }
-            };
-            pushStatus();
-
-            const handleAppStateChange = (nextAppState) => {
-                if (nextAppState === "active") {
-                    pushStatus();
-                }
-            };
-
-            AppState.addEventListener("change", handleAppStateChange);
-
-            // Cleanup: remove the event listener when the component unmounts
-            return () => {
-                AppState.remove;
-            };
-
-        }, [])
-    );
-
-    useEffect(() => {
-        const getAutoPlayPreferenceAsync = async () => {
-            const preference = await getAutoPlayPreference();
-            setIsAutoPlayEnabled(preference);
-        };
-        getAutoPlayPreferenceAsync();
-    }, [isAutoPlayEnabled]);
-
-
-    return (
-        <SafeAreaView style={HomeStyle.settingsContainer}>
-
-            <ScrollView showsVerticalScrollIndicator={false}>
-
+        return (
+            <React.Fragment>
                 {isSignedIn && (
                     <View style={HomeStyle.profileView}>
                         <Text style={HomeStyle.profileText}>{profileInfo.name}</Text>
@@ -302,6 +240,69 @@ export default function SettingsScreen({ navigation }) {
                         </Card>
                     </View>
                 )}
+            </React.Fragment>
+        );
+    };
+
+    const deleteUserAndData = async () => {
+
+        await account.deleteSession("current")
+            .then(() => {
+                setChangeAuthState(!changeAuthState);
+                setIsSignedIn(false);
+            });
+        setIsDeleteModalVisible(false);
+    };
+
+
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const pushStatus = async () => {
+                const { status } = await Notifications.getPermissionsAsync();
+                if (status === "granted") {
+                    setIsPushNotificationEnabled(true);
+                } else {
+                    setIsPushNotificationEnabled(false);
+                }
+            };
+            pushStatus();
+
+            const handleAppStateChange = (nextAppState) => {
+                if (nextAppState === "active") {
+                    pushStatus();
+                }
+            };
+
+            AppState.addEventListener("change", handleAppStateChange);
+
+            // Cleanup: remove the event listener when the component unmounts
+            return () => {
+                AppState.remove;
+            };
+
+        }, [])
+    );
+
+    useEffect(() => {
+        const getAutoPlayPreferenceAsync = async () => {
+            const preference = await getAutoPlayPreference();
+            setIsAutoPlayEnabled(preference);
+        };
+        getAutoPlayPreferenceAsync();
+    }, [isAutoPlayEnabled]);
+
+    // useFocusEffect(React.useCallback(() => {
+    //     setIsSignedIn(changeAuthState);
+    //     console.log("hello its me")
+    // }, [changeAuthState]));
+
+    return (
+        <SafeAreaView style={HomeStyle.settingsContainer}>
+
+            <ScrollView showsVerticalScrollIndicator={false}>
+
+                {renderAccountSettings()}
 
                 <View style={HomeStyle.cardView}>
                     <Text style={HomeStyle.settingsSectionHeader}>App Settings</Text>
