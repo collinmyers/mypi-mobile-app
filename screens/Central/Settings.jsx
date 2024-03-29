@@ -7,12 +7,13 @@ import HomeStyle from "../../styling/HomeStyle";
 import { saveNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
 import { getAutoPlayPreference, saveAutoPlayPreference } from "../../utils/AsyncStorage/AutoPlayPreference";
 import * as Notifications from "expo-notifications";
-import { appPrimaryColor, appQuarternaryColor, appTertiaryColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 } from "@expo/vector-icons";
 import { account, functions } from "../../utils/Config/appwriteConfig";
 import * as Linking from "expo-linking";
 import { useAuth } from "../../components/navigation/AuthContext";
-
+import { Snackbar } from "react-native-paper";
+import AppStyle from "../../styling/AppStyle";
 export default function SettingsScreen({ navigation }) {
 
     const { changeAuthState, setChangeAuthState, isSignedIn, setIsSignedIn } = useAuth();
@@ -21,6 +22,10 @@ export default function SettingsScreen({ navigation }) {
     const [navTypeChecked, setNavTypeChecked] = useState("car");
     const [isPushNotificationEnabled, setIsPushNotificationEnabled] = useState(false);
     const [isAutoPlayEnabled, setIsAutoPlayEnabled] = useState(false);
+    const [isErrorMessage, setIsErrorMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+    const [isActionOcurring, setIsActionOccuring] = useState(false);
     const [profileInfo, setProfileInfo] = useState({
         name: "",
         email: "",
@@ -47,7 +52,7 @@ export default function SettingsScreen({ navigation }) {
                 }
             };
             getNameAndEmail();
-            
+
         }, [changeAuthState])
     );
 
@@ -239,30 +244,46 @@ export default function SettingsScreen({ navigation }) {
     };
 
     const deleteUserAndData = async () => {
+        if (!isActionOcurring) {
+            setIsActionOccuring(true);
+            try {
+                setIsDeleteModalVisible(false);
 
-        const DELETE_USER_FUNCTION_ID = process.env.EXPO_PUBLIC_DELETE_USER_AND_DATA_FUNCTION;
+                const DELETE_USER_FUNCTION_ID = process.env.EXPO_PUBLIC_DELETE_USER_AND_DATA_FUNCTION;
 
-        await functions.createExecution(
-            DELETE_USER_FUNCTION_ID,
-            "",
-            false,
-            "/",
-            "DELETE",
-            {}
-        )
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-        await account.deleteSession("current")
-            .then(() => {
+                await functions.createExecution(
+                    DELETE_USER_FUNCTION_ID,
+                    "",
+                    false,
+                    "/",
+                    "DELETE",
+                    {}
+                )
+                    .then((response) => {
+                        if (response.responseStatusCode === 200) {
+                            setIsErrorMessage(false);
+                            setErrorMessage("Account successfully deleted");
+                            setIsSnackbarVisible(true);
+                        } else {
+                            setIsErrorMessage(true);
+                            setErrorMessage("Error deleting account, please try again");
+                            setIsSnackbarVisible(true);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        setIsErrorMessage(true);
+                        setErrorMessage("Error deleting account, please try again");
+                        setIsSnackbarVisible(true);
+                    });
                 setChangeAuthState(!changeAuthState);
                 setIsSignedIn(false);
-            });
-        setIsDeleteModalVisible(false);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsActionOccuring(false);
+            }
+        }
     };
 
     useFocusEffect(
@@ -285,7 +306,7 @@ export default function SettingsScreen({ navigation }) {
 
             const appSub = AppState.addEventListener("change", handleAppStateChange);
 
-            // Cleanup: remove the event listener when the component unmounts
+            // remove the event listener when the component unmounts
             return () => {
                 appSub.remove();
             };
@@ -366,6 +387,18 @@ export default function SettingsScreen({ navigation }) {
                 <NavPreferenceModal />
 
             </ScrollView>
+            <Snackbar
+                visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={isErrorMessage ? AppStyle.snackBar : [AppStyle.snackBar, { backgroundColor: appSecondaryColor }]}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                    setErrorMessage(""); // Clear the error message
+                }}
+                duration={3000}
+            >
+                {errorMessage}
+            </Snackbar>
         </SafeAreaView >
     );
 }
