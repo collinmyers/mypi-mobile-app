@@ -1,59 +1,60 @@
 {
-    "expo": {
-        "name": "myPI",
-        "slug": "mypi",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/main/myPI-Icon.png",
-        "userInterfaceStyle": "light",
-        "plugins": [
-            [
-                "expo-notifications",
-                {
-                    "icon": "./assets/main/myPI-Icon.png",
-                    "color": "#FFFFFF"
-                }
-            ]
-        ],
-        "splash": {
-            "image": "./assets/main/splashscreen.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#FFFFFF"
-        },
-        "assetBundlePatterns": [
-            "**/*"
-        ],
-        "ios": {
-            "supportsTablet": true,
-            "bundleIdentifier": "com.discoverpi.mypiseniordesign",
-            "infoPlist": {
-                "UIUserInterfaceStyle": "Light"
-            }
-        },
-        "android": {
-            "package": "com.discoverpi.mypi",
-            "versionCode": 1,
-            "permissions": [
-                "INTERNET"
-            ],
-            "googleServicesFile": "./google-services.json",
-            "config": {
-                "googleMaps": {
-                    "apiKey": "AIzaSyCUXlnnBE6OAV1kku4UMMYZb1eGuUeJAlg"
-                }
-            }
-        },
-        "androidStatusBar": {
-            "backgroundColor": "#FFFFFF"
-        },
-        "web": {
-            "favicon": "./assets/main/myPILogo.png"
-        },
-        "extra": {
-            "eas": {
-                "projectId": "8cc387dc-be95-4b8c-8460-3c674e04defe"
-            }
-        },
-        "owner": "mypi"
-    }
+  "expo": {
+    "name": "myPI",
+    "slug": "mypi",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/main/myPI-Icon.png",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/main/myPI-Icon.png",
+          "color": "#FFFFFF"
+        }
+      ],
+      "expo-secure-store"
+    ],
+    "splash": {
+      "image": "./assets/main/splashscreen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.discoverpi.mypiseniordesign",
+      "infoPlist": {
+        "UIUserInterfaceStyle": "Light"
+      }
+    },
+    "android": {
+      "package": "com.discoverpi.mypi",
+      "versionCode": 1,
+      "permissions": [
+        "INTERNET"
+      ],
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCUXlnnBE6OAV1kku4UMMYZb1eGuUeJAlg"
+        }
+      }
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#FFFFFF"
+    },
+    "web": {
+      "favicon": "./assets/main/myPILogo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8cc387dc-be95-4b8c-8460-3c674e04defe"
+      }
+    },
+    "owner": "mypi"
+  }
 }

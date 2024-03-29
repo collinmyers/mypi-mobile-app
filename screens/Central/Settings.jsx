@@ -9,11 +9,14 @@ import { getAutoPlayPreference, saveAutoPlayPreference } from "../../utils/Async
 import * as Notifications from "expo-notifications";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 } from "@expo/vector-icons";
-import { account, functions } from "../../utils/Config/appwriteConfig";
+import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS } from "../../utils/Config/appwriteConfig";
+import { ID } from "appwrite";
 import * as Linking from "expo-linking";
 import { useAuth } from "../../components/navigation/AuthContext";
 import { Snackbar } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
+import * as SecureStore from "expo-secure-store";
+
 export default function SettingsScreen({ navigation }) {
 
     const { changeAuthState, setChangeAuthState, isSignedIn, setIsSignedIn } = useAuth();
@@ -56,21 +59,48 @@ export default function SettingsScreen({ navigation }) {
         }, [changeAuthState])
     );
 
+    const getFromSecureStore = async (key) => {
+        try {
+            const result = await SecureStore.getItemAsync(key);
+            if (result) {
+                return JSON.parse(result);
+            } else {
+                return false;
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const saveToSecureStore = async (key, value) => {
+        try {
+            const result = await SecureStore.setItemAsync(key, value);
+            if (result) {
+                return result;
+            } else {
+                return false;
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const deleteFromSecureStore = async (key) => {
+        try {
+            const result = await SecureStore.deleteItemAsync(key);
+            if (result) {
+                return result;
+            } else {
+                return false;
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     const togglePushNotification = async () => {
         try {
-            await Linking.openSettings(); // device system settings for app
-
-            // Request push notification permissions
-            const { status } = await Notifications.getPermissionsAsync();
-
-            if (status !== "granted") {
-                console.log("Permission to receive notifications denied.");
-                setIsPushNotificationEnabled(false); // Revert the switch state if permission denied
-                return;
-            }
-
-            setIsPushNotificationEnabled(true);
-
+            await Linking.openSettings(); // open device system settings for app
         } catch (error) {
             console.error(error);
         }
@@ -286,14 +316,74 @@ export default function SettingsScreen({ navigation }) {
         }
     };
 
-    useFocusEffect(
-        React.useCallback(() => {
+
+
+
+
+
+
+
+
+    useEffect(() =>{
             const pushStatus = async () => {
-                const { status } = await Notifications.getPermissionsAsync();
-                if (status === "granted") {
-                    setIsPushNotificationEnabled(true);
-                } else {
-                    setIsPushNotificationEnabled(false);
+                try {
+                    // Request push notification permissions
+                    const { status } = await Notifications.getPermissionsAsync();
+
+                    const pushKey = "pushNotification";
+
+                    if (status !== "granted") { // if the current status is granted we are in the process of turning off
+                        console.log("turning off push notifications");
+                        setIsPushNotificationEnabled(false);
+
+                        const pushObject = await getFromSecureStore(pushKey);
+                        
+                        if (!pushObject){ // user went to settings and didnt change push status
+                            return;
+                        }
+
+                        const result = await database.deleteDocument(
+                            DATABASE_ID, // databaseId
+                            USER_NOTIFICATION_TOKENS, // collectionId
+                            pushObject.docID // documentId
+                        );
+
+                        if (result) {
+                            console.log(result);
+                            await deleteFromSecureStore(pushKey);
+                        }
+                        return;
+
+                    } else {
+                        // If granted, get the token and create a document in appwrite
+                        const token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
+
+                        // Create doc for user's push token. This will run if the expo token is not stored or doesn't match.
+                        const createTokenDoc = await database.createDocument(
+                            DATABASE_ID,
+                            USER_NOTIFICATION_TOKENS,
+                            ID.unique(),
+                            {
+                                ExpoPushToken: token,
+                                UID: profileInfo.identity
+                            }
+                        );
+
+                        if (createTokenDoc) {
+                            const pushDoc = { pushToken: token, docID: createTokenDoc.$id };
+
+                            // Serialize the pushDoc object to a string
+                            const pushDocString = JSON.stringify(pushDoc);
+
+                            // Store the serialized object in secure storage
+                            await saveToSecureStore(pushKey, pushDocString);
+
+                        }
+                        console.log("turning on push notifications");
+                        setIsPushNotificationEnabled(true);
+                    }
+                } catch (err) {
+                    console.error(err);
                 }
             };
             pushStatus();
@@ -305,14 +395,12 @@ export default function SettingsScreen({ navigation }) {
             };
 
             const appSub = AppState.addEventListener("change", handleAppStateChange);
-
             // remove the event listener when the component unmounts
             return () => {
                 appSub.remove();
             };
 
-        }, [])
-    );
+        }, []);
 
     useEffect(() => {
         const getAutoPlayPreferenceAsync = async () => {

@@ -7,7 +7,7 @@ import * as Notifications from "expo-notifications";
 import { account, database, DATABASE_ID, USER_NOTIFICATION_TOKENS } from "./utils/Config/appwriteConfig";
 import { ID } from "appwrite";
 import { AuthProvider } from "./components/navigation/AuthContext";
-
+import * as SecureStore from "expo-secure-store";
 
 export default function App() {
     setupURLPolyfill();
@@ -32,6 +32,15 @@ export default function App() {
             }
         };
 
+        const saveToSecureStore = async (key, value) => {
+            try {
+                console.log("Saving to secure storage");
+                await SecureStore.setItemAsync(key, value);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
         const getPermissions = async () => {
             await handleUserSession();
             try {
@@ -52,7 +61,7 @@ export default function App() {
                 token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
 
                 // Create doc for user's push token. This will run if the expo token is not stored or doesn't match.
-                const createTokenDoc = database.createDocument(
+                const createTokenDoc = await database.createDocument(
                     DATABASE_ID,
                     USER_NOTIFICATION_TOKENS,
                     ID.unique(),
@@ -61,18 +70,23 @@ export default function App() {
                         UID: userID
                     }
                 );
-                createTokenDoc.then(function (response) {
-                    console.log(response);
-                }, function (error) {
-                    console.log(error);
-                });
-            } catch (error) {
-                console.error("Error: ", error);
+
+                if (createTokenDoc) {
+                    const pushDoc = { pushToken: token, docID: createTokenDoc.$id };
+
+                    // Serialize the pushDoc object to a string
+                    const pushDocString = JSON.stringify(pushDoc);
+
+                    const pushKey = "pushNotification";
+                    // Store the serialized object in secure storage
+                    await saveToSecureStore(pushKey, pushDocString);
+                }
+            } catch (err) {
+                console.log(err);
             }
         };
         getPermissions();
     }, []);
-
 
     return (
         <AuthProvider>
