@@ -316,15 +316,7 @@ export default function SettingsScreen({ navigation }) {
         }
     };
 
-
-
-
-
-
-
-
-
-    useEffect(() =>{
+    useFocusEffect(React.useCallback(() =>{
             const pushStatus = async () => {
                 try {
                     // Request push notification permissions
@@ -400,7 +392,7 @@ export default function SettingsScreen({ navigation }) {
                 appSub.remove();
             };
 
-        }, []);
+        }, []));
 
     useEffect(() => {
         const getAutoPlayPreferenceAsync = async () => {
