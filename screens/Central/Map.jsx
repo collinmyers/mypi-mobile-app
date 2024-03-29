@@ -235,10 +235,10 @@ export default function MapScreen() {
             "Amenities": "Amenities",
             "Attraction": "Attractions",
             "Beach": "Beaches",
+            "FoodTruck": "Food Truck",
             "Information": "Information",
             "Parking": "Parking",
             "Restroom": "Restrooms",
-            "FoodTruck": "Food Truck",
         };
 
         return Object.keys(filterAliases).map((filter) => (
