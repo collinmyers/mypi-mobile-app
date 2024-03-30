@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
-import { Card, Text, TextInput } from "react-native-paper";
+import { Card, Snackbar, Text, TextInput } from "react-native-paper";
 import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import Logo from "../../components/logo/AppLogo";
@@ -17,7 +17,9 @@ ChangePasswordScreen.propTypes = {
 };
 
 export default function ChangePasswordScreen({ navigation }) {
-
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+    const [isActionOcurring, setIsActionOccuring] = useState(false);
     const [passwords, setPasswords] = useState({
         oldPassword: "",
         newPassword: "",
@@ -25,20 +27,66 @@ export default function ChangePasswordScreen({ navigation }) {
     });
 
     const handlePasswordChange = async () => {
-        try {
-            await account.updatePassword(passwords.newPassword, passwords.oldPassword);
+        if (!isActionOcurring) {
+            setIsActionOccuring(true);
+            try {
 
-            setPasswords({
-                oldPassword: "",
-                newPassword: "",
-                confirmNewPassword: ""
-            });
+                let validationErrors = [];
+                
+                if (passwords.oldPassword.length < 1) {
+                    validationErrors.push("Please enter your old password");
+                }
 
-            navigation.navigate("Settings");
+                const passwordError = validatePassword(passwords.newPassword, passwords.confirmNewPassword);
+                if (passwordError !== "") {
+                    console.log(passwordError)
+                    validationErrors.push(...passwordError);
+                }
 
-        } catch (error) {
-            console.error(error);
+                if (validationErrors.length > 0) {
+                    let snackbarMessage = "";
+                    if (validationErrors.length > 1) {
+                        snackbarMessage += "Multiple Errors:\n";
+                    }
+                    snackbarMessage += validationErrors.join("\n");
+
+                    setErrorMessage(snackbarMessage);
+                    setIsSnackbarVisible(true);
+                    return false;
+                }
+
+                // If validation passes clear error message
+                setErrorMessage("");
+
+                await account.updatePassword(passwords.newPassword, passwords.oldPassword);
+
+                setPasswords({
+                    oldPassword: "",
+                    newPassword: "",
+                    confirmNewPassword: ""
+                });
+
+                navigation.navigate("Settings");
+
+            } catch (error) {
+                console.error(error);
+                const invalidPassword = "AppwriteException: Invalid `password` param: Password must be between 8 and 265 characters long, and should not be one of the commonly used password.";
+
+                switch (error.toString()) {
+                    case invalidPassword:
+                        setErrorMessage("Please enter a valid password");
+                        setIsSnackbarVisible(true);
+                        break;
+                    default:
+                        setErrorMessage("Unknown error occured, please try again");
+                        setIsSnackbarVisible(true);
+                        break;
+                }
+            } finally {
+                setIsActionOccuring(false);
+            }
         }
+
     };
 
     return (
@@ -106,6 +154,18 @@ export default function ChangePasswordScreen({ navigation }) {
                     </Card.Content>
                 </Card>
             </KeyboardAvoidingComponent>
+            <Snackbar
+                visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={AppStyle.snackBar}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                    setErrorMessage(""); // Clear the error message
+                }}
+                duration={3000}
+            >
+                {errorMessage}
+            </Snackbar>
         </SafeAreaView>
 
     );

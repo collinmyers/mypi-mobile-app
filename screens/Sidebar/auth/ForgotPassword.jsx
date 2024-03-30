@@ -26,7 +26,6 @@ export default function ForgotPasswordScreen({ navigation }) {
         if (!isActionOcurring) {
             try {
                 setIsActionOccuring(true);
-
                 try {
                     await account.createRecovery(`${email}`, process.env.EXPO_PUBLIC_RECOVERY_DOMAIN);
 

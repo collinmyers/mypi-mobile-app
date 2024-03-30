@@ -29,57 +29,62 @@ export default function ChangeEmailScreen({ navigation }) {
 
 
     const handleEmailChange = async () => {
-        try {
 
-            if (!validateEmail(credentials.email)) {
-                throw new Error("Malformed email address");
-            }
+        if (!isActionOcurring) {
+            setIsActionOccuring(true);
+            try {
 
-            await account.updateEmail(credentials.email, credentials.password);
-
-            setCredentials({
-                email: "",
-                password: ""
-            });
-
-            navigation.navigate("Settings");
-
-        } catch (error) {
-            const malformedEmail = "Malformed email address";
-            const invalidEmail = "AppwriteException: Invalid `email` param: Value must be a valid email address";
-            const invalidPass = "AppwriteException: Invalid `password` param: Password must be between 8 and 256 characters long.";
-            const incorrectPass = "AppwriteException: Invalid credentials. Please check the email and password.";
-            const emailExists = "AppwriteException: A target with the same ID already exists.";
-
-            switch (error.toString()) {
-                case malformedEmail:
+                if (credentials.email === "" && credentials.password === "") {
+                    setErrorMessage("Multiple Errors:\nPlease enter a valid email\nPlease enter a valid password");
+                    setIsSnackbarVisible(true);
+                    setIsActionOccuring(false);
+                    return;
+                } else if (!validateEmail(credentials.email)) {
                     setErrorMessage("Please enter a valid email");
                     setIsSnackbarVisible(true);
-                    break;
-                case invalidEmail:
-                    setErrorMessage("Please enter a valid email");
-                    setIsSnackbarVisible(true);
-                    break;
-                case invalidPass:
-                    setErrorMessage("Please enter a valid password");
-                    setIsSnackbarVisible(true);
-                    break;
-                case incorrectPass:
-                    setErrorMessage("Incorrect password, please try again");
-                    setIsSnackbarVisible(true);
-                    break;
-                case emailExists:
-                    setErrorMessage("Please try a different email");
-                    setIsSnackbarVisible(true);
-                    break;
-                default:
-                    setErrorMessage("Unknown Error");
-                    setIsSnackbarVisible(true);
-                    break;
+                    setIsActionOccuring(false);
+                    return;
+                }
 
+                await account.updateEmail(credentials.email, credentials.password);
+
+                setCredentials({
+                    email: "",
+                    password: ""
+                });
+                navigation.navigate("Settings");
+
+            } catch (error) {
+                const invalidEmail = "AppwriteException: Invalid `email` param: Value must be a valid email address";
+                const invalidPass = "AppwriteException: Invalid `password` param: Password must be between 8 and 256 characters long.";
+                const incorrectPass = "AppwriteException: Invalid credentials. Please check the email and password.";
+                const emailExists = "AppwriteException: A target with the same ID already exists.";
+
+                switch (error.toString()) {
+                    case invalidEmail:
+                        setErrorMessage("Please enter a valid email");
+                        setIsSnackbarVisible(true);
+                        break;
+                    case invalidPass:
+                        setErrorMessage("Please enter a valid password");
+                        setIsSnackbarVisible(true);
+                        break;
+                    case incorrectPass:
+                        setErrorMessage("Incorrect password, please try again");
+                        setIsSnackbarVisible(true);
+                        break;
+                    case emailExists:
+                        setErrorMessage("Please try a different email");
+                        setIsSnackbarVisible(true);
+                        break;
+                    default:
+                        setErrorMessage("Unknown error occured, please try again");
+                        setIsSnackbarVisible(true);
+                        break;
+                }
+            } finally {
+                setIsActionOccuring(false);
             }
-
-
         }
     };
 

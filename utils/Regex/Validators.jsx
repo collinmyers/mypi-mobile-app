@@ -10,13 +10,17 @@ export const validateEmail = (email) => {
 
 export const validatePassword = (password, confirmPassword) => {
 
+    let passwordErrors = [];
+
     if (password.length < 8) {
-        return "Password must be at least 8 characters.";
+        passwordErrors.push("Password must be at least 8 characters");
     }
 
     if (password !== confirmPassword) {
-        return "Passwords do not match.";
+        passwordErrors.push("Passwords do not match");
     }
+
+    if (passwordErrors.length > 0) return passwordErrors;
 
     return ""; // Return an empty string if validation passes
 };

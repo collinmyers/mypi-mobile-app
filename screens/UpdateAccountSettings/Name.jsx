@@ -26,15 +26,16 @@ export default function ChangeNameScreen({ navigation }) {
         if (!isActionOcurring) {
             setIsActionOccuring(true);
             try {
-
                 if (name === null) {
                     setErrorMessage("Please enter your full name");
                     setIsSnackbarVisible(true);
+                    setIsActionOccuring(false);
                     return;
                 }
                 if (name.length > 128) {
                     setErrorMessage("Name must be less than 128 characters");
                     setIsSnackbarVisible(true);
+                    setIsActionOccuring(false);
                     return;
                 }
 
@@ -44,7 +45,6 @@ export default function ChangeNameScreen({ navigation }) {
                     firstName: "",
                     lastName: ""
                 });
-
                 navigation.navigate("Settings");
 
             } catch (error) {

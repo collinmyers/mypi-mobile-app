@@ -63,6 +63,7 @@ export default function LoginScreen({ navigation }) {
                 setIsActionOccuring(true);
 
                 if (!validateForm()) {
+                    setIsActionOccuring(false);
                     return;
                 }
 

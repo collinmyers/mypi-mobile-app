@@ -325,10 +325,9 @@ export default function SettingsScreen({ navigation }) {
 
                 const pushKey = "pushNotification";
                 const pushObject = await getFromSecureStore(pushKey);
-                
+
 
                 if (status !== "granted") { // if the current status is granted we are in the process of turning off
-                    console.log("turning off push notifications");
                     setIsPushNotificationEnabled(false);
 
                     if (!pushObject) { // user went to settings and didnt change push status
@@ -348,8 +347,6 @@ export default function SettingsScreen({ navigation }) {
                     return;
 
                 } else {
-                    console.log("turning on push notifications");
-                    
                     setIsPushNotificationEnabled(true);
 
                     if (pushObject) { // if the document is already in secure storage it exists on appwrite

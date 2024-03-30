@@ -45,7 +45,7 @@ export default function SignUpScreen({ navigation }) {
 
         const passwordError = validatePassword(password, confirmPassword);
         if (passwordError !== "") {
-            validationErrors.push(passwordError);
+            validationErrors.push(...passwordError);
         }
 
         if (validationErrors.length > 0) {
@@ -66,12 +66,14 @@ export default function SignUpScreen({ navigation }) {
         return true;
 
     };
+
     const handleSignUp = async () => {
         if (!isActionOcurring) {
             try {
                 setIsActionOccuring(true);
 
                 if (!validateForm()) {
+                    setIsActionOccuring(false);
                     return;
                 }
 
@@ -99,7 +101,7 @@ export default function SignUpScreen({ navigation }) {
                             setIsSnackbarVisible(true);
                             break;
                         default:
-                            setErrorMessage("Unknown error, please try again");
+                            setErrorMessage("Unknown error occured, please try again");
                             setIsSnackbarVisible(true);
                             break;
                     }
