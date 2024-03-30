@@ -17,6 +17,7 @@ import { Snackbar } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
 import * as SecureStore from "expo-secure-store";
 
+
 export default function SettingsScreen({ navigation }) {
 
     const { changeAuthState, setChangeAuthState, isSignedIn, setIsSignedIn } = useAuth();
@@ -316,83 +317,87 @@ export default function SettingsScreen({ navigation }) {
         }
     };
 
-    useFocusEffect(React.useCallback(() =>{
-            const pushStatus = async () => {
-                try {
-                    // Request push notification permissions
-                    const { status } = await Notifications.getPermissionsAsync();
+    useFocusEffect(React.useCallback(() => {
+        const pushStatus = async () => {
+            try {
+                // Request push notification permissions
+                const { status } = await Notifications.getPermissionsAsync();
 
-                    const pushKey = "pushNotification";
+                const pushKey = "pushNotification";
+                const pushObject = await getFromSecureStore(pushKey);
+                
 
-                    if (status !== "granted") { // if the current status is granted we are in the process of turning off
-                        console.log("turning off push notifications");
-                        setIsPushNotificationEnabled(false);
+                if (status !== "granted") { // if the current status is granted we are in the process of turning off
+                    console.log("turning off push notifications");
+                    setIsPushNotificationEnabled(false);
 
-                        const pushObject = await getFromSecureStore(pushKey);
-                        
-                        if (!pushObject){ // user went to settings and didnt change push status
-                            return;
-                        }
-
-                        const result = await database.deleteDocument(
-                            DATABASE_ID, // databaseId
-                            USER_NOTIFICATION_TOKENS, // collectionId
-                            pushObject.docID // documentId
-                        );
-
-                        if (result) {
-                            console.log(result);
-                            await deleteFromSecureStore(pushKey);
-                        }
+                    if (!pushObject) { // user went to settings and didnt change push status
                         return;
-
-                    } else {
-                        // If granted, get the token and create a document in appwrite
-                        const token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
-
-                        // Create doc for user's push token. This will run if the expo token is not stored or doesn't match.
-                        const createTokenDoc = await database.createDocument(
-                            DATABASE_ID,
-                            USER_NOTIFICATION_TOKENS,
-                            ID.unique(),
-                            {
-                                ExpoPushToken: token,
-                                UID: profileInfo.identity
-                            }
-                        );
-
-                        if (createTokenDoc) {
-                            const pushDoc = { pushToken: token, docID: createTokenDoc.$id };
-
-                            // Serialize the pushDoc object to a string
-                            const pushDocString = JSON.stringify(pushDoc);
-
-                            // Store the serialized object in secure storage
-                            await saveToSecureStore(pushKey, pushDocString);
-
-                        }
-                        console.log("turning on push notifications");
-                        setIsPushNotificationEnabled(true);
                     }
-                } catch (err) {
-                    console.error(err);
+
+                    const result = await database.deleteDocument(
+                        DATABASE_ID, // databaseId
+                        USER_NOTIFICATION_TOKENS, // collectionId
+                        pushObject.docID // documentId
+                    );
+
+                    if (result) {
+                        console.log(result);
+                        await deleteFromSecureStore(pushKey);
+                    }
+                    return;
+
+                } else {
+                    console.log("turning on push notifications");
+                    
+                    setIsPushNotificationEnabled(true);
+
+                    if (pushObject) { // if the document is already in secure storage it exists on appwrite
+                        return;
+                    }
+                    // If granted, get the token and create a document in appwrite
+                    const token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
+
+                    const createTokenDoc = await database.createDocument(
+                        DATABASE_ID,
+                        USER_NOTIFICATION_TOKENS,
+                        ID.unique(),
+                        {
+                            ExpoPushToken: token,
+                            UID: profileInfo.identity
+                        }
+                    );
+
+                    if (createTokenDoc) {
+                        const pushDoc = { pushToken: token, docID: createTokenDoc.$id };
+
+                        // Serialize the pushDoc object to a string
+                        const pushDocString = JSON.stringify(pushDoc);
+
+                        // Store the serialized object in secure storage
+                        await saveToSecureStore(pushKey, pushDocString);
+                    }
+
                 }
-            };
-            pushStatus();
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        pushStatus();
 
-            const handleAppStateChange = (nextAppState) => {
-                if (nextAppState === "active") {
-                    pushStatus();
-                }
-            };
+        const handleAppStateChange = (nextAppState) => {
+            if (nextAppState === "active") {
+                pushStatus();
+            }
+        };
 
-            const appSub = AppState.addEventListener("change", handleAppStateChange);
-            // remove the event listener when the component unmounts
-            return () => {
-                appSub.remove();
-            };
+        const appSub = AppState.addEventListener("change", handleAppStateChange);
+        // remove the event listener when the component unmounts
+        return () => {
+            appSub.remove();
+        };
 
-        }, []));
+    }, []));
 
     useEffect(() => {
         const getAutoPlayPreferenceAsync = async () => {
