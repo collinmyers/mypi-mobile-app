@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
-import { Card, Text, TextInput } from "react-native-paper";
+import { Card, Snackbar, Text, TextInput } from "react-native-paper";
 import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
@@ -18,13 +18,23 @@ ChangeEmailScreen.propTypes = {
 
 export default function ChangeEmailScreen({ navigation }) {
 
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+    const [isActionOcurring, setIsActionOccuring] = useState(false);
     const [credentials, setCredentials] = useState({
         email: "",
         password: ""
     });
 
+
+
     const handleEmailChange = async () => {
         try {
+
+            if (!validateEmail(credentials.email)) {
+                throw new Error("Malformed email address");
+            }
+
             await account.updateEmail(credentials.email, credentials.password);
 
             setCredentials({
@@ -35,7 +45,41 @@ export default function ChangeEmailScreen({ navigation }) {
             navigation.navigate("Settings");
 
         } catch (error) {
-            console.error(error);
+            const malformedEmail = "Malformed email address";
+            const invalidEmail = "AppwriteException: Invalid `email` param: Value must be a valid email address";
+            const invalidPass = "AppwriteException: Invalid `password` param: Password must be between 8 and 256 characters long.";
+            const incorrectPass = "AppwriteException: Invalid credentials. Please check the email and password.";
+            const emailExists = "AppwriteException: A target with the same ID already exists.";
+
+            switch (error.toString()) {
+                case malformedEmail:
+                    setErrorMessage("Please enter a valid email");
+                    setIsSnackbarVisible(true);
+                    break;
+                case invalidEmail:
+                    setErrorMessage("Please enter a valid email");
+                    setIsSnackbarVisible(true);
+                    break;
+                case invalidPass:
+                    setErrorMessage("Please enter a valid password");
+                    setIsSnackbarVisible(true);
+                    break;
+                case incorrectPass:
+                    setErrorMessage("Incorrect password, please try again");
+                    setIsSnackbarVisible(true);
+                    break;
+                case emailExists:
+                    setErrorMessage("Please try a different email");
+                    setIsSnackbarVisible(true);
+                    break;
+                default:
+                    setErrorMessage("Unknown Error");
+                    setIsSnackbarVisible(true);
+                    break;
+
+            }
+
+
         }
     };
 
@@ -86,7 +130,18 @@ export default function ChangeEmailScreen({ navigation }) {
                 </Card>
 
             </KeyboardAvoidingComponent>
-
+            <Snackbar
+                visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={AppStyle.snackBar}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                    setErrorMessage(""); // Clear the error message
+                }}
+                duration={3000}
+            >
+                {errorMessage}
+            </Snackbar>
         </SafeAreaView>
 
     );
