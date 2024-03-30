@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
-import { Card, Text, TextInput } from "react-native-paper";
+import { Card, Snackbar, Text, TextInput } from "react-native-paper";
 import { account } from "../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
 import Logo from "../../components/logo/AppLogo";
@@ -18,26 +18,35 @@ ChangeNameScreen.propTypes = {
 
 export default function ChangeNameScreen({ navigation }) {
 
-    const [name, setName] = useState({
-        firstName: "",
-        lastName: ""
-    });
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+    const [name, setName] = useState(null);
+    const [isActionOcurring, setIsActionOccuring] = useState(false);
 
     const handleNameChange = async () => {
-        try {
-            const updatedName = `${name.firstName} ${name.lastName}`;
+        if (!isActionOcurring) {
+            setIsActionOccuring(true);
+            try {
+                if (name === null) {
+                    setErrorMessage("Please enter your full name");
+                    setIsSnackbarVisible(true);
+                    return;
+                }
 
-            await account.updateName(updatedName);
+                await account.updateName(name);
 
-            setName({
-                firstName: "",
-                lastName: ""
-            });
+                setName({
+                    firstName: "",
+                    lastName: ""
+                });
 
-            navigation.navigate("Settings");
+                navigation.navigate("Settings");
 
-        } catch (error) {
-            console.error(error);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setIsActionOccuring(false);
+            }
         }
     };
 
@@ -55,29 +64,14 @@ export default function ChangeNameScreen({ navigation }) {
                         <TextInput
                             style={HomeStyle.updateAccountUserInput}
                             numberOfLines={1}
-                            placeholder="First Name"
+                            placeholder="Full Name"
                             placeholderTextColor={appTextColor}
                             textColor={appTextColor}
                             mode="flat"
                             underlineColor={appPrimaryColor}
                             activeUnderlineColor={appPrimaryColor}
-                            onChangeText={(text) => setName({ ...name, firstName: text })}
-                            value={name.firstName}
-                            onBlur={() => validateName(name.firstName, setName)}
-                        />
-
-                        <TextInput
-                            style={HomeStyle.updateAccountUserInput}
-                            numberOfLines={1}
-                            placeholder="Last Name"
-                            placeholderTextColor={appTextColor}
-                            textColor={appTextColor}
-                            mode="flat"
-                            underlineColor={appPrimaryColor}
-                            activeUnderlineColor={appPrimaryColor}
-                            onChangeText={(text) => setName({ ...name, lastName: text })}
-                            value={name.lastName}
-                            onBlur={() => validateName(name.lastName, setName)}
+                            onChangeText={(text) => setName(text)}
+                            value={name}
                         />
 
 
@@ -88,8 +82,18 @@ export default function ChangeNameScreen({ navigation }) {
                     </Card.Content>
                 </Card>
             </KeyboardAvoidingComponent>
-
-
+            <Snackbar
+                visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={AppStyle.snackBar}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                    setErrorMessage(""); // Clear the error message
+                }}
+                duration={3000}
+            >
+                {errorMessage}
+            </Snackbar>
         </SafeAreaView>
 
     );
