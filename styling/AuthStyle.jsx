@@ -1,6 +1,8 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import {appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../utils/colors/appColors";
 
+const deviceWidth = Dimensions.get("window").width;
+const buttonWidth = deviceWidth * .4;
 
 export default StyleSheet.create({
 
@@ -15,7 +17,9 @@ export default StyleSheet.create({
         width: "100%",
         padding: 10,
         backgroundColor: appSecondaryColor,
-        margin: "2%"
+        margin: "2%",
+        borderWidth: 1.25,
+        borderColor: appQuarternaryColor
     },
     cardContent: {
         alignItems: "center"
@@ -38,7 +42,7 @@ export default StyleSheet.create({
 
     ButtonOpacity: {
         fontSize: 20,
-        width: 150,
+        width: buttonWidth,
         margin: "5%",
         padding: 10,
         borderRadius: 20,

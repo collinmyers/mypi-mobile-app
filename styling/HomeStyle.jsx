@@ -9,7 +9,7 @@ if (Platform.OS === "android") {
 
 const deviceWidth = Dimensions.get("window").width;
 const cardWidth = deviceWidth * .90;
-const buttonWidth = deviceWidth * .5;
+const buttonWidth = deviceWidth * .40;
 
 export default StyleSheet.create({
 
@@ -167,11 +167,13 @@ export default StyleSheet.create({
     },
     modalButtonContainer: {
         flexDirection: "row",
+        justifyContent: "center",
+        width: "100%"
     },
     modalCancelButton: {
-        paddingHorizontal: 30,
+        paddingHorizontal: 25,
         marginVertical: 10,
-        marginHorizontal: 5,
+        marginRight: "5%",
         padding: 10,
         borderRadius: 20,
         color: appTextColor,
@@ -180,7 +182,7 @@ export default StyleSheet.create({
         backgroundColor: appQuarternaryColor,
     },
     modalDeleteButton: {
-        paddingHorizontal: 30,
+        paddingHorizontal: 20,
         marginVertical: 10,
         marginHorizontal: 5,
         padding: 10,
@@ -252,7 +254,9 @@ export default StyleSheet.create({
         width: "100%",
         padding: 10,
         backgroundColor: appSecondaryColor,
-        margin: "5%"
+        margin: "5%",
+        borderWidth: 1.25,
+        borderColor: appQuarternaryColor
     },
     updateAccountCardContent: {
         alignItems: "center"
@@ -261,7 +265,7 @@ export default StyleSheet.create({
     updateAccountTitle: {
         fontSize: 30,
         color: appTertiaryColor,
-        fontWeight: "600",
+        fontWeight: "500",
         marginBottom: 16,
     },
 
@@ -282,10 +286,10 @@ export default StyleSheet.create({
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
-        backgroundColor: appTertiaryColor,
-        overflow: "hidden"
+        backgroundColor: appQuarternaryColor,
+        borderWidth: .20,
+        borderColor: "#004466"
     },
-
     updateAccountButtonText: {
         color: appTextColor,
         textAlign: "center",
@@ -481,11 +485,10 @@ export default StyleSheet.create({
     dashboardDonoOpac: {
         flexDirection: "row",
         alignSelf: "center",
-        justifyContent: "space-evenly",
-        width: buttonWidth,
-        marginVertical: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
+        justifyContent: "center",
+        width: deviceWidth * .47,
+        marginVertical: "5%",
+        paddingVertical: "2.5%",
         margin: "5%",
         borderRadius: 20,
         color: appTextColor,
@@ -497,7 +500,8 @@ export default StyleSheet.create({
     dashboardDonoText: {
         color: appTextColor,
         textAlign: "center",
-        fontSize: 24
+        fontSize: 24,
+        paddingLeft: "5%"
     },
     navBackButton: {
 
