@@ -235,7 +235,7 @@ export default function MapScreen() {
             "Amenities": "Amenities",
             "Attraction": "Attractions",
             "Beach": "Beaches",
-            "FoodTruck": "Food Truck",
+            "FoodTruck": "Food Trucks",
             "Information": "Information",
             "Parking": "Parking",
             "Restroom": "Restrooms",
@@ -276,7 +276,7 @@ export default function MapScreen() {
             </MapView>
 
             <TouchableOpacity style={MapStyle.fab} onPress={toggleFabVisible}>
-                <AntDesign name="filter" size={26} color={appPrimaryColor} />
+                <AntDesign name="filter" size={28} color={appPrimaryColor} />
             </TouchableOpacity>
 
             {isLoading ? (
