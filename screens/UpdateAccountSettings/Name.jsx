@@ -27,8 +27,14 @@ export default function ChangeNameScreen({ navigation }) {
         if (!isActionOcurring) {
             setIsActionOccuring(true);
             try {
+
                 if (name === null) {
                     setErrorMessage("Please enter your full name");
+                    setIsSnackbarVisible(true);
+                    return;
+                }
+                if (name.length > 128) {
+                    setErrorMessage("Name must be less than 128 characters");
                     setIsSnackbarVisible(true);
                     return;
                 }
