@@ -8,7 +8,6 @@ import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
 import { appPrimaryColor, appTextColor } from "../../utils/colors/appColors";
-import { validateName } from "../../utils/Regex/Validators";
 
 ChangeNameScreen.propTypes = {
     navigation: PropTypes.shape({
