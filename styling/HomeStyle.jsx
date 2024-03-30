@@ -642,5 +642,6 @@ export default StyleSheet.create({
         borderRadius: 4,
         backgroundColor: appPrimaryColor,
         marginHorizontal: 4,
+        justifyContent: "center"
     }
 });
