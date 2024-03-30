@@ -4,9 +4,6 @@ import SettingsScreen from "../../screens/Central/Settings";
 import ChangeNameScreen from "../../screens/UpdateAccountSettings/Name";
 import ChangeEmailScreen from "../../screens/UpdateAccountSettings/Email";
 import ChangePasswordScreen from "../../screens/UpdateAccountSettings/Password";
-import ParkNotificationsScreen from "../../screens/UpdateNotificationSettings/ParkAlertNotifications";
-import EventsNotificationsScreen from "../../screens/UpdateNotificationSettings/EventNotifications";
-import PromotionsNotificationsScreen from "../../screens/UpdateNotificationSettings/PromotionNotifications";
 import { appPrimaryColor } from "../../utils/colors/appColors";
 import Menu from "./AppHeader";
 import MenuBack from "./AppHeaderNavBack";
@@ -44,34 +41,6 @@ export default function SettingsStackNavigator() {
                 }}
             />
             <Stack.Screen name="Change Password" component={ChangePasswordScreen}
-                options={{
-                    headerShown: true,
-                    headerTransparent: true,
-                    headerTitle: "",
-                    headerStyle: { backgroundColor: appPrimaryColor },
-                    header: () => <MenuBack />
-                }}
-            />
-
-            <Stack.Screen name="Park Notifications" component={ParkNotificationsScreen}
-                options={{
-                    headerShown: true,
-                    headerTransparent: true,
-                    headerTitle: "",
-                    headerStyle: { backgroundColor: appPrimaryColor },
-                    header: () => <MenuBack />
-                }}
-            />
-            <Stack.Screen name="Event Notifications" component={EventsNotificationsScreen}
-                options={{
-                    headerShown: true,
-                    headerTransparent: true,
-                    headerTitle: "",
-                    headerStyle: { backgroundColor: appPrimaryColor },
-                    header: () => <MenuBack />
-                }}
-            />
-            <Stack.Screen name="Promotion Notifications" component={PromotionsNotificationsScreen}
                 options={{
                     headerShown: true,
                     headerTransparent: true,
