@@ -32,15 +32,18 @@ export default function ChangePasswordScreen({ navigation }) {
             try {
 
                 let validationErrors = [];
-                
-                if (passwords.oldPassword.length < 1) {
+
+                if (passwords.oldPassword.length < 8) {
                     validationErrors.push("Please enter your old password");
                 }
 
                 const passwordError = validatePassword(passwords.newPassword, passwords.confirmNewPassword);
                 if (passwordError !== "") {
-                    console.log(passwordError)
                     validationErrors.push(...passwordError);
+                }
+
+                if (passwords.oldPassword === passwords.newPassword) {
+                    validationErrors.push("Old password and new password cannot be the same, please choose a different password and try again");
                 }
 
                 if (validationErrors.length > 0) {
@@ -71,10 +74,14 @@ export default function ChangePasswordScreen({ navigation }) {
             } catch (error) {
                 console.error(error);
                 const invalidPassword = "AppwriteException: Invalid `password` param: Password must be between 8 and 265 characters long, and should not be one of the commonly used password.";
-
+                const isSimilarPassword = "AppwriteException: The password you are trying to use is similar to your previous password. For your security, please choose a different password and try again.";
                 switch (error.toString()) {
                     case invalidPassword:
                         setErrorMessage("Please enter a valid password");
+                        setIsSnackbarVisible(true);
+                        break;
+                    case isSimilarPassword:
+                        setErrorMessage("New password is too similar to a previously used password, please choose a different password and try again");
                         setIsSnackbarVisible(true);
                         break;
                     default:
