@@ -36,15 +36,6 @@ const WebViewComponent = ({ uri, onError }) => {
                     <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
                 </View>
             )}
-            refreshControl={
-                <RefreshControl
-                    style={{ backgroundColor: appPrimaryColor }}
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                    colors={[appQuarternaryColor]}
-                    tintColor={appQuarternaryColor}
-                />
-            }
         />
     );
 };
@@ -61,11 +52,11 @@ const ErrorScreen = ({ onRefresh, refreshing }) => {
             contentContainerStyle={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: appPrimaryColor }}
             refreshControl={
                 <RefreshControl
-                    style={{ backgroundColor: appQuarternaryColor }}
+                    style={{ backgroundColor: appPrimaryColor }}
                     refreshing={refreshing}
                     onRefresh={onRefresh}
-                    colors={[appPrimaryColor]}
-                    tintColor={appPrimaryColor}
+                    colors={[appQuarternaryColor]}
+                    tintColor={appQuarternaryColor}
                 />
             }
         >
