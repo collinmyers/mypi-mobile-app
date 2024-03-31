@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { WebView } from "react-native-webview";
 import { View, ScrollView, RefreshControl } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
@@ -9,15 +9,6 @@ import PropTypes from "prop-types";
 const WebViewComponent = ({ uri, onError }) => {
     const webViewRef = useRef(null);
     const [refreshing, setRefreshing] = useState(false);
-
-    const onRefresh = useCallback(() => {
-        setRefreshing(true);
-
-        // Reload the WebView if it's mounted
-        if (webViewRef.current) {
-            webViewRef.current.reload();
-        }
-    }, []);
 
     useEffect(() => {
         if (!refreshing) {

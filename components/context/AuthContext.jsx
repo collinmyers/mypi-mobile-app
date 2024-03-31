@@ -10,8 +10,7 @@ export const AuthProvider = ({ children }) => {
 
     const getNameAndEmail = async () => {
         try {
-            const response = await account.get();
-
+            await account.get(); // fails if user is not authenticated
             setIsSignedIn(true);
         } catch {
             setIsSignedIn(false);

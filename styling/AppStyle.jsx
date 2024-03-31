@@ -36,13 +36,13 @@ export default StyleSheet.create({
     },
     appHeaderEdit: {
         paddingHorizontal: 16,
-        paddingTop: 9,
+        paddingTop: 9.5,
         paddingBottom: 10,
-        marginLeft: 10,
     },
     appHeaderEditDone: {
         padding: 10,
-        paddingHorizontal: 17,
-        marginLeft: 10,
+        paddingRight: 17,
+        paddingLeft: 15
+
     },
 });

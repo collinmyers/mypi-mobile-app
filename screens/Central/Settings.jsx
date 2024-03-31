@@ -12,7 +12,7 @@ import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 }
 import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS } from "../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
 import * as Linking from "expo-linking";
-import { useAuth } from "../../components/navigation/AuthContext";
+import { useAuth } from "../../components/context/AuthContext";
 import { Snackbar } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
 import * as SecureStore from "expo-secure-store";

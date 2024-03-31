@@ -9,7 +9,7 @@ import AuthStyle from "../../../styling/AuthStyle";
 import { appPrimaryColor, appTextColor } from "../../../utils/colors/appColors";
 import { validateEmail } from "../../../utils/Regex/Validators";
 import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
-import { useAuth } from "../../../components/navigation/AuthContext";
+import { useAuth } from "../../../components/context/AuthContext";
 
 LoginScreen.propTypes = {
     navigation: PropTypes.shape({

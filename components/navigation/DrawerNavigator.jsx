@@ -13,7 +13,7 @@ import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryCol
 import { StatusBar } from "expo-status-bar";
 import { Entypo, Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import FoodTruckStackNavigator from "./FoodTruckStackNavigator";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 const Drawer = createDrawerNavigator();
 
