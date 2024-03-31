@@ -38,11 +38,11 @@ const WebViewComponent = ({ uri, onError }) => {
             )}
             refreshControl={
                 <RefreshControl
-                    style={{ backgroundColor: appQuarternaryColor }}
+                    style={{ backgroundColor: appPrimaryColor }}
                     refreshing={refreshing}
                     onRefresh={onRefresh}
-                    colors={[appPrimaryColor]}
-                    tintColor={appPrimaryColor}
+                    colors={[appQuarternaryColor]}
+                    tintColor={appQuarternaryColor}
                 />
             }
         />
