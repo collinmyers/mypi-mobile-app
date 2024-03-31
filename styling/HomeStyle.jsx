@@ -353,14 +353,11 @@ export default StyleSheet.create({
         textAlign: "center",
         fontSize: 15,
     },
-    donationsWebViewContainer: {
-        justifyContent: "center",
-        height: "100%",
-        backgroundColor: appPrimaryColor
-    },
     donationsWebView: {
         flex: 1,
-        backgroundColor: appPrimaryColor
+        justifyContent: "center",
+        height: "100%",
+        backgroundColor: appPrimaryColor,
     },
     modalNavContainer: {
         flex: 1,
@@ -597,6 +594,7 @@ export default StyleSheet.create({
         marginHorizontal: "5%"
     },
     loadingContainer: {
+        backgroundColor: appPrimaryColor,
         flex: 1,
         justifyContent: "center",
     },
