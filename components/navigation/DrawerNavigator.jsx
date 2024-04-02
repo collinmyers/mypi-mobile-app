@@ -98,8 +98,11 @@ export default function DrawerNavigator() {
 
     useEffect(() => {
         if (!isConnected && !isInternetReachable) {
-            setErrorMessage("No internet connection, some app features may not be available until internet has been restored");
+            setErrorMessage(`Disconnected ---- Connected: ${isConnected} Inet: ${isInternetReachable}`);
             setIsSnackbarVisible(true);
+        } else {
+            setErrorMessage("");
+            setIsSnackbarVisible(false);
         }
     }, [isConnected, isInternetReachable]);
 
@@ -228,11 +231,11 @@ export default function DrawerNavigator() {
                         setErrorMessage(""); // Clear the error message
                     }}
                     action={{
-                        textColor: appTextColor ,
+                        textColor: appTextColor,
                         label: "Close",
                     }}
                     duration={10000}
-                    >
+                >
                     {errorMessage}
                 </Snackbar>
 
