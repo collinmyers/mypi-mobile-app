@@ -12,9 +12,7 @@ export const NetworkProvider = ({ children }) => {
     useEffect(() => {
         const handleConnectivityChange = (state) => {
             setIsConnected(state.isConnected);
-            //console.log(state.isConnected);
             setIsInternetReachable(state.isInternetReachable);
-            //console.log(state.isInternetReachable);
         };
 
         // Subscribe to network state changes

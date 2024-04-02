@@ -14,13 +14,19 @@ import { StatusBar } from "expo-status-bar";
 import { Entypo, Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import FoodTruckStackNavigator from "./FoodTruckStackNavigator";
 import { useAuth } from "../context/AuthContext";
+import { useNetwork } from "../context/NetworkContext";
+import { Snackbar } from "react-native-paper";
+import AppStyle from "../../styling/AppStyle";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
 
     const { changeAuthState, isSignedIn, setIsSignedIn } = useAuth();
-
+    const { isConnected, isInternetReachable } = useNetwork();
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [isSigningOut, setIsSigningOut] = useState(false);
     const [profileRole, setProfileRole] = useState({
         role: "",
@@ -90,121 +96,149 @@ export default function DrawerNavigator() {
         );
     };
 
+    useEffect(() => {
+        if (!isConnected && !isInternetReachable) {
+            setErrorMessage("No internet connection, some app features may not be available until internet has been restored");
+            setIsSnackbarVisible(true);
+        }
+    }, [isConnected, isInternetReachable]);
+
     return (
-        <NavigationContainer>
-            <Drawer.Navigator
-                initialRouteName="Home"
-                drawerContent={(props) => <SignOutDrawerItem {...props} />}
-                screenOptions={{
-                    overlayColor: "transparent",
-                    drawerLabelStyle: {
-                        color: appTextColor,
-                        fontSize: 20,
+        <SafeAreaProvider>
+            <NavigationContainer>
+                <Drawer.Navigator
+                    initialRouteName="Home"
+                    drawerContent={(props) => <SignOutDrawerItem {...props} />}
+                    screenOptions={{
+                        overlayColor: "transparent",
+                        drawerLabelStyle: {
+                            color: appTextColor,
+                            fontSize: 20,
 
-                    },
-                    drawerActiveBackgroundColor: "none",
-                    drawerStyle: {
-                        backgroundColor: appSecondaryColor,
-                        borderRightWidth: 2,
-                        borderRightColor: appQuarternaryColor
-                    }
-                }}
-            >
+                        },
+                        drawerActiveBackgroundColor: "none",
+                        drawerStyle: {
+                            backgroundColor: appSecondaryColor,
+                            borderRightWidth: 2,
+                            borderRightColor: appQuarternaryColor
+                        }
+                    }}
+                >
 
-                {!isSignedIn && (
+                    {!isSignedIn && (
+                        <Drawer.Screen
+                            name="Sign In"
+                            component={AuthStackNavigator}
+                            options={{
+                                header: () => { false; },
+                                drawerIcon: ({ focused }) =>
+                                    <Ionicons
+                                        name="person-circle"
+                                        size={24}
+                                        color={focused ? appPrimaryColor : appTertiaryColor}
+                                    />
+                            }} />
+                    )}
+
                     <Drawer.Screen
-                        name="Sign In"
-                        component={AuthStackNavigator}
+                        name="Home"
+                        component={HomeTabNavigator}
                         options={{
-                            header: () => { false; },
-                            drawerIcon: ({ focused }) =>
-                                <Ionicons
-                                    name="person-circle"
+                            headerShown: false,
+                            drawerIcon: ({ focused }) => (
+                                <Entypo
+                                    name="home"
                                     size={24}
                                     color={focused ? appPrimaryColor : appTertiaryColor}
                                 />
-                        }} />
-                )}
+                            )
+                        }}
+                    />
 
-                <Drawer.Screen
-                    name="Home"
-                    component={HomeTabNavigator}
-                    options={{
-                        headerShown: false,
-                        drawerIcon: ({ focused }) => (
-                            <Entypo
-                                name="home"
-                                size={24}
-                                color={focused ? appPrimaryColor : appTertiaryColor}
-                            />
-                        )
-                    }}
-                />
-
-                <Drawer.Screen
-                    name="Donate"
-                    component={DonationsScreen}
-                    options={{
-                        header: () => <Menu />,
-                        drawerIcon: ({ focused }) =>
-                            <MaterialIcons
-                                name="volunteer-activism"
-                                size={24}
-                                color={focused ? appPrimaryColor : appTertiaryColor}
-                            />
-                    }}
-                />
-
-                <Drawer.Screen
-                    name="FAQ"
-                    component={FAQScreen}
-                    options={{
-                        header: () => <Menu />,
-                        drawerIcon: ({ focused }) =>
-                            <AntDesign
-                                name="infocirlce"
-                                size={24}
-                                color={focused ? appPrimaryColor : appTertiaryColor}
-                            />
-                    }}
-                />
-
-                <Drawer.Screen
-                    name="Park Info"
-                    component={ParkInfoScreen}
-                    options={{
-                        header: () => <Menu />,
-                        drawerIcon: ({ focused }) =>
-                            <MaterialIcons
-                                name="park"
-                                size={24}
-                                color={focused ? appPrimaryColor : appTertiaryColor}
-                            />
-                    }}
-                />
-
-                {isSignedIn && ((profileRole.role == "admin") || (profileRole.role == "foodtruck")) ?
-                    (<Drawer.Screen
-                        name="Food Truck"
-                        component={FoodTruckStackNavigator}
+                    <Drawer.Screen
+                        name="Donate"
+                        component={DonationsScreen}
                         options={{
-                            header: () => { false; },
+                            header: () => <Menu />,
                             drawerIcon: ({ focused }) =>
                                 <MaterialIcons
-                                    name="fastfood"
+                                    name="volunteer-activism"
                                     size={24}
                                     color={focused ? appPrimaryColor : appTertiaryColor}
                                 />
                         }}
                     />
 
-                    ) :
-                    null
-                }
-            </Drawer.Navigator>
-            {Platform.OS === "android" && useDrawerStatus === "open" ? null : <StatusBar style="dark" />}
-            {Platform.OS === "ios" && <StatusBar style="dark" />}
-        </NavigationContainer >
+                    <Drawer.Screen
+                        name="FAQ"
+                        component={FAQScreen}
+                        options={{
+                            header: () => <Menu />,
+                            drawerIcon: ({ focused }) =>
+                                <AntDesign
+                                    name="infocirlce"
+                                    size={24}
+                                    color={focused ? appPrimaryColor : appTertiaryColor}
+                                />
+                        }}
+                    />
+
+                    <Drawer.Screen
+                        name="Park Info"
+                        component={ParkInfoScreen}
+                        options={{
+                            header: () => <Menu />,
+                            drawerIcon: ({ focused }) =>
+                                <MaterialIcons
+                                    name="park"
+                                    size={24}
+                                    color={focused ? appPrimaryColor : appTertiaryColor}
+                                />
+                        }}
+                    />
+
+                    {isSignedIn && ((profileRole.role == "admin") || (profileRole.role == "foodtruck")) ?
+                        (<Drawer.Screen
+                            name="Food Truck"
+                            component={FoodTruckStackNavigator}
+                            options={{
+                                header: () => { false; },
+                                drawerIcon: ({ focused }) =>
+                                    <MaterialIcons
+                                        name="fastfood"
+                                        size={24}
+                                        color={focused ? appPrimaryColor : appTertiaryColor}
+                                    />
+                            }}
+                        />
+
+                        ) :
+                        null
+                    }
+                </Drawer.Navigator>
+                {Platform.OS === "android" && useDrawerStatus === "open" ? null : <StatusBar style="dark" />}
+                {Platform.OS === "ios" && <StatusBar style="dark" />}
+
+                <Snackbar
+                    visible={isSnackbarVisible}
+                    maxFontSizeMultiplier={1}
+                    style={AppStyle.snackBar}
+                    onDismiss={() => {
+                        setIsSnackbarVisible(false);
+                        setErrorMessage(""); // Clear the error message
+                    }}
+                    action={{
+                        textColor: appTextColor ,
+                        label: "Close",
+                    }}
+                    duration={10000}
+                    >
+                    {errorMessage}
+                </Snackbar>
+
+            </NavigationContainer >
+        </SafeAreaProvider>
+
     );
 
 }
