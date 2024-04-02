@@ -7,32 +7,24 @@ import SidebarStyle from "../../styling/SidebarStyle";
 import { appTertiaryColor } from "../../utils/colors/appColors";
 import { ScrollView } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";
-
-
+import { useNetwork } from "../../components/context/NetworkContext";
 
 export default function FoodTruckUnshareScreen() {
+    const PAGE_SIZE = 25;
 
-
-    const [profileRole, setProfileRole] = useState({
-        role: "",
-    });
+    const {isConnected, isInternetReachable} = useNetwork();
     const [isSignedIn, setIsSignedIn] = useState(false);
-
     const [selectedLocation, setSelectedLocation] = useState();
-
-
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [pointData, setPointData] = useState([]);
     const [truckName, setTruckName] = useState();
     const [userID, setUserID] = useState("");
     const [goodStatus, setGoodStatus] = useState(true);
-
     const [buttons, setButtons] = useState();
-
-
-    const PAGE_SIZE = 25;
-
-
+    const [profileRole, setProfileRole] = useState({
+        role: "",
+    });
+    
     const UnShareLocation = async () => {
 
         //Function to find subjson inside of the big json
@@ -143,18 +135,15 @@ export default function FoodTruckUnshareScreen() {
             }
         };
 
-
         checkAuthState();
         getUserAlias();
         getLocations();
 
-    }, [truckName, userID]));
+    }, [truckName, userID, isConnected, isInternetReachable]));
 
     useEffect(() => {
-
         const renderButtons = async () => {
             setButtons(pointData.map((point, index) => (
-
                 <View style={SidebarStyle.radio}
                     id={point.Name}
                     key={`${index}_${point.Name}`}
@@ -169,9 +158,7 @@ export default function FoodTruckUnshareScreen() {
                     />
                     <Text style={SidebarStyle.setRadioText}>{point.Name}</Text>
                 </View>
-
             )));
-
         };
 
         renderButtons();
@@ -180,25 +167,17 @@ export default function FoodTruckUnshareScreen() {
 
     return (
         <SafeAreaView style={SidebarStyle.container}>
-
             <ScrollView>
-
-
                 <View style={SidebarStyle.radioGroup}>
-
                     {buttons}
-
                 </View>
-
             </ScrollView>
 
             <View style={{ paddingTop: 50 }}>
                 <TouchableOpacity style={SidebarStyle.ShareLocationButtonOpac} onPress={() => UnShareLocation()}>
                     <Text style={SidebarStyle.ShareLocationText}>Unshare Location</Text>
-
                 </TouchableOpacity>
             </View>
-
 
             <Snackbar
                 visible={isSnackbarVisible}
@@ -211,7 +190,6 @@ export default function FoodTruckUnshareScreen() {
             >
                 {"Location Unshared!"}
             </Snackbar>
-
         </SafeAreaView>
     );
 }

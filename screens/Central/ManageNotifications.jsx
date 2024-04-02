@@ -12,13 +12,14 @@ import { MaterialCommunityIcons, FontAwesome6, FontAwesome } from "@expo/vector-
 import * as FileSystem from "expo-file-system";
 import { useFocusEffect } from "@react-navigation/native";
 import PropTypes from "prop-types";
+import { useNetwork } from "../../components/context/NetworkContext";
 
 export default function ManageAlertsScreen() {
+    const PAGE_SIZE = 25;
 
     const navigation = useNavigation();
 
-    const PAGE_SIZE = 25;
-
+    const { isConnected, isInternetReachable } = useNetwork();
     const [isLoading, setIsLoading] = useState(true);
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [alertData, setAlertData] = useState([]);
@@ -131,7 +132,7 @@ export default function ManageAlertsScreen() {
             unsubscribe();
         };
 
-    }, []));
+    }, [isConnected, isInternetReachable]));
 
 
     useEffect(() => {

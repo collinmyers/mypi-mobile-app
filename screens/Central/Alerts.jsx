@@ -4,7 +4,7 @@ import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Text, Button } from "react-native-paper";
 import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
-import * as Notifications from "expo-notifications";
+// import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
 import { useNavigation } from "@react-navigation/native";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
@@ -14,16 +14,16 @@ import * as FileSystem from "expo-file-system";
 import { useRoute } from "@react-navigation/native";
 import { differenceInSeconds } from "date-fns";
 import { useFocusEffect } from "@react-navigation/native";
+import { useNetwork } from "../../components/context/NetworkContext";
 
 export default function AlertsScreen() {
-
-    const navigation = useNavigation();
-
-    const route = useRoute();
-    const { showEditNotifications } = route.params;
-
     const PAGE_SIZE = 25;
 
+    const navigation = useNavigation();
+    const route = useRoute();
+
+    const {showEditNotifications} = route.params;
+    const {isConnected, isInternetReachable} = useNetwork();
     const [localDateTime, setLocalDateTime] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState("notifications");
     const [isLoading, setIsLoading] = useState(true);
@@ -49,7 +49,7 @@ export default function AlertsScreen() {
         // Function to handle real-time updates
         const handleSubscription = async () => {
             try {
-                await fetchData(true); // Pass true to indicate a real-time update
+                await fetchData();
 
                 // Update filterList based on the current category
                 handleFilterById(selectedCategory);
@@ -61,17 +61,17 @@ export default function AlertsScreen() {
         // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
 
-        // Define the notification handler
-        const notificationHandler = {
-            handleNotification: async () => ({
-                shouldShowAlert: true,
-                shouldPlaySound: false,
-                shouldSetBadge: true,
-            }),
-        };
+        // // Define the notification handler
+        // const notificationHandler = {
+        //     handleNotification: async () => ({
+        //         shouldShowAlert: true,
+        //         shouldPlaySound: false,
+        //         shouldSetBadge: true,
+        //     }),
+        // };
 
-        // Set the notification handler
-        Notifications.setNotificationHandler(notificationHandler);
+        // // Set the notification handler
+        // Notifications.setNotificationHandler(notificationHandler);
 
         const fetchData = async () => {
             try {
@@ -185,7 +185,7 @@ export default function AlertsScreen() {
             unsubscribe();
         };
 
-    }, []);
+    }, [isConnected, isInternetReachable]);
 
 
     useEffect(() => {

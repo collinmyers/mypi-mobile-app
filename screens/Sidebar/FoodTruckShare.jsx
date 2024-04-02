@@ -8,24 +8,22 @@ import { appTertiaryColor } from "../../utils/colors/appColors";
 import { ScrollView } from "react-native-gesture-handler";
 import { ID, Query } from "appwrite";
 import { useFocusEffect } from "@react-navigation/native";
+import { useNetwork } from "../../components/context/NetworkContext";
 
 export default function FoodTruckShareScreen() {
+    const PAGE_SIZE = 25;
 
-    const [profileRole, setProfileRole] = useState({
-        role: "",
-    });
+    const {isConnected, isInternetReachable} = useNetwork();
     const [isSignedIn, setIsSignedIn] = useState(false);
-
     const [selectedLocation, setSelectedLocation] = useState("Beach 1");
-
     const [truckName, setTruckName] = useState();
     const [userID, setUserID] = useState("");
     const [goodStatus, setGoodStatus] = useState(true);
     const [pointData, setPointData] = useState([]);
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
-
-
-    const PAGE_SIZE = 25;
+    const [profileRole, setProfileRole] = useState({
+        role: "",
+    });
 
 
     const shareLocation = async () => {
@@ -44,8 +42,6 @@ export default function FoodTruckShareScreen() {
             let index = findIndex("Name", selectedLocation);
 
             let randomNum = Math.random();
-
-            console.log(randomNum);
 
             let offset = randomNum * (0.00030 - 0.00006) + 0.00006;
 
@@ -170,7 +166,7 @@ export default function FoodTruckShareScreen() {
         checkAuthState();
         getUserAlias();
 
-    }, [userID]));
+    }, [userID, isConnected, isInternetReachable]));
 
     return (
         <SafeAreaView style={SidebarStyle.container}>

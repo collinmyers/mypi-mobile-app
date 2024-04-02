@@ -14,9 +14,14 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import * as FileSystem from "expo-file-system";
+import { useNetwork } from "../../components/context/NetworkContext";
 
 export default function MapList() {
+    const PAGE_SIZE = 25;
+
     const navigation = useNavigation();
+
+    const { isConnected, isInternetReachable } = useNetwork();
     const [pointData, setPointData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredCards, setFilteredCards] = useState([]);
@@ -24,7 +29,6 @@ export default function MapList() {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const PAGE_SIZE = 25;
 
     useFocusEffect(React.useCallback(() => {
         fetchNavPreference();
@@ -94,7 +98,7 @@ export default function MapList() {
                     delete point.$permissions;
                     delete point.$updatedAt;
                 });
-                
+
                 setPointData(allPoints);
                 await saveDataToFile(allPoints); // Save fetched data to file
             } catch (error) {
@@ -155,7 +159,7 @@ export default function MapList() {
             unsubscribe();
         };
 
-    }, []));
+    }, [isConnected, isInternetReachable]));
 
     useEffect(() => {
         if (pointData.length > 0) {

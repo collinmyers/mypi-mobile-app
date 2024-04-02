@@ -9,11 +9,13 @@ import Logo from "../../components/logo/AppLogo";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { appPrimaryColor } from "../../utils/colors/appColors";
+import { useNetwork } from "../../components/context/NetworkContext";
 
 export default function Dashboard() {
 
     const navigation = useNavigation();
 
+    const {isConnected, isInternetReachable} = useNetwork();
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [profileInfo, setProfileInfo] = useState({
         name: "",
@@ -37,8 +39,10 @@ export default function Dashboard() {
 
     useFocusEffect(
         React.useCallback(() => {
-            getNameAndEmail();
-        }, [])
+            if(isConnected && isInternetReachable){
+                getNameAndEmail();
+            }
+        }, [isConnected, isInternetReachable])
     );
 
     return (

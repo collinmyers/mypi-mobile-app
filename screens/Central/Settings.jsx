@@ -16,11 +16,12 @@ import { useAuth } from "../../components/context/AuthContext";
 import { Snackbar } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
 import * as SecureStore from "expo-secure-store";
-
+import { useNetwork } from "../../components/context/NetworkContext";
 
 export default function SettingsScreen({ navigation }) {
 
     const { changeAuthState, setChangeAuthState, isSignedIn, setIsSignedIn } = useAuth();
+    const { isConnected, isInternetReachable } = useNetwork();
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isNavModalVisible, setIsNavModalVisible] = useState(false);
     const [navTypeChecked, setNavTypeChecked] = useState("car");
@@ -57,7 +58,7 @@ export default function SettingsScreen({ navigation }) {
             };
             getNameAndEmail();
 
-        }, [changeAuthState])
+        }, [changeAuthState, isConnected, isInternetReachable])
     );
 
     const getFromSecureStore = async (key) => {

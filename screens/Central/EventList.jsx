@@ -10,9 +10,11 @@ import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import * as FileSystem from "expo-file-system";
 import { parse } from "date-fns";
 import { appSecondaryColor } from "../../utils/colors/appColors";
+import { useNetwork } from "../../components/context/NetworkContext";
 
 export default function EventListScreen() {
     const navigation = useNavigation();
+    const { isConnected, isInternetReachable } = useNetwork();
     const [eventData, setEventData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const PAGE_SIZE = 25;
@@ -155,7 +157,7 @@ export default function EventListScreen() {
         return () => {
             unsubscribe();
         };
-    }, []);
+    }, [isConnected, isInternetReachable]);
 
     useEffect(() => {
         if (eventData.length > 0) {

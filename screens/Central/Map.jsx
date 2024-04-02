@@ -16,10 +16,12 @@ import { Checkbox } from "expo-checkbox";
 import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
 import { appPrimaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import * as FileSystem from "expo-file-system";
+import { useNetwork } from "../../components/context/NetworkContext";
 
 export default function MapScreen() {
     const navigation = useNavigation();
 
+    const { isConnected, isInternetReachable } = useNetwork();
     const [markersData, setMarkersData] = useState([]);
     const [filteredMarkers, setFilteredMarkers] = useState([]);
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
@@ -123,7 +125,7 @@ export default function MapScreen() {
             unsubscribe();
         };
 
-    }, []));
+    }, [isConnected, isInternetReachable]));
 
     useEffect(() => {
         if (markersData.length > 0) {
