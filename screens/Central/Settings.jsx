@@ -58,7 +58,7 @@ export default function SettingsScreen({ navigation }) {
             };
             getNameAndEmail();
 
-        }, [changeAuthState, isConnected, isInternetReachable])
+        }, [changeAuthState, isInternetReachable])
     );
 
     const getFromSecureStore = async (key) => {

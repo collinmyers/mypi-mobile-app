@@ -132,7 +132,7 @@ export default function ManageAlertsScreen() {
             unsubscribe();
         };
 
-    }, [isConnected, isInternetReachable]));
+    }, [isInternetReachable]));
 
 
     useEffect(() => {

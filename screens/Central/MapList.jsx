@@ -159,7 +159,7 @@ export default function MapList() {
             unsubscribe();
         };
 
-    }, [isConnected, isInternetReachable]));
+    }, [isInternetReachable]));
 
     useEffect(() => {
         if (pointData.length > 0) {

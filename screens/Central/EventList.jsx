@@ -157,7 +157,7 @@ export default function EventListScreen() {
         return () => {
             unsubscribe();
         };
-    }, [isConnected, isInternetReachable]);
+    }, [isInternetReachable]);
 
     useEffect(() => {
         if (eventData.length > 0) {

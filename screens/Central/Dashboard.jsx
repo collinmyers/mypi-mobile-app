@@ -42,7 +42,7 @@ export default function Dashboard() {
             if(isConnected && isInternetReachable){
                 getNameAndEmail();
             }
-        }, [isConnected, isInternetReachable])
+        }, [isInternetReachable])
     );
 
     return (

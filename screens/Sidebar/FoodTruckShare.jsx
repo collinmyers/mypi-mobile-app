@@ -166,7 +166,7 @@ export default function FoodTruckShareScreen() {
         checkAuthState();
         getUserAlias();
 
-    }, [userID, isConnected, isInternetReachable]));
+    }, [userID, isInternetReachable]));
 
     return (
         <SafeAreaView style={SidebarStyle.container}>

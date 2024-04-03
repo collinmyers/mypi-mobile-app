@@ -41,11 +41,13 @@ export default function AlertsScreen() {
     }, []));
 
     useEffect(() => {
+        console.error("hello from hf")
         handleFilterById(selectedCategory);
         renderAlerts(filterList.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
-    }, [showEditNotifications, selectedCategory]);
+    }, [showEditNotifications, selectedCategory, isInternetReachable]);
 
     useEffect(() => {
+        console.error("hello from hs")
         // Function to handle real-time updates
         const handleSubscription = async () => {
             try {
@@ -60,18 +62,6 @@ export default function AlertsScreen() {
 
         // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
-
-        // // Define the notification handler
-        // const notificationHandler = {
-        //     handleNotification: async () => ({
-        //         shouldShowAlert: true,
-        //         shouldPlaySound: false,
-        //         shouldSetBadge: true,
-        //     }),
-        // };
-
-        // // Set the notification handler
-        // Notifications.setNotificationHandler(notificationHandler);
 
         const fetchData = async () => {
             try {
@@ -185,7 +175,7 @@ export default function AlertsScreen() {
             unsubscribe();
         };
 
-    }, [isConnected, isInternetReachable]);
+    }, [isInternetReachable]);
 
 
     useEffect(() => {

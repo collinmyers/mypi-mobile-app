@@ -125,7 +125,7 @@ export default function MapScreen() {
             unsubscribe();
         };
 
-    }, [isConnected, isInternetReachable]));
+    }, [isInternetReachable]));
 
     useEffect(() => {
         if (markersData.length > 0) {

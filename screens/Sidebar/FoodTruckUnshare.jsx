@@ -139,7 +139,7 @@ export default function FoodTruckUnshareScreen() {
         getUserAlias();
         getLocations();
 
-    }, [truckName, userID, isConnected, isInternetReachable]));
+    }, [truckName, userID, isInternetReachable]));
 
     useEffect(() => {
         const renderButtons = async () => {
