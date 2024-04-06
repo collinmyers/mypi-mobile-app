@@ -3,14 +3,14 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import HomeStyle from "../../styling/HomeStyle";
 import * as Notifications from "expo-notifications";
-import { RadioButton, TextInput } from "react-native-paper";
+import { RadioButton, Snackbar, TextInput } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { database, functions, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
-import { appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
+import { appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import AppStyle from "../../styling/AppStyle";
 
 export const PUSH_NOTIFICATION_ID = process.env.EXPO_PUBLIC_PUSH_NOTIFICATION_FUNCTION_ID;
-
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -51,6 +51,8 @@ export default function PushNotificationScreen() {
     const [body, setBody] = useState("");
     const [deliveryTypeChecked, setDeliveryTypeChecked] = useState("in-app");
     const [alertTypeChecked, setAlertTypeChecked] = useState("alerts");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
 
     const alertData = {
         Title: title,
@@ -103,7 +105,8 @@ export default function PushNotificationScreen() {
             navigation.goBack();
 
         } catch (error) {
-            console.error(error);
+            setErrorMessage(error.toString());
+            setIsSnackbarVisible(true);
         }
 
     }
@@ -222,8 +225,8 @@ export default function PushNotificationScreen() {
                             </View>
                         </View>
                     </View>
-
                 </View>
+
 
 
 
@@ -233,6 +236,18 @@ export default function PushNotificationScreen() {
                 </TouchableOpacity>
 
             </ScrollView>
+            <Snackbar
+                visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={AppStyle.snackBar}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                    setErrorMessage(""); // Clear the error message
+                }}
+                duration={3000}
+            >
+                {errorMessage}
+            </Snackbar>
         </SafeAreaView>
     );
 }

@@ -19,15 +19,13 @@ export default function ManageAlertsScreen() {
 
     const navigation = useNavigation();
 
-    const { isConnected, isInternetReachable } = useNetwork();
+    const { isInternetReachable } = useNetwork();
     const [isLoading, setIsLoading] = useState(true);
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [alertData, setAlertData] = useState([]);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [selectedDocumentId, setSelectedDocumentId] = useState(null);
-    const [profileRole, setProfileRole] = useState({
-        role: "",
-    });
+    const [profileRoles, setProfileRoles] = useState([]);
 
     useFocusEffect(React.useCallback(() => {
 
@@ -209,13 +207,10 @@ export default function ManageAlertsScreen() {
 
     const getNameAndRole = async () => {
         try {
-            const response = await account.get();
-
-            setProfileRole({
-                role: response.labels,
+            await account.get().then((response) => {
+                setProfileRoles(response.labels);
+                setIsSignedIn(true);
             });
-
-            setIsSignedIn(true);
         } catch {
             setIsSignedIn(false);
         }
@@ -233,7 +228,7 @@ export default function ManageAlertsScreen() {
                 </ScrollView>
             )}
 
-            {isSignedIn && (profileRole.role.includes("ManageNotification")) ?
+            {isSignedIn && (profileRoles.includes("ManageNotifications")) ?
                 (
                     <TouchableOpacity style={HomeStyle.fab} onPress={() => navigation.navigate("PushNotificationScreen")}>
                         <MaterialCommunityIcons name="bell-plus-outline" size={30} color={appPrimaryColor} />

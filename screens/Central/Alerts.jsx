@@ -4,7 +4,6 @@ import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Text, Button } from "react-native-paper";
 import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
-// import * as Notifications from "expo-notifications";
 import HomeStyle from "../../styling/HomeStyle";
 import { useNavigation } from "@react-navigation/native";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
@@ -23,17 +22,14 @@ export default function AlertsScreen() {
     const route = useRoute();
 
     const { showEditNotifications } = route.params;
-    const { isConnected, isInternetReachable } = useNetwork();
+    const { isInternetReachable } = useNetwork();
     const [localDateTime, setLocalDateTime] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState("notifications");
     const selectedCategoryRef = useRef("notifications");
     const [isLoading, setIsLoading] = useState(true);
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [alertData, setAlertData] = useState([]);
-    const [filterList, setFilterList] = useState([]);
-    const [profileRole, setProfileRole] = useState({
-        role: "",
-    });
+    const [profileRoles, setProfileRoles] = useState([]);
 
 
     useFocusEffect(React.useCallback(() => {
@@ -42,31 +38,16 @@ export default function AlertsScreen() {
 
     useEffect(() => {
         selectedCategoryRef.current = selectedCategory; // Update ref when selectedCategory changes
-        console.log("uf: ", selectedCategoryRef.current);
         handleFilterById(selectedCategoryRef.current);
     }, [selectedCategory, showEditNotifications, isInternetReachable]);
-
-    useEffect(() => {
-        console.log("Current Cat: ", selectedCategory);
-        if (selectedCategory === "notifications") {
-            console.log("Current alertdata Data:    ", alertData.filter((alert) => !alert.isDismissed));
-            renderAlerts(alertData.filter((alert) => !alert.isDismissed));
-        } else {
-            console.log("Current filterdata Data:    ", alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
-            renderAlerts(alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
-        }
-    }, [alertData, filterList]);
-
 
     useEffect(() => {
         // Function to handle real-time updates
         const handleSubscription = async () => {
             try {
                 await fetchData().then(() => {
-                    console.log("hs: ", selectedCategoryRef.current);
                     handleFilterById(selectedCategoryRef.current);
                 });
-
             } catch (error) {
                 console.error(error);
             }
@@ -142,7 +123,6 @@ export default function AlertsScreen() {
         };
 
 
-
         const loadDataFromFile = async () => {
             try {
                 const fileUri = FileSystem.documentDirectory + "alertsCard.json";
@@ -183,7 +163,7 @@ export default function AlertsScreen() {
         // Check network connectivity and fetch data if connected
         checkNetworkConnectivityAndFetchData();
 
-        getNameAndRole();
+        getRoles();
 
         return () => {
             unsubscribe();
@@ -264,56 +244,17 @@ export default function AlertsScreen() {
         return "now";
     };
 
-    const renderAlerts = (alerts) => {
-        return alerts.map((alert, index) => (
-            <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
-                <View style={HomeStyle.alertCardContent}>
-                    <Text style={HomeStyle.alertListTitle}>{alert.Title}</Text>
-                    <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
-                </View>
-
-                {!showEditNotifications && (<View style={HomeStyle.notificationAgeContainer}>
-                    <Text style={HomeStyle.notificationAge}>
-                        {notificationAge(alert.$createdAt)}
-                    </Text>
-                </View>)
-                }
-
-                {showEditNotifications && (
-                    <View style={alert.isDismissed ? HomeStyle.notificationEditIconsFalse : HomeStyle.notificationEditIconsTrue}>
-                        <FontAwesome5
-                            name={alert.isDismissed ? "bell-slash" : "bell"}
-                            size={24}
-                            color={appQuarternaryColor}
-                            onPress={() => toggleDismissed(alert.$id)}
-                        />
-                    </View>
-                )}
-            </View>
-        ));
-    };
-
     const handleFilterById = (filterId) => {
         setSelectedCategory(filterId);
-
-        if (filterId === "notifications") {
-            // Always show all notifications when the category is "Notifications"
-            setFilterList(showEditNotifications ? alertData : alertData.filter((alert) => !alert.isDismissed));
-        } else {
-            // Filter alerts based on the selected category when it's not "Notifications"
-            setFilterList(showEditNotifications ? alertData.filter((alert) => alert.NotificationType === filterId) : alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === filterId));
-        }
     };
 
-    const getNameAndRole = async () => {
+    const getRoles = async () => {
         try {
-            const response = await account.get();
-
-            setProfileRole({
-                role: response.labels,
+            await account.get().then((response) => {
+                console.log(response.labels);
+                setProfileRoles(response.labels);
+                setIsSignedIn(true);
             });
-
-            setIsSignedIn(true);
         } catch {
             setIsSignedIn(false);
         }
@@ -351,30 +292,28 @@ export default function AlertsScreen() {
                             }
                         }).map((alert, index) => (
                             <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
-                                <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
-                                    <View style={HomeStyle.alertCardContent}>
-                                        <Text style={HomeStyle.alertListTitle}>{alert.Title}</Text>
-                                        <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
-                                    </View>
-
-                                    {!showEditNotifications && (<View style={HomeStyle.notificationAgeContainer}>
-                                        <Text style={HomeStyle.notificationAge}>
-                                            {notificationAge(alert.$createdAt)}
-                                        </Text>
-                                    </View>)
-                                    }
-
-                                    {showEditNotifications && (
-                                        <View style={alert.isDismissed ? HomeStyle.notificationEditIconsFalse : HomeStyle.notificationEditIconsTrue}>
-                                            <FontAwesome5
-                                                name={alert.isDismissed ? "bell-slash" : "bell"}
-                                                size={24}
-                                                color={appQuarternaryColor}
-                                                onPress={() => toggleDismissed(alert.$id)}
-                                            />
-                                        </View>
-                                    )}
+                                <View style={HomeStyle.alertCardContent}>
+                                    <Text style={HomeStyle.alertListTitle}>{alert.Title}</Text>
+                                    <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
                                 </View>
+
+                                {!showEditNotifications && (<View style={HomeStyle.notificationAgeContainer}>
+                                    <Text style={HomeStyle.notificationAge}>
+                                        {notificationAge(alert.$createdAt)}
+                                    </Text>
+                                </View>)
+                                }
+
+                                {showEditNotifications && (
+                                    <View style={alert.isDismissed ? HomeStyle.notificationEditIconsFalse : HomeStyle.notificationEditIconsTrue}>
+                                        <FontAwesome5
+                                            name={alert.isDismissed ? "bell-slash" : "bell"}
+                                            size={24}
+                                            color={appQuarternaryColor}
+                                            onPress={() => toggleDismissed(alert.$id)}
+                                        />
+                                    </View>
+                                )}
                             </View>
                         ))
                     ) : (
@@ -387,7 +326,7 @@ export default function AlertsScreen() {
             )}
 
 
-            {isSignedIn && (profileRole.role == "admin") ?
+            {isSignedIn && (profileRoles.includes("ManageNotifications")) ?
                 (
                     <TouchableOpacity style={HomeStyle.fab} onPress={() => navigation.navigate("ManageNotficationsScreen")}>
                         <FontAwesome6 name="pencil" size={28} color={appPrimaryColor} />

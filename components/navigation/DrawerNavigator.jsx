@@ -97,15 +97,11 @@ export default function DrawerNavigator() {
     };
 
     useEffect(() => {
-        //console.error(`Connected: ${isConnected} Internet Reachable: ${isInternetReachable}`);
-        if (isConnected === false || isInternetReachable === false) {
+        if (isInternetReachable === false) {
             setErrorMessage("No internet connection, some app features may not be available until internet has been restored");
             setIsSnackbarVisible(true);
-        } else if (isConnected === true && isInternetReachable === true) {
-            setErrorMessage("");
-            setIsSnackbarVisible(false);
         }
-    }, [isInternetReachable]);
+    }, [isInternetReachable === false]);
 
     return (
         <SafeAreaProvider>
@@ -226,7 +222,7 @@ export default function DrawerNavigator() {
                 <Snackbar
                     visible={isSnackbarVisible}
                     maxFontSizeMultiplier={1}
-                    style={AppStyle.snackBar}
+                    style={[AppStyle.snackBar, { marginBottom: "22%" }]}
                     onDismiss={() => {
                         setIsSnackbarVisible(false);
                         setErrorMessage(""); // Clear the error message

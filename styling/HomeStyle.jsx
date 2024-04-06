@@ -500,14 +500,10 @@ export default StyleSheet.create({
         fontSize: 24,
         paddingLeft: "5%"
     },
-    navBackButton: {
-
-
-    },
     pushNotifOpac: {
         alignSelf: "center",
         justifyContent: "center",
-        width: buttonWidth,
+        width: buttonWidth * 1.2,
         paddingVertical: 10,
         borderRadius: 20,
         textAlign: "center",
