@@ -3,13 +3,16 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import HomeStyle from "../../styling/HomeStyle";
-import { RadioButton, TextInput } from "react-native-paper";
+import { RadioButton, TextInput, Snackbar } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { appSecondaryColor, appTertiaryColor, appQuarternaryColor } from "../../utils/colors/appColors";
+import AppStyle from "../../styling/AppStyle";
 
 export default function EditNotificationScreen() {
 
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const navigation = useNavigation();
     const route = useRoute();
 
@@ -39,12 +42,29 @@ export default function EditNotificationScreen() {
             navigation.goBack();
         }
         catch (error) {
-            console.error(error);
+            const stringError = error.toString();
+
+            const missingField = "Error: Enter all required fields";
+            const TitleLengthError = 'AppwriteException: Invalid document structure: Attribute "Title" has invalid type. Value must be a valid string and no longer than';
+            const DetailsLengthTitle = 'AppwriteException: Invalid document structure: Attribute "Details" has invalid type. Value must be a valid string and no longer than';
+
+            if (stringError.includes(missingField)) {
+                setErrorMessage("Please enter all fields and try again");
+                setIsSnackbarVisible(true);
+            } else if (stringError.includes(TitleLengthError)) {
+                setErrorMessage("The notification title exceeds the character limit. Please shorten it and try again.");
+                setIsSnackbarVisible(true);
+            } else if (stringError.includes(DetailsLengthTitle)) {
+                setErrorMessage("The notification details exceeds the character limit. Please shorten it and try again.");
+                setIsSnackbarVisible(true);
+            } else {
+                setErrorMessage("Unknown error occured, please try again");
+                setIsSnackbarVisible(true);
+            }
         }
 
     };
 
-    // TODO: make sure to see what max length of title and message field is to set limits
     return (
         <SafeAreaView style={HomeStyle.alertContainer}>
             <ScrollView>
@@ -129,6 +149,18 @@ export default function EditNotificationScreen() {
                 </TouchableOpacity>
 
             </ScrollView>
+            <Snackbar
+                visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={AppStyle.snackBar}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                    setErrorMessage(""); // Clear the error message
+                }}
+                duration={3000}
+            >
+                {errorMessage}
+            </Snackbar>
         </SafeAreaView>
     );
 }

@@ -7,7 +7,7 @@ import { RadioButton, Snackbar, TextInput } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { database, functions, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
-import { appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
+import { appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
 import AppStyle from "../../styling/AppStyle";
 
 export const PUSH_NOTIFICATION_ID = process.env.EXPO_PUBLIC_PUSH_NOTIFICATION_FUNCTION_ID;
@@ -69,17 +69,13 @@ export default function PushNotificationScreen() {
             if (title.length === 0 || body.length == 0) throw new Error("Enter all required fields");
             if (deliveryTypeChecked == "in-app") {
                 //create doc for in app
-                const createAlert = database.createDocument(
+                await database.createDocument(
                     DATABASE_ID,
                     ALERTS_COLLECTION_ID,
                     ID.unique(),
                     alertData
                 );
-                createAlert.then(function (response) {
-                    console.log(response);
-                }, function (error) {
-                    console.log(error);
-                });
+
             }
             else if (deliveryTypeChecked == "push") {
                 schedulePushNotification(notificationTitle, notificationBody); //Send out of app
@@ -93,25 +89,36 @@ export default function PushNotificationScreen() {
                     alertData
                 );
 
-                createAlert.then(function (response) {
-                    console.log(response);
-                }, function (error) {
-                    console.log(error);
+                createAlert.then(() => {
+                    schedulePushNotification(notificationTitle, notificationBody); //Send out of app
                 });
-
-                schedulePushNotification(notificationTitle, notificationBody); //Send out of app
             }
 
             navigation.goBack();
-
         } catch (error) {
-            setErrorMessage(error.toString());
-            setIsSnackbarVisible(true);
+            const stringError = error.toString();
+
+            const missingField = "Error: Enter all required fields";
+            const TitleLengthError = 'AppwriteException: Invalid document structure: Attribute "Title" has invalid type. Value must be a valid string and no longer than';
+            const DetailsLengthTitle = 'AppwriteException: Invalid document structure: Attribute "Details" has invalid type. Value must be a valid string and no longer than';
+
+            if (stringError.includes(missingField)) {
+                setErrorMessage("Please enter all fields and try again");
+                setIsSnackbarVisible(true);
+            } else if (stringError.includes(TitleLengthError)) {
+                setErrorMessage("The notification title exceeds the character limit. Please shorten it and try again.");
+                setIsSnackbarVisible(true);
+            } else if (stringError.includes(DetailsLengthTitle)) {
+                setErrorMessage("The notification details exceeds the character limit. Please shorten it and try again.");
+                setIsSnackbarVisible(true);
+            } else {
+                setErrorMessage("Unknown error occured, please try again");
+                setIsSnackbarVisible(true);
+            }
         }
 
     }
 
-    // TODO: make sure to see what max length of title and message field is to set limits
     return (
         <SafeAreaView style={HomeStyle.alertContainer}>
             <ScrollView>

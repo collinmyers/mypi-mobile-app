@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, KeyboardAvoidingView, Platform } from "react-native";
+import { View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const KeyboardAvoidingComponent = ({ children, style }) => {
     return (
-        <KeyboardAvoidingView 
-        behavior={Platform.OS === "ios" ? "padding" : "height"} style={style}>
-            <View>{children}</View>
-        </KeyboardAvoidingView>
+        <KeyboardAwareScrollView style={style} scrollEnabled={false} contentContainerStyle={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <View style={{ width: "100%" }}>
+                {children}
+            </View>
+        </KeyboardAwareScrollView>
     );
 };
 
@@ -16,9 +18,7 @@ KeyboardAvoidingComponent.propTypes = {
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node,
     ]).isRequired,
-    style: PropTypes.any, 
+    style: PropTypes.any,
 };
 
 export default KeyboardAvoidingComponent;
-
-
