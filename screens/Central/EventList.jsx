@@ -69,6 +69,9 @@ export default function EventListScreen() {
                         const EventLongitude = event.Longitude;
                         const EventTime = event.Time || "";
                         const EventImages = []; // Initialize an empty array for images
+                        const ExtranInfoTitle = event.ExtranInfoTitle;
+                        const ExtraInfoURL = event.ExtraInfoURL;
+
 
                         // Loop through each FileID in the event
                         for (const fileID of event.FileID) {
@@ -97,6 +100,8 @@ export default function EventListScreen() {
                             EventLongitude,
                             EventTime,
                             EventImages, // Include the EventImages array
+                            ExtranInfoTitle,
+                            ExtraInfoURL,
                         };
                     })
                 );
@@ -191,6 +196,8 @@ export default function EventListScreen() {
             const EventLongitude = event.EventLongitude;
             const EventImages = event.EventImages;
             const EventTime = event.EventTime;
+            const ExtranInfoTitle = event.ExtranInfoTitle;
+            const ExtraInfoURL = event.ExtraInfoURL;
 
             return (
                 <Pressable
@@ -204,7 +211,9 @@ export default function EventListScreen() {
                             EventListDescription: EventListDescription,
                             EventLatitude: EventLatitude,
                             EventLongitude: EventLongitude,
-                            EventTime: EventTime
+                            EventTime: EventTime,
+                            ExtranInfoTitle: ExtranInfoTitle,
+                            ExtraInfoURL: ExtraInfoURL
                         })
                     }
                 >

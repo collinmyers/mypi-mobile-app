@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dimensions, SafeAreaView, Image, TouchableOpacity, View } from "react-native";
+import { Dimensions, SafeAreaView, Image, TouchableOpacity, View, Linking } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { useRoute } from "@react-navigation/native";
 import { showLocation } from "react-native-map-link";
@@ -23,7 +23,7 @@ export default function EventDetailsScreen() {
 
     const route = useRoute();
 
-    const { EventImages, EventName, EventDate, EventDetailsDescription, EventLatitude, EventLongitude, EventTime } = route.params;
+    const { EventImages, EventName, EventDate, EventDetailsDescription, EventLatitude, EventLongitude, EventTime, ExtranInfoTitle, ExtraInfoURL } = route.params;
 
     const getDirections = (lat, long, directionsPreference) => {
         showLocation({
@@ -54,6 +54,26 @@ export default function EventDetailsScreen() {
         } catch (error) {
             console.error(error);
         }
+    };
+    const handlePress = (url) => {
+        Linking.openURL(url)
+            .catch(err => console.error("An error occurred", err));
+    };
+
+    const renderExtraBtns = () => {
+        return ExtranInfoTitle.map((item, index) => {
+            return (
+                <TouchableOpacity
+                    key={index}
+                    style={HomeStyle.homeButtonOpacity}
+                    onPress={() => handlePress(ExtraInfoURL[index])}
+                >
+                    <Text key={index} style={HomeStyle.homeButtonText}>{item} </Text>
+                </TouchableOpacity>
+            );
+
+
+        });
     };
 
     useFocusEffect(
@@ -132,6 +152,9 @@ export default function EventDetailsScreen() {
                         >
                             <Text style={HomeStyle.homeButtonText}>Get Directions</Text>
                         </TouchableOpacity>
+
+                        {renderExtraBtns()}
+
                     </Card.Content>
                 </Card>
             </ScrollView>
