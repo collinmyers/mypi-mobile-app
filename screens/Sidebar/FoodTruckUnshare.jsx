@@ -12,7 +12,7 @@ import { useNetwork } from "../../components/context/NetworkContext";
 export default function FoodTruckUnshareScreen() {
     const PAGE_SIZE = 25;
 
-    const {isConnected, isInternetReachable} = useNetwork();
+    const { isConnected, isInternetReachable } = useNetwork();
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState();
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
@@ -24,7 +24,7 @@ export default function FoodTruckUnshareScreen() {
     const [profileRole, setProfileRole] = useState({
         role: "",
     });
-    
+
     const UnShareLocation = async () => {
 
         //Function to find subjson inside of the big json
@@ -37,7 +37,7 @@ export default function FoodTruckUnshareScreen() {
             return -1; // If the attribute is not found
         }
 
-        if (isSignedIn && (profileRole.role == "admin" || profileRole.role == "foodtruck") && goodStatus) {
+        if (isSignedIn && (profileRole.role.includes("FoodTruck")) && goodStatus) {
 
             //Find attribute's index, in the point data use State, then delete based on it's id...
             let index = findIndex("Name", selectedLocation);

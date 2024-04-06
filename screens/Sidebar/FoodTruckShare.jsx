@@ -13,7 +13,7 @@ import { useNetwork } from "../../components/context/NetworkContext";
 export default function FoodTruckShareScreen() {
     const PAGE_SIZE = 25;
 
-    const {isConnected, isInternetReachable} = useNetwork();
+    const { isConnected, isInternetReachable } = useNetwork();
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState("Beach 1");
     const [truckName, setTruckName] = useState();
@@ -38,7 +38,7 @@ export default function FoodTruckShareScreen() {
             return -1; // If the attribute is not found
         }
 
-        if (isSignedIn && (profileRole.role == "admin" || profileRole.role == "foodtruck") && goodStatus) {
+        if (isSignedIn && (profileRole.role.includes("FoodTruck")) && goodStatus) {
             let index = findIndex("Name", selectedLocation);
 
             let randomNum = Math.random();

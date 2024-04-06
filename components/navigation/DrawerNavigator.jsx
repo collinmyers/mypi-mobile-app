@@ -201,7 +201,7 @@ export default function DrawerNavigator() {
                         }}
                     />
 
-                    {isSignedIn && ((profileRole.role == "admin") || (profileRole.role == "foodtruck")) ?
+                    {isSignedIn && ((profileRole.role.includes("FoodTruck"))) ?
                         (<Drawer.Screen
                             name="Food Truck"
                             component={FoodTruckStackNavigator}

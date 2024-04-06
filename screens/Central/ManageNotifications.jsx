@@ -233,7 +233,7 @@ export default function ManageAlertsScreen() {
                 </ScrollView>
             )}
 
-            {isSignedIn && (profileRole.role == "admin") ?
+            {isSignedIn && (profileRole.role.includes("ManageNotification")) ?
                 (
                     <TouchableOpacity style={HomeStyle.fab} onPress={() => navigation.navigate("PushNotificationScreen")}>
                         <MaterialCommunityIcons name="bell-plus-outline" size={30} color={appPrimaryColor} />
