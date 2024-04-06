@@ -1,5 +1,5 @@
 import * as Network from "expo-network";
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Text, Button } from "react-native-paper";
 import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
@@ -22,15 +22,15 @@ export default function AlertsScreen() {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const {showEditNotifications} = route.params;
-    const {isConnected, isInternetReachable} = useNetwork();
+    const { showEditNotifications } = route.params;
+    const { isConnected, isInternetReachable } = useNetwork();
     const [localDateTime, setLocalDateTime] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState("notifications");
+    const selectedCategoryRef = useRef("notifications");
     const [isLoading, setIsLoading] = useState(true);
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [alertData, setAlertData] = useState([]);
     const [filterList, setFilterList] = useState([]);
-    const [fullList, setFullList] = useState([]);
     const [profileRole, setProfileRole] = useState({
         role: "",
     });
@@ -40,21 +40,33 @@ export default function AlertsScreen() {
         setLocalDateTime(new Date());
     }, []));
 
-    useEffect(() => {
-        console.error("hello from hf")
-        handleFilterById(selectedCategory);
-        renderAlerts(filterList.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
-    }, [showEditNotifications, selectedCategory, isInternetReachable]);
+useEffect(() => {
+    selectedCategoryRef.current = selectedCategory; // Update ref when selectedCategory changes
+    console.log("uf: ", selectedCategoryRef.current);
+    handleFilterById(selectedCategoryRef.current);
+}, [selectedCategory, showEditNotifications, isInternetReachable]);
+
+useEffect(() => {
+    console.log("Current Cat: ", selectedCategory);
+    if (selectedCategory === "notifications") {
+        console.log("Current alertdata Data:    ", alertData.filter((alert) => !alert.isDismissed));
+        renderAlerts(alertData.filter((alert) => !alert.isDismissed));
+    } else {
+        console.log("Current filterdata Data:    ", alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
+        renderAlerts(alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
+    }
+}, [alertData, filterList]);
+
 
     useEffect(() => {
-        console.error("hello from hs")
         // Function to handle real-time updates
         const handleSubscription = async () => {
             try {
-                await fetchData();
+                await fetchData().then(() => {
+                    console.log("hs: ", selectedCategoryRef.current);
+                    handleFilterById(selectedCategoryRef.current);
+                });
 
-                // Update filterList based on the current category
-                handleFilterById(selectedCategory);
             } catch (error) {
                 console.error(error);
             }
@@ -62,6 +74,7 @@ export default function AlertsScreen() {
 
         // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
+
 
         const fetchData = async () => {
             try {
@@ -111,13 +124,12 @@ export default function AlertsScreen() {
                 updatedAlerts.sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
 
                 setAlertData(updatedAlerts);
-                setFullList(updatedAlerts);
+                setSelectedCategory(selectedCategoryRef.current);
                 await saveDataToFile(updatedAlerts); // Save fetched data to file
             } catch (error) {
                 console.error(error);
             }
         };
-
 
         const saveDataToFile = async (data) => {
             try {
@@ -129,6 +141,8 @@ export default function AlertsScreen() {
             }
         };
 
+
+
         const loadDataFromFile = async () => {
             try {
                 const fileUri = FileSystem.documentDirectory + "alertsCard.json";
@@ -136,11 +150,9 @@ export default function AlertsScreen() {
                 const data = JSON.parse(fileContents);
                 console.log("Data loaded from file:", fileUri);
                 setAlertData(data);
-                setFullList(data);
             } catch (error) {
                 console.error("Error reading data from file: ", error);
                 setAlertData([]);
-                setFullList([]);
             }
         };
 
@@ -149,6 +161,8 @@ export default function AlertsScreen() {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
                     await fetchData(); // Fetch data from appwrite if connected
+                } else {
+                    loadDataFromFile(); // Load data from file if not connected
                 }
             } catch (error) {
                 console.error("Error checking network connectivity: ", error);
@@ -284,10 +298,10 @@ export default function AlertsScreen() {
 
         if (filterId === "notifications") {
             // Always show all notifications when the category is "Notifications"
-            setFilterList(showEditNotifications ? fullList : alertData.filter((alert) => !alert.isDismissed));
+            setFilterList(showEditNotifications ? alertData : alertData.filter((alert) => !alert.isDismissed));
         } else {
             // Filter alerts based on the selected category when it's not "Notifications"
-            setFilterList(showEditNotifications ? fullList.filter((alert) => alert.NotificationType === filterId) : alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === filterId));
+            setFilterList(showEditNotifications ? alertData.filter((alert) => alert.NotificationType === filterId) : alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === filterId));
         }
     };
 

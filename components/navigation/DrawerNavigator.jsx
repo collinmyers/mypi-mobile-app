@@ -97,7 +97,7 @@ export default function DrawerNavigator() {
     };
 
     useEffect(() => {
-        console.error(`Connected: ${isConnected} Internet Reachable: ${isInternetReachable}`);
+        //console.error(`Connected: ${isConnected} Internet Reachable: ${isInternetReachable}`);
         if (isConnected === false || isInternetReachable === false) {
             setErrorMessage("No internet connection, some app features may not be available until internet has been restored");
             setIsSnackbarVisible(true);
