@@ -40,22 +40,22 @@ export default function AlertsScreen() {
         setLocalDateTime(new Date());
     }, []));
 
-useEffect(() => {
-    selectedCategoryRef.current = selectedCategory; // Update ref when selectedCategory changes
-    console.log("uf: ", selectedCategoryRef.current);
-    handleFilterById(selectedCategoryRef.current);
-}, [selectedCategory, showEditNotifications, isInternetReachable]);
+    useEffect(() => {
+        selectedCategoryRef.current = selectedCategory; // Update ref when selectedCategory changes
+        console.log("uf: ", selectedCategoryRef.current);
+        handleFilterById(selectedCategoryRef.current);
+    }, [selectedCategory, showEditNotifications, isInternetReachable]);
 
-useEffect(() => {
-    console.log("Current Cat: ", selectedCategory);
-    if (selectedCategory === "notifications") {
-        console.log("Current alertdata Data:    ", alertData.filter((alert) => !alert.isDismissed));
-        renderAlerts(alertData.filter((alert) => !alert.isDismissed));
-    } else {
-        console.log("Current filterdata Data:    ", alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
-        renderAlerts(alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
-    }
-}, [alertData, filterList]);
+    useEffect(() => {
+        console.log("Current Cat: ", selectedCategory);
+        if (selectedCategory === "notifications") {
+            console.log("Current alertdata Data:    ", alertData.filter((alert) => !alert.isDismissed));
+            renderAlerts(alertData.filter((alert) => !alert.isDismissed));
+        } else {
+            console.log("Current filterdata Data:    ", alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
+            renderAlerts(alertData.filter((alert) => !alert.isDismissed && alert.NotificationType === selectedCategory));
+        }
+    }, [alertData, filterList]);
 
 
     useEffect(() => {
@@ -342,28 +342,48 @@ useEffect(() => {
                 </View>
             ) : (
                 <ScrollView contentContainerStyle={[HomeStyle.scrollableView, { alignItems: "center" }]} showsVerticalScrollIndicator={false}>
-                    {filterList.length > 0 ? (
-                        renderAlerts(filterList)
-                    ) : (
-                        <View>
-                            {(selectedCategory === "notifications") ? (
-                                alertData.filter((alert) => !alert.isDismissed).length > 0 ?
-                                    (renderAlerts(alertData.filter((alert) => !alert.isDismissed)))
-                                    :
-                                    (
-                                        <Text style={HomeStyle.noNotificationsMessage}>
-                                            No new {selectedCategory} at this time
-                                        </Text>
-                                    )
-                            ) : (
-                                <Text style={HomeStyle.noNotificationsMessage}>
-                                    No new {selectedCategory} at this time
-                                </Text>
-                            )}
-                        </View>
-                    )}
+                    {alertData.length > 0 ? (
+                        alertData.filter((alert) => {
+                            if (selectedCategory === "notifications") {
+                                return showEditNotifications || !alert.isDismissed;
+                            } else {
+                                return (showEditNotifications || !alert.isDismissed) && alert.NotificationType === selectedCategory;
+                            }
+                        }).map((alert, index) => (
+                            <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
+                                <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
+                                    <View style={HomeStyle.alertCardContent}>
+                                        <Text style={HomeStyle.alertListTitle}>{alert.Title}</Text>
+                                        <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
+                                    </View>
 
+                                    {!showEditNotifications && (<View style={HomeStyle.notificationAgeContainer}>
+                                        <Text style={HomeStyle.notificationAge}>
+                                            {notificationAge(alert.$createdAt)}
+                                        </Text>
+                                    </View>)
+                                    }
+
+                                    {showEditNotifications && (
+                                        <View style={alert.isDismissed ? HomeStyle.notificationEditIconsFalse : HomeStyle.notificationEditIconsTrue}>
+                                            <FontAwesome5
+                                                name={alert.isDismissed ? "bell-slash" : "bell"}
+                                                size={24}
+                                                color={appQuarternaryColor}
+                                                onPress={() => toggleDismissed(alert.$id)}
+                                            />
+                                        </View>
+                                    )}
+                                </View>
+                            </View>
+                        ))
+                    ) : (
+                        <Text style={HomeStyle.noNotificationsMessage}>
+                            No new {selectedCategory} at this time
+                        </Text>
+                    )}
                 </ScrollView>
+
             )}
 
 
