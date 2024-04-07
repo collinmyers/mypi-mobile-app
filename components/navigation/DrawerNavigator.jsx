@@ -24,7 +24,7 @@ const Drawer = createDrawerNavigator();
 export default function DrawerNavigator() {
 
     const { changeAuthState, isSignedIn, setIsSignedIn } = useAuth();
-    const { isConnected, isInternetReachable } = useNetwork();
+    const {isInternetReachable } = useNetwork();
     const [errorMessage, setErrorMessage] = useState("");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [isSigningOut, setIsSigningOut] = useState(false);

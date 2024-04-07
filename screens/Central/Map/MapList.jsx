@@ -21,7 +21,7 @@ export default function MapList() {
 
     const navigation = useNavigation();
 
-    const { isConnected, isInternetReachable } = useNetwork();
+    const { isInternetReachable } = useNetwork();
     const [pointData, setPointData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredCards, setFilteredCards] = useState([]);

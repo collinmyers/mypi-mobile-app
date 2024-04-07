@@ -14,7 +14,7 @@ import { useNetwork } from "../../../components/context/NetworkContext";
 
 export default function EventListScreen() {
     const navigation = useNavigation();
-    const { isConnected, isInternetReachable } = useNetwork();
+    const { isInternetReachable } = useNetwork();
     const [eventData, setEventData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const PAGE_SIZE = 25;

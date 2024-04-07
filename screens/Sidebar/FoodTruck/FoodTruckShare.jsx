@@ -13,7 +13,7 @@ import { useNetwork } from "../../../components/context/NetworkContext";
 export default function FoodTruckShareScreen() {
     const PAGE_SIZE = 25;
 
-    const { isConnected, isInternetReachable } = useNetwork();
+    const { isInternetReachable } = useNetwork();
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState("Beach 1");
     const [truckName, setTruckName] = useState();

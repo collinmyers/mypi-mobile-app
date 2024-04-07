@@ -21,7 +21,7 @@ import { useNetwork } from "../../../components/context/NetworkContext";
 export default function MapScreen() {
     const navigation = useNavigation();
 
-    const { isConnected, isInternetReachable } = useNetwork();
+    const { isInternetReachable } = useNetwork();
     const [markersData, setMarkersData] = useState([]);
     const [filteredMarkers, setFilteredMarkers] = useState([]);
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
@@ -126,13 +126,6 @@ export default function MapScreen() {
         };
 
     }, [isInternetReachable]));
-
-    // useEffect(() => {
-    //     if (markersData.length > 0) {
-    //         setIsLoading(false);
-    //     }
-    // }, [markersData]);
-
 
     useEffect(() => {
         const filterMarkers = () => {
@@ -275,7 +268,7 @@ export default function MapScreen() {
                     latitudeDelta: 0.085,
                     longitudeDelta: 0.115,
                 }}
-                >
+            >
                 {renderMarkers()}
             </MapView>
 
