@@ -15,7 +15,7 @@ export default function Dashboard() {
 
     const navigation = useNavigation();
 
-    const {isConnected, isInternetReachable} = useNetwork();
+    const { isConnected, isInternetReachable } = useNetwork();
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [profileInfo, setProfileInfo] = useState({
         name: "",
@@ -39,7 +39,7 @@ export default function Dashboard() {
 
     useFocusEffect(
         React.useCallback(() => {
-            if(isConnected && isInternetReachable){
+            if (isConnected && isInternetReachable) {
                 getNameAndEmail();
             }
         }, [isInternetReachable])
@@ -59,7 +59,7 @@ export default function Dashboard() {
                 }
 
                 <TouchableOpacity style={HomeStyle.dashboardDonoOpac} onPress={() => { navigation.navigate("Donate"); }}>
-                    <MaterialIcons name="volunteer-activism" size={24} color={appPrimaryColor} />
+                    <MaterialIcons style={{ alignSelf: "center" }} name="volunteer-activism" size={24} color={appPrimaryColor} />
                     <Text style={HomeStyle.dashboardDonoText}>Donate Now</Text>
                 </TouchableOpacity>
             </View>

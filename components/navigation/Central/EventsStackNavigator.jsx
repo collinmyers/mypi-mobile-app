@@ -1,10 +1,10 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import EventListScreen from "../../screens/Central/EventList";
-import EventDetailsScreen from "../../screens/Central/EventDetails";
-import Menu from "./AppHeader";
-import MenuBack from "./AppHeaderNavBack";
-import { appPrimaryColor } from "../../utils/colors/appColors";
+import EventListScreen from "../../../screens/Central/Events/EventList";
+import EventDetailsScreen from "../../../screens/Central/Events/EventDetails";
+import Menu from "../Headers/AppHeader";
+import MenuBack from "../Headers/AppHeaderNavBack";
+import { appPrimaryColor } from "../../../utils/colors/appColors";
 
 const fade = ({ current }) => ({
     cardStyle: {

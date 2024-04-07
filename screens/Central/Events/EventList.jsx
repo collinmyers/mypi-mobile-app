@@ -2,15 +2,15 @@ import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
 import { ScrollView, SafeAreaView, Pressable, Image, View } from "react-native";
 import { ActivityIndicator, Card, Text } from "react-native-paper";
-import { database, storage, DATABASE_ID, EVENTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { database, storage, DATABASE_ID, EVENTS_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
-import HomeStyle from "../../styling/HomeStyle";
-import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
+import HomeStyle from "../../../styling/HomeStyle";
+import { subscribeToRealTimeUpdates } from "../../../utils/Config/appwriteConfig";
 import * as FileSystem from "expo-file-system";
 import { parse } from "date-fns";
-import { appSecondaryColor } from "../../utils/colors/appColors";
-import { useNetwork } from "../../components/context/NetworkContext";
+import { appSecondaryColor } from "../../../utils/colors/appColors";
+import { useNetwork } from "../../../components/context/NetworkContext";
 
 export default function EventListScreen() {
     const navigation = useNavigation();

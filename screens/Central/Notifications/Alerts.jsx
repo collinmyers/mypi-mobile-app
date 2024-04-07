@@ -2,18 +2,18 @@ import * as Network from "expo-network";
 import React, { useRef, useState, useEffect } from "react";
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Text, Button } from "react-native-paper";
-import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { account, database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
-import HomeStyle from "../../styling/HomeStyle";
+import HomeStyle from "../../../styling/HomeStyle";
 import { useNavigation } from "@react-navigation/native";
-import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTextColor } from "../../utils/colors/appColors";
-import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
+import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTextColor } from "../../../utils/colors/appColors";
+import { subscribeToRealTimeUpdates } from "../../../utils/Config/appwriteConfig";
 import { FontAwesome5, FontAwesome6 } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 import { useRoute } from "@react-navigation/native";
 import { differenceInSeconds } from "date-fns";
 import { useFocusEffect } from "@react-navigation/native";
-import { useNetwork } from "../../components/context/NetworkContext";
+import { useNetwork } from "../../../components/context/NetworkContext";
 
 export default function AlertsScreen() {
     const PAGE_SIZE = 25;

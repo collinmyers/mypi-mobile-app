@@ -1,11 +1,11 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import SignUpScreen from "../../screens/Sidebar/auth/SignUp";
-import LoginScreen from "../../screens/Sidebar/auth/Login";
-import PasswordResetScreen from "../../screens/Sidebar/auth/ForgotPassword";
-import Menu from "./AppHeader";
-import MenuBack from "./AppHeaderNavBack";
-import { appTertiaryColor } from "../../utils/colors/appColors";
+import SignUpScreen from "../../../screens/Sidebar/auth/SignUp";
+import LoginScreen from "../../../screens/Sidebar/auth/Login";
+import PasswordResetScreen from "../../../screens/Sidebar/auth/ForgotPassword";
+import Menu from "../Headers/AppHeader";
+import MenuBack from "../Headers/AppHeaderNavBack";
+import { appTertiaryColor } from "../../../utils/colors/appColors";
 
 const Stack = createStackNavigator();
 

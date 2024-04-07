@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Snackbar, Text, TextInput } from "react-native-paper";
-import { account } from "../../utils/Config/appwriteConfig";
+import { account } from "../../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
-import Logo from "../../components/logo/AppLogo";
-import AppStyle from "../../styling/AppStyle";
-import HomeStyle from "../../styling/HomeStyle";
-import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
-import { appPrimaryColor, appTextColor } from "../../utils/colors/appColors";
-import { validatePassword } from "../../utils/Regex/Validators";
+import Logo from "../../../components/logo/AppLogo";
+import AppStyle from "../../../styling/AppStyle";
+import HomeStyle from "../../../styling/HomeStyle";
+import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
+import { appPrimaryColor, appTextColor } from "../../../utils/colors/appColors";
+import { validatePassword } from "../../../utils/Regex/Validators";
 
 ChangePasswordScreen.propTypes = {
     navigation: PropTypes.shape({

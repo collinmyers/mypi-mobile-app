@@ -2,12 +2,12 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, FontAwesome5, MaterialCommunityIcons, Octicons } from "@expo/vector-icons";
 import DashboardScreen from "../../screens/Central/Dashboard";
-import SettingsStackNavigator from "./SettingsStackNavigator";
-import EventsStackNavigator from "./EventsStackNavigator";
-import MapStackNavigator from "./MapStackNavigator";
+import SettingsStackNavigator from "./Central/SettingsStackNavigator";
+import EventsStackNavigator from "./Central/EventsStackNavigator";
+import MapStackNavigator from "./Central/MapStackNavigator";
 import { appPrimaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
-import Menu from "./AppHeader";
-import AlertsStackNavigator from "./AlertsStackNavigator";
+import Menu from "./Headers/AppHeader";
+import AlertsStackNavigator from "./Central/AlertsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 

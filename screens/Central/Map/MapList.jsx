@@ -3,18 +3,18 @@ import React, { useState, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Card, Searchbar, Text } from "react-native-paper";
-import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import { useNavigation } from "@react-navigation/native";
-import MapStyle from "../../styling/MapStyle";
-import HomeStyle from "../../styling/HomeStyle";
-import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
+import MapStyle from "../../../styling/MapStyle";
+import HomeStyle from "../../../styling/HomeStyle";
+import { getNavigationPreference } from "../../../utils/AsyncStorage/NavigationPreference";
 import { showLocation } from "react-native-map-link";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
-import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
+import { appSecondaryColor, appTertiaryColor, appTextColor } from "../../../utils/colors/appColors";
+import { subscribeToRealTimeUpdates } from "../../../utils/Config/appwriteConfig";
 import * as FileSystem from "expo-file-system";
-import { useNetwork } from "../../components/context/NetworkContext";
+import { useNetwork } from "../../../components/context/NetworkContext";
 
 export default function MapList() {
     const PAGE_SIZE = 25;

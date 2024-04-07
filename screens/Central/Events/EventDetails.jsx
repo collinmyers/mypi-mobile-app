@@ -3,13 +3,13 @@ import { Dimensions, SafeAreaView, Image, TouchableOpacity, View, Linking } from
 import { Card, Text } from "react-native-paper";
 import { useRoute } from "@react-navigation/native";
 import { showLocation } from "react-native-map-link";
-import HomeStyle from "../../styling/HomeStyle";
+import HomeStyle from "../../../styling/HomeStyle";
 import { ScrollView } from "react-native-gesture-handler";
-import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
+import { getNavigationPreference } from "../../../utils/AsyncStorage/NavigationPreference";
 import { useFocusEffect } from "@react-navigation/native";
-import { getAutoPlayPreference } from "../../utils/AsyncStorage/AutoPlayPreference";
+import { getAutoPlayPreference } from "../../../utils/AsyncStorage/AutoPlayPreference";
 import Carousel from "react-native-reanimated-carousel";
-import { appPrimaryColor, appTertiaryColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appTertiaryColor } from "../../../utils/colors/appColors";
 
 
 export default function EventDetailsScreen() {

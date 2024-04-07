@@ -1,11 +1,11 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import Menu from "./AppHeader";
-import MenuBack from "./AppHeaderNavBack";
-import { appPrimaryColor } from "../../utils/colors/appColors";
-import FoodTruckAdminScreen from "../../screens/Sidebar/FoodTruck";
-import FoodTruckShareScreen from "../../screens/Sidebar/FoodTruckShare";
-import FoodTruckUnshareScreen from "../../screens/Sidebar/FoodTruckUnshare";
+import Menu from "../Headers/AppHeader";
+import MenuBack from "../Headers/AppHeaderNavBack";
+import { appPrimaryColor } from "../../../utils/colors/appColors";
+import FoodTruckAdminScreen from "../../../screens/Sidebar/FoodTruck/FoodTruck";
+import FoodTruckShareScreen from "../../../screens/Sidebar/FoodTruck/FoodTruckShare";
+import FoodTruckUnshareScreen from "../../../screens/Sidebar/FoodTruck/FoodTruckUnshare";
 
 const Stack = createStackNavigator();
 

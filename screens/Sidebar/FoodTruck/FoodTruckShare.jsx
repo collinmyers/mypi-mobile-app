@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import { Text, Snackbar } from "react-native-paper";
-import SidebarStyle from "../../styling/SidebarStyle";
-import { DATABASE_ID, FOOD_TRUCK_POI, MAP_COLLECTION_ID, USER_ALIAS_TABLE_ID, account, database } from "../../utils/Config/appwriteConfig";
+import SidebarStyle from "../../../styling/SidebarStyle";
+import { DATABASE_ID, FOOD_TRUCK_POI, MAP_COLLECTION_ID, USER_ALIAS_TABLE_ID, account, database } from "../../../utils/Config/appwriteConfig";
 import { RadioButton } from "react-native-paper";
-import { appTertiaryColor } from "../../utils/colors/appColors";
+import { appTertiaryColor } from "../../../utils/colors/appColors";
 import { ScrollView } from "react-native-gesture-handler";
 import { ID, Query } from "appwrite";
 import { useFocusEffect } from "@react-navigation/native";
-import { useNetwork } from "../../components/context/NetworkContext";
+import { useNetwork } from "../../../components/context/NetworkContext";
 
 export default function FoodTruckShareScreen() {
     const PAGE_SIZE = 25;

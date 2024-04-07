@@ -4,19 +4,19 @@ import { View, SafeAreaView, Text, TouchableOpacity, Platform } from "react-nati
 import { ActivityIndicator } from "react-native-paper";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
-import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
-import MapStyle from "../../styling/MapStyle";
-import HomeStyle from "../../styling/HomeStyle";
-import { getNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
+import MapStyle from "../../../styling/MapStyle";
+import HomeStyle from "../../../styling/HomeStyle";
+import { getNavigationPreference } from "../../../utils/AsyncStorage/NavigationPreference";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
-import { subscribeToRealTimeUpdates } from "../../utils/Config/appwriteConfig";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
+import { subscribeToRealTimeUpdates } from "../../../utils/Config/appwriteConfig";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor } from "../../../utils/colors/appColors";
 import * as FileSystem from "expo-file-system";
-import { useNetwork } from "../../components/context/NetworkContext";
+import { useNetwork } from "../../../components/context/NetworkContext";
 
 export default function MapScreen() {
     const navigation = useNavigation();
@@ -127,11 +127,11 @@ export default function MapScreen() {
 
     }, [isInternetReachable]));
 
-    useEffect(() => {
-        if (markersData.length > 0) {
-            setIsLoading(false);
-        }
-    }, [markersData]);
+    // useEffect(() => {
+    //     if (markersData.length > 0) {
+    //         setIsLoading(false);
+    //     }
+    // }, [markersData]);
 
 
     useEffect(() => {
@@ -268,12 +268,14 @@ export default function MapScreen() {
 
             <MapView
                 style={MapStyle.map}
+                onMapReady={() => setIsLoading(false)}
                 initialRegion={{
                     latitude: 42.158581,
                     longitude: -80.1079,
                     latitudeDelta: 0.085,
                     longitudeDelta: 0.115,
-                }}>
+                }}
+                >
                 {renderMarkers()}
             </MapView>
 

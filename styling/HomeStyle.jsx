@@ -460,10 +460,12 @@ export default StyleSheet.create({
         marginVertical: "2%"
     },
     notificationEditIconsTrue: {
-        paddingRight: "5%"
+        paddingRight: "5%",
+        marginLeft: "2%"
     },
     notificationEditIconsFalse: {
-        paddingRight: "3.9%"
+        paddingRight: "3.9%",
+        marginLeft: "1.5%"
     },
     alertListTitle: {
         fontWeight: "700",
@@ -483,9 +485,8 @@ export default StyleSheet.create({
         flexDirection: "row",
         alignSelf: "center",
         justifyContent: "center",
-        width: deviceWidth * .47,
-        marginVertical: "5%",
-        paddingVertical: "2.5%",
+        maxWidth: deviceWidth * .65,
+        padding: "2.5%",
         margin: "5%",
         borderRadius: 20,
         color: appTextColor,

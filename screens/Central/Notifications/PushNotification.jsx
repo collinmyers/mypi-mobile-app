@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
-import HomeStyle from "../../styling/HomeStyle";
+import HomeStyle from "../../../styling/HomeStyle";
 import * as Notifications from "expo-notifications";
 import { RadioButton, Snackbar, TextInput } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
-import { database, functions, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../utils/Config/appwriteConfig";
+import { database, functions, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
-import { appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
-import AppStyle from "../../styling/AppStyle";
+import { appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../../utils/colors/appColors";
+import AppStyle from "../../../styling/AppStyle";
 
 export const PUSH_NOTIFICATION_ID = process.env.EXPO_PUBLIC_PUSH_NOTIFICATION_FUNCTION_ID;
 

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import AlertsScreen from "../../screens/Central/Alerts";
-import PushNotificationScreen from "../../screens/Central/PushNotification";
-import ManageNotficationsScreen from "../../screens/Central/ManageNotifications";
-import EditNotificationScreen from "../../screens/Central/EditNotification";
-import MenuBack from "./AppHeaderNavBack";
-import MenuEditNotification from "./AppHeaderEditNotifications";
-import { appPrimaryColor } from "../../utils/colors/appColors";
+import AlertsScreen from "../../../screens/Central/Notifications/Alerts";
+import PushNotificationScreen from "../../../screens/Central/Notifications/PushNotification";
+import ManageNotficationsScreen from "../../../screens/Central/Notifications/ManageNotifications";
+import EditNotificationScreen from "../../../screens/Central/Notifications/EditNotification";
+import MenuBack from "../Headers/AppHeaderNavBack";
+import MenuEditNotification from "../Headers/AppHeaderEditNotifications";
+import { appPrimaryColor } from "../../../utils/colors/appColors";
 
 const fade = ({ current }) => ({
     cardStyle: {

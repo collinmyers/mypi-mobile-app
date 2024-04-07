@@ -1,9 +1,9 @@
 import React, { } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
-import AppStyle from "../../styling/AppStyle";
+import AppStyle from "../../../styling/AppStyle";
 import { useNavigation } from "@react-navigation/native";
-import SidebarStyle from "../../styling/SidebarStyle";
+import SidebarStyle from "../../../styling/SidebarStyle";
 
 
 export default function FoodTruckAdminScreen() {

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Snackbar, Text, TextInput } from "react-native-paper";
-import { account } from "../../utils/Config/appwriteConfig";
+import { account } from "../../../utils/Config/appwriteConfig";
 import PropTypes from "prop-types";
-import KeyboardAvoidingComponent from "../../components/Keyboard/KeyboardAvoidingComponent";
-import Logo from "../../components/logo/AppLogo";
-import AppStyle from "../../styling/AppStyle";
-import HomeStyle from "../../styling/HomeStyle";
-import { appPrimaryColor, appTextColor } from "../../utils/colors/appColors";
-import { validateEmail } from "../../utils/Regex/Validators";
+import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
+import Logo from "../../../components/logo/AppLogo";
+import AppStyle from "../../../styling/AppStyle";
+import HomeStyle from "../../../styling/HomeStyle";
+import { appPrimaryColor, appTextColor } from "../../../utils/colors/appColors";
+import { validateEmail } from "../../../utils/Regex/Validators";
 
 ChangeEmailScreen.propTypes = {
     navigation: PropTypes.shape({

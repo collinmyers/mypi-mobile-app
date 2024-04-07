@@ -1,12 +1,12 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import SettingsScreen from "../../screens/Central/Settings";
-import ChangeNameScreen from "../../screens/UpdateAccountSettings/Name";
-import ChangeEmailScreen from "../../screens/UpdateAccountSettings/Email";
-import ChangePasswordScreen from "../../screens/UpdateAccountSettings/Password";
-import { appPrimaryColor } from "../../utils/colors/appColors";
-import Menu from "./AppHeader";
-import MenuBack from "./AppHeaderNavBack";
+import SettingsScreen from "../../../screens/Central/Settings/Settings";
+import ChangeNameScreen from "../../../screens/Central/Settings/Name";
+import ChangeEmailScreen from "../../../screens/Central/Settings/Email";
+import ChangePasswordScreen from "../../../screens/Central/Settings/Password";
+import { appPrimaryColor } from "../../../utils/colors/appColors";
+import Menu from "../Headers/AppHeader";
+import MenuBack from "../Headers/AppHeaderNavBack";
 
 const Stack = createStackNavigator();
 

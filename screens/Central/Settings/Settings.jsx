@@ -3,25 +3,26 @@ import { AppState, Modal, Platform, SafeAreaView, ScrollView, TouchableOpacity, 
 import { useFocusEffect } from "@react-navigation/native";
 import { Card, RadioButton, Switch, Text } from "react-native-paper";
 import PropTypes from "prop-types";
-import HomeStyle from "../../styling/HomeStyle";
-import { saveNavigationPreference } from "../../utils/AsyncStorage/NavigationPreference";
-import { getAutoPlayPreference, saveAutoPlayPreference } from "../../utils/AsyncStorage/AutoPlayPreference";
+import HomeStyle from "../../../styling/HomeStyle";
+import { saveNavigationPreference } from "../../../utils/AsyncStorage/NavigationPreference";
+import { getAutoPlayPreference, saveAutoPlayPreference } from "../../../utils/AsyncStorage/AutoPlayPreference";
 import * as Notifications from "expo-notifications";
-import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../utils/colors/appColors";
+import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 } from "@expo/vector-icons";
-import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS } from "../../utils/Config/appwriteConfig";
+import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS } from "../../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
 import * as Linking from "expo-linking";
-import { useAuth } from "../../components/context/AuthContext";
+import { useAuth } from "../../../components/context/AuthContext";
 import { Snackbar } from "react-native-paper";
-import AppStyle from "../../styling/AppStyle";
+import AppStyle from "../../../styling/AppStyle";
 import * as SecureStore from "expo-secure-store";
-import { useNetwork } from "../../components/context/NetworkContext";
+import { useNetwork } from "../../../components/context/NetworkContext";
 
 export default function SettingsScreen({ navigation }) {
 
     const { changeAuthState, setChangeAuthState, isSignedIn, setIsSignedIn } = useAuth();
-    const { isConnected, isInternetReachable } = useNetwork();
+    const [localSignInState, setLocalSignInState] = useState(false);
+    const { isInternetReachable } = useNetwork();
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [isNavModalVisible, setIsNavModalVisible] = useState(false);
     const [navTypeChecked, setNavTypeChecked] = useState("car");
@@ -43,16 +44,21 @@ export default function SettingsScreen({ navigation }) {
                 try {
                     const response = await account.get();
 
-                    if (response.email === "") throw new Error("Not a email user (guest)");
+                    if (response.email === "") {
+                        setLocalSignInState(false);
+                        setIsSignedIn(false);
+                        throw new Error("Not a email user (guest)");
+                    }
 
                     setProfileInfo({
                         name: response.name,
                         email: response.email,
                         identity: response.$id
                     });
-
+                    setLocalSignInState(true);
                     setIsSignedIn(true);
                 } catch {
+                    setLocalSignInState(false);
                     setIsSignedIn(false);
                 }
             };
@@ -203,78 +209,6 @@ export default function SettingsScreen({ navigation }) {
         );
     };
 
-    const renderAccountSettings = () => {
-        if (!isSignedIn) {
-            return null;
-        }
-
-        return (
-            <React.Fragment>
-                {isSignedIn && (
-                    <View style={HomeStyle.profileView}>
-                        <Text style={HomeStyle.profileText}>{profileInfo.name}</Text>
-                        <Text style={HomeStyle.profileText}>{profileInfo.email}</Text>
-                    </View>
-                )}
-
-                {isSignedIn && (
-                    <View style={HomeStyle.cardView}>
-                        <Text style={HomeStyle.settingsSectionHeader}>Account Settings</Text>
-                        <Card style={HomeStyle.settingsCard}>
-
-                            <Card.Content style={[HomeStyle.settingsCardContent, { paddingTop: "3%" }]}>
-                                <Ionicons style={{ paddingBottom: "4%" }} name="person" size={24} color={appPrimaryColor} />
-                                <View style={HomeStyle.ClickableSettingsOption}>
-                                    <TouchableOpacity onPress={() => navigation.navigate("Change Name")} style={HomeStyle.clickableRow}>
-                                        <Text style={HomeStyle.changeInfoText} >Change Name</Text>
-                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
-                                    </TouchableOpacity>
-                                    <View style={HomeStyle.touchableOptionArea} />
-                                </View>
-                            </Card.Content>
-
-
-                            <Card.Content style={HomeStyle.settingsCardContent}>
-                                <Entypo style={{ paddingBottom: "4%" }} name="email" size={24} color={appPrimaryColor} />
-                                <View style={HomeStyle.ClickableSettingsOption}>
-                                    <TouchableOpacity onPress={() => navigation.navigate("Change Email")} style={HomeStyle.clickableRow}>
-                                        <Text style={HomeStyle.changeInfoText}>Change Email</Text>
-                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
-                                    </TouchableOpacity>
-                                    <View style={HomeStyle.touchableOptionArea} />
-                                </View>
-                            </Card.Content>
-
-
-                            <Card.Content style={HomeStyle.settingsCardContent}>
-                                <MaterialIcons style={{ paddingBottom: "4%" }} name="password" size={24} color={appPrimaryColor} />
-                                <View style={HomeStyle.ClickableSettingsOption}>
-                                    <TouchableOpacity onPress={() => navigation.navigate("Change Password")} style={HomeStyle.clickableRow}>
-                                        <Text style={HomeStyle.changeInfoText}>Change Password</Text>
-                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
-                                    </TouchableOpacity>
-                                    <View style={HomeStyle.touchableOptionArea} />
-                                </View>
-                            </Card.Content>
-
-
-                            <Card.Content style={[HomeStyle.settingsCardContent, { paddingBottom: "3%" }]}>
-                                <MaterialIcons style={{ paddingBottom: 0 }} name="delete" size={24} color={appPrimaryColor} />
-                                <View style={HomeStyle.ClickableSettingsOption}>
-                                    <TouchableOpacity onPress={showDeleteModal} style={HomeStyle.clickableRow}>
-                                        <Text style={HomeStyle.changeInfoText} >Delete Account</Text>
-                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
-                                    </TouchableOpacity>
-                                </View>
-                            </Card.Content>
-
-                        </Card>
-                    </View>
-                )}
-            </React.Fragment>
-        );
-    };
-
     const deleteUserAndData = async () => {
         if (!isActionOcurring) {
             setIsActionOccuring(true);
@@ -309,6 +243,7 @@ export default function SettingsScreen({ navigation }) {
                         setIsSnackbarVisible(true);
                     });
                 setChangeAuthState(!changeAuthState);
+                setLocalSignInState(false);
                 setIsSignedIn(false);
             } catch (err) {
                 console.error(err);
@@ -410,7 +345,67 @@ export default function SettingsScreen({ navigation }) {
 
             <ScrollView showsVerticalScrollIndicator={false}>
 
-                {renderAccountSettings()}
+                {localSignInState && isSignedIn ? (
+                    <View style={HomeStyle.profileView}>
+                        <Text style={HomeStyle.profileText}>{profileInfo.name}</Text>
+                        <Text style={HomeStyle.profileText}>{profileInfo.email}</Text>
+                    </View>
+                ) : null}
+
+                {localSignInState && isSignedIn? (
+                    <View style={HomeStyle.cardView}>
+                        <Text style={HomeStyle.settingsSectionHeader}>Account Settings</Text>
+                        <Card style={HomeStyle.settingsCard}>
+
+                            <Card.Content style={[HomeStyle.settingsCardContent, { paddingTop: "3%" }]}>
+                                <Ionicons style={{ paddingBottom: "4%" }} name="person" size={24} color={appPrimaryColor} />
+                                <View style={HomeStyle.ClickableSettingsOption}>
+                                    <TouchableOpacity onPress={() => navigation.navigate("Change Name")} style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText} >Change Name</Text>
+                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
+                                    </TouchableOpacity>
+                                    <View style={HomeStyle.touchableOptionArea} />
+                                </View>
+                            </Card.Content>
+
+
+                            <Card.Content style={HomeStyle.settingsCardContent}>
+                                <Entypo style={{ paddingBottom: "4%" }} name="email" size={24} color={appPrimaryColor} />
+                                <View style={HomeStyle.ClickableSettingsOption}>
+                                    <TouchableOpacity onPress={() => navigation.navigate("Change Email")} style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText}>Change Email</Text>
+                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
+                                    </TouchableOpacity>
+                                    <View style={HomeStyle.touchableOptionArea} />
+                                </View>
+                            </Card.Content>
+
+
+                            <Card.Content style={HomeStyle.settingsCardContent}>
+                                <MaterialIcons style={{ paddingBottom: "4%" }} name="password" size={24} color={appPrimaryColor} />
+                                <View style={HomeStyle.ClickableSettingsOption}>
+                                    <TouchableOpacity onPress={() => navigation.navigate("Change Password")} style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText}>Change Password</Text>
+                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
+                                    </TouchableOpacity>
+                                    <View style={HomeStyle.touchableOptionArea} />
+                                </View>
+                            </Card.Content>
+
+
+                            <Card.Content style={[HomeStyle.settingsCardContent, { paddingBottom: "3%" }]}>
+                                <MaterialIcons style={{ paddingBottom: 0 }} name="delete" size={24} color={appPrimaryColor} />
+                                <View style={HomeStyle.ClickableSettingsOption}>
+                                    <TouchableOpacity onPress={showDeleteModal} style={HomeStyle.clickableRow}>
+                                        <Text style={HomeStyle.changeInfoText} >Delete Account</Text>
+                                        <MaterialIcons style={{ alignSelf: "center" }} name="navigate-next" size={24} color={appPrimaryColor} />
+                                    </TouchableOpacity>
+                                </View>
+                            </Card.Content>
+
+                        </Card>
+                    </View>
+                ) : null}
 
                 <View style={HomeStyle.cardView}>
                     <Text style={HomeStyle.settingsSectionHeader}>App Settings</Text>

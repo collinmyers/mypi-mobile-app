@@ -2,10 +2,10 @@ import React from "react";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
-import AppStyle from "../../styling/AppStyle";
+import AppStyle from "../../../styling/AppStyle";
 import PropTypes from "prop-types";
-import { appQuarternaryColor, appWarningColor } from "../../utils/colors/appColors";
-import { useNetwork } from "../context/NetworkContext";
+import { appQuarternaryColor, appWarningColor } from "../../../utils/colors/appColors";
+import { useNetwork } from "../../context/NetworkContext";
 
 
 export default function AppHeaderEditNotifications({ showEditNotifications, onToggleEditNotifications }) {
