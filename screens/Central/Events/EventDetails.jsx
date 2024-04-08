@@ -33,7 +33,7 @@ export default function EventDetailsScreen() {
             appsWhiteList: [],
             googleForceLatLon: true,
             alwaysIncludeGoogle: true,
-            naverCallerName: "com.discoverpi.mypi",
+            naverCallerName: process.env.EXPO_PUBLIC_BUNDLE_AND_PACKAGE_IDENTIFIER,
             directionsMode: directionsPreference,
         });
     };
