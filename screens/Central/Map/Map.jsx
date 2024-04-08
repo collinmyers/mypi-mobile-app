@@ -1,7 +1,7 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, Text, TouchableOpacity, Platform } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Snackbar } from "react-native-paper";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
 import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
@@ -17,6 +17,7 @@ import { subscribeToRealTimeUpdates } from "../../../utils/Config/appwriteConfig
 import { appPrimaryColor, appSecondaryColor, appTertiaryColor } from "../../../utils/colors/appColors";
 import * as FileSystem from "expo-file-system";
 import { useNetwork } from "../../../components/context/NetworkContext";
+import AppStyle from "../../../styling/AppStyle";
 
 export default function MapScreen() {
     const navigation = useNavigation();
@@ -26,6 +27,8 @@ export default function MapScreen() {
     const [filteredMarkers, setFilteredMarkers] = useState([]);
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState([]);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [fabVisible, setFabVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -131,9 +134,21 @@ export default function MapScreen() {
         const filterMarkers = () => {
             if (selectedFilters.length === 0) {
                 setFilteredMarkers(markersData);
+
             } else {
                 const filtered = markersData.filter(marker => selectedFilters.includes(marker.Type));
-                setFilteredMarkers(filtered);
+                if (filtered.length < 1) {
+                    markersData.Type === "FoodTruck" ?
+                        (setErrorMessage("No Food Trucks at Presque Isle, please check again later "))
+                        :
+                        (setErrorMessage(`No ${selectedFilters} open at Presque Isle, please check again later`));
+
+                    setIsSnackbarVisible(true);
+                } else {
+                    setErrorMessage("");
+                    setIsSnackbarVisible(false);
+                    setFilteredMarkers(filtered);
+                }
             }
         };
 
@@ -288,7 +303,18 @@ export default function MapScreen() {
                 )
             )}
 
-
+            <Snackbar
+                visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={[AppStyle.snackBar, { backgroundColor: appSecondaryColor }]}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                    setErrorMessage(""); // Clear the error message
+                }}
+                duration={5000}
+            >
+                {errorMessage}
+            </Snackbar>
         </SafeAreaView>
     );
 }
