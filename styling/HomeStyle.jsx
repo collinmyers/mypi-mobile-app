@@ -636,5 +636,31 @@ export default StyleSheet.create({
         backgroundColor: appPrimaryColor,
         marginHorizontal: 4,
         justifyContent: "center"
+    }, 
+    additionalInfoContainer:{
+        alignSelf: "center"
+    },
+    additionalOptions: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "5%"
+    },
+    additionalOptionsText: {
+        color: appTertiaryColor,
+        fontWeight: 500,
+        fontSize: 18,
+        marginRight: "3%",
+        textAlign: "left"
+    }, 
+    additionalInfoListOpacity: {
+        marginVertical: "5%",
+    },
+    additionalInfoListText: {
+        textAlign: "center",
+        color: appTextColor,
+        textDecorationLine: "underline",
+        fontWeight: 500,
+        fontSize: 18
     }
 });

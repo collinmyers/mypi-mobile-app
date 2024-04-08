@@ -332,16 +332,12 @@ export default function MapScreen() {
                 <AntDesign name="filter" size={28} color={appPrimaryColor} />
             </TouchableOpacity>
 
-            {isLoading ? (
-                <View style={HomeStyle.loadingContainer}>
-                    <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
+            {isLoading && (<ActivityIndicator style={MapStyle.mapLoadingIndicator} animating={true} color={appSecondaryColor} size="large" />)}
+
+            {fabVisible && (
+                <View style={MapStyle.filterOptionsContainer}>
+                    {renderFilterCheckboxes()}
                 </View>
-            ) : (
-                fabVisible && (
-                    <View style={MapStyle.filterOptionsContainer}>
-                        {renderFilterCheckboxes()}
-                    </View>
-                )
             )}
 
             <Snackbar

@@ -131,6 +131,10 @@ export default StyleSheet.create({
         borderColor: appQuarternaryColor,
         color: appTextColor
     },
+    mapLoadingIndicator: {
+        flex: 1,
+        justifyContent: "center",
+    },
     directionsIcon: {
         
     }

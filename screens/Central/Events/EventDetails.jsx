@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, SafeAreaView, TouchableOpacity, View, Linking } from "react-native";
 import { Image } from "expo-image";
 import { Card, Text } from "react-native-paper";
@@ -11,11 +11,15 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getAutoPlayPreference } from "../../../utils/AsyncStorage/AutoPlayPreference";
 import Carousel from "react-native-reanimated-carousel";
 import { appPrimaryColor, appTertiaryColor } from "../../../utils/colors/appColors";
+import { FontAwesome } from "@expo/vector-icons";
+import Collapsible from "react-native-collapsible";
 
 
 export default function EventDetailsScreen() {
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
     const [currentAutoPlayPreference, setCurrentAutoPlayPreference] = useState(null);
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [isAdditionalInfoAvailable, setIsAdditionalInfoAvailable] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
 
     const deviceWidth = Dimensions.get("window").width;
@@ -66,14 +70,12 @@ export default function EventDetailsScreen() {
             return (
                 <TouchableOpacity
                     key={index}
-                    style={HomeStyle.homeButtonOpacity}
+                    style={HomeStyle.additionalInfoListOpacity}
                     onPress={() => handlePress(ExtraInfoURL[index])}
                 >
-                    <Text key={index} style={HomeStyle.homeButtonText}>{item} </Text>
+                    <Text key={index} style={HomeStyle.additionalInfoListText}>{item} </Text>
                 </TouchableOpacity>
             );
-
-
         });
     };
 
@@ -94,6 +96,13 @@ export default function EventDetailsScreen() {
             }
         }, [currentAutoPlayPreference])
     );
+
+    useEffect(() => {
+        // console.log(ExtraInfoTitle.length);
+        if (ExtraInfoTitle.length > 0 && ExtraInfoURL.length > 0) {
+            setIsAdditionalInfoAvailable(true);
+        }
+    }, []);
 
     return (
         <SafeAreaView style={HomeStyle.eventContainer}>
@@ -121,11 +130,11 @@ export default function EventDetailsScreen() {
                                         snapEnabled={true}
                                         onSnapToItem={(index) => setActiveIndex(index)}
                                         renderItem={({ item }) => (
-                                            <Image 
-                                            placeholder={"blurhash"} 
-                                            contentFit="cover" 
-                                            source={{ uri: item }} 
-                                            style={[HomeStyle.eventDetailsImage, { marginVertical: 0 }]} />
+                                            <Image
+                                                placeholder={"blurhash"}
+                                                contentFit="cover"
+                                                source={{ uri: item }}
+                                                style={[HomeStyle.eventDetailsImage, { marginVertical: 0 }]} />
                                         )}
                                         style={HomeStyle.imageCarousel}
                                     />
@@ -142,7 +151,7 @@ export default function EventDetailsScreen() {
                             :
                             (
                                 <Image
-                                    placeholder={"blurhash"} 
+                                    placeholder={"blurhash"}
                                     contentFit="cover"
                                     source={{ uri: EventImages[0] }}
                                     style={HomeStyle.eventDetailsImage}
@@ -151,6 +160,25 @@ export default function EventDetailsScreen() {
                         }
 
                         <Text style={HomeStyle.eventDetailsDescription}>{EventDetailsDescription}</Text>
+
+                        {isAdditionalInfoAvailable && (
+                            <View style={HomeStyle.additionalInfoContainer}>
+                                <TouchableOpacity
+                                    onPress={() => setIsExpanded(!isExpanded)}
+                                    style={HomeStyle.additionalOptions}
+                                >
+                                    <Text style={HomeStyle.additionalOptionsText}>Additional Info</Text>
+                                    {isExpanded ? (
+                                        <FontAwesome name="angle-up" size={24} color={appTertiaryColor} />
+                                    ) : (
+                                        <FontAwesome name="angle-down" size={24} color={appTertiaryColor} />
+                                    )}
+                                </TouchableOpacity>
+                                <Collapsible collapsed={!isExpanded}>{renderExtraBtns()}</Collapsible>
+                            </View>
+                        )}
+
+
                         <TouchableOpacity
                             onPress={() => {
                                 getDirections(EventLatitude, EventLongitude, currentNavPreference);
@@ -160,7 +188,6 @@ export default function EventDetailsScreen() {
                             <Text style={HomeStyle.homeButtonText}>Get Directions</Text>
                         </TouchableOpacity>
 
-                        {renderExtraBtns()}
 
                     </Card.Content>
                 </Card>

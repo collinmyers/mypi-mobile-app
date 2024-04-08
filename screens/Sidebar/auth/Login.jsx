@@ -86,7 +86,7 @@ export default function LoginScreen({ navigation }) {
                     const networkError = "AppwriteException: Network request failed";
 
                     switch (error.toString()) {
-                        case alreadySignedInError: // edge case to prevent e
+                        case alreadySignedInError:
                             await account.deleteSessions("current");
                             handleLogin();
                             break;
