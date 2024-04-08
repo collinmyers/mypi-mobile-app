@@ -43,7 +43,7 @@ export default function ChangePasswordScreen({ navigation }) {
                 }
 
                 if (passwords.oldPassword === passwords.newPassword) {
-                    validationErrors.push("Old password and new password cannot be the same, please choose a different password and try again");
+                    validationErrors.push("Old password and new password cannot be the same, please choose a different password and try again.");
                 }
 
                 if (validationErrors.length > 0) {
@@ -78,19 +78,19 @@ export default function ChangePasswordScreen({ navigation }) {
                 const networkError = "AppwriteException: Network request failed";
                 switch (error.toString()) {
                     case invalidPassword:
-                        setErrorMessage("Please enter a valid password");
+                        setErrorMessage("Please enter a valid password.");
                         setIsSnackbarVisible(true);
                         break;
                     case isSimilarPassword:
-                        setErrorMessage("New password is too similar to a previously used password, please choose a different password and try again");
+                        setErrorMessage("New password is too similar to a previously used password, please choose a different password and try again.");
                         setIsSnackbarVisible(true);
                         break;
                     case networkError:
-                        setErrorMessage("Network request failed, please check your connection and try again");
+                        setErrorMessage("Network request failed, please check your connection and try again.");
                         setIsSnackbarVisible(true);
                         break;
                     default:
-                        setErrorMessage("Unknown error occured, please try again");
+                        setErrorMessage("Unknown error occured, please try again.");
                         setIsSnackbarVisible(true);
                         break;
                 }

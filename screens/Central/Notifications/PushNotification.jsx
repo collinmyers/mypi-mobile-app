@@ -104,7 +104,7 @@ export default function PushNotificationScreen() {
             const networkError = "AppwriteException: Network request failed";
 
             if (stringError.includes(missingField)) {
-                setErrorMessage("Please enter all fields and try again");
+                setErrorMessage("Please enter all fields and try again.");
                 setIsSnackbarVisible(true);
             } else if (stringError.includes(TitleLengthError)) {
                 setErrorMessage("The notification title exceeds the character limit. Please shorten it and try again.");
@@ -113,10 +113,10 @@ export default function PushNotificationScreen() {
                 setErrorMessage("The notification details exceeds the character limit. Please shorten it and try again.");
                 setIsSnackbarVisible(true);
             } else if (error.toString() === networkError) {
-                setErrorMessage("Network request failed, please check your connection and try again");
+                setErrorMessage("Network request failed, please check your connection and try again.");
                 setIsSnackbarVisible(true);
             }else {
-                setErrorMessage("Unknown error occured, please try again");
+                setErrorMessage("Unknown error occured, please try again.");
                 setIsSnackbarVisible(true);
             }
         }

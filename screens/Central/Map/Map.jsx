@@ -31,6 +31,8 @@ export default function MapScreen() {
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [fabVisible, setFabVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [errorMessageShown, setErrorMessageShown] = useState(false);
+    const [prevEmptyCategories, setPrevEmptyCategories] = useState([]);
 
     const PAGE_SIZE = 25;
 
@@ -134,21 +136,58 @@ export default function MapScreen() {
         const filterMarkers = () => {
             if (selectedFilters.length === 0) {
                 setFilteredMarkers(markersData);
-
+                setErrorMessage("");
+                setIsSnackbarVisible(false);
+                setErrorMessageShown(false); // Reset the error message shown flag
             } else {
-                const filtered = markersData.filter(marker => selectedFilters.includes(marker.Type));
-                if (filtered.length < 1) {
-                    markersData.Type === "FoodTruck" ?
-                        (setErrorMessage("No Food Trucks at Presque Isle, please check again later "))
-                        :
-                        (setErrorMessage(`No ${selectedFilters} open at Presque Isle, please check again later`));
+                const filteredCategories = [];
+                const emptyCategories = [];
 
-                    setIsSnackbarVisible(true);
+                selectedFilters.forEach((filter) => {
+                    const filtered = markersData.filter((marker) => marker.Type === filter);
+                    if (filtered.length > 0) {
+                        filteredCategories.push(...filtered);
+                    } else {
+                        emptyCategories.push(filter);
+                    }
+                });
+
+                if (emptyCategories.length > 0) {
+                    const emptyCategoriesText = emptyCategories
+                        .map((category) => {
+                            const categoryAlias = {
+                                Amenities: "Amenities",
+                                Attraction: "Attractions",
+                                Beach: "Beaches",
+                                FoodTruck: "Food Trucks",
+                                Information: "Information",
+                                Parking: "Parking",
+                                Restroom: "Restrooms",
+                            };
+                            return categoryAlias[category];
+                        })
+                        .join(", ");
+
+                    const lastCategory = emptyCategories[emptyCategories.length - 1];
+                    const isSingular = emptyCategories.length === 1 && (emptyCategories[0] === "Information" || emptyCategories[0] === "Parking");
+                    const isLastElementInformationOrParking = lastCategory === "Information" || lastCategory === "Parking";
+                    const verb = isSingular || isLastElementInformationOrParking ? "is" : "are";
+
+                    const newErrorMessage = `No ${emptyCategoriesText} ${verb} available, please check back later.`;
+
+                    if (!errorMessageShown || emptyCategories.some((category) => !prevEmptyCategories.includes(category))) {
+                        setErrorMessage(newErrorMessage);
+                        setIsSnackbarVisible(true);
+                        setErrorMessageShown(true);
+                        setPrevEmptyCategories(emptyCategories);
+                    }
                 } else {
                     setErrorMessage("");
                     setIsSnackbarVisible(false);
-                    setFilteredMarkers(filtered);
+                    setErrorMessageShown(false); // Reset the error message shown flag
                 }
+
+                setFilteredMarkers(filteredCategories);
             }
         };
 

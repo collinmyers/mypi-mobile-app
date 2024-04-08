@@ -35,12 +35,12 @@ export default function ChangeEmailScreen({ navigation }) {
             try {
 
                 if (credentials.email === "" && credentials.password === "") {
-                    setErrorMessage("Multiple Errors:\nPlease enter a valid email\nPlease enter a valid password");
+                    setErrorMessage("Multiple Errors:\nPlease enter a valid email.\nPlease enter a valid password.");
                     setIsSnackbarVisible(true);
                     setIsActionOccuring(false);
                     return;
                 } else if (!validateEmail(credentials.email)) {
-                    setErrorMessage("Please enter a valid email");
+                    setErrorMessage("Please enter a valid email.");
                     setIsSnackbarVisible(true);
                     setIsActionOccuring(false);
                     return;
@@ -63,27 +63,27 @@ export default function ChangeEmailScreen({ navigation }) {
 
                 switch (error.toString()) {
                     case invalidEmail:
-                        setErrorMessage("Please enter a valid email");
+                        setErrorMessage("Please enter a valid email.");
                         setIsSnackbarVisible(true);
                         break;
                     case invalidPass:
-                        setErrorMessage("Please enter a valid password");
+                        setErrorMessage("Please enter a valid password.");
                         setIsSnackbarVisible(true);
                         break;
                     case incorrectPass:
-                        setErrorMessage("Incorrect password, please try again");
+                        setErrorMessage("Incorrect password, please try again.");
                         setIsSnackbarVisible(true);
                         break;
                     case emailExists:
-                        setErrorMessage("Please try a different email");
+                        setErrorMessage("Please try a different email.");
                         setIsSnackbarVisible(true);
                         break;
                     case networkError:
-                        setErrorMessage("Network request failed, please check your connection and try again");
+                        setErrorMessage("Network request failed, please check your connection and try again.");
                         setIsSnackbarVisible(true);
                         break;
                     default:
-                        setErrorMessage("Unknown error occured, please try again");
+                        setErrorMessage("Unknown error occured, please try again.");
                         setIsSnackbarVisible(true);
                         break;
                 }

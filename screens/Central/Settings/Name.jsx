@@ -27,13 +27,13 @@ export default function ChangeNameScreen({ navigation }) {
             setIsActionOccuring(true);
             try {
                 if (name === null) {
-                    setErrorMessage("Please enter your full name");
+                    setErrorMessage("Please enter your full name.");
                     setIsSnackbarVisible(true);
                     setIsActionOccuring(false);
                     return;
                 }
                 if (name.length > 128) {
-                    setErrorMessage("Name must be less than 128 characters");
+                    setErrorMessage("Name must be less than 128 characters.");
                     setIsSnackbarVisible(true);
                     setIsActionOccuring(false);
                     return;
@@ -48,15 +48,15 @@ export default function ChangeNameScreen({ navigation }) {
                 navigation.navigate("Settings");
 
             } catch (error) {
-                const networkError = "AppwriteException: Network request failed";
+                const networkError = "AppwriteException: Network request failed.";
 
                 switch(error.toString()){
                     case networkError:
-                        setErrorMessage("Network request failed, please check your connection and try again");
+                        setErrorMessage("Network request failed, please check your connection and try again.");
                         setIsSnackbarVisible(true);
                         break;
                     default:
-                        setErrorMessage("Unknown error occured, please try again");
+                        setErrorMessage("Unknown error occured, please try again.");
                         setIsSnackbarVisible(true);
                         break;
                 }
