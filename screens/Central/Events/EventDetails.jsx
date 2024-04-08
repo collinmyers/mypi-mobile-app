@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Dimensions, SafeAreaView, Image, TouchableOpacity, View, Linking } from "react-native";
+import { Dimensions, SafeAreaView, TouchableOpacity, View, Linking } from "react-native";
+import { Image } from "expo-image";
 import { Card, Text } from "react-native-paper";
 import { useRoute } from "@react-navigation/native";
 import { showLocation } from "react-native-map-link";
@@ -120,7 +121,11 @@ export default function EventDetailsScreen() {
                                         snapEnabled={true}
                                         onSnapToItem={(index) => setActiveIndex(index)}
                                         renderItem={({ item }) => (
-                                            <Image source={{ uri: item }} style={[HomeStyle.eventDetailsImage, { marginVertical: 0 }]} />
+                                            <Image 
+                                            placeholder={"blurhash"} 
+                                            contentFit="cover" 
+                                            source={{ uri: item }} 
+                                            style={[HomeStyle.eventDetailsImage, { marginVertical: 0 }]} />
                                         )}
                                         style={HomeStyle.imageCarousel}
                                     />
@@ -137,6 +142,8 @@ export default function EventDetailsScreen() {
                             :
                             (
                                 <Image
+                                    placeholder={"blurhash"} 
+                                    contentFit="cover"
                                     source={{ uri: EventImages[0] }}
                                     style={HomeStyle.eventDetailsImage}
                                 />

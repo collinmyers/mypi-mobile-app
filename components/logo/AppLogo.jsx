@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image } from "expo-image";
 import Logo from "../../assets/main/myPILogo.png";
 import PropTypes from "prop-types";
 
@@ -8,7 +8,9 @@ export default function AppLogo({ logoWidth, logoHeight, style }) {
     return (
         <Image
             source={Logo}
-            style={[{ width: logoWidth, height: logoHeight, resizeMode: "contain" }, style]}
+            placeholder={"blurhash"}
+            contentFit="contain"
+            style={[{ width: logoWidth, height: logoHeight }, style]}
         />
 
     );

@@ -1,6 +1,7 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
-import { ScrollView, SafeAreaView, Pressable, Image, View } from "react-native";
+import { Image } from "expo-image";
+import { ScrollView, SafeAreaView, Pressable, View } from "react-native";
 import { ActivityIndicator, Card, Text } from "react-native-paper";
 import { database, storage, DATABASE_ID, EVENTS_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
@@ -219,7 +220,7 @@ export default function EventListScreen() {
                 >
                     <Card style={HomeStyle.eventCard}>
                         <Card.Content style={HomeStyle.eventCardContent}>
-                            <Image source={{ uri: EventImages[0] }} style={HomeStyle.eventListImage} />
+                            <Image placeholder={"blurhash"} contentFit="cover" source={{ uri: EventImages[0] }} style={HomeStyle.eventListImage} />
                             <Text style={HomeStyle.eventListTitle}>{EventName}</Text>
                             <Text style={HomeStyle.eventListDate}>{EventDate}</Text>
                             <Text style={HomeStyle.eventListDescription}>{EventListDescription}</Text>

@@ -27,13 +27,10 @@ export const functions = new Functions(client); // Named export use {functions} 
 
 export const subscribeToRealTimeUpdates = (handleSubscription, CURRENT_COLLECTION_ID) => {
     // Subscribe to real-time updates
-    const unsubscribe = client.subscribe(
+    return client.subscribe(
         `databases.${DATABASE_ID}.collections.${CURRENT_COLLECTION_ID}.documents`,
         handleSubscription
     );
-
-    // Return unsubscribe function
-    return unsubscribe; // TODO: this may need removed
 };
 
 export default client; // default export use the word client when exporting

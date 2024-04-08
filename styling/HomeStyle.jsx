@@ -222,7 +222,6 @@ export default StyleSheet.create({
         aspectRatio: 1.5,
         borderRadius: 5,
         marginBottom: "5%",
-        resizeMode: "cover",
         width: "100%",
         borderWidth: .75,
         borderColor: appQuarternaryColor
@@ -326,7 +325,6 @@ export default StyleSheet.create({
         aspectRatio: 1.5,
         borderRadius: 5,
         marginBottom: "7%",
-        resizeMode: "cover",
         width: "100%",
         borderWidth: .75,
         borderColor: appQuarternaryColor
