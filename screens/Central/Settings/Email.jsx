@@ -52,7 +52,7 @@ export default function ChangeEmailScreen({ navigation }) {
                     email: "",
                     password: ""
                 });
-                navigation.navigate("Settings");
+                navigation.navigate("Settings", { updateProfileInfo: true });
 
             } catch (error) {
                 const invalidEmail = "AppwriteException: Invalid `email` param: Value must be a valid email address";

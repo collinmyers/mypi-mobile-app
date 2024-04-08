@@ -69,7 +69,7 @@ export default function ChangePasswordScreen({ navigation }) {
                     confirmNewPassword: ""
                 });
 
-                navigation.navigate("Settings");
+                navigation.navigate("Settings", { updateProfileInfo: true });
 
             } catch (error) {
                 console.error(error);

@@ -17,8 +17,11 @@ import { Snackbar } from "react-native-paper";
 import AppStyle from "../../../styling/AppStyle";
 import * as SecureStore from "expo-secure-store";
 import { useNetwork } from "../../../components/context/NetworkContext";
+import { useRoute } from "@react-navigation/native";
 
 export default function SettingsScreen({ navigation }) {
+
+    const route = useRoute();
 
     const { changeAuthState, setChangeAuthState, isSignedIn, setIsSignedIn } = useAuth();
     const [localSignInState, setLocalSignInState] = useState(false);
@@ -38,18 +41,45 @@ export default function SettingsScreen({ navigation }) {
         identity: ""
     });
 
-    useFocusEffect(
-        React.useCallback(() => {
+    useEffect(() => {
+        const getNameAndEmail = async () => {
+            try {
+                const response = await account.get();
+
+                if (response.email === "") {
+                    setLocalSignInState(false);
+                    setIsSignedIn(false);
+                    throw new Error("Not a email user (guest)");
+                }
+
+                setProfileInfo({
+                    name: response.name,
+                    email: response.email,
+                    identity: response.$id
+                });
+                setLocalSignInState(true);
+                setIsSignedIn(true);
+            } catch {
+                setLocalSignInState(false);
+                setIsSignedIn(false);
+            }
+        };
+        getNameAndEmail();
+
+    }, [changeAuthState, isInternetReachable]);
+
+    useEffect(() => {
+        if (route.params?.updateProfileInfo === true) {
             const getNameAndEmail = async () => {
                 try {
                     const response = await account.get();
-
+    
                     if (response.email === "") {
                         setLocalSignInState(false);
                         setIsSignedIn(false);
                         throw new Error("Not a email user (guest)");
                     }
-
+    
                     setProfileInfo({
                         name: response.name,
                         email: response.email,
@@ -63,9 +93,8 @@ export default function SettingsScreen({ navigation }) {
                 }
             };
             getNameAndEmail();
-
-        }, [changeAuthState, isInternetReachable])
-    );
+        }
+    }, [route.params]);
 
     const getFromSecureStore = async (key) => {
         try {
@@ -352,7 +381,7 @@ export default function SettingsScreen({ navigation }) {
                     </View>
                 ) : null}
 
-                {localSignInState && isSignedIn? (
+                {localSignInState && isSignedIn ? (
                     <View style={HomeStyle.cardView}>
                         <Text style={HomeStyle.settingsSectionHeader}>Account Settings</Text>
                         <Card style={HomeStyle.settingsCard}>

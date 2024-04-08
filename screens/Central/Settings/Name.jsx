@@ -45,7 +45,7 @@ export default function ChangeNameScreen({ navigation }) {
                     firstName: "",
                     lastName: ""
                 });
-                navigation.navigate("Settings");
+                navigation.navigate("Settings", { updateProfileInfo: true });
 
             } catch (error) {
                 const networkError = "AppwriteException: Network request failed.";
