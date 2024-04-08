@@ -48,7 +48,18 @@ export default function ChangeNameScreen({ navigation }) {
                 navigation.navigate("Settings");
 
             } catch (error) {
-                console.error(error);
+                const networkError = "AppwriteException: Network request failed";
+
+                switch(error.toString()){
+                    case networkError:
+                        setErrorMessage("Network request failed, please check your connection and try again");
+                        setIsSnackbarVisible(true);
+                        break;
+                    default:
+                        setErrorMessage("Unknown error occured, please try again");
+                        setIsSnackbarVisible(true);
+                        break;
+                }
             } finally {
                 setIsActionOccuring(false);
             }

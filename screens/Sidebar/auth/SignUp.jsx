@@ -90,6 +90,7 @@ export default function SignUpScreen({ navigation }) {
                 } catch (error) {
                     const emailExistsError = "AppwriteException: A user with the same email already exists in the current project.";
                     const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
+                    const networkError = "AppwriteException: Network request failed";
 
                     switch (error.toString()) {
                         case emailExistsError:
@@ -98,6 +99,10 @@ export default function SignUpScreen({ navigation }) {
                             break;
                         case rateLimitError:
                             setErrorMessage("Sign up attempts exceeded, please try again later");
+                            setIsSnackbarVisible(true);
+                            break;
+                        case networkError:
+                            setErrorMessage("Network request failed, please check your connection and try again");
                             setIsSnackbarVisible(true);
                             break;
                         default:

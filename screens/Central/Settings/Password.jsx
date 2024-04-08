@@ -75,6 +75,7 @@ export default function ChangePasswordScreen({ navigation }) {
                 console.error(error);
                 const invalidPassword = "AppwriteException: Invalid `password` param: Password must be between 8 and 265 characters long, and should not be one of the commonly used password.";
                 const isSimilarPassword = "AppwriteException: The password you are trying to use is similar to your previous password. For your security, please choose a different password and try again.";
+                const networkError = "AppwriteException: Network request failed";
                 switch (error.toString()) {
                     case invalidPassword:
                         setErrorMessage("Please enter a valid password");
@@ -82,6 +83,10 @@ export default function ChangePasswordScreen({ navigation }) {
                         break;
                     case isSimilarPassword:
                         setErrorMessage("New password is too similar to a previously used password, please choose a different password and try again");
+                        setIsSnackbarVisible(true);
+                        break;
+                    case networkError:
+                        setErrorMessage("Network request failed, please check your connection and try again");
                         setIsSnackbarVisible(true);
                         break;
                     default:

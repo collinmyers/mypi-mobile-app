@@ -83,6 +83,7 @@ export default function LoginScreen({ navigation }) {
                     const credentialError = "AppwriteException: Invalid credentials. Please check the email and password.";
                     const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
                     const alreadySignedInError = "AppwriteException: Creation of a session is prohibited when a session is active.";
+                    const networkError = "AppwriteException: Network request failed";
 
                     switch (error.toString()) {
                         case alreadySignedInError: // edge case to prevent e
@@ -103,6 +104,10 @@ export default function LoginScreen({ navigation }) {
                             break;
                         case rateLimitError:
                             setErrorMessage("Sign in attempts exceeded, please try again later");
+                            setIsSnackbarVisible(true);
+                            break;
+                        case networkError:
+                            setErrorMessage("Network request failed, please check your connection and try again");
                             setIsSnackbarVisible(true);
                             break;
                         default:

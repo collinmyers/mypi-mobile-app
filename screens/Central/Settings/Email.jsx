@@ -59,6 +59,7 @@ export default function ChangeEmailScreen({ navigation }) {
                 const invalidPass = "AppwriteException: Invalid `password` param: Password must be between 8 and 256 characters long.";
                 const incorrectPass = "AppwriteException: Invalid credentials. Please check the email and password.";
                 const emailExists = "AppwriteException: A target with the same ID already exists.";
+                const networkError = "AppwriteException: Network request failed";
 
                 switch (error.toString()) {
                     case invalidEmail:
@@ -75,6 +76,10 @@ export default function ChangeEmailScreen({ navigation }) {
                         break;
                     case emailExists:
                         setErrorMessage("Please try a different email");
+                        setIsSnackbarVisible(true);
+                        break;
+                    case networkError:
+                        setErrorMessage("Network request failed, please check your connection and try again");
                         setIsSnackbarVisible(true);
                         break;
                     default:

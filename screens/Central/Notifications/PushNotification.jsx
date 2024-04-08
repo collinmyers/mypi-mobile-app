@@ -101,6 +101,7 @@ export default function PushNotificationScreen() {
             const missingField = "Error: Enter all required fields";
             const TitleLengthError = 'AppwriteException: Invalid document structure: Attribute "Title" has invalid type. Value must be a valid string and no longer than';
             const DetailsLengthTitle = 'AppwriteException: Invalid document structure: Attribute "Details" has invalid type. Value must be a valid string and no longer than';
+            const networkError = "AppwriteException: Network request failed";
 
             if (stringError.includes(missingField)) {
                 setErrorMessage("Please enter all fields and try again");
@@ -111,7 +112,10 @@ export default function PushNotificationScreen() {
             } else if (stringError.includes(DetailsLengthTitle)) {
                 setErrorMessage("The notification details exceeds the character limit. Please shorten it and try again.");
                 setIsSnackbarVisible(true);
-            } else {
+            } else if (error.toString() === networkError) {
+                setErrorMessage("Network request failed, please check your connection and try again");
+                setIsSnackbarVisible(true);
+            }else {
                 setErrorMessage("Unknown error occured, please try again");
                 setIsSnackbarVisible(true);
             }

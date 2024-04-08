@@ -38,6 +38,7 @@ export default function ForgotPasswordScreen({ navigation }) {
                 } catch (error) {
                     const emailError = "AppwriteException: Invalid `email` param: Value must be a valid email address";
                     const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
+                    const networkError = "AppwriteException: Network request failed";
 
                     switch (error.toString()) {
                         case emailError:
@@ -46,6 +47,10 @@ export default function ForgotPasswordScreen({ navigation }) {
                             break;
                         case rateLimitError:
                             setErrorMessage("Forgot password attempts exceeded, please try again later");
+                            setIsSnackbarVisible(true);
+                            break;
+                        case networkError:
+                            setErrorMessage("Network request failed, please check your connection and try again");
                             setIsSnackbarVisible(true);
                             break;
                         default:
