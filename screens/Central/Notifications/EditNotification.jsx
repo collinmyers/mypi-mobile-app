@@ -50,7 +50,7 @@ export default function EditNotificationScreen() {
             const networkError = "AppwriteException: Network request failed";
 
             if (stringError.includes(missingField)) {
-                setErrorMessage("Please enter all fields and try again".);
+                setErrorMessage("Please enter all fields and try again.");
                 setIsSnackbarVisible(true);
             } else if (stringError.includes(TitleLengthError)) {
                 setErrorMessage("The notification title exceeds the character limit. Please shorten it and try again.");
