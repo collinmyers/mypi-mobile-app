@@ -7,11 +7,17 @@ import FoodTruckAdminScreen from "../../../screens/Sidebar/FoodTruck/FoodTruck";
 import FoodTruckShareScreen from "../../../screens/Sidebar/FoodTruck/FoodTruckShare";
 import FoodTruckUnshareScreen from "../../../screens/Sidebar/FoodTruck/FoodTruckUnshare";
 
+const fade = ({ current }) => ({
+    cardStyle: {
+        opacity: current.progress,
+    },
+});
+
 const Stack = createStackNavigator();
 
 export default function FoodTruckStackNavigator() {
     return (
-        <Stack.Navigator initialRouteName="FoodTruckAdmin" screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName="FoodTruckAdmin" screenOptions={{ cardStyleInterpolator: fade }}>
             <Stack.Screen name="FoodTruckAdmin" component={FoodTruckAdminScreen}
                 options={{
                     headerShown: true,

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import HomeStyle from "../../../styling/HomeStyle";
 import * as Notifications from "expo-notifications";
-import { RadioButton, Snackbar, TextInput } from "react-native-paper";
+import { RadioButton, Snackbar, Text, TextInput } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { database, functions, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";

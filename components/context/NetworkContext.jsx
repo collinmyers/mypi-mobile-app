@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { addEventListener, fetch } from "@react-native-community/netinfo";
 import PropTypes from "prop-types";

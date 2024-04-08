@@ -8,11 +8,17 @@ import { appPrimaryColor } from "../../../utils/colors/appColors";
 import Menu from "../Headers/AppHeader";
 import MenuBack from "../Headers/AppHeaderNavBack";
 
+const fade = ({ current }) => ({
+    cardStyle: {
+        opacity: current.progress,
+    },
+});
+
 const Stack = createStackNavigator();
 
 export default function SettingsStackNavigator() {
     return (
-        <Stack.Navigator initialRouteName="Settings" >
+        <Stack.Navigator initialRouteName="Settings" screenOptions={{ cardStyleInterpolator: fade }} >
             <Stack.Screen name="Settings" component={SettingsScreen}
                 options={{
                     headerShown: true,

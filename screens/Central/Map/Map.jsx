@@ -1,7 +1,7 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
-import { View, SafeAreaView, Text, TouchableOpacity, Platform } from "react-native";
-import { ActivityIndicator, Snackbar } from "react-native-paper";
+import { View, SafeAreaView, TouchableOpacity, Platform } from "react-native";
+import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
 import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
