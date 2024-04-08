@@ -70,7 +70,7 @@ export default function EventListScreen() {
                         const EventLongitude = event.Longitude;
                         const EventTime = event.Time || "";
                         const EventImages = []; // Initialize an empty array for images
-                        const ExtranInfoTitle = event.ExtranInfoTitle;
+                        const ExtraInfoTitle = event.ExtraInfoTitle;
                         const ExtraInfoURL = event.ExtraInfoURL;
 
 
@@ -101,7 +101,7 @@ export default function EventListScreen() {
                             EventLongitude,
                             EventTime,
                             EventImages, // Include the EventImages array
-                            ExtranInfoTitle,
+                            ExtraInfoTitle,
                             ExtraInfoURL,
                         };
                     })
@@ -197,7 +197,7 @@ export default function EventListScreen() {
             const EventLongitude = event.EventLongitude;
             const EventImages = event.EventImages;
             const EventTime = event.EventTime;
-            const ExtranInfoTitle = event.ExtranInfoTitle;
+            const ExtraInfoTitle = event.ExtraInfoTitle;
             const ExtraInfoURL = event.ExtraInfoURL;
 
             return (
@@ -213,7 +213,7 @@ export default function EventListScreen() {
                             EventLatitude: EventLatitude,
                             EventLongitude: EventLongitude,
                             EventTime: EventTime,
-                            ExtranInfoTitle: ExtranInfoTitle,
+                            ExtraInfoTitle: ExtraInfoTitle,
                             ExtraInfoURL: ExtraInfoURL
                         })
                     }

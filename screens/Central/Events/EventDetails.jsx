@@ -24,7 +24,7 @@ export default function EventDetailsScreen() {
 
     const route = useRoute();
 
-    const { EventImages, EventName, EventDate, EventDetailsDescription, EventLatitude, EventLongitude, EventTime, ExtranInfoTitle, ExtraInfoURL } = route.params;
+    const { EventImages, EventName, EventDate, EventDetailsDescription, EventLatitude, EventLongitude, EventTime, ExtraInfoTitle, ExtraInfoURL } = route.params;
 
     const getDirections = (lat, long, directionsPreference) => {
         showLocation({
@@ -62,7 +62,7 @@ export default function EventDetailsScreen() {
     };
 
     const renderExtraBtns = () => {
-        return ExtranInfoTitle.map((item, index) => {
+        return ExtraInfoTitle.map((item, index) => {
             return (
                 <TouchableOpacity
                     key={index}

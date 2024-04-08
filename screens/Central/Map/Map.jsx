@@ -67,6 +67,8 @@ export default function MapScreen() {
                 }
 
                 allMarkers.map((marker) => {
+                    delete marker.$createdAt;
+                    delete marker.$id;
                     delete marker.$collectionId;
                     delete marker.$databaseId;
                     delete marker.$permissions;

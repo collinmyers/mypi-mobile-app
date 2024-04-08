@@ -93,6 +93,8 @@ export default function MapList() {
                 });
 
                 allPoints.map((point) => {
+                    delete point.$createdAt;
+                    delete point.$id;
                     delete point.$collectionId;
                     delete point.$databaseId;
                     delete point.$permissions;
