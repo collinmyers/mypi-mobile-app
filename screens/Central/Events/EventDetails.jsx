@@ -165,7 +165,7 @@ export default function EventDetailsScreen() {
                             <View style={HomeStyle.additionalInfoContainer}>
                                 <TouchableOpacity
                                     onPress={() => setIsExpanded(!isExpanded)}
-                                    style={HomeStyle.additionalOptions}
+                                    style={HomeStyle.additionalOptionsOpacity}
                                 >
                                     <Text style={HomeStyle.additionalOptionsText}>Additional Information</Text>
                                     {isExpanded ? (

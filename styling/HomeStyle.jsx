@@ -337,7 +337,7 @@ export default StyleSheet.create({
         backgroundColor: appQuarternaryColor,
         paddingHorizontal: 30,
         paddingVertical: 10,
-        marginVertical: "10%",
+        marginTop: "8%",
         marginBottom: 0,
         fontSize: 20,
         borderRadius: 20,
@@ -640,11 +640,11 @@ export default StyleSheet.create({
     additionalInfoContainer:{
         alignSelf: "center"
     },
-    additionalOptions: {
+    additionalOptionsOpacity: {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: "5%"
+        marginTop: "8%"
     },
     additionalOptionsText: {
         color: appTertiaryColor,
