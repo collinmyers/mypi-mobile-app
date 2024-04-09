@@ -167,7 +167,7 @@ export default function EventDetailsScreen() {
                                     onPress={() => setIsExpanded(!isExpanded)}
                                     style={HomeStyle.additionalOptions}
                                 >
-                                    <Text style={HomeStyle.additionalOptionsText}>Additional Info</Text>
+                                    <Text style={HomeStyle.additionalOptionsText}>Additional Information</Text>
                                     {isExpanded ? (
                                         <FontAwesome name="angle-up" size={24} color={appTertiaryColor} />
                                     ) : (
