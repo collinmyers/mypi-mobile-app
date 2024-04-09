@@ -4,14 +4,14 @@ import HomeTabNavigator from "./HomeTabNavigator";
 import { NavigationContainer, useDrawerStatus } from "@react-navigation/native";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import Menu from "./Headers/AppHeader";
-import ParkInfoScreen from "../../screens/Sidebar/ParkInfo";
+import AboutScreen from "../../screens/Sidebar/About";
 import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./Sidebar/AuthStackNavigator";
 import { account } from "../../utils/Config/appwriteConfig";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
-import { Entypo, Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { Entypo, Ionicons, AntDesign, MaterialIcons, FontAwesome6 } from "@expo/vector-icons";
 import FoodTruckStackNavigator from "./Sidebar/FoodTruckStackNavigator";
 import { useAuth } from "../context/AuthContext";
 import { useNetwork } from "../context/NetworkContext";
@@ -175,22 +175,23 @@ export default function DrawerNavigator() {
                         options={{
                             header: () => <Menu />,
                             drawerIcon: ({ focused }) =>
-                                <AntDesign
-                                    name="infocirlce"
-                                    size={24}
+                                <FontAwesome6
+                                    style={{marginHorizontal: "1%"}}
+                                    name="clipboard-question"
+                                    size={26}
                                     color={focused ? appPrimaryColor : appTertiaryColor}
                                 />
                         }}
                     />
 
                     <Drawer.Screen
-                        name="Park Info"
-                        component={ParkInfoScreen}
+                        name="About"
+                        component={AboutScreen}
                         options={{
                             header: () => <Menu />,
                             drawerIcon: ({ focused }) =>
-                                <MaterialIcons
-                                    name="park"
+                                <FontAwesome6
+                                    name="circle-info"
                                     size={24}
                                     color={focused ? appPrimaryColor : appTertiaryColor}
                                 />
