@@ -38,7 +38,6 @@
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.14.0",
-    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-map-link": "^3.1.0",
     "react-native-maps": "1.10.0",
     "react-native-paper": "^5.12.3",
