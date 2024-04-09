@@ -22,6 +22,7 @@ export default function FoodTruckShareScreen() {
     const [goodStatus, setGoodStatus] = useState(true);
     const [pointData, setPointData] = useState([]);
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+    const [failSnackbarVisible, setFailSnackbarVisible] = useState(false);
     const [profileRole, setProfileRole] = useState({
         role: "",
     });
@@ -56,9 +57,13 @@ export default function FoodTruckShareScreen() {
                 setIsSnackbarVisible(true);
 
             } catch (error) {
+                setFailSnackbarVisible(true);
                 console.error(error);
             }
 
+        }
+        else {
+            setFailSnackbarVisible(true);
         }
 
     };
@@ -205,6 +210,22 @@ export default function FoodTruckShareScreen() {
                 duration={5000}
             >
                 {"Location Shared!"}
+            </Snackbar>
+
+            <Snackbar
+                visible={failSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={SidebarStyle.snackBarFail}
+                onDismiss={() => {
+                    setFailSnackbarVisible(false);
+                }}
+                action={{
+                    textColor: appTextColor,
+                    label: "Close",
+                }}
+                duration={5000}
+            >
+                {"Failed Sharing Location!"}
             </Snackbar>
 
         </SafeAreaView>
