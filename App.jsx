@@ -15,7 +15,6 @@ export default function App() {
     if (!("localStorage" in window)) window.localStorage = storage;
 
     useEffect(() => {
-
         let userID = null;
 
         const handleUserSession = async () => {
