@@ -7,7 +7,7 @@ import { RadioButton, Snackbar, Text, TextInput } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { database, functions, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
-import { appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../../utils/colors/appColors";
+import { appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../../utils/colors/appColors";
 import AppStyle from "../../../styling/AppStyle";
 
 export const PUSH_NOTIFICATION_ID = process.env.EXPO_PUBLIC_PUSH_NOTIFICATION_FUNCTION_ID;
@@ -254,6 +254,10 @@ export default function PushNotificationScreen() {
                 onDismiss={() => {
                     setIsSnackbarVisible(false);
                     setErrorMessage(""); // Clear the error message
+                }}
+                action={{
+                    textColor: appTextColor,
+                    label: "Close",
                 }}
                 duration={3000}
             >

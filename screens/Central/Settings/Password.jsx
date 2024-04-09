@@ -174,6 +174,10 @@ export default function ChangePasswordScreen({ navigation }) {
                     setIsSnackbarVisible(false);
                     setErrorMessage(""); // Clear the error message
                 }}
+                action={{
+                    textColor: appTextColor,
+                    label: "Close",
+                }}
                 duration={3000}
             >
                 {errorMessage}

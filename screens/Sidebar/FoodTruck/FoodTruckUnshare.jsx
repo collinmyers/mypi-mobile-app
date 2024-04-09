@@ -8,6 +8,7 @@ import { appTertiaryColor } from "../../../utils/colors/appColors";
 import { ScrollView } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNetwork } from "../../../components/context/NetworkContext";
+import { appTextColor } from "../../../utils/colors/appColors";
 
 export default function FoodTruckUnshareScreen() {
     const PAGE_SIZE = 25;
@@ -185,6 +186,10 @@ export default function FoodTruckUnshareScreen() {
                 style={SidebarStyle.snackBar}
                 onDismiss={() => {
                     setIsSnackbarVisible(false);
+                }}
+                action={{
+                    textColor: appTextColor,
+                    label: "Close",
                 }}
                 duration={5000}
             >

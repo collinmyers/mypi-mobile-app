@@ -7,7 +7,7 @@ import HomeStyle from "../../../styling/HomeStyle";
 import { saveNavigationPreference } from "../../../utils/AsyncStorage/NavigationPreference";
 import { getAutoPlayPreference, saveAutoPlayPreference } from "../../../utils/AsyncStorage/AutoPlayPreference";
 import * as Notifications from "expo-notifications";
-import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor } from "../../../utils/colors/appColors";
+import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 } from "@expo/vector-icons";
 import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS } from "../../../utils/Config/appwriteConfig";
 import { ID } from "appwrite";
@@ -501,6 +501,10 @@ export default function SettingsScreen({ navigation }) {
                 onDismiss={() => {
                     setIsSnackbarVisible(false);
                     setErrorMessage(""); // Clear the error message
+                }}
+                action={{
+                    textColor: appTextColor,
+                    label: "Close",
                 }}
                 duration={3000}
             >

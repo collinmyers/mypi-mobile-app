@@ -7,14 +7,13 @@ import { showLocation } from "react-native-map-link";
 import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
 import { Query } from "appwrite";
 import MapStyle from "../../../styling/MapStyle";
-import HomeStyle from "../../../styling/HomeStyle";
 import { getNavigationPreference } from "../../../utils/AsyncStorage/NavigationPreference";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
 import { subscribeToRealTimeUpdates } from "../../../utils/Config/appwriteConfig";
-import { appPrimaryColor, appSecondaryColor, appTertiaryColor } from "../../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../../utils/colors/appColors";
 import * as FileSystem from "expo-file-system";
 import { useNetwork } from "../../../components/context/NetworkContext";
 import AppStyle from "../../../styling/AppStyle";
@@ -347,6 +346,10 @@ export default function MapScreen() {
                 onDismiss={() => {
                     setIsSnackbarVisible(false);
                     setErrorMessage(""); // Clear the error message
+                }}
+                action={{
+                    textColor: appTextColor,
+                    label: "Close",
                 }}
                 duration={5000}
             >

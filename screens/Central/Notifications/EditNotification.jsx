@@ -6,7 +6,7 @@ import HomeStyle from "../../../styling/HomeStyle";
 import { RadioButton, Text, TextInput, Snackbar } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
-import { appSecondaryColor, appTertiaryColor, appQuarternaryColor } from "../../../utils/colors/appColors";
+import { appSecondaryColor, appTertiaryColor, appQuarternaryColor, appTextColor } from "../../../utils/colors/appColors";
 import AppStyle from "../../../styling/AppStyle";
 
 export default function EditNotificationScreen() {
@@ -160,6 +160,10 @@ export default function EditNotificationScreen() {
                 onDismiss={() => {
                     setIsSnackbarVisible(false);
                     setErrorMessage(""); // Clear the error message
+                }}
+                action={{
+                    textColor: appTextColor,
+                    label: "Close",
                 }}
                 duration={3000}
             >
