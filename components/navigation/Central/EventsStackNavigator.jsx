@@ -6,17 +6,11 @@ import Menu from "../Headers/AppHeader";
 import MenuBack from "../Headers/AppHeaderNavBack";
 import { appPrimaryColor } from "../../../utils/colors/appColors";
 
-const fade = ({ current }) => ({
-    cardStyle: {
-        opacity: current.progress,
-    },
-});
-
 const Stack = createStackNavigator();
 
 export default function EventsStackNavigator() {
     return (
-        <Stack.Navigator initialRouteName="Events" screenOptions={{ headerShown: false, cardStyleInterpolator: fade }}>
+        <Stack.Navigator initialRouteName="Events" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Events" component={EventListScreen}
                 options={{
                     headerShown: true,

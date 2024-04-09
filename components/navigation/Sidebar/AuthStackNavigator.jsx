@@ -7,18 +7,11 @@ import Menu from "../Headers/AppHeader";
 import MenuBack from "../Headers/AppHeaderNavBack";
 import { appTertiaryColor } from "../../../utils/colors/appColors";
 
-
-const fade = ({ current }) => ({
-    cardStyle: {
-        opacity: current.progress,
-    },
-});
-
 const Stack = createStackNavigator();
 
 export default function AuthStackNavigator() {
     return (
-        <Stack.Navigator initialRouteName="Login" screenOptions={{ cardStyleInterpolator: fade }}>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Login"
                 component={LoginScreen}
                 options={{

@@ -8,13 +8,6 @@ import MenuBack from "../Headers/AppHeaderNavBack";
 import MenuEditNotification from "../Headers/AppHeaderEditNotifications";
 import { appPrimaryColor } from "../../../utils/colors/appColors";
 
-const fade = ({ current }) => ({
-    cardStyle: {
-        opacity: current.progress,
-    },
-});
-
-
 const Stack = createStackNavigator();
 
 export default function AlertsStackNavigator() {
@@ -22,7 +15,7 @@ export default function AlertsStackNavigator() {
     const [showEditNotifications, setShowEditNotifications] = useState(false);
 
     return (
-        <Stack.Navigator initialRouteName="AlertsScreen" screenOptions={{ headerShown: false, cardStyleInterpolator: fade }}>
+        <Stack.Navigator initialRouteName="AlertsScreen" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="AlertsScreen" component={AlertsScreen} initialParams={{ showEditNotifications: showEditNotifications }}
                 options={{
                     headerShown: true,
