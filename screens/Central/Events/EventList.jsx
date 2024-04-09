@@ -22,6 +22,9 @@ export default function EventListScreen() {
 
     const FILE_BUCKET_ID = process.env.EXPO_PUBLIC_FILE_BUCKET_ID;
 
+    const blurhash ="LyD1KYtRWBf7?wt6Wqj?xvoIa}j@";
+
+
     useEffect(() => {
         // Function to handle real-time updates
         const handleSubscription = () => {
@@ -220,7 +223,7 @@ export default function EventListScreen() {
                 >
                     <Card style={HomeStyle.eventCard}>
                         <Card.Content style={HomeStyle.eventCardContent}>
-                            <Image placeholder={"blurhash"} contentFit="cover" source={{ uri: EventImages[0] }} style={HomeStyle.eventListImage} />
+                            <Image placeholder={blurhash} contentFit="cover" source={{ uri: EventImages[0] }} style={HomeStyle.eventListImage} />
                             <Text style={HomeStyle.eventListTitle}>{EventName}</Text>
                             <Text style={HomeStyle.eventListDate}>{EventDate}</Text>
                             <Text style={HomeStyle.eventListDescription}>{EventListDescription}</Text>

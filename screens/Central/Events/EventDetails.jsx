@@ -25,6 +25,7 @@ export default function EventDetailsScreen() {
     const deviceWidth = Dimensions.get("window").width;
     const deviceHeight = Dimensions.get("window").height;
 
+    const blurhash = "LyD1KYtRWBf7?wt6Wqj?xvoIa}j@";
 
     const route = useRoute();
 
@@ -131,7 +132,7 @@ export default function EventDetailsScreen() {
                                         onSnapToItem={(index) => setActiveIndex(index)}
                                         renderItem={({ item }) => (
                                             <Image
-                                                placeholder={"blurhash"}
+                                                placeholder={blurhash}
                                                 contentFit="cover"
                                                 source={{ uri: item }}
                                                 style={[HomeStyle.eventDetailsImage, { marginVertical: 0 }]} />
@@ -151,7 +152,7 @@ export default function EventDetailsScreen() {
                             :
                             (
                                 <Image
-                                    placeholder={"blurhash"}
+                                    placeholder={blurhash}
                                     contentFit="cover"
                                     source={{ uri: EventImages[0] }}
                                     style={HomeStyle.eventDetailsImage}
