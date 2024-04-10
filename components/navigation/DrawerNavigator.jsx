@@ -11,7 +11,7 @@ import AuthStackNavigator from "./Sidebar/AuthStackNavigator";
 import { account } from "../../utils/Config/appwriteConfig";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
-import { Entypo, Ionicons, AntDesign, MaterialIcons, FontAwesome6 } from "@expo/vector-icons";
+import { Entypo, Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from "@expo/vector-icons";
 import FoodTruckStackNavigator from "./Sidebar/FoodTruckStackNavigator";
 import { useAuth } from "../context/AuthContext";
 import { useNetwork } from "../context/NetworkContext";
@@ -175,10 +175,9 @@ export default function DrawerNavigator() {
                         options={{
                             header: () => <Menu />,
                             drawerIcon: ({ focused }) =>
-                                <FontAwesome6
-                                    style={{marginHorizontal: "1%"}}
-                                    name="clipboard-question"
-                                    size={26}
+                                <MaterialCommunityIcons
+                                    name="frequently-asked-questions"
+                                    size={24}
                                     color={focused ? appPrimaryColor : appTertiaryColor}
                                 />
                         }}
