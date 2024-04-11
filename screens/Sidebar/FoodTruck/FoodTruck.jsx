@@ -14,6 +14,8 @@ export default function FoodTruckAdminScreen() {
     return (
         <SafeAreaView style={AppStyle.container}>
 
+            <Text>Choose To Share Location Or To Unshare Location</Text>
+
             <TouchableOpacity style={SidebarStyle.ShareLocationButtonOpac} onPress={() => navigation.navigate("FoodTruckShare")}>
                 <Text style={SidebarStyle.ShareLocationText}>Share Location</Text>
             </TouchableOpacity>

@@ -160,6 +160,11 @@ export default function FoodTruckUnshareScreen() {
                     <Text style={SidebarStyle.setRadioText}>{point.Name}</Text>
                 </View>
             )));
+            if (pointData == "") {
+                setButtons(
+                    <Text>Location Not Shared!</Text>
+                );
+            }
         };
 
         renderButtons();
