@@ -109,8 +109,9 @@ export default function FoodTruckUnshareScreen() {
                 const response = await database.listDocuments(
                     DATABASE_ID,
                     MAP_COLLECTION_ID,
-                    [Query.limit(PAGE_SIZE), Query.offset(offset), Query.search("Name", [truckName])]
+                    [Query.limit(PAGE_SIZE), Query.offset(offset), Query.startsWith("Name", [truckName])]
                 );
+                console.log(response);
 
                 while (response.documents.length > 0) {
                     allPoints = [...allPoints, ...response.documents];
@@ -118,7 +119,7 @@ export default function FoodTruckUnshareScreen() {
                     const nextResponse = await database.listDocuments(
                         DATABASE_ID,
                         MAP_COLLECTION_ID,
-                        [Query.limit(PAGE_SIZE), Query.offset(offset), Query.search("Name", [truckName])]
+                        [Query.limit(PAGE_SIZE), Query.offset(offset), Query.startsWith("Name", [truckName])]
                     );
                     response.documents = nextResponse.documents;
                 }
