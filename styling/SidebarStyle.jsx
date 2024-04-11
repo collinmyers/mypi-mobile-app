@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { appPrimaryColor, appTertiaryColor, appTextColor, appSecondaryColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appTertiaryColor, appTextColor, appSecondaryColor, appWarningColor } from "../utils/colors/appColors";
 
 
 const deviceWidth = Dimensions.get("window").width;
@@ -83,5 +83,9 @@ export default StyleSheet.create({
     snackBar: {
         backgroundColor: appSecondaryColor,
         color: appTextColor,
+    },
+    snackBarFail: {
+        backgroundColor: appWarningColor,
+        color: appTextColor
     },
 });
