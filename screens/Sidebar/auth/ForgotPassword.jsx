@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Snackbar, Text, TextInput } from "react-native-paper";
 import PropTypes from "prop-types";
-import { account } from "../../../utils/Config/appwriteConfig";
+import { account, RECOVERY_DOMAIN } from "../../../utils/Config/config";
 import Logo from "../../../components/logo/AppLogo";
 import AppStyle from "../../../styling/AppStyle";
 import AuthStyle from "../../../styling/AuthStyle";
@@ -27,7 +27,7 @@ export default function ForgotPasswordScreen({ navigation }) {
             try {
                 setIsActionOccuring(true);
                 try {
-                    await account.createRecovery(`${email}`, process.env.EXPO_PUBLIC_RECOVERY_DOMAIN);
+                    await account.createRecovery(`${email}`, RECOVERY_DOMAIN);
 
                     setErrorMessage("If an account exists, a password reset will be sent to the provided email.");
                     setIsSnackbarVisible(true);

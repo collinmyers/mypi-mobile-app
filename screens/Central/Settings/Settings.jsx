@@ -9,7 +9,7 @@ import { getAutoPlayPreference, saveAutoPlayPreference } from "../../../utils/As
 import * as Notifications from "expo-notifications";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 } from "@expo/vector-icons";
-import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS } from "../../../utils/Config/appwriteConfig";
+import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS, DELETE_USER_FUNCTION_ID } from "../../../utils/Config/config";
 import { ID } from "appwrite";
 import * as Linking from "expo-linking";
 import { useAuth } from "../../../components/context/AuthContext";
@@ -73,13 +73,13 @@ export default function SettingsScreen({ navigation }) {
             const getNameAndEmail = async () => {
                 try {
                     const response = await account.get();
-    
+
                     if (response.email === "") {
                         setLocalSignInState(false);
                         setIsSignedIn(false);
                         throw new Error("Not a email user (guest)");
                     }
-    
+
                     setProfileInfo({
                         name: response.name,
                         email: response.email,
@@ -243,8 +243,6 @@ export default function SettingsScreen({ navigation }) {
             setIsActionOccuring(true);
             try {
                 setIsDeleteModalVisible(false);
-
-                const DELETE_USER_FUNCTION_ID = process.env.EXPO_PUBLIC_DELETE_USER_AND_DATA_FUNCTION;
 
                 await functions.createExecution(
                     DELETE_USER_FUNCTION_ID,

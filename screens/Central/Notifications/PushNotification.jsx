@@ -5,12 +5,10 @@ import HomeStyle from "../../../styling/HomeStyle";
 import * as Notifications from "expo-notifications";
 import { RadioButton, Snackbar, Text, TextInput } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
-import { database, functions, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
+import { database, functions, DATABASE_ID, ALERTS_COLLECTION_ID, PUSH_NOTIFICATION_ID } from "../../../utils/Config/config";
 import { ID } from "appwrite";
 import { appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../../utils/colors/appColors";
 import AppStyle from "../../../styling/AppStyle";
-
-export const PUSH_NOTIFICATION_ID = process.env.EXPO_PUBLIC_PUSH_NOTIFICATION_FUNCTION_ID;
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({

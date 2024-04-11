@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Snackbar, Text, TextInput } from "react-native-paper";
-import { account } from "../../../utils/Config/appwriteConfig";
+import { account } from "../../../utils/Config/config";
 import { ID } from "appwrite";
 import PropTypes from "prop-types";
 import { validateName, validateEmail, validatePassword } from "../../../utils/Regex/Validators";

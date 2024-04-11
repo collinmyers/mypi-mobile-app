@@ -5,7 +5,7 @@ import { useRoute } from "@react-navigation/native";
 import HomeStyle from "../../../styling/HomeStyle";
 import { RadioButton, Text, TextInput, Snackbar } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
-import { database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
+import { database, DATABASE_ID, ALERTS_COLLECTION_ID } from "../../../utils/Config/config";
 import { appSecondaryColor, appTertiaryColor, appQuarternaryColor, appTextColor } from "../../../utils/colors/appColors";
 import AppStyle from "../../../styling/AppStyle";
 

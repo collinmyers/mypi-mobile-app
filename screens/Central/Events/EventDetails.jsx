@@ -13,6 +13,7 @@ import Carousel from "react-native-reanimated-carousel";
 import { appPrimaryColor, appTertiaryColor } from "../../../utils/colors/appColors";
 import { FontAwesome } from "@expo/vector-icons";
 import Collapsible from "react-native-collapsible";
+import { BUNDLER_PACKAGE_IDENTIFIER } from "../../../utils/Config/config";
 
 
 export default function EventDetailsScreen() {
@@ -38,7 +39,7 @@ export default function EventDetailsScreen() {
             appsWhiteList: [],
             googleForceLatLon: true,
             alwaysIncludeGoogle: true,
-            naverCallerName: process.env.EXPO_PUBLIC_BUNDLE_AND_PACKAGE_IDENTIFIER,
+            naverCallerName: BUNDLER_PACKAGE_IDENTIFIER,
             directionsMode: directionsPreference,
         });
     };

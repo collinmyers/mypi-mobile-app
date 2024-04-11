@@ -4,7 +4,7 @@ import { View, SafeAreaView, TouchableOpacity, Platform } from "react-native";
 import { ActivityIndicator, Snackbar, Text } from "react-native-paper";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { showLocation } from "react-native-map-link";
-import { database, DATABASE_ID, MAP_COLLECTION_ID } from "../../../utils/Config/appwriteConfig";
+import { database, DATABASE_ID, MAP_COLLECTION_ID, BUNDLER_PACKAGE_IDENTIFIER } from "../../../utils/Config/config";
 import { Query } from "appwrite";
 import MapStyle from "../../../styling/MapStyle";
 import { getNavigationPreference } from "../../../utils/AsyncStorage/NavigationPreference";
@@ -12,7 +12,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { Checkbox } from "expo-checkbox";
-import { subscribeToRealTimeUpdates } from "../../../utils/Config/appwriteConfig";
+import { subscribeToRealTimeUpdates } from "../../../utils/Config/config";
 import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../../utils/colors/appColors";
 import * as FileSystem from "expo-file-system";
 import { useNetwork } from "../../../components/context/NetworkContext";
@@ -202,7 +202,7 @@ export default function MapScreen() {
             appsWhiteList: [],
             googleForceLatLon: true,
             alwaysIncludeGoogle: true,
-            naverCallerName: process.env.EXPO_PUBLIC_BUNDLE_AND_PACKAGE_IDENTIFIER,
+            naverCallerName: BUNDLER_PACKAGE_IDENTIFIER,
             directionsMode: directionsPreference,
         });
     };

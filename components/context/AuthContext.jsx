@@ -1,7 +1,7 @@
 // AuthContext.js
 import React, { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { account } from "../../utils/Config/appwriteConfig";
+import { account } from "../../utils/Config/config";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {

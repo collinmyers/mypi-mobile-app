@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import { Text, Snackbar } from "react-native-paper";
 import SidebarStyle from "../../../styling/SidebarStyle";
-import { DATABASE_ID, FOOD_TRUCK_POI, MAP_COLLECTION_ID, USER_ALIAS_TABLE_ID, account, database } from "../../../utils/Config/appwriteConfig";
+import { DATABASE_ID, FOOD_TRUCK_POI, MAP_COLLECTION_ID, USER_ALIAS_TABLE_ID, account, database } from "../../../utils/Config/config";
 import { RadioButton } from "react-native-paper";
 import { appTertiaryColor } from "../../../utils/colors/appColors";
 import { ScrollView } from "react-native-gesture-handler";

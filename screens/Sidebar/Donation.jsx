@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { WebView } from "react-native-webview";
 import { View, ScrollView, RefreshControl } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
+import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor } from "../../utils/colors/appColors";
-import PropTypes from "prop-types";
+import { DONATIONS_PROVIDER_LINK } from "../../utils/Config/config";
 
 const WebViewComponent = ({ uri, onError }) => {
     const webViewRef = useRef(null);
@@ -69,7 +70,7 @@ export default function DonationsScreen() {
         <>
             {!isErrored ? (
                 <WebViewComponent
-                    uri={process.env.EXPO_PUBLIC_DONATION_PROVIDER_LINK}
+                    uri={DONATIONS_PROVIDER_LINK}
                     onError={() => setIsErrored(true)}
                     refreshing={refreshing}
                     setRefreshing={setRefreshing}

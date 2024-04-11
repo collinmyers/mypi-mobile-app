@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import { Snackbar, Text, RadioButton } from "react-native-paper";
-import { DATABASE_ID, MAP_COLLECTION_ID, account, database, USER_ALIAS_TABLE_ID } from "../../../utils/Config/appwriteConfig";
+import { DATABASE_ID, MAP_COLLECTION_ID, account, database, USER_ALIAS_TABLE_ID } from "../../../utils/Config/config";
 import { Query } from "appwrite";
 import SidebarStyle from "../../../styling/SidebarStyle";
 import { appTertiaryColor } from "../../../utils/colors/appColors";

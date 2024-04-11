@@ -8,7 +8,7 @@ import AboutScreen from "../../screens/Sidebar/About";
 import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./Sidebar/AuthStackNavigator";
-import { account } from "../../utils/Config/appwriteConfig";
+import { account } from "../../utils/Config/config";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
 import { Entypo, Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from "@expo/vector-icons";

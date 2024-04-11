@@ -3,7 +3,7 @@ import { Text } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
-import { account } from "../../utils/Config/appwriteConfig";
+import { account } from "../../utils/Config/config";
 import { useFocusEffect } from "@react-navigation/native";
 import Logo from "../../components/logo/AppLogo";
 import { MaterialIcons } from "@expo/vector-icons";
