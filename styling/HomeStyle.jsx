@@ -182,16 +182,16 @@ export default StyleSheet.create({
         backgroundColor: appQuarternaryColor,
     },
     modalDeleteButton: {
-        paddingHorizontal: 20,
+        paddingHorizontal: 25,
+        paddingVertical: 1,
         marginVertical: 10,
-        marginHorizontal: 5,
-        padding: 10,
+        marginHorizontal: "5%",
         borderRadius: 20,
         color: appTextColor,
         textAlign: "center",
         flexDirection: "column",
         backgroundColor: appSecondaryColor,
-        overflow: "hidden"
+        justifyContent: "center"
     },
     modalButtonText: {
         color: appTextColor,
@@ -621,8 +621,8 @@ export default StyleSheet.create({
         marginRight: "1%"
     },
     deleteNotificationsButtonContainer: {
+        justifyContent: "center",
         flexDirection: "row",
-        justifyContent: "space-evenly",
         width: "90%"
     },
     imageCarousel: {
@@ -636,8 +636,8 @@ export default StyleSheet.create({
         backgroundColor: appPrimaryColor,
         marginHorizontal: 4,
         justifyContent: "center"
-    }, 
-    additionalInfoContainer:{
+    },
+    additionalInfoContainer: {
         alignSelf: "center"
     },
     additionalOptionsOpacity: {
@@ -652,7 +652,7 @@ export default StyleSheet.create({
         fontSize: 18,
         marginRight: "3%",
         textAlign: "left"
-    }, 
+    },
     additionalInfoListOpacity: {
         marginVertical: "5%",
     },
@@ -662,5 +662,40 @@ export default StyleSheet.create({
         textDecorationLine: "underline",
         fontWeight: 500,
         fontSize: 18
+    },
+    sidebarScrollView: {
+        marginHorizontal: "3%",
+        marginBottom: "5%",
+        backgroundColor: appPrimaryColor,
+        flex: 1
+    },
+    aboutHeaders: {
+        margin: 0,
+        alignSelf: "center",
+        fontWeight: 600,
+        fontSize: 24,
+        color: appQuarternaryColor,
+        paddingVertical: "2%",
+    },
+    aboutSection: {
+        alignSelf: "center",
+        maxWidth: "98%",
+        marginBottom: "2%",
+        padding: "2%",
+        borderWidth: 1,
+        borderRadius: "10%",
+        borderColor: appQuarternaryColor,
+        backgroundColor: appSecondaryColor
+    },
+    aboutTitle: {
+        fontWeight: 600,
+        fontStyle: "italic",
+        fontSize: 20,
+        color: appTertiaryColor,
+        marginBottom: "1%"
+    },
+    aboutDescription: {
+        fontSize: 16,
+        color: appTextColor
     }
 });

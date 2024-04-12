@@ -154,119 +154,113 @@ export default function MapList() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData();
-
-        // Cleanup function
-        return () => {
-            unsubscribe();
-        };
-
-    }, [isInternetReachable]));
-
-    useEffect(() => {
-        if (pointData.length > 0) {
+        checkNetworkConnectivityAndFetchData().then(() => {
             setIsLoading(false);
-        }
-    }, [pointData]);
-
-
-    const renderPoints = () => {
-        return pointData.map((point, index) => (
-            <Pressable
-                id={point.Name}
-                key={`${index}_${point.Name}`}
-            >
-                <Card style={MapStyle.poiCard}>
-                    <Card.Content style={MapStyle.poiCardContent}>
-                        <Text style={MapStyle.poiListTitle}>{point.Name} ({point.Status})</Text>
-                        <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={30} color={appTertiaryColor} onPress={() => {
-                            getDirections(point.Latitude, point.Longitude, currentNavPreference);
-                        }} />
-                    </Card.Content>
-                </Card>
-            </Pressable>
-        ));
-
-    };
-
-    const fetchNavPreference = async () => {
-        try {
-            const preference = await getNavigationPreference();
-
-            setCurrentNavPreference(preference);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const getDirections = (lat, long, directionsPreference) => {
-        showLocation({
-            latitude: lat,
-            longitude: long,
-            appsWhiteList: [],
-            googleForceLatLon: true,
-            alwaysIncludeGoogle: true,
-            naverCallerName: BUNDLER_PACKAGE_IDENTIFIER,
-            directionsMode: directionsPreference,
         });
+    // Cleanup function
+    return () => {
+        unsubscribe();
     };
 
+}, [isInternetReachable]));
 
-    const handleSearch = (query) => {
-        setSearchQuery(query); // Update search query state
+const renderPoints = () => {
+    return pointData.map((point, index) => (
+        <Pressable
+            id={point.Name}
+            key={`${index}_${point.Name}`}
+        >
+            <Card style={MapStyle.poiCard}>
+                <Card.Content style={MapStyle.poiCardContent}>
+                    <Text style={MapStyle.poiListTitle}>{point.Name} ({point.Status})</Text>
+                    <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={30} color={appTertiaryColor} onPress={() => {
+                        getDirections(point.Latitude, point.Longitude, currentNavPreference);
+                    }} />
+                </Card.Content>
+            </Card>
+        </Pressable>
+    ));
 
-        const filtered = pointData.filter(element => {
-            const pointName = element.Name.toLowerCase();
-            return pointName.includes(query.toLowerCase());
-        }).map((point, index) => (
-            <Pressable
-                id={point.Name}
-                key={`${index}_${point.Name}`}
-            >
-                <Card style={MapStyle.poiCard}>
-                    <Card.Content style={MapStyle.poiCardContent}>
-                        <Text style={MapStyle.poiListTitle}>{point.Name} ({point.Status})</Text>
-                        <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={30} color={appTertiaryColor} onPress={() => {
-                            getDirections(point.Latitude, point.Longitude, currentNavPreference);
-                        }} />
-                    </Card.Content>
-                </Card>
-            </Pressable>
-        ));
+};
 
-        setFilteredCards(filtered);
-        setFilterOn(query !== ""); // Set filterOn based on whether the query is empty or not
-    };
+const fetchNavPreference = async () => {
+    try {
+        const preference = await getNavigationPreference();
 
-    return (
-        <SafeAreaView style={MapStyle.poiContainer}>
-            <TouchableOpacity style={MapStyle.changeListOpac} onPress={() => { navigation.navigate("MapScreen"); }}>
-                <Text style={MapStyle.changeListText}>View as Map</Text>
-            </TouchableOpacity>
-            <Searchbar
-                style={MapStyle.mapSearchBar}
-                iconColor={appTertiaryColor}
-                inputStyle={{ color: appTextColor }}
-                placeholder="Search"
-                placeholderTextColor={appTextColor}
-                value={searchQuery}
-                onChangeText={(text) => {
-                    setSearchQuery(text);
-                    handleSearch(text);
-                }}
-            />
-            {isLoading ? (
-                <View style={HomeStyle.loadingContainer}>
-                    <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
-                </View>
-            ) : (
-                <ScrollView contentContainerStyle={MapStyle.scrollableView} showsVerticalScrollIndicator={false}>
-                    {filterOn ? (filteredCards) : (renderPoints())}
-                </ScrollView>
-            )}
+        setCurrentNavPreference(preference);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const getDirections = (lat, long, directionsPreference) => {
+    showLocation({
+        latitude: lat,
+        longitude: long,
+        appsWhiteList: [],
+        googleForceLatLon: true,
+        alwaysIncludeGoogle: true,
+        naverCallerName: BUNDLER_PACKAGE_IDENTIFIER,
+        directionsMode: directionsPreference,
+    });
+};
 
 
-        </SafeAreaView>
-    );
+const handleSearch = (query) => {
+    setSearchQuery(query); // Update search query state
+
+    const filtered = pointData.filter(element => {
+        const pointName = element.Name.toLowerCase();
+        return pointName.includes(query.toLowerCase());
+    }).map((point, index) => (
+        <Pressable
+            id={point.Name}
+            key={`${index}_${point.Name}`}
+        >
+            <Card style={MapStyle.poiCard}>
+                <Card.Content style={MapStyle.poiCardContent}>
+                    <Text style={MapStyle.poiListTitle}>{point.Name} ({point.Status})</Text>
+                    <FontAwesome5 style={MapStyle.directionsIcon} name="directions" size={30} color={appTertiaryColor} onPress={() => {
+                        getDirections(point.Latitude, point.Longitude, currentNavPreference);
+                    }} />
+                </Card.Content>
+            </Card>
+        </Pressable>
+    ));
+
+    setFilteredCards(filtered);
+    setFilterOn(query !== ""); // Set filterOn based on whether the query is empty or not
+};
+
+return (
+    <SafeAreaView style={MapStyle.poiContainer}>
+        <TouchableOpacity style={MapStyle.changeListOpac} onPress={() => { navigation.navigate("MapScreen"); }}>
+            <Text style={MapStyle.changeListText}>View as Map</Text>
+        </TouchableOpacity>
+        <Searchbar
+            style={MapStyle.mapSearchBar}
+            iconColor={appTertiaryColor}
+            inputStyle={{ color: appTextColor }}
+            placeholder="Search"
+            placeholderTextColor={appTextColor}
+            value={searchQuery}
+            onChangeText={(text) => {
+                setSearchQuery(text);
+                handleSearch(text);
+            }}
+        />
+        {isLoading ? (
+            <View style={HomeStyle.loadingContainer}>
+                <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
+            </View>
+        ) : (
+            <ScrollView contentContainerStyle={MapStyle.scrollableView} showsVerticalScrollIndicator={false}>
+                {filterOn ? (filteredCards) : (renderPoints())}
+            </ScrollView>
+        )}
+
+
+    </SafeAreaView>
+);
 
 }

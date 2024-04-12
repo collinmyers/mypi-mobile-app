@@ -17,6 +17,8 @@ export const FILE_BUCKET_ID = process.env.EXPO_PUBLIC_FILE_BUCKET_ID;
 export const PUSH_NOTIFICATION_ID = process.env.EXPO_PUBLIC_PUSH_NOTIFICATION_FUNCTION_ID;
 export const DELETE_USER_FUNCTION_ID = process.env.EXPO_PUBLIC_DELETE_USER_AND_DATA_FUNCTION;
 export const DONATIONS_PROVIDER_LINK = process.env.EXPO_PUBLIC_DONATION_PROVIDER_LINK;
+export const ABOUT_COLLECTIONS_ID = process.env.EXPO_PUBLIC_ABOUT_COLLECTIONS_ID;
+export const FAQ_COLLECTIONS_ID = process.env.EXPO_PUBLIC_FAQ_COLLECTIONS_ID;
 
 // Create a client to connect
 const client = new Client()

@@ -160,7 +160,9 @@ export default function AlertsScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData();
+        checkNetworkConnectivityAndFetchData().then(() => {
+            setIsLoading(false);
+        });
 
         getRoles();
 
@@ -169,13 +171,6 @@ export default function AlertsScreen() {
         };
 
     }, [isInternetReachable]);
-
-
-    useEffect(() => {
-        if (alertData.length > 0) {
-            setIsLoading(false);
-        }
-    }, [alertData]);
 
     const toggleDismissed = async (alertId) => {
         try {

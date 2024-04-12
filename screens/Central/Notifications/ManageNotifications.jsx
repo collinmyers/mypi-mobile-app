@@ -121,7 +121,9 @@ export default function ManageAlertsScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData();
+        checkNetworkConnectivityAndFetchData().then(() => {
+            setIsLoading(false);
+        });
 
         getNameAndRole();
 
@@ -130,13 +132,6 @@ export default function ManageAlertsScreen() {
         };
 
     }, [isInternetReachable]));
-
-
-    useEffect(() => {
-        if (alertData.length > 0) {
-            setIsLoading(false);
-        }
-    }, [alertData]);
 
     const handleDeleteNotification = async (documentID) => {
         try {

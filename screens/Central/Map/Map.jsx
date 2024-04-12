@@ -124,7 +124,9 @@ export default function MapScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData();
+        checkNetworkConnectivityAndFetchData().then(() => {
+            setIsLoading(false);
+        });
 
         // Cleanup function
         return () => {
