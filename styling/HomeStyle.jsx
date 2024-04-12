@@ -210,7 +210,7 @@ export default StyleSheet.create({
     },
     eventCard: {
         width: deviceWidth * .9,
-        marginBottom: deviceWidth * .1,
+        marginBottom: deviceWidth * .04,
         backgroundColor: appSecondaryColor,
         borderWidth: 1.25,
         borderColor: appQuarternaryColor

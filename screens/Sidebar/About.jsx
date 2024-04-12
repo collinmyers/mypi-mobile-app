@@ -130,7 +130,7 @@ export default function ParkInfoScreen() {
 
     const renderAbout = (aboutData) => {
         return aboutData.map((item) => (
-            <Card style={[HomeStyle.eventCard, {marginBottom: "4%"}]} key={item.$id}>
+            <Card style={HomeStyle.eventCard} key={item.$id}>
                 <Card.Content style={HomeStyle.eventCardContent}>
                     <Text style={HomeStyle.aboutTitle}>{item.Title}</Text>
                     <Text style={HomeStyle.aboutDescription}>{item.Description}</Text>
