@@ -102,8 +102,6 @@ export default function AlertsScreen() {
                 // Sort to show newest notifications first
                 allAlerts.sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
 
-                console.log(allAlerts);
-
                 setAlertData(allAlerts);
                 setSelectedCategory(selectedCategoryRef.current);
                 await saveDataToFile(allAlerts); // Save fetched data to file
