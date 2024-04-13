@@ -87,25 +87,26 @@ export default function AlertsScreen() {
                     offset += PAGE_SIZE;
                 } while (response.documents.length > 0);
 
-                const updatedAlerts = allAlerts.map((newAlert) => {
-                    const isDismissed = existingAlertsMap.get(newAlert.$id) || false;
-                    const updatedAlert = { ...newAlert, isDismissed };
+                allAlerts.forEach((alert) => {
+                    const isDismissed = existingAlertsMap.get(alert.$id) || false;
+                    alert.isDismissed = isDismissed;
 
-                    delete updatedAlert.$collectionId;
-                    delete updatedAlert.$databaseId;
-                    delete updatedAlert.$permissions;
-                    delete updatedAlert.$updatedAt;
-                    delete updatedAlert.AlertType;
-
-                    return updatedAlert;
+                    delete alert.$collectionId;
+                    delete alert.$databaseId;
+                    delete alert.$permissions;
+                    delete alert.$updatedAt;
+                    delete alert.AlertType;
                 });
 
-                // Sort to show newest notifications first
-                updatedAlerts.sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
 
-                setAlertData(updatedAlerts);
+                // Sort to show newest notifications first
+                allAlerts.sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
+
+                console.log(allAlerts);
+
+                setAlertData(allAlerts);
                 setSelectedCategory(selectedCategoryRef.current);
-                await saveDataToFile(updatedAlerts); // Save fetched data to file
+                await saveDataToFile(allAlerts); // Save fetched data to file
             } catch (error) {
                 console.error(error);
             }
@@ -277,7 +278,7 @@ export default function AlertsScreen() {
                 </View>
             ) : (
                 <ScrollView contentContainerStyle={[HomeStyle.scrollableView, { alignItems: "center" }]} showsVerticalScrollIndicator={false}>
-                    {alertData.length > 0 ? (
+                    {alertData.filter(alert => !alert.isDismissed).length > 0 && !showEditNotifications ? (
                         alertData.filter((alert) => {
                             if (selectedCategory === "notifications") {
                                 return showEditNotifications || !alert.isDismissed;
@@ -310,10 +311,44 @@ export default function AlertsScreen() {
                                 )}
                             </View>
                         ))
-                    ) : (
+                    ) : (!showEditNotifications &&
                         <Text style={HomeStyle.noNotificationsMessage}>
                             No new {selectedCategory} at this time
                         </Text>
+                    )}
+                    {showEditNotifications && (
+                        alertData.filter((alert) => {
+                            if (selectedCategory === "notifications") {
+                                return showEditNotifications || !alert.isDismissed;
+                            } else {
+                                return (showEditNotifications || !alert.isDismissed) && alert.NotificationType === selectedCategory;
+                            }
+                        }).map((alert, index) => (
+                            <View style={HomeStyle.alertCard} key={`${index}_${alert.Name}`} id={alert.NotificationType}>
+                                <View style={HomeStyle.alertCardContent}>
+                                    <Text style={HomeStyle.alertListTitle}>{alert.Title}</Text>
+                                    <Text style={HomeStyle.alertListDetails}>{alert.Details}</Text>
+                                </View>
+
+                                {!showEditNotifications && (<View style={HomeStyle.notificationAgeContainer}>
+                                    <Text style={HomeStyle.notificationAge}>
+                                        {notificationAge(alert.$createdAt)}
+                                    </Text>
+                                </View>)
+                                }
+
+                                {alertData.length > 0 && showEditNotifications && (
+                                    <View style={alert.isDismissed ? HomeStyle.notificationEditIconsFalse : HomeStyle.notificationEditIconsTrue}>
+                                        <FontAwesome5
+                                            name={alert.isDismissed ? "bell-slash" : "bell"}
+                                            size={24}
+                                            color={appQuarternaryColor}
+                                            onPress={() => toggleDismissed(alert.$id)}
+                                        />
+                                    </View>
+                                )}
+                            </View>
+                        ))
                     )}
                 </ScrollView>
 
