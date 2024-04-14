@@ -67,7 +67,7 @@ export default function AlertsScreen() {
                     fileContents = await FileSystem.readAsStringAsync(fileUri);
                 } catch (error) {
                     // If the file doesn't exist, initialize with an empty array
-                    fileContents = "[]";
+                    fileContents = [];
                 }
                 const localData = JSON.parse(fileContents);
 
@@ -98,6 +98,7 @@ export default function AlertsScreen() {
                     delete alert.AlertType;
                 });
 
+                console.log(allAlerts);
 
                 // Sort to show newest notifications first
                 allAlerts.sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
