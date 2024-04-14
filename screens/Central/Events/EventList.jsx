@@ -235,7 +235,12 @@ export default function EventListScreen() {
                 </View>
             ) : (
                 <ScrollView contentContainerStyle={HomeStyle.scrollableView} showsVerticalScrollIndicator={false}>
-                    {renderEvents()}
+                    {eventData.length > 0 ?
+                        renderEvents()
+                        :
+                        <Text style={HomeStyle.noNotificationsMessage}>
+                            No new events at this time
+                        </Text>}
                 </ScrollView>
             )}
 

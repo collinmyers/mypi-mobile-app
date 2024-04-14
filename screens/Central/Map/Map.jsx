@@ -305,6 +305,13 @@ export default function MapScreen() {
         ));
     };
 
+    useEffect(() => {
+        if (markersData.length < 1) {
+          setErrorMessage("No available points of interest at this time"); 
+          setIsSnackbarVisible(true);
+        }
+      }, [markersData]); 
+
     const toggleFabVisible = () => {
         setFabVisible(!fabVisible);
     };
@@ -326,7 +333,7 @@ export default function MapScreen() {
                     longitudeDelta: 0.115,
                 }}
             >
-                {renderMarkers()}
+                {markersData.length > 0 ? renderMarkers() : (null)}
             </MapView>
 
             <TouchableOpacity style={MapStyle.fab} onPress={toggleFabVisible}>
