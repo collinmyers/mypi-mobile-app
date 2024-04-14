@@ -674,28 +674,22 @@ export default StyleSheet.create({
         alignSelf: "center",
         fontWeight: 600,
         fontSize: 24,
-        color: appQuarternaryColor,
+        color: appSecondaryColor,
         paddingVertical: "2%",
     },
     aboutSection: {
         alignSelf: "center",
-        maxWidth: "98%",
-        marginBottom: "2%",
-        padding: "2%",
-        borderWidth: 1,
-        borderRadius: "10%",
-        borderColor: appQuarternaryColor,
-        backgroundColor: appSecondaryColor
+        maxWidth: "100%",
+        paddingVertical: "2%",
     },
     aboutTitle: {
-        fontWeight: 600,
-        fontStyle: "italic",
+        fontWeight: 700,
         fontSize: 20,
         color: appTertiaryColor,
         marginBottom: "1%"
     },
     aboutDescription: {
         fontSize: 16,
-        color: appTextColor
+        color: appSecondaryColor
     }
 });

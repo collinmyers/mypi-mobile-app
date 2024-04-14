@@ -1,5 +1,5 @@
 import * as Network from "expo-network";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { ScrollView, SafeAreaView, Pressable, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Card, Searchbar, Text } from "react-native-paper";
