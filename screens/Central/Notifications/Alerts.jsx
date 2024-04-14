@@ -277,7 +277,7 @@ export default function AlertsScreen() {
                 </View>
             ) : (
                 <ScrollView contentContainerStyle={[HomeStyle.scrollableView, { alignItems: "center" }]} showsVerticalScrollIndicator={false}>
-                    {alertData.filter(alert => !alert.isDismissed).length > 0 && !showEditNotifications ? (
+                    {!showEditNotifications && alertData.filter(alert => !alert.isDismissed && (selectedCategory === "notifications" || alert.NotificationType === selectedCategory)).length > 0 ? (
                         alertData.filter((alert) => {
                             if (selectedCategory === "notifications") {
                                 return showEditNotifications || !alert.isDismissed;
@@ -298,7 +298,7 @@ export default function AlertsScreen() {
                                 </View>)
                                 }
 
-                                {showEditNotifications && (
+                                {alertData.filter(alert => !alert.isDismissed).length == 0 && !showEditNotifications && (
                                     <View style={alert.isDismissed ? HomeStyle.notificationEditIconsFalse : HomeStyle.notificationEditIconsTrue}>
                                         <FontAwesome5
                                             name={alert.isDismissed ? "bell-slash" : "bell"}
