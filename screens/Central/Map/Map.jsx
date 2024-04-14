@@ -306,11 +306,11 @@ export default function MapScreen() {
     };
 
     useEffect(() => {
-        if (markersData.length < 1) {
-          setErrorMessage("No available points of interest at this time"); 
-          setIsSnackbarVisible(true);
+        if (markersData.length < 1 & !isLoading) {
+            setErrorMessage("No available points of interest at this time");
+            setIsSnackbarVisible(true);
         }
-      }, [markersData]); 
+    }, [markersData]);
 
     const toggleFabVisible = () => {
         setFabVisible(!fabVisible);

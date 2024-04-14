@@ -240,7 +240,8 @@ export default function EventListScreen() {
                         :
                         <Text style={HomeStyle.noNotificationsMessage}>
                             No new events at this time
-                        </Text>}
+                        </Text>
+                    }
                 </ScrollView>
             )}
 
