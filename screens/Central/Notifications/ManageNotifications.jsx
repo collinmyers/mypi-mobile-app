@@ -126,9 +126,6 @@ export default function ManageAlertsScreen() {
         checkNetworkConnectivityAndFetchData().then(() => {
             setIsLoading(false);
         });
-
-
-
         return () => {
             unsubscribe();
         };
@@ -137,6 +134,9 @@ export default function ManageAlertsScreen() {
 
     useEffect(() => {
         getNameAndRole();
+        if (!isSignedIn) {
+            navigation.goBack();
+        }
     }, [isSignedIn]);
 
     const handleDeleteNotification = async (documentID) => {
