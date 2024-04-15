@@ -55,6 +55,12 @@
         "projectId": "8cc387dc-be95-4b8c-8460-3c674e04defe"
       }
     },
-    "owner": "mypi"
+    "owner": "mypi",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/8cc387dc-be95-4b8c-8460-3c674e04defe"
+    }
   }
 }
