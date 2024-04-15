@@ -1,30 +1,40 @@
 {
-    "cli": {
-        "version": ">= 7.1.3"
+  "cli": {
+    "version": ">= 7.1.3"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false
+      },
+      "channel": "development"
     },
-    "build": {
-        "development": {
-            "developmentClient": true,
-            "distribution": "internal",
-            "android": {
-                "buildType": "apk"
-            },
-            "ios": {
-                "simulator": false
-            }
-        },
-        "preview": {
-            "distribution": "internal",
-            "android": {
-                "buildType": "apk"
-            },
-            "ios": {
-                "simulator": false
-            }
-        },
-        "production": {}
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false
+      },
+      "channel": "preview"
     },
-    "submit": {
-        "production": {}
+    "production": {
+      "channel": "production"
     }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "mypiseniordesign@gmail.com",
+        "ascAppId": "6497066606",
+        "appleTeamId": "YC9WAHR243"
+      }
+    }
+  }
 }
