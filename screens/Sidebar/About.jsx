@@ -1,7 +1,7 @@
 import * as Network from "expo-network";
 import React, { useState, useEffect } from "react";
 import { ScrollView, SafeAreaView, View } from "react-native";
-import { ActivityIndicator, Card, Text } from "react-native-paper";
+import { ActivityIndicator, Text } from "react-native-paper";
 import { database, DATABASE_ID, ABOUT_COLLECTIONS_ID, subscribeToRealTimeUpdates } from "../../utils/Config/config";
 import { Query } from "appwrite";
 import * as FileSystem from "expo-file-system";
@@ -145,9 +145,9 @@ export default function ParkInfoScreen() {
                 </View>
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false} style={HomeStyle.sidebarScrollView}>
-                    <Text style={HomeStyle.aboutHeaders}>About The Park</Text>
+                    <Text allowFontScaling={false} style={HomeStyle.aboutHeaders}>About The Park</Text>
                     {renderAbout(parkAboutData)}
-                    <Text style={HomeStyle.aboutHeaders}>About The Partnership</Text>
+                    <Text allowFontScaling={false} style={HomeStyle.aboutHeaders}>About The Partnership</Text>
                     {renderAbout(partnershipAboutData)}
                 </ScrollView>
             )}

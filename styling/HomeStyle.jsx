@@ -679,7 +679,7 @@ export default StyleSheet.create({
     },
     aboutSection: {
         alignSelf: "center",
-        maxWidth: "100%",
+        width: "100%",
         paddingVertical: "2%",
     },
     aboutTitle: {
@@ -689,6 +689,37 @@ export default StyleSheet.create({
         marginBottom: "1%"
     },
     aboutDescription: {
+        fontSize: 16,
+        color: appSecondaryColor
+    },
+    faqHeaders: {
+        margin: 0,
+        alignSelf: "center",
+        fontWeight: 600,
+        fontSize: 24,
+        color: appSecondaryColor,
+        paddingVertical: "2%",
+    },
+    faqSection: {
+        alignSelf: "center",
+        justifyContent: "center",
+        width: "100%",
+        paddingVertical: "2%",
+    },
+    expandFAQOpacity: {
+        flex: 1,
+        flexDirection: "row",
+        width: "100%",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    faqTitle: {
+        fontWeight: 700,
+        fontSize: 20,
+        color: appTertiaryColor,
+        marginBottom: "1%"
+    },
+    faqDescription: {
         fontSize: 16,
         color: appSecondaryColor
     }
