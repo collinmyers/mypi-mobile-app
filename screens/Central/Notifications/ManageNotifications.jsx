@@ -12,6 +12,7 @@ import * as FileSystem from "expo-file-system";
 import { useFocusEffect } from "@react-navigation/native";
 import PropTypes from "prop-types";
 import { useNetwork } from "../../../components/context/NetworkContext";
+import { useAuth } from "../../../components/context/AuthContext";
 
 export default function ManageAlertsScreen() {
     const PAGE_SIZE = 25;
@@ -19,8 +20,9 @@ export default function ManageAlertsScreen() {
     const navigation = useNavigation();
 
     const { isInternetReachable } = useNetwork();
+    const { isSignedIn } = useAuth();
     const [isLoading, setIsLoading] = useState(true);
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [isSignedInLocal, setisSignedInLocal] = useState(false);
     const [alertData, setAlertData] = useState([]);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [selectedDocumentId, setSelectedDocumentId] = useState(null);
@@ -125,13 +127,17 @@ export default function ManageAlertsScreen() {
             setIsLoading(false);
         });
 
-        getNameAndRole();
+
 
         return () => {
             unsubscribe();
         };
 
     }, [isInternetReachable]));
+
+    useEffect(() => {
+        getNameAndRole();
+    }, [isSignedIn]);
 
     const handleDeleteNotification = async (documentID) => {
         try {
@@ -203,10 +209,10 @@ export default function ManageAlertsScreen() {
         try {
             await account.get().then((response) => {
                 setProfileRoles(response.labels);
-                setIsSignedIn(true);
+                setisSignedInLocal(true);
             });
         } catch {
-            setIsSignedIn(false);
+            setisSignedInLocal(false);
         }
     };
 
@@ -222,7 +228,7 @@ export default function ManageAlertsScreen() {
                 </ScrollView>
             )}
 
-            {isSignedIn && (profileRoles.includes("ManageNotifications")) ?
+            {isSignedInLocal && (profileRoles.includes("ManageNotifications")) ?
                 (
                     <TouchableOpacity style={HomeStyle.fab} onPress={() => navigation.navigate("PushNotificationScreen")}>
                         <MaterialCommunityIcons name="bell-plus-outline" size={30} color={appPrimaryColor} />

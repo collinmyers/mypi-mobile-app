@@ -13,7 +13,7 @@ import { useRoute } from "@react-navigation/native";
 import { differenceInSeconds } from "date-fns";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNetwork } from "../../../components/context/NetworkContext";
-
+import { useAuth } from "../../../components/context/AuthContext";
 export default function AlertsScreen() {
     const PAGE_SIZE = 25;
 
@@ -22,11 +22,12 @@ export default function AlertsScreen() {
 
     const { showEditNotifications } = route.params;
     const { isInternetReachable } = useNetwork();
+    const { isSignedIn } = useAuth();
     const [localDateTime, setLocalDateTime] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState("notifications");
     const selectedCategoryRef = useRef("notifications");
     const [isLoading, setIsLoading] = useState(true);
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [isSignedInLocal, setisSignedInLocal] = useState(false);
     const [alertData, setAlertData] = useState([]);
     const [profileRoles, setProfileRoles] = useState([]);
 
@@ -164,13 +165,16 @@ export default function AlertsScreen() {
             setIsLoading(false);
         });
 
-        getRoles();
-
         return () => {
             unsubscribe();
         };
 
     }, [isInternetReachable]);
+
+
+    useEffect(()=>{
+        getRoles();
+    },[isSignedIn]);
 
     const toggleDismissed = async (alertId) => {
         try {
@@ -247,10 +251,10 @@ export default function AlertsScreen() {
             await account.get().then((response) => {
                 console.log(response.labels);
                 setProfileRoles(response.labels);
-                setIsSignedIn(true);
+                setisSignedInLocal(true);
             });
         } catch {
-            setIsSignedIn(false);
+            setisSignedInLocal(false);
         }
     };
 
@@ -354,7 +358,7 @@ export default function AlertsScreen() {
             )}
 
 
-            {isSignedIn && (profileRoles.includes("ManageNotifications")) ?
+            {isSignedInLocal && (profileRoles.includes("ManageNotifications")) ?
                 (
                     <TouchableOpacity style={HomeStyle.fab} onPress={() => navigation.navigate("ManageNotficationsScreen")}>
                         <FontAwesome6 name="pencil" size={28} color={appPrimaryColor} />
