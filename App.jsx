@@ -18,23 +18,20 @@ export default function App() {
         let userID = null;
         let token = null;
 
-        (async () => {
-            try {
-                const authUserStatus = await account.get();
-                userID = authUserStatus.$id;
+        // const handleUserSession = async () => {
+        //     try {
+        //         await account.get().then((response) => {
+        //             userID = response.$id;
 
-                if (authUserStatus.email === "") console.log("User session already exists (guest user)");
-
-                else console.log("User session already exists (email user)");
-
-            } catch {
-                await account.createAnonymousSession().then(() => {
-                    console.log("Created guest sessions");
-                }).catch((error) => {
-                    console.error(error);
-                });
-            }
-        })();
+        //         });
+        //     } catch {
+        //         await account.createAnonymousSession().then(() => {
+        //             console.log("Created guest sessions");
+        //         }).catch((error) => {
+        //             console.error(error);
+        //         });
+        //     }
+        // };
 
         const saveToSecureStore = async (key, value) => {
             try {
@@ -47,6 +44,23 @@ export default function App() {
 
         const getPermissions = async () => {
             try {
+
+                if (userID === null) {
+                    await account.get().then((response) => {
+                        userID = response.$id;
+                        if (response.email === "") console.log("User session already exists (guest user)");
+                        else console.log("User session already exists (email user)");
+                    }).catch((error) => {
+                        const stringError = error.toString();
+                        const notRegistered = "AppwriteException: User (role: guests) missing scope (account)";
+                        if (stringError.includes(notRegistered))
+                            account.createAnonymousSession().then((response) => {
+                                userID = response.$id;
+                                console.log("Created guest sessions");
+                            });
+                    });
+                }
+
                 if (Platform.OS === "android") {
                     Notifications.setNotificationChannelAsync("default", {
                         name: "default",
@@ -62,11 +76,7 @@ export default function App() {
                 // If granted, get the token and create a document in appwrite
                 token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
 
-                if (userID === null) {
-                    await account.get().then((response) => {
-                        userID = response.$id;
-                    });
-                }
+
 
                 // Create doc for user's push token. This will run if the expo token is not stored or doesn't match.
                 const createTokenDoc = await database.createDocument(

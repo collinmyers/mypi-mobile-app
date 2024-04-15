@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import { account } from "../../utils/Config/config";
-import { useFocusEffect } from "@react-navigation/native";
 import Logo from "../../components/logo/AppLogo";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { appPrimaryColor } from "../../utils/colors/appColors";
 import { useNetwork } from "../../components/context/NetworkContext";
-
+import { useAuth } from "../../components/context/AuthContext";
 export default function Dashboard() {
 
     const navigation = useNavigation();
-
+    const { isSignedIn } = useAuth();
     const { isConnected, isInternetReachable } = useNetwork();
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [isSignedInLocal, setisSignedInLocal] = useState(false);
     const [profileInfo, setProfileInfo] = useState({
         name: "",
     });
@@ -31,19 +30,17 @@ export default function Dashboard() {
                 name: response.name,
             });
 
-            setIsSignedIn(true);
+            setisSignedInLocal(true);
         } catch {
-            setIsSignedIn(false);
+            setisSignedInLocal(false);
         }
     };
 
-    useFocusEffect(
-        React.useCallback(() => {
-            if (isConnected && isInternetReachable) {
-                getNameAndEmail();
-            }
-        }, [isInternetReachable])
-    );
+    useEffect(() => {
+        if (isConnected && isInternetReachable) {
+            getNameAndEmail();
+        }
+    }, [isInternetReachable, isSignedIn]);
 
     return (
         <SafeAreaView style={AppStyle.container}>
@@ -53,7 +50,7 @@ export default function Dashboard() {
 
             <View style={HomeStyle.dbContainer}>
 
-                {isSignedIn ?
+                {isSignedInLocal ?
                     (<Text style={HomeStyle.dbTitleText}>Welcome {profileInfo.name}</Text>) :
                     (<Text style={HomeStyle.dbTitleText}>Welcome to myPI</Text>)
                 }

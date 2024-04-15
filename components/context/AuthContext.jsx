@@ -10,9 +10,14 @@ export const AuthProvider = ({ children }) => {
 
     const getNameAndEmail = async () => {
         try {
-            await account.get(); // fails if user is not authenticated
-            setIsSignedIn(true);
-        } catch {
+            await account.get().then((response) => {
+                if (response.email === "" || response.name === "" || response.passwordUpdate === ""){
+                    throw new Error("Not a registered user");
+                }
+                setIsSignedIn(true);
+            });
+        } catch (error) {
+            console.warn(error);
             setIsSignedIn(false);
         }
     };
