@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DrawerNavigator from "./components/navigation/DrawerNavigator";
 import { setupURLPolyfill } from "react-native-url-polyfill";
 import storage from "local-storage-fallback";
@@ -14,10 +14,13 @@ export default function App() {
     setupURLPolyfill();
     if (!("localStorage" in window)) window.localStorage = storage;
 
+    // const [token, setToken] = useState("");
+    // const [userID, setUserID] = useState("");
+
     useEffect(() => {
         let userID = null;
-
-        const handleUserSession = async () => {
+        let token = null;
+        const handleUserSession = (async () => {
             try {
                 const authUserStatus = await account.get();
                 userID = authUserStatus.$id;
@@ -30,7 +33,7 @@ export default function App() {
                 account.createAnonymousSession();
                 console.log("Created guest sessions");
             }
-        };
+        })();
 
         const saveToSecureStore = async (key, value) => {
             try {
@@ -42,9 +45,9 @@ export default function App() {
         };
 
         const getPermissions = async () => {
-            await handleUserSession();
             try {
-                let token = "";
+                //await handleUserSession();
+
                 if (Platform.OS === "android") {
                     Notifications.setNotificationChannelAsync("default", {
                         name: "default",
@@ -59,6 +62,12 @@ export default function App() {
 
                 // If granted, get the token and create a document in appwrite
                 token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
+
+                if (userID === null) {
+                    await account.get().then((response) => {
+                        userID = response.$id;
+                    });
+                }
 
                 // Create doc for user's push token. This will run if the expo token is not stored or doesn't match.
                 const createTokenDoc = await database.createDocument(
@@ -81,8 +90,8 @@ export default function App() {
                     // Store the serialized object in secure storage
                     await saveToSecureStore(pushKey, pushDocString);
                 }
-            } catch (err) {
-                console.log(err);
+            } catch (error) {
+                console.warn(error);
             }
         };
         getPermissions();
