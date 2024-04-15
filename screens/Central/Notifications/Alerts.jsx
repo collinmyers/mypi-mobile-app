@@ -68,7 +68,7 @@ export default function AlertsScreen() {
                     fileContents = await FileSystem.readAsStringAsync(fileUri);
                 } catch (error) {
                     // If the file doesn't exist, initialize with an empty array
-                    fileContents = [];
+                    fileContents = "";
                 }
                 const localData = JSON.parse(fileContents);
 
