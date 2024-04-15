@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import DrawerNavigator from "./components/navigation/DrawerNavigator";
 import { setupURLPolyfill } from "react-native-url-polyfill";
 import storage from "local-storage-fallback";
@@ -14,13 +14,11 @@ export default function App() {
     setupURLPolyfill();
     if (!("localStorage" in window)) window.localStorage = storage;
 
-    // const [token, setToken] = useState("");
-    // const [userID, setUserID] = useState("");
-
     useEffect(() => {
         let userID = null;
         let token = null;
-        const handleUserSession = (async () => {
+
+        (async () => {
             try {
                 const authUserStatus = await account.get();
                 userID = authUserStatus.$id;
@@ -30,8 +28,11 @@ export default function App() {
                 else console.log("User session already exists (email user)");
 
             } catch {
-                account.createAnonymousSession();
-                console.log("Created guest sessions");
+                await account.createAnonymousSession().then(() => {
+                    console.log("Created guest sessions");
+                }).catch((error) => {
+                    console.error(error);
+                });
             }
         })();
 
@@ -46,8 +47,6 @@ export default function App() {
 
         const getPermissions = async () => {
             try {
-                //await handleUserSession();
-
                 if (Platform.OS === "android") {
                     Notifications.setNotificationChannelAsync("default", {
                         name: "default",
