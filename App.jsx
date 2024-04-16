@@ -4,7 +4,7 @@ import { setupURLPolyfill } from "react-native-url-polyfill";
 import storage from "local-storage-fallback";
 import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
-import { account, database, DATABASE_ID, USER_NOTIFICATION_TOKENS } from "./utils/Config/config";
+import { account, database, DATABASE_ID, EXPO_PROJECT_ID, USER_NOTIFICATION_TOKENS } from "./utils/Config/config";
 import { ID } from "appwrite";
 import { AuthProvider } from "./components/context/AuthContext";
 import { NetworkProvider } from "./components/context/NetworkContext";
@@ -74,7 +74,7 @@ export default function App() {
                 }
 
                 // If granted, get the token and create a document in appwrite
-                token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
+                token = (await Notifications.getExpoPushTokenAsync({ projectID: EXPO_PROJECT_ID })).data;
 
 
 

@@ -9,7 +9,7 @@ import { getAutoPlayPreference, saveAutoPlayPreference } from "../../../utils/As
 import * as Notifications from "expo-notifications";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 } from "@expo/vector-icons";
-import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS, DELETE_USER_FUNCTION_ID } from "../../../utils/Config/config";
+import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS, DELETE_USER_FUNCTION_ID, EXPO_PROJECT_ID } from "../../../utils/Config/config";
 import { ID } from "appwrite";
 import * as Linking from "expo-linking";
 import { useAuth } from "../../../components/context/AuthContext";
@@ -316,7 +316,7 @@ export default function SettingsScreen({ navigation }) {
                         return;
                     }
                     // If granted, get the token and create a document in appwrite
-                    const token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
+                    const token = (await Notifications.getExpoPushTokenAsync({ projectID: EXPO_PROJECT_ID })).data;
 
                     const createTokenDoc = await database.createDocument(
                         DATABASE_ID,
