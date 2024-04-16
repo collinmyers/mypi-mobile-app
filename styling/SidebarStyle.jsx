@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { appPrimaryColor, appTertiaryColor, appTextColor, appSecondaryColor, appWarningColor } from "../utils/colors/appColors";
+import { appPrimaryColor, appTertiaryColor, appTextColor, appSecondaryColor, appWarningColor, appQuarternaryColor } from "../utils/colors/appColors";
 
 
 const deviceWidth = Dimensions.get("window").width;
@@ -51,14 +51,21 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    radioGroup: {
+    dropdrop: {
         alignSelf: "center",
         justifyContent: "center",
-        width: "100%",
-        marginTop: "2%",
-        borderRadius: 8,
-        backgroundColor: "white",
-        padding: 20,
+        width: "60%",
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: appQuarternaryColor,
+        backgroundColor: appPrimaryColor,
+    },
+    dropdownLabel:{
+        fontSize: 20,
+        fontWeight: 600,
+        color: appTertiaryColor,
+        textAlign: "center",
+        marginBottom: "2%"
     },
     radioButtons: {
         flexDirection: "row",
