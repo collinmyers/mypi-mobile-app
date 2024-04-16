@@ -7,49 +7,11 @@ const buttonWidth = deviceWidth * .5;
 
 export default StyleSheet.create({
     container: {
+        display: "flex",
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: appPrimaryColor,
-    },
-    ShareLocationButtonOpac: {
-        fontSize: 20,
-        width: buttonWidth,
-        margin: "2%",
-        padding: 10,
-        borderRadius: 20,
-        color: appTextColor,
-        textAlign: "center",
-        flexDirection: "column",
-        backgroundColor: appTertiaryColor,
-        overflow: "hidden"
-    },
-    ShareLocationText: {
-        color: appTextColor,
-        textAlign: "center",
-        fontSize: 18
-    },
-    UnshareLocationButtonOpac: {
-        fontSize: 20,
-        width: buttonWidth,
-        margin: "2%",
-        padding: 10,
-        borderRadius: 20,
-        color: appTextColor,
-        textAlign: "center",
-        flexDirection: "column",
-        backgroundColor: appTertiaryColor,
-        overflow: "hidden"
-    },
-    UnshareLocationText: {
-        color: appTextColor,
-        textAlign: "center",
-        fontSize: 18
-    },
-    radio: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
     },
     dropdrop: {
         alignSelf: "center",
@@ -59,40 +21,89 @@ export default StyleSheet.create({
         borderRadius: 10,
         borderColor: appQuarternaryColor,
         backgroundColor: appPrimaryColor,
+        marginBottom: "5%"
     },
-    dropdownLabel:{
-        fontSize: 20,
+    dropdownLabel: {
+        fontSize: 24,
         fontWeight: 600,
         color: appTertiaryColor,
         textAlign: "center",
-        marginBottom: "2%"
+        marginBottom: "2%",
+        alignSelf: "center"
     },
-    radioButtons: {
+    pointContainer: {
+        width: "97%",
+        marginHorizontal: "1%",
         flexDirection: "row",
-        justifyContent: "space-evenly",
         alignItems: "center",
-        marginTop: "2%",
-        marginBottom: "5%",
-
-    },
-
-    radioText: {
-        color: appSecondaryColor,
-    },
-    setRadioText: {
-        color: appSecondaryColor,
-
-    },
-    TextInputStyle: {
+        marginBottom: "6%",
         backgroundColor: appPrimaryColor,
-        fontSize: 16
+        justifyContent: "center",
     },
-    snackBar: {
+    pointTitleView: {
+        flex: 1,
+        marginHorizontal: "1%",
+        marginVertical: "2%"
+    },
+    pointTitle: {
+        fontWeight: "700",
+        fontSize: 18,
+        color: appSecondaryColor
+    },
+    removePoint: {
+        flexDirection: "row",
+        marginLeft: "1%",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    trashIcon: {
+        paddingHorizontal: "3%",
+        marginRight: "1%"
+    },
+    deleteModalContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    fab: {
+        backgroundColor: appTertiaryColor,
+        borderRadius: 40,
+        width: 45,
+        height: 45,
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        elevation: 8,
+    },
+    addPointView: {
+        alignSelf: "center"
+    },
+    multiFABContainer: {
+        flexDirection: "row",
+        marginBottom: "100%",
+        width: "100%",
+        justifyContent: "center",
+        alignSelf: "center"
+    },
+    cancelFAB: {
+        backgroundColor: appTertiaryColor,
+        borderRadius: 40,
+        width: 50,
+        height: 50,
+        justifyContent: "center",
+        alignSelf: "center",
+        elevation: 8,
+        marginRight: "2%"
+    },
+    shareFAB: {
         backgroundColor: appSecondaryColor,
-        color: appTextColor,
-    },
-    snackBarFail: {
-        backgroundColor: appWarningColor,
-        color: appTextColor
-    },
+        borderRadius: 40,
+        width: 50,
+        height: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        elevation: 8,
+        marginLeft: "2%",
+        marginRight: "1%"
+    }
 });

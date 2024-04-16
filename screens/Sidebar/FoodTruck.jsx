@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
-import { Modal, Text, Snackbar } from "react-native-paper";
-import SidebarStyle from "../../../styling/SidebarStyle";
-import { DATABASE_ID, FOOD_TRUCK_POI, MAP_COLLECTION_ID, USER_ALIAS_TABLE_ID, account, database } from "../../../utils/Config/config";
+import { Modal, Text } from "react-native-paper";
+import SidebarStyle from "../../styling/SidebarStyle";
+import { DATABASE_ID, FOOD_TRUCK_POI, MAP_COLLECTION_ID, USER_ALIAS_TABLE_ID, account, database, subscribeToRealTimeUpdates } from "../../utils/Config/config";
 import { Dropdown } from "react-native-element-dropdown";
-import { appPrimaryColor, appSecondaryColor, appWarningColor } from "../../../utils/colors/appColors";
+import { appPrimaryColor, appSecondaryColor, appWarningColor } from "../../utils/colors/appColors";
 import { ID, Query } from "appwrite";
 import { useFocusEffect } from "@react-navigation/native";
-import { useNetwork } from "../../../components/context/NetworkContext";
-import { appTextColor } from "../../../utils/colors/appColors";
+import { useNetwork } from "../../components/context/NetworkContext";
 import { ScrollView } from "react-native-gesture-handler";
-import HomeStyle from "../../../styling/HomeStyle";
-import { FontAwesome } from "@expo/vector-icons";
-import PropTypes from "prop-types";
+import HomeStyle from "../../styling/HomeStyle";
+import { FontAwesome, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 
-export default function FoodTruckShareScreen() {
+export default function FoodTruckScreen() {
     const PAGE_SIZE = 25;
 
     const { isInternetReachable } = useNetwork();
@@ -25,8 +23,8 @@ export default function FoodTruckShareScreen() {
     const [goodStatus, setGoodStatus] = useState(true);
     const [unsharedPointsData, setUnsharedPointsData] = useState([]);
     const [sharedPointsData, setSharedPointsData] = useState([]);
-    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
-    const [failSnackbarVisible, setFailSnackbarVisible] = useState(false);
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+    const [addNew, setAddNew] = useState(false);
     const [profileRole, setProfileRole] = useState({
         role: "",
     });
@@ -57,18 +55,16 @@ export default function FoodTruckShareScreen() {
                     ID.unique(),
                     { Name: truckName + " " + selectedLocation, Latitude: unsharedPointsData.at(index).Latitude + offset, Longitude: unsharedPointsData.at(index).Longitude + offset, Status: "Open", Type: "FoodTruck" }
                 );
-                setIsSnackbarVisible(true);
 
             } catch (error) {
-                setFailSnackbarVisible(true);
                 console.error(error);
             }
 
         }
         else {
-            setFailSnackbarVisible(true);
+            console.error("Something else went wrong");
         }
-
+        setAddNew(false);
     };
 
     const unshareLocation = async () => {
@@ -94,7 +90,6 @@ export default function FoodTruckShareScreen() {
                     MAP_COLLECTION_ID,
                     (sharedPointsData.at(index).$id)
                 );
-                setIsSnackbarVisible(true);
 
                 // Update pointData after successful deletion
                 const updatedPointData = sharedPointsData.filter((_, i) => i !== index);
@@ -105,12 +100,32 @@ export default function FoodTruckShareScreen() {
         }
     };
 
-
     useFocusEffect(React.useCallback(() => {
+
+        const handleSubscription_getUnshared = async () => {
+            try {
+                await getUnsharedLocations();
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        // Subscribe to real-time updates for available poi for vendors
+        const unsubscribe_getUnshared = subscribeToRealTimeUpdates(handleSubscription_getUnshared, FOOD_TRUCK_POI);
+
+        const handleSubscription_getShared = async () => {
+            try {
+                await getSharedLocations();
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        // Subscribe to real-time updates for map 
+        const unsubscribe_getShared = subscribeToRealTimeUpdates(handleSubscription_getShared, MAP_COLLECTION_ID);
 
         const checkAuthState = async () => {
             try {
-
                 const response = await account.get();
                 if (response.email === "") throw new Error("Not a email user (guest)");
 
@@ -223,40 +238,44 @@ export default function FoodTruckShareScreen() {
         getUnsharedLocations();
         getSharedLocations();
 
+        return () => {
+            unsubscribe_getUnshared();
+            unsubscribe_getShared();
+        };
+
     }, [userID, isInternetReachable, truckName]));
 
 
     const renderPoints = (sharedPoints) => {
         return sharedPoints.map((sharedPoint, index) => (
-            <View style={HomeStyle.alertCard} key={`${index}_${sharedPoint.Name}`} id={alert.NotificationType}>
-                <View style={HomeStyle.alertCardContent}>
-                    <Text style={HomeStyle.alertListTitle}>{sharedPoint.Name}</Text>
+            <View style={SidebarStyle.pointContainer} key={`${index}_${sharedPoint.Name}`} id={alert.NotificationType}>
+                <View style={SidebarStyle.pointTitleView}>
+                    <Text style={SidebarStyle.pointTitle}>{sharedPoint.Name}</Text>
                 </View>
-                <View style={HomeStyle.manageNotification}>
-                    <FontAwesome style={HomeStyle.manageDelete} name="trash-o" size={30} color={appWarningColor} onPress={() => console.log("hi")} />
+                <View style={SidebarStyle.removePoint}>
+                    <FontAwesome style={SidebarStyle.trashIcon} name="trash-o" size={30} color={appWarningColor} onPress={() => showDeleteModal()} />
                 </View>
             </View>
         ));
     };
 
-    const showDeleteModal = (documentID) => {
-        setSelectedDocumentId(documentID);
+    const showDeleteModal = () => {
         setIsDeleteModalVisible(true);
     };
 
-    const DeleteConfirmationModal = ({ documentID }) => {
+    const DeleteConfirmationModal = () => {
         return (
             <Modal visible={isDeleteModalVisible} transparent>
-                <View style={HomeStyle.modalContainer}>
+                <View style={SidebarStyle.deleteModalContainer}>
                     <View style={HomeStyle.modalContentContainer}>
-                        <Text style={HomeStyle.modalText}>Are you sure you want to delete the notification?</Text>
+                        <Text style={HomeStyle.modalText}>Are you sure you want to delete your location?</Text>
                         <View style={HomeStyle.deleteNotificationsButtonContainer}>
                             <TouchableOpacity onPress={() => setIsDeleteModalVisible(false)} style={HomeStyle.modalCancelButton}>
                                 <Text style={HomeStyle.modalButtonText}>Cancel</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => {
-                                unshareLocation()
                                 setIsDeleteModalVisible(false);
+                                unshareLocation();
                             }} style={HomeStyle.modalDeleteButton}>
                                 <Text style={HomeStyle.modalButtonText}>Delete</Text>
                             </TouchableOpacity>
@@ -267,74 +286,50 @@ export default function FoodTruckShareScreen() {
         );
     };
 
-    DeleteConfirmationModal.propTypes = {
-        documentID: PropTypes.string,
-    };
-
-
     return (
         <SafeAreaView style={SidebarStyle.container}>
             <ScrollView style={{ width: "100%", }} containerStyle={{ justifyContent: "center" }}>
-                {renderPoints(sharedPointsData)}
-                <Text style={SidebarStyle.dropdownLabel}>
-                    Select Location
-                </Text>
-                <View style={SidebarStyle.dropdrop}>
-                    <Dropdown
-                        selectedTextStyle={{ color: appSecondaryColor, textAlign: "center" }}
-                        containerStyle={{ backgroundColor: appPrimaryColor, borderRadius: 10 }}
-                        data={unsharedPointsData}
-                        labelField="Name"
-                        valueField="Name"
-                        value={selectedLocation}
-                        onChange={item => {
-                            setSelectedLocation(item.Name);
-                        }}
-                    />
+                <View style={SidebarStyle.addPointView}>
+                    {renderPoints(sharedPointsData)}
+                    {!addNew &&
+                        <TouchableOpacity style={SidebarStyle.fab} onPress={() => setAddNew(!addNew)}>
+                            <FontAwesome6 name="plus" size={30} color={appPrimaryColor} />
+                        </TouchableOpacity>
+                    }
                 </View>
+
+                {addNew && (
+                    <>
+                        <Text style={SidebarStyle.dropdownLabel}>
+                            Select Location
+                        </Text>
+                        <View style={SidebarStyle.dropdrop}>
+                            <Dropdown
+                                selectedTextStyle={{ color: appSecondaryColor, textAlign: "center" }}
+                                containerStyle={{ backgroundColor: appPrimaryColor, borderRadius: 10 }}
+                                data={unsharedPointsData}
+                                maxHeight={"75%"}
+                                labelField="Name"
+                                valueField="Name"
+                                value={selectedLocation}
+                                onChange={item => {
+                                    setSelectedLocation(item.Name);
+                                }}
+                            />
+                        </View>
+
+                        <View style={SidebarStyle.multiFABContainer}>
+                            <TouchableOpacity style={SidebarStyle.cancelFAB} onPress={() => setAddNew(!addNew)}>
+                                <MaterialIcons style={{ alignSelf: "center" }} name="close" size={30} color={appPrimaryColor} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={SidebarStyle.shareFAB} onPress={() => shareLocation()}>
+                                <MaterialIcons name="check" size={30} color={appPrimaryColor} />
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                )}
             </ScrollView>
-
-
-            <View style={{ paddingTop: 50 }}>
-                <TouchableOpacity style={SidebarStyle.ShareLocationButtonOpac} onPress={() => shareLocation()}>
-                    <Text style={SidebarStyle.ShareLocationText}>Share Location</Text>
-
-                </TouchableOpacity>
-            </View>
-
-
-            <Snackbar
-                visible={isSnackbarVisible}
-                maxFontSizeMultiplier={1}
-                style={SidebarStyle.snackBar}
-                onDismiss={() => {
-                    setIsSnackbarVisible(false);
-                }}
-                action={{
-                    textColor: appTextColor,
-                    label: "Close",
-                }}
-                duration={5000}
-            >
-                {"Location Shared!"}
-            </Snackbar>
-
-            <Snackbar
-                visible={failSnackbarVisible}
-                maxFontSizeMultiplier={1}
-                style={SidebarStyle.snackBarFail}
-                onDismiss={() => {
-                    setFailSnackbarVisible(false);
-                }}
-                action={{
-                    textColor: appTextColor,
-                    label: "Close",
-                }}
-                duration={5000}
-            >
-                {"Failed Sharing Location!"}
-            </Snackbar>
-
+            <DeleteConfirmationModal />
         </SafeAreaView>
     );
 }

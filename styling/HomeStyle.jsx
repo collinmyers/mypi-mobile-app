@@ -723,5 +723,6 @@ export default StyleSheet.create({
     faqDescription: {
         fontSize: 16,
         color: appSecondaryColor
-    }
+    },
+    
 });

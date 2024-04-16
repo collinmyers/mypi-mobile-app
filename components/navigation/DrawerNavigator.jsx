@@ -12,19 +12,19 @@ import { account } from "../../utils/Config/config";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
 import { Entypo, Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from "@expo/vector-icons";
-import FoodTruckStackNavigator from "./Sidebar/FoodTruckStackNavigator";
 import { useAuth } from "../context/AuthContext";
 import { useNetwork } from "../context/NetworkContext";
 import { Snackbar } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import FoodTruckScreen from "../../screens/Sidebar/FoodTruck";
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
 
     const { changeAuthState, isSignedIn, setIsSignedIn } = useAuth();
-    const {isInternetReachable } = useNetwork();
+    const { isInternetReachable } = useNetwork();
     const [errorMessage, setErrorMessage] = useState("");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [isSigningOut, setIsSigningOut] = useState(false);
@@ -200,9 +200,9 @@ export default function DrawerNavigator() {
                     {isSignedIn && ((profileRole.role.includes("FoodTruck"))) ?
                         (<Drawer.Screen
                             name="Food Truck"
-                            component={FoodTruckStackNavigator}
+                            component={FoodTruckScreen}
                             options={{
-                                header: () => { false; },
+                                header: () => <Menu />,
                                 drawerIcon: ({ focused }) =>
                                     <MaterialIcons
                                         name="fastfood"
