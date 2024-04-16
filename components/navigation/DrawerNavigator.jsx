@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Platform } from "react-native";
+import { Linking, Platform } from "react-native";
 import HomeTabNavigator from "./HomeTabNavigator";
 import { NavigationContainer, useDrawerStatus } from "@react-navigation/native";
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Menu from "./Headers/AppHeader";
 import AboutScreen from "../../screens/Sidebar/About";
 import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./Sidebar/AuthStackNavigator";
-import { account, APPROVED_NON_PROFIT } from "../../utils/Config/config";
+import { account, DONATIONS_PROVIDER_LINK, APPROVED_NON_PROFIT } from "../../utils/Config/config";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
 import { Entypo, Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from "@expo/vector-icons";
@@ -18,6 +18,7 @@ import { Snackbar } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import FoodTruckScreen from "../../screens/Sidebar/FoodTruck";
+import PropTypes from "prop-types";
 
 const Drawer = createDrawerNavigator();
 
@@ -70,30 +71,138 @@ export default function DrawerNavigator() {
     };
 
 
-    const SignOutDrawerItem = (props) => {
+    const CustomDrawerItems = (props) => {
+        const { navigation } = props;
+
         return (
             <DrawerContentScrollView {...props}>
-
-                {isSignedIn && (
+                {/* Sign In/Sign Out */}
+                {!isSignedIn ? (
                     <DrawerItem
-                        label="Sign Out"
-                        labelStyle={{
-                            color: appTextColor,
-                            fontSize: 20,
-                        }}
+                        label="Sign In"
+                        onPress={() => navigation.navigate("Sign In")}
                         icon={({ focused }) => (
                             <Ionicons
                                 name="person-circle"
                                 size={24}
                                 color={focused ? appPrimaryColor : appTertiaryColor}
                             />
-                        )
-                        }
-                        onPress={handleLogout} />
+                        )}
+                        labelStyle={{ color: appTextColor, fontSize: 20 }}
+                    />
+                ) : (
+                    <DrawerItem
+                        label="Sign Out"
+                        onPress={handleLogout}
+                        icon={({ focused }) => (
+                            <Ionicons
+                                name="person-circle"
+                                size={24}
+                                color={focused ? appPrimaryColor : appTertiaryColor}
+                            />
+                        )}
+                        labelStyle={{ color: appTextColor, fontSize: 20 }}
+                    />
                 )}
-                <DrawerItemList {...props} />
+
+                {/* Home */}
+                <DrawerItem
+                    label="Home"
+                    onPress={() => navigation.navigate("Home")}
+                    icon={({ focused }) => (
+                        <Entypo
+                            name="home"
+                            size={24}
+                            color={focused ? appPrimaryColor : appTertiaryColor}
+                        />
+                    )}
+                    labelStyle={{ color: appTextColor, fontSize: 20 }}
+                />
+
+                {/* Donate */}
+                {APPROVED_NON_PROFIT.toLowerCase() === "true" ? (
+                    <DrawerItem
+                        label="Donate"
+                        onPress={() => navigation.navigate("Donate")}
+                        icon={({ focused }) => (
+                            <MaterialIcons
+                                name="volunteer-activism"
+                                size={24}
+                                color={focused ? appPrimaryColor : appTertiaryColor}
+                            />
+                        )}
+                        labelStyle={{ color: appTextColor, fontSize: 20 }}
+                    />
+                ) : (
+                    <DrawerItem
+                        label="Donate"
+                        onPress={() => handlePress(DONATIONS_PROVIDER_LINK)}
+                        icon={({ focused }) => (
+                            <MaterialIcons
+                                name="volunteer-activism"
+                                size={24}
+                                color={focused ? appPrimaryColor : appTertiaryColor}
+                            />
+                        )}
+                        labelStyle={{ color: appTextColor, fontSize: 20 }}
+                    />
+                )}
+
+                {/* FAQ */}
+                <DrawerItem
+                    label="FAQ"
+                    onPress={() => navigation.navigate("FAQ")}
+                    icon={({ focused }) => (
+                        <MaterialCommunityIcons
+                            name="frequently-asked-questions"
+                            size={24}
+                            color={focused ? appPrimaryColor : appTertiaryColor}
+                        />
+                    )}
+                    labelStyle={{ color: appTextColor, fontSize: 20 }}
+                />
+
+                {/* About */}
+                <DrawerItem
+                    label="About"
+                    onPress={() => navigation.navigate("About")}
+                    icon={({ focused }) => (
+                        <FontAwesome6
+                            name="circle-info"
+                            size={24}
+                            color={focused ? appPrimaryColor : appTertiaryColor}
+                        />
+                    )}
+                    labelStyle={{ color: appTextColor, fontSize: 20 }}
+                />
+
+                {/* Food Truck */}
+                {isSignedIn && profileRole.role.includes("FoodTruck") && (
+                    <DrawerItem
+                        label="Food Truck"
+                        onPress={() => navigation.navigate("Food Truck")}
+                        icon={({ focused }) => (
+                            <MaterialIcons
+                                name="fastfood"
+                                size={24}
+                                color={focused ? appPrimaryColor : appTertiaryColor}
+                            />
+                        )}
+                        labelStyle={{ color: appTextColor, fontSize: 20 }}
+                    />
+                )}
             </DrawerContentScrollView>
         );
+    };
+
+    CustomDrawerItems.propTypes = {
+        navigation: PropTypes.object.isRequired, // Validate the navigation prop
+    };
+
+
+    const handlePress = (url) => {
+        Linking.openURL(url)
+            .catch(err => console.error("An error occurred", err));
     };
 
     useEffect(() => {
@@ -108,7 +217,7 @@ export default function DrawerNavigator() {
             <NavigationContainer>
                 <Drawer.Navigator
                     initialRouteName="Home"
-                    drawerContent={(props) => <SignOutDrawerItem {...props} />}
+                    drawerContent={(props) => <CustomDrawerItems {...props} />}
                     screenOptions={{
                         overlayColor: "transparent",
                         drawerLabelStyle: {
@@ -155,7 +264,7 @@ export default function DrawerNavigator() {
                         }}
                     />
 
-                    {APPROVED_NON_PROFIT.toLowerCase() === "true" && <Drawer.Screen
+                    <Drawer.Screen
                         name="Donate"
                         component={DonationsScreen}
                         options={{
@@ -167,7 +276,7 @@ export default function DrawerNavigator() {
                                     color={focused ? appPrimaryColor : appTertiaryColor}
                                 />
                         }}
-                    />}
+                    />
 
                     <Drawer.Screen
                         name="FAQ"

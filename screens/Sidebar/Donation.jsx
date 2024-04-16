@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { WebView } from "react-native-webview";
-import { View, ScrollView, RefreshControl, Linking } from "react-native";
+import { View, ScrollView, RefreshControl } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 import PropTypes from "prop-types";
 import HomeStyle from "../../styling/HomeStyle";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor } from "../../utils/colors/appColors";
-import { DONATIONS_PROVIDER_LINK, APPROVED_NON_PROFIT } from "../../utils/Config/config";
+import { DONATIONS_PROVIDER_LINK } from "../../utils/Config/config";
 
 const WebViewComponent = ({ uri, onError }) => {
     const webViewRef = useRef(null);
@@ -62,30 +62,23 @@ ErrorScreen.propTypes = {
     refreshing: PropTypes.bool.isRequired,
 };
 
-const handlePress = (url) => {
-    Linking.openURL(url)
-        .catch(err => console.error("An error occurred", err));
-};
-
 export default function DonationsScreen() {
     const [isErrored, setIsErrored] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
     return (
         <>
-            {APPROVED_NON_PROFIT.toLowerCase() === "true" ?
-                (!isErrored ? (
-                    <WebViewComponent
-                        uri={DONATIONS_PROVIDER_LINK}
-                        onError={() => setIsErrored(true)}
-                        refreshing={refreshing}
-                        setRefreshing={setRefreshing}
-                    />
-                ) : (
-                    <ErrorScreen onRefresh={() => setIsErrored(false)} refreshing={refreshing} />
-                ))
-                : (handlePress(DONATIONS_PROVIDER_LINK))
-            }
+            {(!isErrored ? (
+                <WebViewComponent
+                    uri={DONATIONS_PROVIDER_LINK}
+                    onError={() => setIsErrored(true)}
+                    refreshing={refreshing}
+                    setRefreshing={setRefreshing}
+                />
+            )
+                :
+                (<ErrorScreen onRefresh={() => setIsErrored(false)} refreshing={refreshing} />)
+            )}
         </>
     );
 }
