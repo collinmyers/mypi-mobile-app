@@ -8,7 +8,7 @@ import AboutScreen from "../../screens/Sidebar/About";
 import FAQScreen from "../../screens/Sidebar/FAQ";
 import DonationsScreen from "../../screens/Sidebar/Donation";
 import AuthStackNavigator from "./Sidebar/AuthStackNavigator";
-import { account } from "../../utils/Config/config";
+import { account, APPROVED_NON_PROFIT } from "../../utils/Config/config";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../utils/colors/appColors";
 import { StatusBar } from "expo-status-bar";
 import { Entypo, Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from "@expo/vector-icons";
@@ -155,7 +155,7 @@ export default function DrawerNavigator() {
                         }}
                     />
 
-                    <Drawer.Screen
+                    {APPROVED_NON_PROFIT.toLowerCase() === "true" && <Drawer.Screen
                         name="Donate"
                         component={DonationsScreen}
                         options={{
@@ -167,7 +167,7 @@ export default function DrawerNavigator() {
                                     color={focused ? appPrimaryColor : appTertiaryColor}
                                 />
                         }}
-                    />
+                    />}
 
                     <Drawer.Screen
                         name="FAQ"

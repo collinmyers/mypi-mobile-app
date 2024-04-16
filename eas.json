@@ -21,7 +21,8 @@
         "EXPO_PUBLIC_DELETE_USER_AND_DATA_FUNCTION": "65fa205a237c28253c4e",
         "EXPO_PUBLIC_ABOUT_COLLECTIONS_ID": "65ce66bd79dfd70837b2",
         "EXPO_PUBLIC_FAQ_COLLECTIONS_ID": "65ce669eb0bffcc26f03",
-        "EXPO_PUBLIC_BUNDLE_AND_PACKAGE_IDENTIFIER": "com.discoverpi.mypiseniordesign"
+        "EXPO_PUBLIC_BUNDLE_AND_PACKAGE_IDENTIFIER": "com.discoverpi.mypiseniordesign",
+        "EXPO_PUBLIC_APPROVED_NON_PROFIT": "false"
       },
       "developmentClient": true,
       "distribution": "internal",
@@ -51,7 +52,8 @@
         "EXPO_PUBLIC_DELETE_USER_AND_DATA_FUNCTION": "65fa205a237c28253c4e",
         "EXPO_PUBLIC_ABOUT_COLLECTIONS_ID": "65ce66bd79dfd70837b2",
         "EXPO_PUBLIC_FAQ_COLLECTIONS_ID": "65ce669eb0bffcc26f03",
-        "EXPO_PUBLIC_BUNDLE_AND_PACKAGE_IDENTIFIER": "com.discoverpi.mypiseniordesign"
+        "EXPO_PUBLIC_BUNDLE_AND_PACKAGE_IDENTIFIER": "com.discoverpi.mypiseniordesign",
+        "EXPO_PUBLIC_APPROVED_NON_PROFIT": "false"
       },
       "distribution": "internal",
       "android": {
@@ -80,7 +82,8 @@
         "EXPO_PUBLIC_DELETE_USER_AND_DATA_FUNCTION": "65fa205a237c28253c4e",
         "EXPO_PUBLIC_ABOUT_COLLECTIONS_ID": "65ce66bd79dfd70837b2",
         "EXPO_PUBLIC_FAQ_COLLECTIONS_ID": "65ce669eb0bffcc26f03",
-        "EXPO_PUBLIC_BUNDLE_AND_PACKAGE_IDENTIFIER": "com.discoverpi.mypiseniordesign"
+        "EXPO_PUBLIC_BUNDLE_AND_PACKAGE_IDENTIFIER": "com.discoverpi.mypiseniordesign",
+        "EXPO_PUBLIC_APPROVED_NON_PROFIT": "false"
       },
       "channel": "production"
     }
