@@ -63,12 +63,12 @@ export default function AlertsScreen() {
 
                 // Load data from the local file
                 const fileUri = FileSystem.documentDirectory + "alertsCard.json";
-                let fileContents;
+                let fileContents = "[]";
                 try {
                     fileContents = await FileSystem.readAsStringAsync(fileUri);
                 } catch (error) {
                     // If the file doesn't exist, initialize with an empty array
-                    fileContents = "";
+                    fileContents = "[]";
                 }
                 const localData = JSON.parse(fileContents);
 

@@ -4,6 +4,25 @@
   },
   "build": {
     "development": {
+      "env": {
+        "EXPO_PUBLIC_APPWRITE_ENDPOINT": "https://mypi.bd.psu.edu/v1",
+        "EXPO_PUBLIC_APPWRITE_PROJECT_ID": "653a90dd1993aebe707f",
+        "EXPO_PUBLIC_RECOVERY_DOMAIN": "https://mypi.bd.psu.edu",
+        "EXPO_PUBLIC_DATABASE_ID": "653ae4b2740b9f0a5139",
+        "EXPO_PUBLIC_MAP_COLLECTION_ID": "65565099921adc2d835b",
+        "EXPO_PUBLIC_EVENT_COLLECTION_ID": "655280f07e30eb37c8e8",
+        "EXPO_PUBLIC_ALERTS_COLLECTION_ID": "6552848655e88d169d7d",
+        "EXPO_PUBLIC_FILE_BUCKET_ID": "653ae4d2b3fcc68c10bf",
+        "EXPO_PUBLIC_USER_NOTIFICATION_TOKENS_COLLECTION_ID": "65d651f3af4d612b0b75",
+        "EXPO_PUBLIC_PUSH_NOTIFICATION_FUNCTION_ID": "65f0d127760ea12b0f1f",
+        "EXPO_PUBLIC_DONATION_PROVIDER_LINK": "https://www.discoverpi.com/support",
+        "EXPO_PUBLIC_USER_ALIAS_TABLE_COLLECTION_ID": "65f9d24372191350e360",
+        "EXPO_PUBLIC_FOOD_TRUCK_POI_COLLECTION_ID": "65fa05f7ae5701d50637",
+        "EXPO_PUBLIC_DELETE_USER_AND_DATA_FUNCTION": "65fa205a237c28253c4e",
+        "EXPO_PUBLIC_ABOUT_COLLECTIONS_ID": "65ce66bd79dfd70837b2",
+        "EXPO_PUBLIC_FAQ_COLLECTIONS_ID": "65ce669eb0bffcc26f03",
+        "EXPO_PUBLIC_BUNDLE_AND_PACKAGE_IDENTIFIER": "com.discoverpi.mypiseniordesign"
+      },
       "developmentClient": true,
       "distribution": "internal",
       "android": {
