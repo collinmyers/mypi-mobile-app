@@ -32,8 +32,15 @@ export default function MapScreen() {
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessageShown, setErrorMessageShown] = useState(false);
     const [prevEmptyCategories, setPrevEmptyCategories] = useState([]);
-
+    const [fetchingFinished, setFetchFinished] = useState(false);
     const PAGE_SIZE = 25;
+
+    
+    useEffect(() => {
+        if (markersData.length > 0 || fetchingFinished) {
+            setIsLoading(false);
+        }
+    }, [markersData.length, fetchingFinished]);
 
     useFocusEffect(React.useCallback(() => {
 
@@ -76,6 +83,7 @@ export default function MapScreen() {
 
                 setMarkersData(allMarkers);
                 await saveDataToFile(allMarkers); // Save fetched data to file
+                setFetchFinished(true);
             } catch (error) {
                 console.error(error);
             }
@@ -124,9 +132,7 @@ export default function MapScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData().then(() => {
-            setIsLoading(false);
-        });
+        checkNetworkConnectivityAndFetchData();
 
         // Cleanup function
         return () => {

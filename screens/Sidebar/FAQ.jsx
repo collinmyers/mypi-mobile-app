@@ -13,11 +13,18 @@ import HomeStyle from "../../styling/HomeStyle";
 import { appSecondaryColor } from "../../utils/colors/appColors";
 
 export default function FAQScreen() {
+    const PAGE_SIZE = 25;
     const { isInternetReachable } = useNetwork();
     const [faqData, setFaqData] = useState([]);
     const [isExpanded, setIsExpanded] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const PAGE_SIZE = 25;
+    const [fetchingFinished, setFetchFinished] = useState(false);
+
+    useEffect(() => {
+        if (faqData.length > 0 || fetchingFinished) {
+            setIsLoading(false);
+        }
+    }, [faqData.length, fetchingFinished]);
 
     useEffect(() => {
         const handleSubscription = () => {
@@ -58,6 +65,7 @@ export default function FAQScreen() {
 
                 setFaqData(allFAQ);
                 await saveDataToFile(allFAQ); // Save fetched data to file
+                setFetchFinished(true);
             } catch (error) {
                 console.error(error);
             }
@@ -110,9 +118,7 @@ export default function FAQScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData().then(() => {
-            setIsLoading(false);
-        });
+        checkNetworkConnectivityAndFetchData();
 
         // Cleanup function
         return () => {

@@ -17,10 +17,16 @@ export default function EventListScreen() {
     const { isInternetReachable } = useNetwork();
     const [eventData, setEventData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [fetchingFinished, setFetchFinished] = useState(false);
     const PAGE_SIZE = 25;
 
     const blurhash = "LyD1KYtRWBf7?wt6Wqj?xvoIa}j@";
 
+    useEffect(() => {
+        if (eventData.length > 0 || fetchingFinished) {
+            setIsLoading(false);
+        }
+    }, [eventData.length, fetchingFinished]);
 
     useEffect(() => {
         // Function to handle real-time updates
@@ -109,6 +115,7 @@ export default function EventListScreen() {
 
                 setEventData(eventsWithImages);
                 await saveDataToFile(eventsWithImages); // Save fetched data to file
+                setFetchFinished(true);
             } catch (error) {
                 console.error(error);
             }
@@ -158,9 +165,7 @@ export default function EventListScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData().then(() => {
-            setIsLoading(false);
-        });
+        checkNetworkConnectivityAndFetchData();
         // Cleanup function
         return () => {
             unsubscribe();

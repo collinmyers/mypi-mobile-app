@@ -27,9 +27,16 @@ export default function ManageAlertsScreen() {
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const [selectedDocumentId, setSelectedDocumentId] = useState(null);
     const [profileRoles, setProfileRoles] = useState([]);
+    const [fetchingFinished, setFetchFinished] = useState(false);
+
+
+    useEffect(() => {
+        if (alertData.length > 0 || fetchingFinished) {
+            setIsLoading(false);
+        }
+    }, [alertData.length, fetchingFinished]);
 
     useFocusEffect(React.useCallback(() => {
-
         const handleSubscription = async () => {
             try {
                 await fetchData();
@@ -71,6 +78,7 @@ export default function ManageAlertsScreen() {
 
                 setAlertData(allAlerts);
                 await saveDataToFile(allAlerts); // Save fetched data to file
+                setFetchFinished(true);
             } catch (error) {
                 console.error(error);
             }
@@ -123,9 +131,8 @@ export default function ManageAlertsScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData().then(() => {
-            setIsLoading(false);
-        });
+        checkNetworkConnectivityAndFetchData();
+
         return () => {
             unsubscribe();
         };
@@ -223,9 +230,14 @@ export default function ManageAlertsScreen() {
                     <ActivityIndicator animating={true} color={appSecondaryColor} size="large" />
                 </View>
             ) : (
-                <ScrollView contentContainerStyle={[HomeStyle.scrollableView, { alignItems: "center" }]} showsVerticalScrollIndicator={false}>
-                    {renderAlerts(alertData)}
-                </ScrollView>
+                alertData.length > 0 ?
+                    <ScrollView contentContainerStyle={[HomeStyle.scrollableView, { alignItems: "center" }]} showsVerticalScrollIndicator={false}>
+                        {renderAlerts(alertData)}
+                    </ScrollView>
+                    :
+                    <Text style={HomeStyle.noNotificationsMessage}>
+                        No notifications to manage at this time
+                    </Text>
             )}
 
             {isSignedInLocal && (profileRoles.includes("ManageNotifications")) ?

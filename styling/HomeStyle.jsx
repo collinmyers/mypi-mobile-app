@@ -553,6 +553,7 @@ export default StyleSheet.create({
         elevation: 8,
     },
     noNotificationsMessage: {
+        textAlign: "center",
         color: appSecondaryColor,
         fontWeight: 600,
         fontSize: 20

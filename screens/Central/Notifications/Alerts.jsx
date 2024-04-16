@@ -27,10 +27,17 @@ export default function AlertsScreen() {
     const [selectedCategory, setSelectedCategory] = useState("notifications");
     const selectedCategoryRef = useRef("notifications");
     const [isLoading, setIsLoading] = useState(true);
+    const [fetchingFinished, setFetchFinished] = useState(false);
     const [isSignedInLocal, setisSignedInLocal] = useState(false);
     const [alertData, setAlertData] = useState([]);
     const [profileRoles, setProfileRoles] = useState([]);
 
+
+    useEffect(() => {
+        if (alertData.length > 0 || fetchingFinished) {
+            setIsLoading(false);
+        }
+    }, [alertData.length, fetchingFinished]);
 
     useFocusEffect(React.useCallback(() => {
         setLocalDateTime(new Date());
@@ -60,20 +67,27 @@ export default function AlertsScreen() {
         const fetchData = async () => {
             try {
                 let allAlerts = [];
-
+                let doesLocalExist = false;
+                let existingAlertsMap;
                 // Load data from the local file
                 const fileUri = FileSystem.documentDirectory + "alertsCard.json";
                 let fileContents = "[]";
                 try {
                     fileContents = await FileSystem.readAsStringAsync(fileUri);
+                    doesLocalExist = true;
                 } catch (error) {
                     // If the file doesn't exist, initialize with an empty array
                     fileContents = "[]";
                 }
-                const localData = JSON.parse(fileContents);
+                
 
+                if (doesLocalExist) {
+                    const localData = JSON.parse(fileContents);
+                    console.log(localData);
+                    existingAlertsMap = new Map(localData.map((alert) => [alert.$id, alert.isDismissed]));
+                }
                 // Create a mapping of the local data with $id and isDismissed state
-                const existingAlertsMap = new Map(localData.map((alert) => [alert.$id, alert.isDismissed]));
+
 
                 let offset = 0;
                 let response;
@@ -89,8 +103,13 @@ export default function AlertsScreen() {
                 } while (response.documents.length > 0);
 
                 allAlerts.forEach((alert) => {
-                    const isDismissed = existingAlertsMap.get(alert.$id) || false;
-                    alert.isDismissed = isDismissed;
+
+                    if (doesLocalExist) {
+                        const isDismissed = existingAlertsMap.get(alert.$id) || false;
+                        alert.isDismissed = isDismissed;
+                    } else {
+                        alert.isDismissed = false;
+                    }
 
                     delete alert.$collectionId;
                     delete alert.$databaseId;
@@ -99,14 +118,13 @@ export default function AlertsScreen() {
                     delete alert.AlertType;
                 });
 
-                console.log(allAlerts);
-
                 // Sort to show newest notifications first
                 allAlerts.sort((a, b) => new Date(b.$createdAt) - new Date(a.$createdAt));
 
                 setAlertData(allAlerts);
                 setSelectedCategory(selectedCategoryRef.current);
                 await saveDataToFile(allAlerts); // Save fetched data to file
+                setFetchFinished(true);
             } catch (error) {
                 console.error(error);
             }
@@ -161,9 +179,9 @@ export default function AlertsScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData().then(() => {
-            setIsLoading(false);
-        });
+        checkNetworkConnectivityAndFetchData();
+
+
 
         return () => {
             unsubscribe();
@@ -172,9 +190,9 @@ export default function AlertsScreen() {
     }, [isInternetReachable]);
 
 
-    useEffect(()=>{
+    useEffect(() => {
         getRoles();
-    },[isSignedIn]);
+    }, [isSignedIn]);
 
     const toggleDismissed = async (alertId) => {
         try {
@@ -249,7 +267,6 @@ export default function AlertsScreen() {
     const getRoles = async () => {
         try {
             await account.get().then((response) => {
-                console.log(response.labels);
                 setProfileRoles(response.labels);
                 setisSignedInLocal(true);
             });

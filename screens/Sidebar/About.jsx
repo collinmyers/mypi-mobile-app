@@ -11,11 +11,19 @@ import HomeStyle from "../../styling/HomeStyle";
 import { appSecondaryColor } from "../../utils/colors/appColors";
 
 export default function ParkInfoScreen() {
+    const PAGE_SIZE = 25;
+
     const { isInternetReachable } = useNetwork();
     const [parkAboutData, setParkAboutData] = useState([]);
     const [partnershipAboutData, setPartnershipAboutData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const PAGE_SIZE = 25;
+    const [fetchingFinished, setFetchFinished] = useState(false);
+
+    useEffect(() => {
+        if ((parkAboutData.length > 0 && partnershipAboutData) || fetchingFinished) {
+            setIsLoading(false);
+        }
+    }, [parkAboutData.length, partnershipAboutData.length, fetchingFinished]);
 
     useEffect(() => {
         const handleSubscription = () => {
@@ -59,8 +67,8 @@ export default function ParkInfoScreen() {
                 const partnershipData = allAbout.filter(item => item.AboutType === "partnership");
                 setParkAboutData(parkData);
                 setPartnershipAboutData(partnershipData);
-
                 await saveDataToFile(allAbout); // Save fetched data to file
+                setFetchFinished(true);
             } catch (error) {
                 console.error(error);
             }
@@ -116,9 +124,7 @@ export default function ParkInfoScreen() {
             .catch(error => console.error("Error checking file: ", error));
 
         // Check network connectivity and fetch data if connected
-        checkNetworkConnectivityAndFetchData().then(() => {
-            setIsLoading(false);
-        });
+        checkNetworkConnectivityAndFetchData();
 
         // Cleanup function
         return () => {
