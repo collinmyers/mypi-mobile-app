@@ -32,7 +32,7 @@ export default function MapList() {
 
 
     useEffect(() => {
-        if (pointData.length > 0 && fetchingFinished) {
+        if (pointData.length > 0 || fetchingFinished) {
             setIsLoading(false);
             setMessage("");
         } else if (pointData.length === 0 && fetchingFinished) {
