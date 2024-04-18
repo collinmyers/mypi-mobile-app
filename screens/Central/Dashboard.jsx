@@ -136,7 +136,7 @@ export default function Dashboard() {
                 let pushDocString = "push doc not set";
 
                 // If granted, get the token and create a document in appwrite
-                await Notifications.getExpoPushTokenAsync({ projectID: EXPO_PROJECT_ID }).then((response) => {
+                await Notifications.getExpoPushTokenAsync({ projectId: EXPO_PROJECT_ID }).then((response) => {
 
                     token = response.data;
 
