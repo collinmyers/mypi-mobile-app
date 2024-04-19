@@ -66,7 +66,7 @@ export default function SettingsScreen({ navigation }) {
         };
         getNameAndEmail();
 
-    }, [changeAuthState, isInternetReachable]);
+    }, [changeAuthState, isSignedIn, isInternetReachable]);
 
     useEffect(() => {
         if (route.params?.updateProfileInfo === true) {
@@ -283,6 +283,23 @@ export default function SettingsScreen({ navigation }) {
     useFocusEffect(React.useCallback(() => {
         const pushStatus = async () => {
             try {
+
+                let userID = null;
+
+                await account.get().then((response) => { // handles user already signed in
+                    userID = response.$id;
+                    if (response.email === "") console.log("User session already exists (guest user)");
+                    else console.log("User session already exists (email user)");
+                }).catch((error) => { // creates anonoymous session to send token to backend
+                    const stringError = error.toString();
+                    const notRegistered = "AppwriteException: User (role: guests) missing scope (account)";
+                    if (stringError.includes(notRegistered))
+                        account.createAnonymousSession().then((response) => {
+                            userID = response.$id;
+                            console.log("Created guest sessions");
+                        });
+                });
+
                 // Request push notification permissions
                 const { status } = await Notifications.getPermissionsAsync();
 
@@ -323,7 +340,7 @@ export default function SettingsScreen({ navigation }) {
                         ID.unique(),
                         {
                             ExpoPushToken: token,
-                            UID: profileInfo.identity
+                            UID: userID
                         }
                     );
 
