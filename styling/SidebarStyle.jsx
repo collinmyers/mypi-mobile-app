@@ -1,9 +1,6 @@
-import { Dimensions, StyleSheet } from "react-native";
-import { appPrimaryColor, appTertiaryColor, appTextColor, appSecondaryColor, appWarningColor, appQuarternaryColor } from "../utils/colors/appColors";
+import { StyleSheet } from "react-native";
+import { appPrimaryColor, appTertiaryColor, appSecondaryColor, appQuarternaryColor } from "../utils/colors/appColors";
 
-
-const deviceWidth = Dimensions.get("window").width;
-const buttonWidth = deviceWidth * .5;
 
 export default StyleSheet.create({
     container: {
@@ -36,7 +33,7 @@ export default StyleSheet.create({
         marginHorizontal: "1%",
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: "6%",
+        marginBottom: "2.5%",
         backgroundColor: appPrimaryColor,
         justifyContent: "center",
     },
@@ -48,7 +45,8 @@ export default StyleSheet.create({
     pointTitle: {
         fontWeight: "700",
         fontSize: 18,
-        color: appSecondaryColor
+        color: appSecondaryColor,
+        marginLeft: "1%"
     },
     removePoint: {
         flexDirection: "row",
@@ -73,9 +71,10 @@ export default StyleSheet.create({
         alignItems: "center",
         alignSelf: "center",
         elevation: 8,
+        marginTop: "4%"
     },
     addPointView: {
-        alignSelf: "center"
+        alignSelf: "center",
     },
     multiFABContainer: {
         flexDirection: "row",
@@ -105,5 +104,12 @@ export default StyleSheet.create({
         elevation: 8,
         marginLeft: "2%",
         marginRight: "1%"
-    }
+    },
+    noMessage: {
+        textAlign: "center",
+        color: appSecondaryColor,
+        fontWeight: 600,
+        fontSize: 20,
+        marginBottom: "5%"
+    },
 });

@@ -304,7 +304,6 @@ export default function SettingsScreen({ navigation }) {
                     );
 
                     if (result) {
-                        console.log(result);
                         await deleteFromSecureStore(pushKey);
                     }
                     return;
@@ -316,7 +315,7 @@ export default function SettingsScreen({ navigation }) {
                         return;
                     }
                     // If granted, get the token and create a document in appwrite
-                    const token = (await Notifications.getExpoPushTokenAsync({ projectID: EXPO_PROJECT_ID })).data;
+                    const token = (await Notifications.getExpoPushTokenAsync({ projectId: EXPO_PROJECT_ID })).data;
 
                     const createTokenDoc = await database.createDocument(
                         DATABASE_ID,
