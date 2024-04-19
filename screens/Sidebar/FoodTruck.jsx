@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
 import { Modal, Text } from "react-native-paper";
 import SidebarStyle from "../../styling/SidebarStyle";
@@ -6,7 +6,6 @@ import { DATABASE_ID, FOOD_TRUCK_POI, MAP_COLLECTION_ID, USER_ALIAS_TABLE_ID, ac
 import { Dropdown } from "react-native-element-dropdown";
 import { appPrimaryColor, appSecondaryColor, appWarningColor } from "../../utils/colors/appColors";
 import { ID, Query } from "appwrite";
-import { useFocusEffect } from "@react-navigation/native";
 import { useNetwork } from "../../components/context/NetworkContext";
 import { ScrollView } from "react-native-gesture-handler";
 import HomeStyle from "../../styling/HomeStyle";
@@ -17,13 +16,15 @@ export default function FoodTruckScreen() {
 
     const { isInternetReachable } = useNetwork();
     const [isSignedIn, setIsSignedIn] = useState(false);
-    const [selectedLocation, setSelectedLocation] = useState("Beach 1");
+    const [selectedLocation, setSelectedLocation] = useState("");
     const [truckName, setTruckName] = useState();
     const [userID, setUserID] = useState("");
-    const [goodStatus, setGoodStatus] = useState(true);
+    const [aliasExist, setAliasExist] = useState(true);
     const [unsharedPointsData, setUnsharedPointsData] = useState([]);
     const [sharedPointsData, setSharedPointsData] = useState([]);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+    const [fetchingFinished, setFetchFinished] = useState(false);
+    const [message, setMessage] = useState("");
     const [addNew, setAddNew] = useState(false);
     const [profileRole, setProfileRole] = useState({
         role: "",
@@ -41,7 +42,7 @@ export default function FoodTruckScreen() {
             return -1; // If the attribute is not found
         }
 
-        if (isSignedIn && (profileRole.role.includes("FoodTruck")) && goodStatus) {
+        if (isSignedIn && (profileRole.role.includes("FoodTruck")) && aliasExist) {
             let index = findIndex("Name", selectedLocation);
 
             let randomNum = Math.random();
@@ -79,7 +80,7 @@ export default function FoodTruckScreen() {
             return -1; // If the attribute is not found
         }
 
-        if (isSignedIn && (profileRole.role.includes("FoodTruck")) && goodStatus) {
+        if (isSignedIn && (profileRole.role.includes("FoodTruck")) && aliasExist) {
 
             //Find attribute's index, in the point data use State, then delete based on it's id...
             let index = findIndex("Name", selectedLocation);
@@ -100,7 +101,16 @@ export default function FoodTruckScreen() {
         }
     };
 
-    useFocusEffect(React.useCallback(() => {
+    useEffect(() => {
+        if (sharedPointsData.length > 0 ) {
+            setMessage("");
+        } else if (sharedPointsData.length === 0 && fetchingFinished) {
+            setMessage("No Food Trucks have been shared yet");
+        }
+    }, [sharedPointsData.length, fetchingFinished]);
+
+
+    useEffect(() => {
 
         const handleSubscription_getUnshared = async () => {
             try {
@@ -137,7 +147,7 @@ export default function FoodTruckScreen() {
 
             } catch {
                 setIsSignedIn(false);
-                setGoodStatus(false);
+                setAliasExist(false);
             }
 
         };
@@ -153,10 +163,10 @@ export default function FoodTruckScreen() {
             );
             if (response.documents.length > 0) {
                 setTruckName(response.documents.at(0).UserName);
-                setGoodStatus(true);
+                setAliasExist(true);
             }
             else {
-                setGoodStatus(false);
+                setAliasExist(false);
             }
         };
 
@@ -228,6 +238,7 @@ export default function FoodTruckScreen() {
                     delete point.$updatedAt;
                 });
                 setSharedPointsData(allPoints);
+                setFetchFinished(true);
             } catch (error) {
                 console.error(error);
             }
@@ -243,7 +254,7 @@ export default function FoodTruckScreen() {
             unsubscribe_getShared();
         };
 
-    }, [userID, isInternetReachable, truckName]));
+    }, [userID, isInternetReachable, truckName]);
 
 
     const renderPoints = (sharedPoints) => {
@@ -290,7 +301,14 @@ export default function FoodTruckScreen() {
         <SafeAreaView style={SidebarStyle.container}>
             <ScrollView style={{ width: "100%", }} containerStyle={{ justifyContent: "center" }}>
                 <View style={SidebarStyle.addPointView}>
-                    {renderPoints(sharedPointsData)}
+                    {
+                        sharedPointsData.length > 0 ?
+                            renderPoints(sharedPointsData)
+                            :
+                            <Text style={SidebarStyle.noMessage}>
+                                {message}
+                            </Text>
+                    }
                     {!addNew &&
                         <TouchableOpacity style={SidebarStyle.fab} onPress={() => setAddNew(!addNew)}>
                             <FontAwesome6 name="plus" size={30} color={appPrimaryColor} />
@@ -305,8 +323,11 @@ export default function FoodTruckScreen() {
                         </Text>
                         <View style={SidebarStyle.dropdrop}>
                             <Dropdown
+                                placeholder="Choose a Location"
+                                placeholderStyle={{ textAlign: "center", fontWeight: 500, color: appSecondaryColor }}
                                 selectedTextStyle={{ color: appSecondaryColor, textAlign: "center" }}
                                 containerStyle={{ backgroundColor: appPrimaryColor, borderRadius: 10 }}
+                                itemTextStyle={{ color: appSecondaryColor, fontWeight: 500 }}
                                 data={unsharedPointsData}
                                 maxHeight={"75%"}
                                 labelField="Name"

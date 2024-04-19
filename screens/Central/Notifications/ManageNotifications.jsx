@@ -9,7 +9,6 @@ import { useNavigation } from "@react-navigation/native";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appWarningColor, } from "../../../utils/colors/appColors";
 import { MaterialCommunityIcons, FontAwesome6, FontAwesome } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
-import { useFocusEffect } from "@react-navigation/native";
 import PropTypes from "prop-types";
 import { useNetwork } from "../../../components/context/NetworkContext";
 import { useAuth } from "../../../components/context/AuthContext";
@@ -36,7 +35,7 @@ export default function ManageAlertsScreen() {
         }
     }, [alertData.length, fetchingFinished]);
 
-    useFocusEffect(React.useCallback(() => {
+    useEffect(() => {
         const handleSubscription = async () => {
             try {
                 await fetchData();
@@ -137,7 +136,7 @@ export default function ManageAlertsScreen() {
             unsubscribe();
         };
 
-    }, [isInternetReachable]));
+    }, [isInternetReachable]);
 
     useEffect(() => {
         getNameAndRole();

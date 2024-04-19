@@ -9,7 +9,7 @@ import { getAutoPlayPreference, saveAutoPlayPreference } from "../../../utils/As
 import * as Notifications from "expo-notifications";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../../utils/colors/appColors";
 import { MaterialCommunityIcons, Entypo, MaterialIcons, Ionicons, FontAwesome6 } from "@expo/vector-icons";
-import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS, DELETE_USER_FUNCTION_ID } from "../../../utils/Config/config";
+import { account, database, DATABASE_ID, functions, USER_NOTIFICATION_TOKENS, DELETE_USER_FUNCTION_ID, EXPO_PROJECT_ID } from "../../../utils/Config/config";
 import { ID } from "appwrite";
 import * as Linking from "expo-linking";
 import { useAuth } from "../../../components/context/AuthContext";
@@ -66,7 +66,7 @@ export default function SettingsScreen({ navigation }) {
         };
         getNameAndEmail();
 
-    }, [changeAuthState, isInternetReachable]);
+    }, [changeAuthState, isSignedIn, isInternetReachable]);
 
     useEffect(() => {
         if (route.params?.updateProfileInfo === true) {
@@ -283,6 +283,23 @@ export default function SettingsScreen({ navigation }) {
     useFocusEffect(React.useCallback(() => {
         const pushStatus = async () => {
             try {
+
+                let userID = null;
+
+                await account.get().then((response) => { // handles user already signed in
+                    userID = response.$id;
+                    if (response.email === "") console.log("User session already exists (guest user)");
+                    else console.log("User session already exists (email user)");
+                }).catch((error) => { // creates anonoymous session to send token to backend
+                    const stringError = error.toString();
+                    const notRegistered = "AppwriteException: User (role: guests) missing scope (account)";
+                    if (stringError.includes(notRegistered))
+                        account.createAnonymousSession().then((response) => {
+                            userID = response.$id;
+                            console.log("Created guest sessions");
+                        });
+                });
+
                 // Request push notification permissions
                 const { status } = await Notifications.getPermissionsAsync();
 
@@ -304,7 +321,6 @@ export default function SettingsScreen({ navigation }) {
                     );
 
                     if (result) {
-                        console.log(result);
                         await deleteFromSecureStore(pushKey);
                     }
                     return;
@@ -316,7 +332,7 @@ export default function SettingsScreen({ navigation }) {
                         return;
                     }
                     // If granted, get the token and create a document in appwrite
-                    const token = (await Notifications.getExpoPushTokenAsync({ projectID: "myPI" })).data;
+                    const token = (await Notifications.getExpoPushTokenAsync({ projectId: EXPO_PROJECT_ID })).data;
 
                     const createTokenDoc = await database.createDocument(
                         DATABASE_ID,
@@ -324,7 +340,7 @@ export default function SettingsScreen({ navigation }) {
                         ID.unique(),
                         {
                             ExpoPushToken: token,
-                            UID: profileInfo.identity
+                            UID: userID
                         }
                     );
 

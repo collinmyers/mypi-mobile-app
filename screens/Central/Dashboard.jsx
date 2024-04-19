@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { appPrimaryColor } from "../../utils/colors/appColors";
 import { useNetwork } from "../../components/context/NetworkContext";
 import { useAuth } from "../../components/context/AuthContext";
+
 export default function Dashboard() {
 
     const navigation = useNavigation();
@@ -50,6 +51,8 @@ export default function Dashboard() {
             getNameAndEmail();
         }
     }, [isInternetReachable, isSignedIn]);
+
+
 
     return (
         <SafeAreaView style={AppStyle.container}>
