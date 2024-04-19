@@ -58,7 +58,6 @@ export default function App() {
 
                 // If granted, get the token and create a document in appwrite
                 const token = (await Notifications.getExpoPushTokenAsync({ projectId: EXPO_PROJECT_ID })).data;
-                console.log(token);
 
                 // Create doc for user's push token. This will run if the expo token is not stored or doesn't match.
                 const createTokenDoc = await database.createDocument(
