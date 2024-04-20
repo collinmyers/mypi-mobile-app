@@ -191,7 +191,7 @@ export default function AlertsScreen() {
             unsubscribe();
         };
 
-    }, [isInternetReachable]);
+    }, [isInternetReachable, isAppActive]);
 
 
     useEffect(() => {
