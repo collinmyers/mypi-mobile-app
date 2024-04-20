@@ -11,14 +11,17 @@ import { useNetwork } from "../../components/context/NetworkContext";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import { appSecondaryColor } from "../../utils/colors/appColors";
+import { useAppState } from "../../components/context/AppStateContext";
 
 export default function FAQScreen() {
     const PAGE_SIZE = 25;
     const { isInternetReachable } = useNetwork();
+    const { isAppActive } = useAppState();
     const [faqData, setFaqData] = useState([]);
     const [isExpanded, setIsExpanded] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [fetchingFinished, setFetchFinished] = useState(false);
+
 
     useEffect(() => {
         if (faqData.length > 0 || fetchingFinished) {
@@ -125,7 +128,7 @@ export default function FAQScreen() {
             unsubscribe();
         };
 
-    }, [isInternetReachable]);
+    }, [isInternetReachable, isAppActive]);
 
 
     const renderFAQ = (faqData) => {
@@ -145,10 +148,10 @@ export default function FAQScreen() {
                         name={isExpanded[index] ? "minus" : "plus"}
                         size={24}
                         color={appSecondaryColor}
-                        style={{marginLeft: 15, marginRight: 15}}
+                        style={{ marginLeft: 15, marginRight: 15 }}
                     />
                 </TouchableOpacity>
-                <Collapsible style={{marginRight: "12%"}} collapsed={!isExpanded[index]}>
+                <Collapsible style={{ marginRight: "12%" }} collapsed={!isExpanded[index]}>
                     <Text style={HomeStyle.faqDescription}>{item.Answer}</Text>
                 </Collapsible>
             </View>

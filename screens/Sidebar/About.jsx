@@ -9,11 +9,13 @@ import { useNetwork } from "../../components/context/NetworkContext";
 import AppStyle from "../../styling/AppStyle";
 import HomeStyle from "../../styling/HomeStyle";
 import { appSecondaryColor } from "../../utils/colors/appColors";
+import { useAppState } from "../../components/context/AppStateContext";
 
 export default function ParkInfoScreen() {
     const PAGE_SIZE = 25;
 
     const { isInternetReachable } = useNetwork();
+    const { isAppActive } = useAppState();
     const [parkAboutData, setParkAboutData] = useState([]);
     const [partnershipAboutData, setPartnershipAboutData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -131,14 +133,14 @@ export default function ParkInfoScreen() {
             unsubscribe();
         };
 
-    }, [isInternetReachable]);
+    }, [isInternetReachable, isAppActive]);
 
 
     const renderAbout = (aboutData) => {
         return aboutData.map((item) => (
             <View style={HomeStyle.aboutSection} key={item.$id}>
-                    <Text style={HomeStyle.aboutTitle}>{item.Title}</Text>
-                    <Text style={HomeStyle.aboutDescription}>{item.Description}</Text>
+                <Text style={HomeStyle.aboutTitle}>{item.Title}</Text>
+                <Text style={HomeStyle.aboutDescription}>{item.Description}</Text>
             </View>
         ));
     };

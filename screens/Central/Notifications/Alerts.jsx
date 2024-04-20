@@ -84,14 +84,10 @@ export default function AlertsScreen() {
                     fileContents = "[]";
                 }
 
-
                 if (doesLocalExist) {
                     const localData = JSON.parse(fileContents);
-                    console.log(localData);
                     existingAlertsMap = new Map(localData.map((alert) => [alert.$id, alert.isDismissed]));
                 }
-                // Create a mapping of the local data with $id and isDismissed state
-
 
                 let offset = 0;
                 let response;

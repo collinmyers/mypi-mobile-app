@@ -10,11 +10,13 @@ import { useNetwork } from "../../components/context/NetworkContext";
 import { ScrollView } from "react-native-gesture-handler";
 import HomeStyle from "../../styling/HomeStyle";
 import { FontAwesome, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
+import { useAppState } from "../../components/context/AppStateContext";
 
 export default function FoodTruckScreen() {
     const PAGE_SIZE = 25;
 
     const { isInternetReachable } = useNetwork();
+    const { isAppActive } = useAppState();
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState("");
     const [truckName, setTruckName] = useState();
@@ -102,7 +104,7 @@ export default function FoodTruckScreen() {
     };
 
     useEffect(() => {
-        if (sharedPointsData.length > 0 ) {
+        if (sharedPointsData.length > 0) {
             setMessage("");
         } else if (sharedPointsData.length === 0 && fetchingFinished) {
             setMessage("No Food Trucks have been shared yet");
@@ -254,7 +256,7 @@ export default function FoodTruckScreen() {
             unsubscribe_getShared();
         };
 
-    }, [userID, isInternetReachable, truckName]);
+    }, [userID, isInternetReachable, truckName, isAppActive]);
 
 
     const renderPoints = (sharedPoints) => {
