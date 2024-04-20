@@ -14,12 +14,14 @@ import { appSecondaryColor, appTertiaryColor, appTextColor } from "../../../util
 import { subscribeToRealTimeUpdates } from "../../../utils/Config/config";
 import * as FileSystem from "expo-file-system";
 import { useNetwork } from "../../../components/context/NetworkContext";
+import { useAppState } from "../../../components/context/AppStateContext";
 
 export default function MapList() {
     const PAGE_SIZE = 25;
 
     const navigation = useNavigation();
 
+    const { isAppActive } = useAppState();
     const { isInternetReachable } = useNetwork();
     const [pointData, setPointData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
@@ -172,7 +174,7 @@ export default function MapList() {
             unsubscribe();
         };
 
-    }, [isInternetReachable]);
+    }, [isInternetReachable, isAppActive]);
 
     const renderPoints = () => {
         return pointData.map((point, index) => (

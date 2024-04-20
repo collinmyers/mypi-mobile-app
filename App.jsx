@@ -4,6 +4,7 @@ import { setupURLPolyfill } from "react-native-url-polyfill";
 import storage from "local-storage-fallback";
 import { AuthProvider } from "./components/context/AuthContext";
 import { NetworkProvider } from "./components/context/NetworkContext";
+import { AppStateProvider } from "./components/context/AppStateContext";
 import { Platform } from "react-native";
 import { account, database, DATABASE_ID, EXPO_PROJECT_ID, USER_NOTIFICATION_TOKENS } from "./utils/Config/config";
 import { ID } from "appwrite";
@@ -89,10 +90,13 @@ export default function App() {
 
 
     return (
-        <NetworkProvider>
-            <AuthProvider>
-                <DrawerNavigator />
-            </AuthProvider>
-        </NetworkProvider>
+        <AppStateProvider>
+            <NetworkProvider>
+                <AuthProvider>
+                    <DrawerNavigator />
+                </AuthProvider>
+            </NetworkProvider>
+        </AppStateProvider>
+
     );
 }

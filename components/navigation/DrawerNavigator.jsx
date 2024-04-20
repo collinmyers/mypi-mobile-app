@@ -14,6 +14,7 @@ import { StatusBar } from "expo-status-bar";
 import { Entypo, Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from "@expo/vector-icons";
 import { useAuth } from "../context/AuthContext";
 import { useNetwork } from "../context/NetworkContext";
+import { useAppState } from "../context/AppStateContext";
 import { Snackbar } from "react-native-paper";
 import AppStyle from "../../styling/AppStyle";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -26,12 +27,11 @@ export default function DrawerNavigator() {
 
     const { changeAuthState, isSignedIn, setIsSignedIn } = useAuth();
     const { isInternetReachable } = useNetwork();
+    const { isAppActive } = useAppState();
     const [errorMessage, setErrorMessage] = useState("");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [isSigningOut, setIsSigningOut] = useState(false);
-    const [profileRole, setProfileRole] = useState({
-        role: "",
-    });
+    const [profileRole, setProfileRole] = useState({ role: "", });
 
     const checkAuthState = async () => {
         try {
@@ -206,11 +206,11 @@ export default function DrawerNavigator() {
     };
 
     useEffect(() => {
-        if (isInternetReachable === false) {
+        if (isInternetReachable === false && isAppActive) {
             setErrorMessage("No internet connection, some app features may not be available until internet has been restored.");
             setIsSnackbarVisible(true);
         }
-    }, [isInternetReachable === false]);
+    }, [isInternetReachable === false, isAppActive]);
 
     return (
         <SafeAreaProvider>

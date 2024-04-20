@@ -12,12 +12,14 @@ import * as FileSystem from "expo-file-system";
 import PropTypes from "prop-types";
 import { useNetwork } from "../../../components/context/NetworkContext";
 import { useAuth } from "../../../components/context/AuthContext";
+import { useAppState } from "../../../components/context/AppStateContext";
 
 export default function ManageAlertsScreen() {
     const PAGE_SIZE = 25;
 
     const navigation = useNavigation();
 
+    const { isAppActive } = useAppState();
     const { isInternetReachable } = useNetwork();
     const { isSignedIn } = useAuth();
     const [isLoading, setIsLoading] = useState(true);
@@ -136,7 +138,7 @@ export default function ManageAlertsScreen() {
             unsubscribe();
         };
 
-    }, [isInternetReachable]);
+    }, [isInternetReachable, isAppActive]);
 
     useEffect(() => {
         getNameAndRole();

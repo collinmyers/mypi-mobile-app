@@ -16,12 +16,14 @@ import { subscribeToRealTimeUpdates } from "../../../utils/Config/config";
 import { appPrimaryColor, appSecondaryColor, appTertiaryColor, appTextColor } from "../../../utils/colors/appColors";
 import * as FileSystem from "expo-file-system";
 import { useNetwork } from "../../../components/context/NetworkContext";
+import { useAppState } from "../../../components/context/AppStateContext";
 import AppStyle from "../../../styling/AppStyle";
 
 export default function MapScreen() {
     const navigation = useNavigation();
 
     const { isInternetReachable } = useNetwork();
+    const { isAppActive } = useAppState();
     const [markersData, setMarkersData] = useState([]);
     const [filteredMarkers, setFilteredMarkers] = useState([]);
     const [currentNavPreference, setCurrentNavPreference] = useState(null);
@@ -35,7 +37,7 @@ export default function MapScreen() {
     const [fetchingFinished, setFetchFinished] = useState(false);
     const PAGE_SIZE = 25;
 
-    
+
     useEffect(() => {
         if (markersData.length > 0 || fetchingFinished) {
             setIsLoading(false);
@@ -139,7 +141,7 @@ export default function MapScreen() {
             unsubscribe();
         };
 
-    }, [isInternetReachable]));
+    }, [isInternetReachable, isAppActive]));
 
     useEffect(() => {
         const filterMarkers = () => {

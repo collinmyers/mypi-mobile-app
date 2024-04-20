@@ -14,13 +14,17 @@ import { differenceInSeconds } from "date-fns";
 import { useFocusEffect } from "@react-navigation/native";
 import { useNetwork } from "../../../components/context/NetworkContext";
 import { useAuth } from "../../../components/context/AuthContext";
+import { useAppState } from "../../../components/context/AppStateContext";
+
 export default function AlertsScreen() {
     const PAGE_SIZE = 25;
 
     const navigation = useNavigation();
-    const route = useRoute();
 
+    const route = useRoute();
     const { showEditNotifications } = route.params;
+
+    const { isAppActive } = useAppState();
     const { isInternetReachable } = useNetwork();
     const { isSignedIn } = useAuth();
     const [localDateTime, setLocalDateTime] = useState(null);
@@ -79,7 +83,7 @@ export default function AlertsScreen() {
                     // If the file doesn't exist, initialize with an empty array
                     fileContents = "[]";
                 }
-                
+
 
                 if (doesLocalExist) {
                     const localData = JSON.parse(fileContents);

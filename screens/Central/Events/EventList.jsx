@@ -11,10 +11,12 @@ import * as FileSystem from "expo-file-system";
 import { parse } from "date-fns";
 import { appSecondaryColor } from "../../../utils/colors/appColors";
 import { useNetwork } from "../../../components/context/NetworkContext";
+import { useAppState } from "../../../components/context/AppStateContext";
 
 export default function EventListScreen() {
     const navigation = useNavigation();
     const { isInternetReachable } = useNetwork();
+    const { isAppActive } = useAppState();
     const [eventData, setEventData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [fetchingFinished, setFetchFinished] = useState(false);
@@ -170,7 +172,7 @@ export default function EventListScreen() {
         return () => {
             unsubscribe();
         };
-    }, [isInternetReachable]);
+    }, [isInternetReachable, isAppActive]);
 
     const parseEventDate = (dateString) => {
         const dateParts = dateString.split(" - ");
