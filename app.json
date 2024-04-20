@@ -4,20 +4,20 @@
     "slug": "mypi",
     "version": "1.0.7",
     "orientation": "portrait",
-    "icon": "./assets/main/myPI-Icon.png",
+    "icon": "./assets/main/myPIOnly.png",
     "userInterfaceStyle": "light",
     "plugins": [
       [
         "expo-notifications",
         {
-          "icon": "./assets/main/myPI-Icon.png",
+          "icon": "./assets/main/myPIOnly.png",
           "color": "#FFFFFF"
         }
       ],
       "expo-secure-store"
     ],
     "splash": {
-      "image": "./assets/main/splashscreen.png",
+      "image": "./assets/main/pip-splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF"
     },
@@ -48,7 +48,7 @@
       "backgroundColor": "#FFFFFF"
     },
     "web": {
-      "favicon": "./assets/main/myPILogo.png"
+      "favicon": "./assets/main/myPIOnly.png"
     },
     "extra": {
       "eas": {
