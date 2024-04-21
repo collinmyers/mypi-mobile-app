@@ -41,19 +41,20 @@
           {
             "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategorySystemBootTime",
             "NSPrivacyAccessedAPITypeReasons": [
-              "CA92.1"
+              "35F9.1"
             ]
           },
           {
             "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryDiskSpace",
             "NSPrivacyAccessedAPITypeReasons": [
-              "CA92.1"
+              "85F4.1",
+              "E174.1"
             ]
           },
           {
             "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryFileTimestamp",
             "NSPrivacyAccessedAPITypeReasons": [
-              "CA92.1"
+              "C617.1", 
             ]
           },
         ]
