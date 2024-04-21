@@ -55,7 +55,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.24.3",
-    "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1"
   },
