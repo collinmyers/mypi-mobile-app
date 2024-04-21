@@ -15,7 +15,7 @@ export default function HomeTabNavigator() {
 
     return (
         <Tab.Navigator
-            initialRouteName="Home"
+            initialRouteName="Dashboard"
             screenOptions={{
                 tabBarActiveTintColor: appTertiaryColor,
                 tabBarInactiveTintColor: appSecondaryColor,

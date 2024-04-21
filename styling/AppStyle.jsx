@@ -32,7 +32,8 @@ export default StyleSheet.create({
     },
     snackBar: {
         backgroundColor: appWarningColor,
-        color: appTextColor
+        color: appTextColor,
+        marginBottom: "-8%"
     },
     appHeaderEdit: {
         paddingHorizontal: 16,

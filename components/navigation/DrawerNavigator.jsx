@@ -331,7 +331,7 @@ export default function DrawerNavigator() {
                 <Snackbar
                     visible={isSnackbarVisible}
                     maxFontSizeMultiplier={1}
-                    style={[AppStyle.snackBar, { marginBottom: "22%" }]}
+                    style={[AppStyle.snackBar, { marginBottom: "12%" }]}
                     onDismiss={() => {
                         setIsSnackbarVisible(false);
                         setErrorMessage(""); // Clear the error message
