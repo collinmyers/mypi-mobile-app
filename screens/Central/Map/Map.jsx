@@ -368,7 +368,7 @@ export default function MapScreen() {
                     textColor: appTextColor,
                     label: "Close",
                 }}
-                duration={5000}
+                duration={3000}
             >
                 {errorMessage}
             </Snackbar>

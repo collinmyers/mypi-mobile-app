@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView, TouchableOpacity, View } from "react-native";
-import { Modal, Text } from "react-native-paper";
+import { Modal, Snackbar, Text } from "react-native-paper";
 import SidebarStyle from "../../styling/SidebarStyle";
 import { DATABASE_ID, FOOD_TRUCK_POI, MAP_COLLECTION_ID, USER_ALIAS_TABLE_ID, account, database, subscribeToRealTimeUpdates } from "../../utils/Config/config";
 import { Dropdown } from "react-native-element-dropdown";
@@ -11,6 +11,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import HomeStyle from "../../styling/HomeStyle";
 import { FontAwesome, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 import { useAppState } from "../../components/context/AppStateContext";
+import { appTextColor } from "../../utils/colors/appColors";
+import AppStyle from "../../styling/AppStyle";
 
 export default function FoodTruckScreen() {
     const PAGE_SIZE = 25;
@@ -28,11 +30,19 @@ export default function FoodTruckScreen() {
     const [fetchingFinished, setFetchFinished] = useState(false);
     const [message, setMessage] = useState("");
     const [addNew, setAddNew] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [profileRole, setProfileRole] = useState({
         role: "",
     });
 
     const shareLocation = async () => {
+
+        if (selectedLocation === ""){
+            setErrorMessage("Please selection a location to share.");
+            setIsSnackbarVisible(true);
+            return;
+        }
 
         //Function to find subjson inside of the big json
         function findIndex(attribute, value) {
@@ -353,6 +363,22 @@ export default function FoodTruckScreen() {
                 )}
             </ScrollView>
             <DeleteConfirmationModal />
+            <Snackbar
+                visible={isSnackbarVisible}
+                maxFontSizeMultiplier={1}
+                style={[AppStyle.snackBar,{marginBottom: "12%"}]}
+                onDismiss={() => {
+                    setIsSnackbarVisible(false);
+                    setErrorMessage(""); // Clear the error message
+                }}
+                action={{
+                    textColor: appTextColor,
+                    label: "Close",
+                }}
+                duration={3000}
+            >
+                {errorMessage}
+            </Snackbar>
         </SafeAreaView>
     );
 }
