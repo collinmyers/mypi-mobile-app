@@ -27,7 +27,7 @@ export default function DrawerNavigator() {
 
     const { changeAuthState, isSignedIn, setIsSignedIn } = useAuth();
     const { isInternetReachable } = useNetwork();
-    const { isAppActive } = useAppState();
+    const { isAppActive, wasInBackground, setWasInBackground } = useAppState();
     const [errorMessage, setErrorMessage] = useState("");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [isSigningOut, setIsSigningOut] = useState(false);
@@ -206,11 +206,14 @@ export default function DrawerNavigator() {
     };
 
     useEffect(() => {
-        if (isInternetReachable === false && isAppActive) {
-          setErrorMessage("No internet connection, some app features may not be available until internet has been restored.");
-          setIsSnackbarVisible(true);
+        if (isInternetReachable === false && isAppActive && !wasInBackground) {
+            setErrorMessage("No internet connection, some app features may not be available until internet has been restored.");
+            setIsSnackbarVisible(true);
+        } else if (isAppActive && wasInBackground) {
+            setWasInBackground(false); // Reset the flag when app becomes active again
         }
-      }, [isInternetReachable, isAppActive]);
+
+    }, [isInternetReachable, isAppActive]);
 
     return (
         <SafeAreaProvider>
