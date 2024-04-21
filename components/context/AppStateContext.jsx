@@ -1,4 +1,3 @@
-// AppStateContext.js
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AppState } from "react-native";
 import PropTypes from "prop-types";
