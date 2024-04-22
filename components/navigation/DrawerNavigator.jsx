@@ -13,10 +13,6 @@ import { appPrimaryColor, appQuarternaryColor, appSecondaryColor, appTertiaryCol
 import { StatusBar } from "expo-status-bar";
 import { Entypo, Ionicons, MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from "@expo/vector-icons";
 import { useAuth } from "../context/AuthContext";
-import { useNetwork } from "../context/NetworkContext";
-import { useAppState } from "../context/AppStateContext";
-import { Snackbar } from "react-native-paper";
-import AppStyle from "../../styling/AppStyle";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import FoodTruckScreen from "../../screens/Sidebar/FoodTruck";
 import PropTypes from "prop-types";
@@ -26,8 +22,6 @@ const Drawer = createDrawerNavigator();
 export default function DrawerNavigator() {
 
     const { changeAuthState, isSignedIn, setIsSignedIn } = useAuth();
-    const { isInternetReachable } = useNetwork();
-    const { isAppActive, wasInBackground, setWasInBackground } = useAppState();
     const [errorMessage, setErrorMessage] = useState("");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
     const [isSigningOut, setIsSigningOut] = useState(false);
@@ -205,16 +199,6 @@ export default function DrawerNavigator() {
             .catch(err => console.error("An error occurred", err));
     };
 
-    useEffect(() => {
-        if (isInternetReachable === false && isAppActive && !wasInBackground) {
-            setErrorMessage("No internet connection, some app features may not be available until internet has been restored.");
-            setIsSnackbarVisible(true);
-        } else if (isAppActive && wasInBackground) {
-            setWasInBackground(false); // Reset the flag when app becomes active again
-        }
-
-    }, [isInternetReachable, isAppActive]);
-
     return (
         <SafeAreaProvider>
             <NavigationContainer>
@@ -330,24 +314,6 @@ export default function DrawerNavigator() {
                 </Drawer.Navigator>
                 {Platform.OS === "android" && useDrawerStatus === "open" ? null : <StatusBar style="dark" />}
                 {Platform.OS === "ios" && <StatusBar style="dark" />}
-
-                <Snackbar
-                    visible={isSnackbarVisible}
-                    maxFontSizeMultiplier={1}
-                    style={[AppStyle.snackBar, { marginBottom: "12%" }]}
-                    onDismiss={() => {
-                        setIsSnackbarVisible(false);
-                        setErrorMessage(""); // Clear the error message
-                    }}
-                    action={{
-                        textColor: appTextColor,
-                        label: "Close",
-                    }}
-                    duration={10000}
-                >
-                    {errorMessage}
-                </Snackbar>
-
             </NavigationContainer >
         </SafeAreaProvider>
 
