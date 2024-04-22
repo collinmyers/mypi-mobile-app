@@ -91,22 +91,27 @@ export default function SignUpScreen({ navigation }) {
                     const emailExistsError = "AppwriteException: A user with the same email already exists in the current project.";
                     const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
                     const networkError = "AppwriteException: Network request failed";
+                    const passwordError = "AppwriteException: Invalid `password` param: Password must be between 8 and 265 characters long, and should not be one of the commonly used password.";
 
                     switch (error.toString()) {
                         case emailExistsError:
-                            setErrorMessage("Email already in use, please try a different email");
+                            setErrorMessage("Email already in use, please try a different email.");
+                            setIsSnackbarVisible(true);
+                            break;
+                        case passwordError:
+                            setErrorMessage("Please choose another password.");
                             setIsSnackbarVisible(true);
                             break;
                         case rateLimitError:
-                            setErrorMessage("Sign up attempts exceeded, please try again later");
+                            setErrorMessage("Sign up attempts exceeded, please try again later.");
                             setIsSnackbarVisible(true);
                             break;
                         case networkError:
-                            setErrorMessage("Network request failed, please check your connection and try again");
+                            setErrorMessage("Network request failed, please check your connection and try again.");
                             setIsSnackbarVisible(true);
                             break;
                         default:
-                            setErrorMessage("Unknown error occured, please try again");
+                            setErrorMessage("Unknown error occured, please try again.");
                             setIsSnackbarVisible(true);
                             break;
                     }
