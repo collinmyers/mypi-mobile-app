@@ -1,10 +1,14 @@
 import React from "react";
 import { Image } from "expo-image";
+import { Dimensions } from "react-native";
 import Logo from "../../assets/main/myPILogo.png";
 import PropTypes from "prop-types";
 
-// import image from assets folder and define the size
+const deviceWidth = Dimensions.get("window").width;
+const deviceHeight = Dimensions.get("window").height;
+
 export default function AppLogo({ logoWidth, logoHeight, style }) {
+
     return (
         <Image
             source={Logo}
@@ -23,6 +27,6 @@ AppLogo.propTypes = {
 };
 
 AppLogo.defaultProps = {
-    logoWidth: 200,
-    logoHeight: 200,
+    logoWidth: (deviceWidth * .45),
+    logoHeight: (deviceHeight * .25),
 };
