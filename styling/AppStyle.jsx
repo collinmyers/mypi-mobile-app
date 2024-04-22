@@ -1,5 +1,11 @@
-import { StyleSheet } from "react-native";
+import {Platform, StyleSheet } from "react-native";
 import { appPrimaryColor, appTextColor, appWarningColor } from "../utils/colors/appColors";
+
+let snackbarMargin = "-8%";
+
+if (Platform.OS === "android"){
+    snackbarMargin = "1%";
+}
 
 export default StyleSheet.create({
     container: {
@@ -33,7 +39,7 @@ export default StyleSheet.create({
     snackBar: {
         backgroundColor: appWarningColor,
         color: appTextColor,
-        marginBottom: "-8%"
+        marginBottom: snackbarMargin
     },
     appHeaderEdit: {
         paddingHorizontal: 16,
