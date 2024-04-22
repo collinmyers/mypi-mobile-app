@@ -17,7 +17,7 @@ export default function EventListScreen() {
     const navigation = useNavigation();
     const { isInternetReachable } = useNetwork();
     const { isAppActive } = useAppState();
-    const [eventData, setEventData] = useState([]);
+    const [eventData, setEventData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [fetchingFinished, setFetchFinished] = useState(false);
     const PAGE_SIZE = 25;
