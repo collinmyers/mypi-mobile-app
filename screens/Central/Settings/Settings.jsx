@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AppState, Modal, Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
+import { Modal, Platform, SafeAreaView, ScrollView, TouchableOpacity, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { Card, RadioButton, Switch, Text } from "react-native-paper";
 import PropTypes from "prop-types";
