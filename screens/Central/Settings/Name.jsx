@@ -8,6 +8,7 @@ import AppStyle from "../../../styling/AppStyle";
 import HomeStyle from "../../../styling/HomeStyle";
 import KeyboardAvoidingComponent from "../../../components/Keyboard/KeyboardAvoidingComponent";
 import { appPrimaryColor, appTextColor } from "../../../utils/colors/appColors";
+import { useAuth } from "../../../components/context/AuthContext";
 
 ChangeNameScreen.propTypes = {
     navigation: PropTypes.shape({
@@ -17,23 +18,24 @@ ChangeNameScreen.propTypes = {
 
 export default function ChangeNameScreen({ navigation }) {
 
+    const { changeMade, setChangeMade } = useAuth();
     const [errorMessage, setErrorMessage] = useState("");
     const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
-    const [name, setName] = useState(null);
+    const [name, setName] = useState("");
     const [isActionOcurring, setIsActionOccuring] = useState(false);
 
     const handleNameChange = async () => {
         if (!isActionOcurring) {
             setIsActionOccuring(true);
             try {
-                if (name === null) {
+                if (name === "") {
                     setErrorMessage("Please enter your full name.");
                     setIsSnackbarVisible(true);
                     setIsActionOccuring(false);
                     return;
                 }
-                if (name.length > 128) {
-                    setErrorMessage("Name must be less than 128 characters.");
+                if (name.length >= 128) {
+                    setErrorMessage("Please use a shorter name.");
                     setIsSnackbarVisible(true);
                     setIsActionOccuring(false);
                     return;
@@ -41,16 +43,14 @@ export default function ChangeNameScreen({ navigation }) {
 
                 await account.updateName(name);
 
-                setName({
-                    firstName: "",
-                    lastName: ""
-                });
+                setName("");
+                setChangeMade(!changeMade);
                 navigation.navigate("Settings", { updateProfileInfo: true });
 
             } catch (error) {
                 const networkError = "AppwriteException: Network request failed.";
 
-                switch(error.toString()){
+                switch (error.toString()) {
                     case networkError:
                         setErrorMessage("Network request failed, please check your connection and try again.");
                         setIsSnackbarVisible(true);

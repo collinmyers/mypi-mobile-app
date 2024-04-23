@@ -15,14 +15,14 @@ import { useAuth } from "../../components/context/AuthContext";
 export default function Dashboard() {
 
     const navigation = useNavigation();
-    const { isSignedIn } = useAuth();
+    const { isSignedIn, changeMade } = useAuth();
     const { isConnected, isInternetReachable } = useNetwork();
     const [isSignedInLocal, setisSignedInLocal] = useState(false);
     const [profileInfo, setProfileInfo] = useState({
         name: "",
     });
 
-    const getNameAndEmail = async () => {
+    const getName = async () => {
         try {
             const response = await account.get();
 
@@ -48,9 +48,9 @@ export default function Dashboard() {
 
     useEffect(() => {
         if (isConnected && isInternetReachable) {
-            getNameAndEmail();
+            getName();
         }
-    }, [isInternetReachable, isSignedIn]);
+    }, [isInternetReachable, isSignedIn, changeMade ]);
 
 
 
