@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
                 setIsSignedIn(true);
             });
         } catch (error) {
-            console.warn(error);
             setIsSignedIn(false);
         }
     };
