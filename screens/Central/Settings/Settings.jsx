@@ -18,11 +18,12 @@ import AppStyle from "../../../styling/AppStyle";
 import * as SecureStore from "expo-secure-store";
 import { useNetwork } from "../../../components/context/NetworkContext";
 import { useRoute } from "@react-navigation/native";
+import { useAppState } from "../../../components/context/AppStateContext";
 
 export default function SettingsScreen({ navigation }) {
 
     const route = useRoute();
-
+    const { isAppActive } = useAppState();
     const { changeAuthState, setChangeAuthState, isSignedIn, setIsSignedIn } = useAuth();
     const [localSignInState, setLocalSignInState] = useState(false);
     const { isInternetReachable } = useNetwork();
@@ -361,19 +362,7 @@ export default function SettingsScreen({ navigation }) {
         };
         pushStatus();
 
-        const handleAppStateChange = (nextAppState) => {
-            if (nextAppState === "active") {
-                pushStatus();
-            }
-        };
-
-        const appSub = AppState.addEventListener("change", handleAppStateChange);
-        // remove the event listener when the component unmounts
-        return () => {
-            appSub.remove();
-        };
-
-    }, []));
+    }, [isAppActive]));
 
     useEffect(() => {
         const getAutoPlayPreferenceAsync = async () => {
