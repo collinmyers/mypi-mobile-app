@@ -37,7 +37,7 @@
     "local-storage-fallback": "^4.1.2",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
-    "react-native": "0.73.6",
+    "react-native": "0.74.0",
     "react-native-collapsible": "^1.6.1",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-element-dropdown": "^2.10.4",
