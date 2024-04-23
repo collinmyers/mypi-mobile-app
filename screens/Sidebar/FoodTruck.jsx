@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, TouchableOpacity, View } from "react-native";
+import { Platform, SafeAreaView, TouchableOpacity, View } from "react-native";
 import { Modal, Snackbar, Text } from "react-native-paper";
 import SidebarStyle from "../../styling/SidebarStyle";
 import { DATABASE_ID, FOOD_TRUCK_POI, MAP_COLLECTION_ID, USER_ALIAS_TABLE_ID, account, database, subscribeToRealTimeUpdates } from "../../utils/Config/config";
@@ -366,7 +366,7 @@ export default function FoodTruckScreen() {
             <Snackbar
                 visible={isSnackbarVisible}
                 maxFontSizeMultiplier={1}
-                style={[AppStyle.snackBar,{marginBottom: "12%"}]}
+                style={Platform.OS === "ios" ? [AppStyle.snackBar, { marginBottom: 0 }] : AppStyle.snackBar }
                 onDismiss={() => {
                     setIsSnackbarVisible(false);
                     setErrorMessage(""); // Clear the error message

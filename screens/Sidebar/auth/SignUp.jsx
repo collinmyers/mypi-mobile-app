@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, TouchableOpacity } from "react-native";
+import { Platform, SafeAreaView, TouchableOpacity } from "react-native";
 import { Card, Snackbar, Text, TextInput } from "react-native-paper";
 import { account } from "../../../utils/Config/config";
 import { ID } from "appwrite";
@@ -200,7 +200,7 @@ export default function SignUpScreen({ navigation }) {
             <Snackbar
                 visible={isSnackbarVisible}
                 maxFontSizeMultiplier={1}
-                style={AppStyle.snackBar}
+                style={Platform.OS === "ios" ? [AppStyle.snackBar, { marginBottom: 0 }] : AppStyle.snackBar }
                 onDismiss={() => {
                     setIsSnackbarVisible(false);
                     setErrorMessage(""); // Clear the error message
