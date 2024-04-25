@@ -88,12 +88,18 @@ export default function SignUpScreen({ navigation }) {
 
                     navigation.navigate("Login");
                 } catch (error) {
+                    console.error(error.toString());
                     const emailExistsError = "AppwriteException: A user with the same email already exists in the current project.";
                     const rateLimitError = "AppwriteException: Rate limit for the current endpoint has been exceeded. Please try again after some time.";
                     const networkError = "AppwriteException: Network request failed";
                     const passwordError = "AppwriteException: Invalid `password` param: Password must be between 8 and 265 characters long, and should not be one of the commonly used password.";
+                    const alreadyExists = "AppwriteException: A user with the same id, email, or phone already exists in this project.";
 
                     switch (error.toString()) {
+                        case alreadyExists:
+                            setErrorMessage("Email already in use, please try a different email.");
+                            setIsSnackbarVisible(true);
+                            break;
                         case emailExistsError:
                             setErrorMessage("Email already in use, please try a different email.");
                             setIsSnackbarVisible(true);

@@ -277,6 +277,9 @@ export default function SettingsScreen({ navigation }) {
                 console.error(err);
             } finally {
                 setIsActionOccuring(false);
+                account.createAnonymousSession().then(() => {
+                    console.log("created anonomyous session");
+                }).catch((error) => console.error(error));
             }
         }
     };

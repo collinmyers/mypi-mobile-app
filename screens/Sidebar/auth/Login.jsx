@@ -56,8 +56,6 @@ export default function LoginScreen({ navigation }) {
     };
 
     const handleLogin = async () => {
-
-
         if (!isActionOcurring) {
             try {
                 setIsActionOccuring(true);
@@ -68,7 +66,7 @@ export default function LoginScreen({ navigation }) {
                 }
 
                 try {
-                    await account.createEmailSession(`${authentication.email}`, `${authentication.password}`);
+                    await account.createEmailPasswordSession(`${authentication.email}`, `${authentication.password}`);
 
                     setAuthentication({
                         email: "",
