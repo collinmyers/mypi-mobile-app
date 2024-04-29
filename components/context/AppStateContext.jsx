@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 export const AppStateContext = createContext();
 
-export const AppStateProvider = ({ children }) => {
+export const AppStateProvider = ({ children }) => { // provide current state of whether app is in foreground or background
   const [isAppActive, setIsAppActive] = useState(true);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export const AppStateProvider = ({ children }) => {
 
 AppStateProvider.propTypes = {
   children: PropTypes.node.isRequired,
-  handleAppStateChange: PropTypes.func, // Add prop type validation for handleAppStateChange
+  handleAppStateChange: PropTypes.func,
 };
 
 export const useAppState = () => useContext(AppStateContext);

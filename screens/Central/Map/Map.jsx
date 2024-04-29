@@ -37,19 +37,18 @@ export default function MapScreen() {
     const [fetchingFinished, setFetchFinished] = useState(false);
     const PAGE_SIZE = 25;
 
-
     useEffect(() => {
         if (markersData.length > 0 || fetchingFinished) {
             setIsLoading(false);
         }
     }, [markersData.length, fetchingFinished]);
 
-    useFocusEffect(React.useCallback(() => {
+    useFocusEffect(React.useCallback(() => { // Use focus effect to unmount on blur to decrease total memory usage
 
         const handleSubscription = () => {
             checkNetworkConnectivityAndFetchData();
         };
-        // Subscribe to real-time updates
+
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, MAP_COLLECTION_ID);
 
         const fetchData = async () => {
@@ -84,7 +83,7 @@ export default function MapScreen() {
                 });
 
                 setMarkersData(allMarkers);
-                await saveDataToFile(allMarkers); // Save fetched data to file
+                await saveDataToFile(allMarkers);
                 setFetchFinished(true);
             } catch (error) {
                 console.error(error);
@@ -115,7 +114,7 @@ export default function MapScreen() {
             try {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
-                    fetchData(); // Fetch data from appwrite if connected
+                    fetchData();
                 }
             } catch (error) {
                 console.error("Error checking network connectivity: ", error);
@@ -126,14 +125,13 @@ export default function MapScreen() {
         FileSystem.getInfoAsync(FileSystem.documentDirectory + "markersData.json")
             .then(({ exists }) => {
                 if (exists) {
-                    loadDataFromFile(); // Load data from file if available
+                    loadDataFromFile();
                 } else {
-                    fetchData(); // Fetch data from network if not available
+                    fetchData(); 
                 }
             })
             .catch(error => console.error("Error checking file: ", error));
 
-        // Check network connectivity and fetch data if connected
         checkNetworkConnectivityAndFetchData();
 
         // Cleanup function
@@ -144,12 +142,12 @@ export default function MapScreen() {
     }, [isInternetReachable, isAppActive]));
 
     useEffect(() => {
-        const filterMarkers = () => {
+        const filterMarkers = () => { // Filters pins by category and if empty determines error message to display if any
             if (selectedFilters.length === 0) {
                 setFilteredMarkers(markersData);
                 setErrorMessage("");
                 setIsSnackbarVisible(false);
-                setErrorMessageShown(false); // Reset the error message shown flag
+                setErrorMessageShown(false);
             } else {
                 const filteredCategories = [];
                 const emptyCategories = [];
@@ -195,7 +193,7 @@ export default function MapScreen() {
                 } else {
                     setErrorMessage("");
                     setIsSnackbarVisible(false);
-                    setErrorMessageShown(false); // Reset the error message shown flag
+                    setErrorMessageShown(false);
                 }
 
                 setFilteredMarkers(filteredCategories);

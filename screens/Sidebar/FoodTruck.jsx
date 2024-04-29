@@ -44,14 +44,14 @@ export default function FoodTruckScreen() {
             return;
         }
 
-        //Function to find subjson inside of the big json
+        // Function to find an object inside of multiple objects
         function findIndex(attribute, value) {
             for (let i = 0; i < unsharedPointsData.length; i++) {
                 if (unsharedPointsData[i][attribute] === value) {
                     return i;
                 }
             }
-            return -1; // If the attribute is not found
+            return -1; // attribute not found
         }
 
         if (isSignedIn && (profileRole.role.includes("FoodTruck")) && aliasExist) {
@@ -59,7 +59,7 @@ export default function FoodTruckScreen() {
 
             let randomNum = Math.random();
 
-            let offset = randomNum * (0.00030 - 0.00006) + 0.00006;
+            let offset = randomNum * (0.00030 - 0.00006) + 0.00006; // random offset to prevent pins stack on one another
 
             try {
                 await database.createDocument(
@@ -82,19 +82,19 @@ export default function FoodTruckScreen() {
 
     const unshareLocation = async () => {
 
-        //Function to find subjson inside of the big json
+        // Function to find an object inside of multiple objects
         function findIndex(attribute, value) {
             for (let i = 0; i < sharedPointsData.length; i++) {
                 if (sharedPointsData[i][attribute] === value) {
                     return i;
                 }
             }
-            return -1; // If the attribute is not found
+            return -1; // attribute not found
         }
 
         if (isSignedIn && (profileRole.role.includes("FoodTruck")) && aliasExist) {
 
-            //Find attribute's index, in the point data use State, then delete based on it's id...
+            // Find attribute's index, in the pointData useState, then delete based on it's id
             let index = findIndex("Name", selectedLocation);
 
             try {
@@ -221,7 +221,7 @@ export default function FoodTruckScreen() {
 
         };
         const getSharedLocations = async () => {
-            //Get locations from the database
+            // Get shared food truck locations from the database for user
             try {
                 let offset = 0;
                 let allPoints = [];

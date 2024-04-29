@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 
 const NetworkContext = createContext();
 
-export const NetworkProvider = ({ children }) => {
-    const [isConnected, setIsConnected] = useState(true); // Default to true assuming initial connection
-    const [isInternetReachable, setIsInternetReachable] = useState(true); // Default to true assuming initial connection
+export const NetworkProvider = ({ children }) => { // provide status of if device is connected and internet is reachable 
+    const [isConnected, setIsConnected] = useState(true); 
+    const [isInternetReachable, setIsInternetReachable] = useState(true); 
 
     useEffect(() => {
         const handleConnectivityChange = (state) => {
@@ -14,7 +14,6 @@ export const NetworkProvider = ({ children }) => {
             setIsInternetReachable(state.isInternetReachable);
         };
 
-        // Subscribe to network state changes
         const unsubscribe = addEventListener(handleConnectivityChange);
 
         // Fetch initial network state

@@ -10,10 +10,10 @@ import { useNetwork } from "../../context/NetworkContext";
 
 export default function AppHeaderEditNotifications({ showEditNotifications, onToggleEditNotifications }) {
     const navigation = useNavigation();
-    const { isConnected, isInternetReachable } = useNetwork();
+    const { isConnected, isInternetReachable } = useNetwork(); // Used to determine whether to show no network indicator
 
-    const handleToggle = () => {
-        onToggleEditNotifications(!showEditNotifications);  // Pass the new state upwards if needed
+    const handleToggle = () => { // Handles passing of edit mode to change notifications screen content/mode
+        onToggleEditNotifications(!showEditNotifications); 
         navigation.setParams({ showEditNotifications: !showEditNotifications });
     };
 

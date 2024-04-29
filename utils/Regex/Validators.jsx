@@ -3,7 +3,7 @@ export const validateName = (name) => {
     return name.length > 0;  // True if name has at least one character
 };
 
-export const validateEmail = (email) => {
+export const validateEmail = (email) => { // Validate basic email format
     const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return emailRegex.test(email);
 };

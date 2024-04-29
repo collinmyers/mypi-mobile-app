@@ -10,7 +10,7 @@ import { useNetwork } from "../../context/NetworkContext";
 export default function AppHeader() {
     const deviceWidth = Dimensions.get("window").width;
     const navigation = useNavigation();
-    const { isConnected, isInternetReachable } = useNetwork();
+    const { isConnected, isInternetReachable } = useNetwork(); // Used to determine whether to show no network indicator
 
     return (
         <View style={AppStyle.drawerHeader}>

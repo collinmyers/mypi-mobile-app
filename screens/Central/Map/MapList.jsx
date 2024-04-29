@@ -49,9 +49,8 @@ export default function MapList() {
         const handleSubscription = () => {
             checkNetworkConnectivityAndFetchData();
         };
-        // Subscribe to real-time updates
-        const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, MAP_COLLECTION_ID);
 
+        const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, MAP_COLLECTION_ID);
 
         const fetchData = async () => {
             try {
@@ -75,7 +74,7 @@ export default function MapList() {
                     response.documents = nextResponse.documents;
                 }
 
-                allPoints.sort((a, b) => {
+                allPoints.sort((a, b) => { // Sort in the correct alphabetical order
                     const nameA = a.Name.toLowerCase();
                     const nameB = b.Name.toLowerCase();
 
@@ -115,7 +114,7 @@ export default function MapList() {
                 });
 
                 setPointData(allPoints);
-                await saveDataToFile(allPoints); // Save fetched data to file
+                await saveDataToFile(allPoints);
                 setFetchFinished(true);
             } catch (error) {
                 console.error(error);
@@ -147,7 +146,7 @@ export default function MapList() {
             try {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
-                    fetchData(); // Fetch data from appwrite if connected
+                    fetchData();
                 } else {
                     loadDataFromFile();
                 }
@@ -160,15 +159,15 @@ export default function MapList() {
         FileSystem.getInfoAsync(FileSystem.documentDirectory + "pointsCard.json")
             .then(({ exists }) => {
                 if (exists) {
-                    loadDataFromFile(); // Load data from file if available
+                    loadDataFromFile();
                 } else {
-                    fetchData(); // Fetch data from network if not available
+                    fetchData();
                 }
             })
             .catch(error => console.error("Error checking file: ", error));
 
-        // Check network connectivity and fetch data if connected
         checkNetworkConnectivityAndFetchData();
+
         // Cleanup function
         return () => {
             unsubscribe();

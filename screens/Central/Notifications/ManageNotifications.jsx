@@ -46,7 +46,6 @@ export default function ManageAlertsScreen() {
             }
         };
 
-        // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
 
         const fetchData = async () => {
@@ -78,7 +77,7 @@ export default function ManageAlertsScreen() {
                 });
 
                 setAlertData(allAlerts);
-                await saveDataToFile(allAlerts); // Save fetched data to file
+                await saveDataToFile(allAlerts);
                 setFetchFinished(true);
             } catch (error) {
                 console.error(error);
@@ -113,7 +112,7 @@ export default function ManageAlertsScreen() {
             try {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
-                    await fetchData(); // Fetch data from appwrite if connected
+                    await fetchData();
                 }
             } catch (error) {
                 console.error("Error checking network connectivity: ", error);
@@ -124,14 +123,13 @@ export default function ManageAlertsScreen() {
         FileSystem.getInfoAsync(FileSystem.documentDirectory + "alertsCard.json")
             .then(({ exists }) => {
                 if (exists) {
-                    loadDataFromFile(); // Load data from file if available
+                    loadDataFromFile(); 
                 } else {
-                    fetchData(); // Fetch data from network if not available
+                    fetchData();
                 }
             })
             .catch(error => console.error("Error checking file: ", error));
 
-        // Check network connectivity and fetch data if connected
         checkNetworkConnectivityAndFetchData();
 
         return () => {

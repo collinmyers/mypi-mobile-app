@@ -21,7 +21,7 @@ const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
 
-    const { changeAuthState, isSignedIn, setIsSignedIn } = useAuth();
+    const { changeAuthState, isSignedIn, setIsSignedIn } = useAuth(); // Passing auth state into Drawer component to update when change occurs
 
     const [isSigningOut, setIsSigningOut] = useState(false);
     const [profileRole, setProfileRole] = useState({ role: "", });
@@ -64,7 +64,7 @@ export default function DrawerNavigator() {
     };
 
 
-    const CustomDrawerItems = (props) => {
+    const CustomDrawerItems = (props) => { // Declare all screens in drawer navigator before adding here, order can be changed and reflected here
         const { navigation } = props;
 
         return (

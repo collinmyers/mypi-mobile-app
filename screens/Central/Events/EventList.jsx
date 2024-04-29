@@ -22,7 +22,7 @@ export default function EventListScreen() {
     const [fetchingFinished, setFetchFinished] = useState(false);
     const PAGE_SIZE = 25;
 
-    const blurhash = "LyD1KYtRWBf7?wt6Wqj?xvoIa}j@";
+    const blurhash = "LyD1KYtRWBf7?wt6Wqj?xvoIa}j@"; // placeholder until image loads
 
     useEffect(() => {
         if (eventData.length > 0 || fetchingFinished) {
@@ -31,7 +31,6 @@ export default function EventListScreen() {
     }, [eventData.length, fetchingFinished]);
 
     useEffect(() => {
-        // Function to handle real-time updates
         const handleSubscription = () => {
             checkNetworkConnectivityAndFetchData();
         };
@@ -67,7 +66,6 @@ export default function EventListScreen() {
                     return startDateA - startDateB;
                 });
 
-                // Fetch images for each event concurrently
                 const eventsWithImages = await Promise.all(
                     allEvents.map(async (event) => {
                         const EventListDescription = event.EventListDescription;
@@ -77,12 +75,10 @@ export default function EventListScreen() {
                         const EventLatitude = event.Latitude;
                         const EventLongitude = event.Longitude;
                         const EventTime = event.Time || "";
-                        const EventImages = []; // Initialize an empty array for images
+                        const EventImages = [];
                         const ExtraInfoTitle = event.ExtraInfoTitle;
                         const ExtraInfoURL = event.ExtraInfoURL;
 
-
-                        // Loop through each FileID in the event
                         for (const fileID of event.FileID) {
                             const imageFileUri = `${FileSystem.documentDirectory}${fileID}.png`;
                             const fileInfo = await FileSystem.getInfoAsync(imageFileUri);
@@ -97,7 +93,7 @@ export default function EventListScreen() {
                                 await FileSystem.downloadAsync(image, imageFileUri);
                             }
 
-                            EventImages.push(image); // Add the image to the EventImages array
+                            EventImages.push(image);
                         }
 
                         return {
@@ -108,7 +104,7 @@ export default function EventListScreen() {
                             EventLatitude,
                             EventLongitude,
                             EventTime,
-                            EventImages, // Include the EventImages array
+                            EventImages, 
                             ExtraInfoTitle,
                             ExtraInfoURL,
                         };
@@ -116,7 +112,7 @@ export default function EventListScreen() {
                 );
 
                 setEventData(eventsWithImages);
-                await saveDataToFile(eventsWithImages); // Save fetched data to file
+                await saveDataToFile(eventsWithImages);
                 setFetchFinished(true);
             } catch (error) {
                 console.error(error);
@@ -148,7 +144,7 @@ export default function EventListScreen() {
             try {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
-                    fetchData(); // Fetch data from appwrite if connected
+                    fetchData();
                 }
             } catch (error) {
                 console.error("Error checking network connectivity: ", error);
@@ -159,15 +155,16 @@ export default function EventListScreen() {
         FileSystem.getInfoAsync(FileSystem.documentDirectory + "eventList.json")
             .then(({ exists }) => {
                 if (exists) {
-                    loadDataFromFile(); // Load data from file if available
+                    loadDataFromFile();
                 } else {
-                    fetchData(); // Fetch data from network if not available
+                    fetchData();
                 }
             })
             .catch(error => console.error("Error checking file: ", error));
 
-        // Check network connectivity and fetch data if connected
+
         checkNetworkConnectivityAndFetchData();
+        
         // Cleanup function
         return () => {
             unsubscribe();

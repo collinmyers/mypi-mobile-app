@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { account } from "../../utils/Config/config";
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => { // provide current state of whether the user is logged in or not
     const [ changeAuthState, setChangeAuthState ] = useState(false);
     const [ isSignedIn, setIsSignedIn ] = useState(false);
     const [ changeMade, setChangeMade ] = useState(false);

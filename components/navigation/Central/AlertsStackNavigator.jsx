@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 
 export default function AlertsStackNavigator() {
 
-    const [showEditNotifications, setShowEditNotifications] = useState(false);
+    const [showEditNotifications, setShowEditNotifications] = useState(false); // Pass state of if we are in edit mode through components
 
     return (
         <Stack.Navigator initialRouteName="AlertsScreen" screenOptions={{ headerShown: false }}>

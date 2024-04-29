@@ -7,7 +7,7 @@ import HomeStyle from "../../styling/HomeStyle";
 import { appPrimaryColor, appQuarternaryColor, appSecondaryColor } from "../../utils/colors/appColors";
 import { DONATIONS_PROVIDER_LINK } from "../../utils/Config/config";
 
-const WebViewComponent = ({ uri, onError }) => {
+const WebViewComponent = ({ uri, onError }) => { // To be used if apple approves them for a non profit
     const webViewRef = useRef(null);
     const [refreshing, setRefreshing] = useState(false);
 

@@ -29,7 +29,7 @@ export default function AlertsScreen() {
     const { isSignedIn } = useAuth();
     const [localDateTime, setLocalDateTime] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState("notifications");
-    const selectedCategoryRef = useRef("notifications");
+    const selectedCategoryRef = useRef("notifications"); // Used to make sure user doesnt get booted back to previous category on real time update
     const [isLoading, setIsLoading] = useState(true);
     const [fetchingFinished, setFetchFinished] = useState(false);
     const [isSignedInLocal, setisSignedInLocal] = useState(false);
@@ -53,7 +53,7 @@ export default function AlertsScreen() {
     }, [selectedCategory, showEditNotifications, isInternetReachable]);
 
     useEffect(() => {
-        // Function to handle real-time updates
+
         const handleSubscription = async () => {
             try {
                 await fetchData().then(() => {
@@ -64,9 +64,7 @@ export default function AlertsScreen() {
             }
         };
 
-        // Subscribe to real-time updates
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, ALERTS_COLLECTION_ID);
-
 
         const fetchData = async () => {
             try {
@@ -81,7 +79,7 @@ export default function AlertsScreen() {
                     doesLocalExist = true;
                 } catch (error) {
                     // If the file doesn't exist, initialize with an empty array
-                    fileContents = "[]";
+                    fileContents = "[]"; // must be an array as a string due to readAsStringAsync
                 }
 
                 if (doesLocalExist) {
@@ -123,7 +121,7 @@ export default function AlertsScreen() {
 
                 setAlertData(allAlerts);
                 setSelectedCategory(selectedCategoryRef.current);
-                await saveDataToFile(allAlerts); // Save fetched data to file
+                await saveDataToFile(allAlerts);
                 setFetchFinished(true);
             } catch (error) {
                 console.error(error);
@@ -158,9 +156,9 @@ export default function AlertsScreen() {
             try {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
-                    await fetchData(); // Fetch data from appwrite if connected
+                    await fetchData();
                 } else {
-                    loadDataFromFile(); // Load data from file if not connected
+                    loadDataFromFile();
                 }
             } catch (error) {
                 console.error("Error checking network connectivity: ", error);
@@ -171,17 +169,14 @@ export default function AlertsScreen() {
         FileSystem.getInfoAsync(FileSystem.documentDirectory + "alertsCard.json")
             .then(({ exists }) => {
                 if (exists) {
-                    loadDataFromFile(); // Load data from file if available
+                    loadDataFromFile();
                 } else {
-                    fetchData(); // Fetch data from network if not available
+                    fetchData();
                 }
             })
             .catch(error => console.error("Error checking file: ", error));
 
-        // Check network connectivity and fetch data if connected
         checkNetworkConnectivityAndFetchData();
-
-
 
         return () => {
             unsubscribe();

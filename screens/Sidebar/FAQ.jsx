@@ -33,7 +33,7 @@ export default function FAQScreen() {
         const handleSubscription = () => {
             checkNetworkConnectivityAndFetchData();
         };
-        // Subscribe to real-time updates
+
         const unsubscribe = subscribeToRealTimeUpdates(handleSubscription, FAQ_COLLECTIONS_ID);
 
         const fetchData = async () => {
@@ -67,7 +67,7 @@ export default function FAQScreen() {
                 });
 
                 setFaqData(allFAQ);
-                await saveDataToFile(allFAQ); // Save fetched data to file
+                await saveDataToFile(allFAQ);
                 setFetchFinished(true);
             } catch (error) {
                 console.error(error);
@@ -100,7 +100,7 @@ export default function FAQScreen() {
             try {
                 const networkState = await Network.getNetworkStateAsync();
                 if (networkState.isConnected) {
-                    fetchData(); // Fetch data from appwrite if connected
+                    fetchData();
                 } else {
                     loadDataFromFile();
                 }
@@ -113,14 +113,13 @@ export default function FAQScreen() {
         FileSystem.getInfoAsync(FileSystem.documentDirectory + "faqInfo.json")
             .then(({ exists }) => {
                 if (exists) {
-                    loadDataFromFile(); // Load data from file if available
+                    loadDataFromFile();
                 } else {
-                    fetchData(); // Fetch data from network if not available
+                    fetchData();
                 }
             })
             .catch(error => console.error("Error checking file: ", error));
 
-        // Check network connectivity and fetch data if connected
         checkNetworkConnectivityAndFetchData();
 
         // Cleanup function

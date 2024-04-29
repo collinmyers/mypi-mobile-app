@@ -26,7 +26,7 @@ export default function EventDetailsScreen() {
     const deviceWidth = Dimensions.get("window").width;
     const deviceHeight = Dimensions.get("window").height;
 
-    const blurhash = "LyD1KYtRWBf7?wt6Wqj?xvoIa}j@";
+    const blurhash = "LyD1KYtRWBf7?wt6Wqj?xvoIa}j@"; // placeholder until image loads
 
     const route = useRoute();
 
@@ -67,7 +67,7 @@ export default function EventDetailsScreen() {
             .catch(err => console.error("An error occurred", err));
     };
 
-    const renderExtraBtns = () => {
+    const renderExtraBtns = () => { // Renders additonal info if available
         return ExtraInfoTitle.map((item, index) => {
             return (
                 <TouchableOpacity
@@ -100,7 +100,6 @@ export default function EventDetailsScreen() {
     );
 
     useEffect(() => {
-        // console.log(ExtraInfoTitle.length);
         if (ExtraInfoTitle.length > 0 && ExtraInfoURL.length > 0) {
             setIsAdditionalInfoAvailable(true);
         }
