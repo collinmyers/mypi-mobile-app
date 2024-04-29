@@ -2,7 +2,7 @@
   "expo": {
     "name": "myPI",
     "slug": "mypi",
-    "version": "1.0.9",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/main/myPIOnly.png",
     "userInterfaceStyle": "light",
@@ -26,7 +26,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.discoverpi.mypiseniordesign",
+      "bundleIdentifier": "<add-yours-here>",
       "infoPlist": {
         "UIUserInterfaceStyle": "Light"
       },
@@ -62,7 +62,7 @@
       }
     },
     "android": {
-      "package": "com.discoverpi.mypi",
+      "package": "<add-yours-here>",
       "versionCode": 1,
       "permissions": [
         "INTERNET"
@@ -70,7 +70,7 @@
       "googleServicesFile": "./google-services.json",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyCUXlnnBE6OAV1kku4UMMYZb1eGuUeJAlg"
+          "apiKey": "<add-yours-here>"
         }
       }
     },
@@ -82,15 +82,15 @@
     },
     "extra": {
       "eas": {
-        "projectId": "8cc387dc-be95-4b8c-8460-3c674e04defe"
+        "projectId": "<add-yours-here>"
       }
     },
-    "owner": "mypi",
+    "owner": "<add-yours-here>",
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/8cc387dc-be95-4b8c-8460-3c674e04defe"
+      "url": "<add-yours-here>"
     }
   }
 }

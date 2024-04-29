@@ -47,6 +47,9 @@ ios/
 # Ignore any vscode overrides
 .vscode/
 
+# Ignore .idea
+*.idea*
+
 # Ignore aab/apk's in android build folder
 *.apk*
 *.aab*

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1079724461346",
-    "project_id": "mypi-36e69",
-    "storage_bucket": "mypi-36e69.appspot.com"
+    "project_number": "<add-yours-here>",
+    "project_id": "<add-yours-here>",
+    "storage_bucket": "<add-yours-here>"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1079724461346:android:885766986e8609f42f297b",
+        "mobilesdk_app_id": "<add-yours-here>",
         "android_client_info": {
-          "package_name": "com.discoverpi.mypi"
+          "package_name": "<add-yours-here>"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAVD2to5wagjmgV1TpVmY-1bWgxIZW5dUY"
+          "current_key": "<add-yours-here>"
         }
       ],
       "services": {
